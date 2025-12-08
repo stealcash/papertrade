@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: papertrade_postgres
+    environment:
+      POSTGRES_DB: papertrade_db
+      POSTGRES_USER: papertrade
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - papertrade_network
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: papertrade_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - papertrade_network
+
+  # Django Backend
+  django:
+    build:
+      context: ../backend/python
+      dockerfile: ../../docker/Dockerfile.django
+    container_name: papertrade_django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ../backend/python:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://papertrade:password@postgres:5432/papertrade_db
+      - REDIS_URL=redis://redis:6379/0
+      - GO_SERVICE_URL=http://go-service:8080/api/v1
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - papertrade_network
+
+  # Celery Worker
+  celery-worker:
+    build:
+      context: ../backend/python
+      dockerfile: ../../docker/Dockerfile.django
+    container_name: papertrade_celery_worker
+    command: celery -A config worker -l info
+    volumes:
+      - ../backend/python:/app
+    environment:
+      - DATABASE_URL=postgres://papertrade:password@postgres:5432/papertrade_db
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - papertrade_network
+
+  # Celery Beat
+  celery-beat:
+    build:
+      context: ../backend/python
+      dockerfile: ../../docker/Dockerfile.django
+    container_name: papertrade_celery_beat
+    command: celery -A config beat -l info
+    volumes:
+      - ../backend/python:/app
+    environment:
+      - DATABASE_URL=postgres://papertrade:password@postgres:5432/papertrade_db
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - papertrade_network
+
+  # Go Service
+  go-service:
+    build:
+      context: ../backend/go
+      dockerfile: ../../docker/Dockerfile.go
+    container_name: papertrade_go
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - GO_INTERNAL_API_SECRET=shared-secret
+    networks:
+      - papertrade_network
+
+  # Frontend
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../docker/Dockerfile.frontend
+    container_name: papertrade_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_BASE=http://localhost:8000/api/v1
+      - NEXT_PUBLIC_GO_SERVICE_URL=http://localhost:8080/api/v1
+    depends_on:
+      - django
+      - go-service
+    networks:
+      - papertrade_network
+
+networks:
+  papertrade_network:
+    driver: bridge
+
+volumes:
+  postgres_data:

@@ -1,0 +1,129 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { stocksAPI } from '@/lib/api';
+import { ArrowLeft, TrendingUp, TrendingDown } from 'lucide-react';
+
+export default function StockDetailPage() {
+    const { id } = useParams();
+    const router = useRouter();
+    const stockId = Number(id);
+
+    const [stock, setStock] = useState<any>(null);
+    const [prices, setPrices] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchDetails();
+    }, [stockId]);
+
+    const fetchDetails = async () => {
+        try {
+            const [s, p] = await Promise.all([
+                stocksAPI.getById(stockId),
+                stocksAPI.getPrices({ stock_id: stockId, days: 30 })
+            ]);
+
+            setStock(s.data.data);
+            setPrices(p.data.data || []);
+        } catch {
+            console.log("API Offline – Using Mock");
+
+            setStock({
+                id: stockId,
+                symbol: "RELIANCE",
+                company_name: "Reliance Industries Ltd",
+                last_price: 2456.75,
+                price_change: 2.3,
+                market_cap: 16500000,
+                pe_ratio: 28.5,
+            });
+
+            setPrices([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) return <div className="flex justify-center items-center h-60 text-gray-500">Loading...</div>;
+    if (!stock) return <div className="flex justify-center items-center h-60 text-gray-500">Stock Not Found</div>;
+
+    return (
+        <div className="space-y-10">
+
+            {/* Back Button */}
+            <button
+                className="flex items-center gap-2 text-gray-600 hover:text-black transition"
+                onClick={() => router.back()}
+            >
+                <ArrowLeft size={18} /> Back
+            </button>
+
+            {/* Title */}
+            <div>
+                <h1 className="text-4xl font-bold text-gray-900">{stock.symbol}</h1>
+                <p className="text-gray-500 mt-1 text-lg">{stock.company_name}</p>
+            </div>
+
+            {/* Key Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <MetricCard label="Last Price" value={`₹${stock.last_price?.toFixed(2) || '--'}`} />
+
+                <MetricCard 
+                    label="Change" 
+                    value={`${stock.price_change?.toFixed(2) || '--'}%`}
+                    icon={stock.price_change >= 0 ? <TrendingUp size={20}/> : <TrendingDown size={20}/>}
+                    accent={stock.price_change >= 0 ? "text-green-600" : "text-red-600"}
+                />
+
+                <MetricCard 
+                    label="Market Cap" 
+                    value={stock.market_cap ? `₹${(stock.market_cap/10000000).toFixed(2)} Cr` : 'N/A'} 
+                />
+
+                <MetricCard 
+                    label="P/E Ratio" 
+                    value={stock.pe_ratio?.toFixed(2) || 'N/A'} 
+                />
+            </div>
+
+            {/* Chart Area */}
+            <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6">
+                <h2 className="text-xl font-semibold mb-4">Price Chart</h2>
+
+                <div className="h-64 flex justify-center items-center text-gray-500">
+                    {prices.length > 0 ? "Chart Coming Soon" : "No price data available"}
+                </div>
+            </div>
+
+            {/* Trading */}
+            <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-6">
+                <h2 className="text-xl font-semibold mb-4">Quick Trade</h2>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <button className="py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition">
+                        Buy
+                    </button>
+                    <button className="py-3 bg-gray-100 rounded-lg font-semibold hover:bg-gray-200 transition">
+                        Sell
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    );
+}
+
+// 💡 Small reusable UI component for cleaner JSX
+function MetricCard({ label, value, icon, accent = "text-gray-900" } : any) {
+    return (
+        <div className="bg-white border border-gray-200 shadow-sm rounded-xl p-5">
+            <p className="text-sm text-gray-500 mb-1">{label}</p>
+            <div className={`flex items-center gap-2 text-2xl font-bold ${accent}`}>
+                {icon} {value}
+            </div>
+        </div>
+    );
+}

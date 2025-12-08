@@ -1,0 +1,32 @@
+name: Docker Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build Frontend Docker image
+      run: docker build -f docker/Dockerfile.frontend -t papertrade-frontend:latest frontend
+  
+  build-django:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build Django Docker image
+      run: docker build -f docker/Dockerfile.django -t papertrade-django:latest backend/python
+  
+  build-go:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build Go Docker image
+      run: docker build -f docker/Dockerfile.go -t papertrade-go:latest backend/go
