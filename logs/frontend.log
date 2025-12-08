@@ -1,0 +1,314 @@
+=========================================
+Starting Next.js Frontend
+=========================================
+
+Starting Next.js development server on http://localhost:3000
+
+Press Ctrl+C to stop
+
+
+> papertrade-frontend@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.1.4
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.106:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1369ms
+ ○ Compiling / ...
+ ✓ Compiled / in 911ms (856 modules)
+ GET / 200 in 1151ms
+ ✓ Compiled in 59ms (369 modules)
+ ✓ Compiled /favicon.ico in 329ms (880 modules)
+ GET /favicon.ico 200 in 306ms
+ GET /dashboard 200 in 407ms
+ GET /dashboard 200 in 5ms
+ ✓ Compiled /stocks in 484ms (893 modules)
+ GET /stocks 200 in 536ms
+ ✓ Compiled /stocks/[id] in 223ms (904 modules)
+ GET /stocks/3 200 in 599ms
+ ✓ Compiled /stock-history in 238ms (915 modules)
+ GET /stock-history 200 in 279ms
+ GET / 200 in 166ms
+ GET /dashboard 200 in 14ms
+ GET /dashboard 200 in 14ms
+ GET / 200 in 45ms
+ GET /dashboard 200 in 8ms
+ GET /dashboard 200 in 6ms
+ GET / 200 in 41ms
+ GET /dashboard 200 in 10ms
+ GET /dashboard 200 in 5ms
+ ○ Compiling /profile ...
+ ✓ Compiled /profile in 551ms (915 modules)
+ GET /profile 200 in 630ms
+ GET /stock-history 200 in 26ms
+ GET /stocks 200 in 22ms
+ GET /stock-history 200 in 16ms
+ GET /stock-history 200 in 111ms
+ ✓ Compiled /favicon.ico in 207ms (532 modules)
+ GET /favicon.ico 200 in 259ms
+ GET /stocks 200 in 53ms
+ GET /stock-history 200 in 11ms
+ ✓ Compiled / in 199ms (524 modules)
+ GET / 200 in 316ms
+ GET /dashboard 200 in 13ms
+ GET /dashboard 200 in 7ms
+ GET / 200 in 18ms
+ GET /dashboard 200 in 5ms
+ GET /dashboard 200 in 4ms
+ GET /stock-history 200 in 12ms
+ GET / 200 in 44ms
+ GET /dashboard 200 in 6ms
+ GET /dashboard 200 in 7ms
+ GET /stock-history 200 in 25ms
+ GET /stock-history 200 in 32ms
+ ✓ Compiled /favicon.ico in 176ms (532 modules)
+ GET /favicon.ico 200 in 224ms
+ GET /dashboard 200 in 53ms
+ GET /stocks 200 in 15ms
+ GET /stock-history 200 in 13ms
+ ✓ Compiled /options in 342ms (930 modules)
+ GET /options 200 in 367ms
+ ✓ Compiled /backtest in 274ms (945 modules)
+ GET /backtest 200 in 300ms
+ ✓ Compiled /strategy in 291ms (960 modules)
+ GET /strategy 200 in 342ms
+ ✓ Compiled /wallet in 215ms (964 modules)
+ GET /wallet 200 in 239ms
+ ✓ Compiled /notifications in 164ms (977 modules)
+ GET /notifications 200 in 187ms
+ GET /stock-history 200 in 26ms
+ GET /dashboard 200 in 21ms
+ ✓ Compiled /_not-found in 317ms (936 modules)
+ GET /price-history 404 in 429ms
+ ✓ Compiled in 1301ms (941 modules)
+ GET /stock-history 200 in 60ms
+ ✓ Compiled /_not-found in 175ms (931 modules)
+ GET /price-history 404 in 200ms
+ GET /price-history 404 in 62ms
+ ✓ Compiled in 298ms (429 modules)
+ GET /price-history 404 in 55ms
+ GET /stock-history 200 in 72ms
+ GET /price-history 404 in 29ms
+ ✓ Compiled in 596ms (941 modules)
+ GET /stock-history 200 in 50ms
+ ✓ Compiled /_not-found in 183ms (945 modules)
+ GET /price-history 404 in 209ms
+ GET /price-history 404 in 12ms
+ GET /stock-history 200 in 29ms
+ GET /price-history 404 in 68ms
+ GET /stock-history 200 in 51ms
+ ✓ Compiled /favicon.ico in 271ms (531 modules)
+ GET /favicon.ico 200 in 324ms
+ ✓ Compiled in 715ms (941 modules)
+ GET /stock-history 200 in 78ms
+ ✓ Compiled /_not-found in 192ms (931 modules)
+ GET /price-history 404 in 227ms
+ GET /price-history 404 in 60ms
+ GET /stock-history 200 in 62ms
+ ✓ Compiled /favicon.ico in 195ms (531 modules)
+ GET /favicon.ico 200 in 296ms
+ GET /stock-history 200 in 147ms
+ GET /favicon.ico 200 in 5ms
+ ✓ Compiled in 641ms (956 modules)
+ GET /stock-history 200 in 82ms
+ ✓ Compiled /_not-found in 186ms (946 modules)
+ GET /price-history 404 in 221ms
+ GET /price-history 404 in 47ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 36ms
+ ✓ Compiled in 844ms (945 modules)
+ GET /price-history 404 in 75ms
+ GET /stock-history 200 in 77ms
+ GET /price-history 404 in 47ms
+ GET /stock-history 200 in 29ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 19ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 574ms (531 modules)
+ GET /favicon.ico 200 in 702ms
+ ✓ Compiled in 660ms (960 modules)
+ GET /price-history 404 in 98ms
+ GET /stock-history 200 in 116ms
+ GET /price-history 404 in 245ms
+ ✓ Compiled in 942ms (945 modules)
+ GET /price-history 404 in 116ms
+ GET /stock-history 200 in 121ms
+ GET /price-history 404 in 46ms
+ ✓ Compiled in 835ms (941 modules)
+ GET /stock-history 200 in 54ms
+ ✓ Compiled /_not-found in 166ms (931 modules)
+ GET /price-history 404 in 200ms
+ GET /price-history 404 in 71ms
+ ✓ Compiled in 317ms (945 modules)
+ GET /price-history 404 in 63ms
+ GET /stock-history 200 in 70ms
+ GET /price-history 404 in 67ms
+ ✓ Compiled /options in 451ms (520 modules)
+ GET /options 200 in 486ms
+ GET /stock-history 200 in 17ms
+ ✓ Compiled in 659ms (946 modules)
+ ○ Compiling /_not-found ...
+ GET /stock-history 200 in 567ms
+ ✓ Compiled /_not-found in 691ms (936 modules)
+ GET /price-history 404 in 736ms
+ GET /price-history 404 in 66ms
+ ✓ Compiled in 708ms (950 modules)
+ GET /price-history 404 in 141ms
+ GET /stock-history 200 in 157ms
+ GET /price-history 404 in 68ms
+ ✓ Compiled in 407ms (950 modules)
+ GET /price-history 404 in 38ms
+ GET /stock-history 200 in 42ms
+ GET /price-history 404 in 65ms
+ GET /price-history 404 in 40ms
+ ✓ Compiled /favicon.ico in 352ms (531 modules)
+ GET /favicon.ico 200 in 412ms
+ ⨯ ./src/components/layout/AppLayout.tsx
+Error:   [31mx[0m Expression expected
+    ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend/src/components/layout/AppLayout.tsx[0m:59:1]
+ [2m56[0m |     const showSidebar = !["/", "/login", "/signup"].includes(pathname);
+ [2m57[0m | 
+ [2m58[0m |     return (
+ [2m59[0m |     return (
+    : [35;1m    ^^^^^^[0m
+ [2m60[0m |         <div className="flex flex-col md:flex-row min-h-screen w-full text-gray-900">
+ [2m61[0m | 
+ [2m62[0m |             {/* Sidebar (only for inner pages) */}
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/layout/AppLayout.tsx
+./src/app/layout.tsx
+ ⨯ ./src/components/layout/AppLayout.tsx
+Error:   [31mx[0m Expression expected
+    ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend/src/components/layout/AppLayout.tsx[0m:59:1]
+ [2m56[0m |     const showSidebar = !["/", "/login", "/signup"].includes(pathname);
+ [2m57[0m | 
+ [2m58[0m |     return (
+ [2m59[0m |     return (
+    : [35;1m    ^^^^^^[0m
+ [2m60[0m |         <div className="flex flex-col md:flex-row min-h-screen w-full text-gray-900">
+ [2m61[0m | 
+ [2m62[0m |             {/* Sidebar (only for inner pages) */}
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/layout/AppLayout.tsx
+./src/app/layout.tsx
+ ✓ Compiled in 851ms (960 modules)
+ GET /stock-history 200 in 73ms
+ GET /stock-history 200 in 126ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 19ms
+ GET /favicon.ico 200 in 64ms
+ GET /stock-history 200 in 41ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 27ms
+ GET /favicon.ico 200 in 5ms
+ GET /stock-history 200 in 43ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 31ms
+ GET /favicon.ico 200 in 5ms
+ GET /stock-history 200 in 53ms
+ GET /favicon.ico 200 in 7ms
+ GET /stock-history 200 in 48ms
+ GET /favicon.ico 200 in 7ms
+ GET /stock-history 200 in 82ms
+ GET /favicon.ico 200 in 5ms
+ GET /stock-history 200 in 26ms
+ GET /favicon.ico 200 in 3ms
+ GET /stock-history 200 in 57ms
+ GET /favicon.ico 200 in 6ms
+ GET /stock-history 200 in 14ms
+ GET /favicon.ico 200 in 3ms
+ GET /stock-history 200 in 47ms
+ GET /favicon.ico 200 in 4ms
+ GET /stock-history 200 in 78ms
+ GET /favicon.ico 200 in 5ms
+ GET /stock-history 200 in 36ms
+ GET /favicon.ico 200 in 4ms
+ GET /stock-history 200 in 44ms
+ GET /favicon.ico 200 in 5ms
+ GET /stock-history 200 in 39ms
+ GET /favicon.ico 200 in 4ms
+ ✓ Compiled / in 474ms (522 modules)
+ GET / 200 in 732ms
+ GET /dashboard 200 in 12ms
+ GET /dashboard 200 in 6ms
+ ✓ Compiled /stocks in 268ms (530 modules)
+ GET /stocks 200 in 311ms
+ GET /stocks 200 in 75ms
+ ✓ Compiled /favicon.ico in 172ms (537 modules)
+ GET /favicon.ico 200 in 373ms
+ GET /stock-history 200 in 50ms
+ GET /stock-history 200 in 97ms
+ GET /favicon.ico 200 in 9ms
+ GET /stock-history 200 in 36ms
+ GET /favicon.ico 200 in 4ms
+ GET /stocks 200 in 21ms
+ ✓ Compiled /options in 359ms (520 modules)
+ GET /options 200 in 454ms
+ ✓ Compiled /backtest in 160ms (529 modules)
+ GET /backtest 200 in 213ms
+ ✓ Compiled /strategy in 125ms (537 modules)
+ GET /strategy 200 in 191ms
+ GET /strategy 200 in 111ms
+ ✓ Compiled /favicon.ico in 296ms (531 modules)
+ GET /favicon.ico 200 in 400ms
+ GET /strategy 200 in 122ms
+ GET /favicon.ico 200 in 5ms
+ ✓ Compiled / in 432ms (523 modules)
+ GET / 200 in 589ms
+ GET /dashboard 200 in 13ms
+ GET /dashboard 200 in 8ms
+ ✓ Compiled /stock-history in 190ms (528 modules)
+ GET /stock-history 200 in 255ms
+ GET /stock-history 200 in 101ms
+ ✓ Compiled /favicon.ico in 244ms (528 modules)
+ GET /favicon.ico 200 in 338ms
+ GET /stock-history 200 in 132ms
+ GET /favicon.ico 200 in 9ms
+ GET /stock-history 200 in 59ms
+ GET /favicon.ico 200 in 4ms
+ GET /stock-history 200 in 69ms
+ GET /favicon.ico 200 in 5ms
+ GET /stock-history 200 in 48ms
+ GET /favicon.ico 200 in 8ms
+ GET /stock-history 200 in 83ms
+ GET /favicon.ico 200 in 7ms
+ GET /stock-history 200 in 53ms
+ GET /favicon.ico 200 in 8ms
+ ✓ Compiled / in 290ms (520 modules)
+ GET / 200 in 524ms
+ GET /dashboard 200 in 12ms
+ GET /dashboard 200 in 6ms
+ GET /stock-history 200 in 75ms
+ ✓ Compiled /favicon.ico in 447ms (528 modules)
+ GET /favicon.ico 200 in 806ms
+ GET /stock-history 200 in 305ms
+ GET /favicon.ico 200 in 11ms
+ GET /stock-history 200 in 40ms
+ GET /favicon.ico 200 in 17ms
+ GET /stock-history 200 in 88ms
+ GET /favicon.ico 200 in 7ms
+ GET /stock-history 200 in 132ms
+ GET /favicon.ico 200 in 12ms
+ GET /stock-history 200 in 68ms
+ GET /favicon.ico 200 in 7ms
+ GET /stock-history 200 in 62ms
+ GET /favicon.ico 200 in 11ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1154ms (958 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1305ms
+ GET /stock-history 200 in 162ms
+ GET /stock-history 200 in 61ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 16ms
+ GET /favicon.ico 200 in 20ms
+ GET /stock-history 200 in 33ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 21ms
+ GET /favicon.ico 200 in 15ms
+[?25h

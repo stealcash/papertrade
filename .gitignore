@@ -1,148 +1,148 @@
-# macOS
-.DS_Store
+# # macOS
+# .DS_Store
 
-# Node
-node_modules/
-.next/
-out/
-dist/
-build/
+# # Node
+# node_modules/
+# .next/
+# out/
+# dist/
+# build/
 
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-env/
-venv/
-*.venv
-.Python
+# # Python
+# __pycache__/
+# *.py[cod]
+# *.pyo
+# *.pyd
+# env/
+# venv/
+# *.venv
+# .Python
 
-# Django
-*.sqlite3
-*.log
-media/
-staticfiles/
-celerybeat-schedule
-local_settings.py
+# # Django
+# *.sqlite3
+# *.log
+# media/
+# staticfiles/
+# celerybeat-schedule
+# local_settings.py
 
-# Go
-bin/
-*.exe
+# # Go
+# bin/
+# *.exe
 
-# IDEs
-.vscode/
-.idea/
-*.sublime-workspace
+# # IDEs
+# .vscode/
+# .idea/
+# *.sublime-workspace
 
-# Git
-.git
-.gitmodules
+# # Git
+# .git
+# .gitmodules
 
-# Logs and coverage
-logs/
-coverage/
-coverage.*
-*.cover
+# # Logs and coverage
+# logs/
+# coverage/
+# coverage.*
+# *.cover
 
-# Credentials and env
-cred.txt
-*.env
-.env.local
-.env.*.local
+# # Credentials and env
+# cred.txt
+# *.env
+# .env.local
+# .env.*.local
 
-# Docker
-docker-compose.override.yml
-docker/.env
+# # Docker
+# docker-compose.override.yml
+# docker/.env
 
-# Misc
-Screenshot*
-*.pem
-*.key
-# Environment files
-.env
-.env.local
-.env.*.local
-*.env
+# # Misc
+# Screenshot*
+# *.pem
+# *.key
+# # Environment files
+# .env
+# .env.local
+# .env.*.local
+# *.env
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-.venv/
-venv/
-ENV/
-env/
+# # Python
+# __pycache__/
+# *.py[cod]
+# *$py.class
+# *.so
+# .Python
+# build/
+# develop-eggs/
+# dist/
+# downloads/
+# eggs/
+# .eggs/
+# lib/
+# lib64/
+# parts/
+# sdist/
+# var/
+# wheels/
+# *.egg-info/
+# .installed.cfg
+# *.egg
+# MANIFEST
+# *.log
+# local_settings.py
+# db.sqlite3
+# db.sqlite3-journal
+# .pytest_cache/
+# .coverage
+# htmlcov/
+# .tox/
+# .venv/
+# venv/
+# ENV/
+# env/
 
-# Node
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-.next/
-out/
-.cache/
-.vercel
-.turbo
+# # Node
+# node_modules/
+# npm-debug.log*
+# yarn-debug.log*
+# yarn-error.log*
+# .pnpm-debug.log*
+# .next/
+# out/
+# .cache/
+# .vercel
+# .turbo
 
-# Go
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-*.test
-*.out
-go.work
-vendor/
+# # Go
+# *.exe
+# *.exe~
+# *.dll
+# *.so
+# *.dylib
+# *.test
+# *.out
+# go.work
+# vendor/
 
-# IDEs
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
+# # IDEs
+# .vscode/
+# .idea/
+# *.swp
+# *.swo
+# *~
+# .DS_Store
 
-# Docker
-*.log
+# # Docker
+# *.log
 
-# Temporary files
-tmp/
-temp/
-*.tmp
+# # Temporary files
+# tmp/
+# temp/
+# *.tmp
 
-# Backtest exports
-backend/python/exports/
-backend/python/media/temp/
+# # Backtest exports
+# backend/python/exports/
+# backend/python/media/temp/
 
-# Logs
-logs/
-*.log
+# # Logs
+# logs/
+# *.log

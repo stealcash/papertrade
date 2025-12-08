@@ -1,0 +1,52 @@
+
+> papertrade-frontend@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.1.4
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.106:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+
+   We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
+   The following mandatory changes were made to your tsconfig.json:
+
+   	- jsx was set to preserve (next.js implements its own optimized jsx transform)
+
+ ✓ Ready in 1285ms
+ ○ Compiling / ...
+ ⨯ ./src/app/globals.css.webpack[javascript/auto]!=!./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/app/globals.css
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/build/webpack/config/blocks/css/plugins.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/build/webpack/config/blocks/css/index.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/build/webpack/config/index.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/build/webpack-config.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/server/lib/start-server.js
+    at Array.map (<anonymous>)
+Import trace for requested module:
+./src/app/globals.css.webpack[javascript/auto]!=!./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/app/globals.css
+./src/app/globals.css
+./src/app/layout.tsx
+ ⨯ ./src/app/globals.css.webpack[javascript/auto]!=!./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/app/globals.css
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/build/webpack/config/blocks/css/plugins.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/build/webpack/config/blocks/css/index.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/build/webpack/config/index.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/build/webpack-config.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend/node_modules/next/dist/server/lib/start-server.js
+    at Array.map (<anonymous>)
+Import trace for requested module:
+./src/app/globals.css.webpack[javascript/auto]!=!./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/app/globals.css
+./src/app/globals.css
+./src/app/layout.tsx
+ HEAD / 500 in 2731ms
+[?25h

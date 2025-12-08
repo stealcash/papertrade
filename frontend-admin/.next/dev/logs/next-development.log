@@ -1,0 +1,112 @@
+[00:07:06.818] Server  ERROR    ⨯ Error: Cannot find module 'next/dist/client/components/builtin/global-not-found'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.007] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.223] Server  ERROR    ⨯ Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.250] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.324] Server  ERROR    ⨯ Error: Cannot find module 'next/dist/client/components/builtin/global-not-found'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.352] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.379] Server  ERROR    ⨯ Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.432] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.489] Server  ERROR    ⨯ Error: Cannot find module 'next/dist/client/components/builtin/global-not-found'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.719] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.869] Server  ERROR    ⨯ Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:07.922] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:08.053] Server  ERROR    ⨯ Error: Cannot find module 'next/dist/client/components/builtin/global-not-found'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:08.152] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:08.257] Server  ERROR    ⨯ Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
+[00:07:08.374] Server  ERROR   Error: Cannot find module 'next/dist/pages/_error'
+Require stack:
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/on-demand-entry-handler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/dev/hot-reloader-turbopack.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/router-server.js
+- /Users/chat360team/Documents/papertrade/frontend-admin/node_modules/next/dist/server/lib/start-server.js
