@@ -30,8 +30,8 @@ export default function SectorsManagementPage() {
             router.push('/login');
             return;
         }
-        // Redirect if user cannot manage stocks/sectors
-        if (!user?.can_manage_stocks) {
+        // Redirect if user cannot manage stocks/sectors (and is not superadmin)
+        if (!user?.can_manage_stocks && user?.role !== 'superadmin') {
             router.push('/dashboard');
             return;
         }
@@ -86,7 +86,7 @@ export default function SectorsManagementPage() {
         }
     };
 
-    if (!isAuthenticated || !user?.can_manage_stocks || !mounted) {
+    if (!isAuthenticated || (!user?.can_manage_stocks && user?.role !== 'superadmin') || !mounted) {
         return <div className="min-h-screen flex items-center justify-center"><div>Loading...</div></div>;
     }
 

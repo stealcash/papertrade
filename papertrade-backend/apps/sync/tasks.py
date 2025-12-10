@@ -88,6 +88,12 @@ def sync_stocks_task(is_auto=False, user_id=None, from_date=None, to_date=None, 
         internal_api_secret_config = SystemConfig.objects.filter(key='internal_api_secret').first()
         internal_api_secret = internal_api_secret_config.value if internal_api_secret_config else settings.INTERNAL_API_SECRET
 
+        # Initialize variables
+        end_date = timezone.now().date()
+        total_items = stocks.count()
+        success_count = 0
+        failed_count = 0
+        
         # Sync each stock
         for stock in stocks:
             try:

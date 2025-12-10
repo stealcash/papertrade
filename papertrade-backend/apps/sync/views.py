@@ -64,10 +64,18 @@ def trigger_normal_sync(request):
     sync_type = request.data.get('sync_type', 'stock')
     
     # Trigger appropriate sync task
+    run_sync = request.data.get('run_sync', False)
+
     if sync_type == 'stock':
-        task = sync_stocks_task.delay(is_auto=False, user_id=request.user.id)
+        if run_sync:
+             task = sync_stocks_task.apply(kwargs={'is_auto': False, 'user_id': request.user.id})
+        else:
+             task = sync_stocks_task.delay(is_auto=False, user_id=request.user.id)
     elif sync_type == 'sector':
-        task = sync_sectors_task.delay(is_auto=False, user_id=request.user.id)
+        if run_sync:
+             task = sync_sectors_task.apply(kwargs={'is_auto': False, 'user_id': request.user.id})
+        else:
+             task = sync_sectors_task.delay(is_auto=False, user_id=request.user.id)
     elif sync_type == 'option':
         # Option sync not implemented yet
         return get_error_response(

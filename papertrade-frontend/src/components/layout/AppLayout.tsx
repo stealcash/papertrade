@@ -56,13 +56,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     const showSidebar = !["/", "/login", "/signup"].includes(pathname);
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen w-full text-gray-900">
+        <div className="flex flex-col md:flex-row min-h-screen w-full bg-gray-50 text-gray-900 gap-8">
 
             {/* Sidebar (only for inner pages) */}
             {showSidebar && <Sidebar />}
 
             {/* Main content */}
-            <main className="flex-1 w-full p-[10px]">
+            <main className="flex-1 w-full p-8">
                 <div className="max-w-7xl mx-auto">
                     {children}
                 </div>

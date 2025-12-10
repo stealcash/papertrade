@@ -10,6 +10,7 @@ import {
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
   { name: "Stocks", href: "/stocks", icon: TrendingUp },
+  { name: "Market Analysis", href: "/market-analysis", icon: BarChart3 },
   { name: "Stock History", href: "/stock-history", icon: BarChart3 }, // Reusing icon for now or change
   { name: "Options", href: "/options", icon: Zap },
   { name: "Backtest", href: "/backtest", icon: BarChart3 },
