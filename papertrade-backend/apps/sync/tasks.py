@@ -103,14 +103,13 @@ def sync_stocks_task(is_auto=False, user_id=None, from_date=None, to_date=None, 
                     stock_start_date = datetime.strptime(from_date, '%Y-%m-%d').date()
                     end_date = datetime.strptime(to_date, '%Y-%m-%d').date()
                 else:
-                    # Normal sync - ONLY process stocks with NULL last_synced_at (new stocks)
-                    if stock.last_synced_at is not None:
-                        print(f"DTO-DEBUG: Skipping {stock.symbol} - already synced")
-                        continue
-                    
-                    # First time sync for this stock
+                    # Normal sync - incremental
                     end_date = timezone.now().date()
-                    stock_start_date = global_default_start
+                    
+                    if stock.last_synced_at:
+                        stock_start_date = stock.last_synced_at.date()
+                    else:
+                        stock_start_date = global_default_start
                 
                 # Clamp end_date to today to prevent future data from Go service
                 today = timezone.now().date()
@@ -125,7 +124,7 @@ def sync_stocks_task(is_auto=False, user_id=None, from_date=None, to_date=None, 
                         req_start = time.time()
                         url = f"{go_service_base_url}/stock/data"
                         params = {
-                            'stock_enum': stock.enum,
+                            'symbol': stock.symbol,
                             'date': current_date.isoformat(),
                             'timewise': 'true'
                         }
@@ -326,7 +325,7 @@ def sync_sectors_task(is_auto=False, user_id=None, from_date=None, to_date=None)
                         req_start = time.time()
                         url = f"{go_service_base_url}/sector/data"
                         params = {
-                            'sector_enum': sector.enum,
+                            'symbol': sector.symbol,
                             'date': current_date.isoformat(),
                             'timewise': 'false'
                         }
@@ -418,12 +417,12 @@ def check_market_status(date):
     """Check if market was open on given date."""
     # Check if RELIANCE and TCS both have data
     reliance_data = StockPriceDaily.objects.filter(
-        stock__enum='RELIANCE',
+        stock__symbol='RELIANCE',
         date=date
     ).exists()
     
     tcs_data = StockPriceDaily.objects.filter(
-        stock__enum='TCS',
+        stock__symbol='TCS',
         date=date
     ).exists()
     

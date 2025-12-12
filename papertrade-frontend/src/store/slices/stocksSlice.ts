@@ -3,8 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface Stock {
     id: number;
     symbol: string;
-    enum: string;
-    full_symbol: string;
+    name: string;
 }
 
 interface StocksState {

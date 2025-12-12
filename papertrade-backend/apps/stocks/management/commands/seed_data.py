@@ -11,17 +11,14 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Seed sample stocks
         stocks_data = [
-            {'enum': 'RELIANCE', 'symbol': 'RELIANCE', 'exchange_suffix': 'NSE', 
-             'full_symbol': 'RELIANCE.NSE', 'status': 'active'},
-            {'enum': 'TCS', 'symbol': 'TCS', 'exchange_suffix': 'NSE', 
-             'full_symbol': 'TCS.NSE', 'status': 'active'},
-            {'enum': 'INFY', 'symbol': 'INFY', 'exchange_suffix': 'NSE', 
-             'full_symbol': 'INFY.NSE', 'status': 'active'},
+            {'symbol': 'RELIANCE', 'name': 'Reliance Industries', 'exchange_suffix': 'NSE', 'status': 'active'},
+            {'symbol': 'TCS', 'name': 'Tata Consultancy Services', 'exchange_suffix': 'NSE', 'status': 'active'},
+            {'symbol': 'INFY', 'name': 'Infosys', 'exchange_suffix': 'NSE', 'status': 'active'},
         ]
         
         for stock_data in stocks_data:
             stock, created = Stock.objects.get_or_create(
-                enum=stock_data['enum'],
+                symbol=stock_data['symbol'],
                 defaults=stock_data
             )
             if created:
@@ -31,17 +28,17 @@ class Command(BaseCommand):
         
         # Seed sample sectors
         sectors_data = [
-            {'enum': 'NIFTY50', 'name': 'NIFTY 50', 
+            {'symbol': 'NIFTY50', 'name': 'NIFTY 50', 
              'description': 'NSE NIFTY 50 Index', 'status': 'active'},
-            {'enum': 'NIFTYIT', 'name': 'NIFTY IT', 
+            {'symbol': 'NIFTYIT', 'name': 'NIFTY IT', 
              'description': 'NSE NIFTY IT Index', 'status': 'active'},
-            {'enum': 'BANKNIFTY', 'name': 'BANK NIFTY', 
+            {'symbol': 'BANKNIFTY', 'name': 'BANK NIFTY', 
              'description': 'NSE BANK NIFTY Index', 'status': 'active'},
         ]
         
         for sector_data in sectors_data:
             sector, created = Sector.objects.get_or_create(
-                enum=sector_data['enum'],
+                symbol=sector_data['symbol'],
                 defaults=sector_data
             )
             if created:

@@ -33,10 +33,9 @@ apiClient.interceptors.response.use(
         if (error.response?.status === 401) {
             // Token expired or invalid
             if (typeof window !== 'undefined') {
-                // localStorage.removeItem('access_token'); // Disabled to keep session alive despite 401
-                // localStorage.removeItem('user');
-                // window.location.href = '/login'; // Disabled to prevent aggressive bounces
-                console.warn("API 401: Token invalid, but preventing auto-redirect loop.");
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('user');
+                window.location.href = '/login';
             }
         }
         return Promise.reject(error);

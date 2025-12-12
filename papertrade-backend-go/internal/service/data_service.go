@@ -22,13 +22,13 @@ func NewDataService() *DataService {
 }
 
 // GetStockData generates dummy stock data
-func (s *DataService) GetStockData(stockEnum, date string, timewise bool) (*domain.StockData, error) {
+func (s *DataService) GetStockData(symbol, date string, timewise bool) (*domain.StockData, error) {
 	// Base price depends on stock
-	basePrice := s.getBasePrice(stockEnum)
+	basePrice := s.getBasePrice(symbol)
 
 	// Generate daily OHLCV
 	data := &domain.StockData{
-		StockEnum:  stockEnum,
+		Symbol:     symbol,
 		Date:       date,
 		OpenPrice:  basePrice + s.randomFloat(-10, 10),
 		HighPrice:  basePrice + s.randomFloat(5, 20),
@@ -52,13 +52,13 @@ func (s *DataService) GetStockData(stockEnum, date string, timewise bool) (*doma
 }
 
 // GetSectorData generates dummy sector data
-func (s *DataService) GetSectorData(sectorEnum, date string, timewise bool) (*domain.SectorData, error) {
+func (s *DataService) GetSectorData(symbol, date string, timewise bool) (*domain.SectorData, error) {
 	// Base value depends on sector
-	baseValue := s.getSectorBaseValue(sectorEnum)
+	baseValue := s.getSectorBaseValue(symbol)
 
 	// Generate daily OHLCV
 	data := &domain.SectorData{
-		SectorEnum: sectorEnum,
+		Symbol:     symbol,
 		Date:       date,
 		OpenPrice:  baseValue + s.randomFloat(-100, 100),
 		HighPrice:  baseValue + s.randomFloat(50, 200),
@@ -81,27 +81,27 @@ func (s *DataService) GetSectorData(sectorEnum, date string, timewise bool) (*do
 	return data, nil
 }
 
-func (s *DataService) getBasePrice(stockEnum string) float64 {
+func (s *DataService) getBasePrice(symbol string) float64 {
 	prices := map[string]float64{
 		"RELIANCE": 2500.0,
 		"TCS":      3500.0,
 		"INFY":     1500.0,
 	}
 
-	if price, ok := prices[stockEnum]; ok {
+	if price, ok := prices[symbol]; ok {
 		return price
 	}
 	return 1000.0 // Default
 }
 
-func (s *DataService) getSectorBaseValue(sectorEnum string) float64 {
+func (s *DataService) getSectorBaseValue(symbol string) float64 {
 	values := map[string]float64{
 		"NIFTY50":   19500.0,
 		"NIFTYIT":   30000.0,
 		"BANKNIFTY": 44000.0,
 	}
 
-	if value, ok := values[sectorEnum]; ok {
+	if value, ok := values[symbol]; ok {
 		return value
 	}
 	return 10000.0 // Default

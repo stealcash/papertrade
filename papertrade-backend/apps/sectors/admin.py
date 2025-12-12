@@ -4,9 +4,9 @@ from .models import Sector, SectorPriceDaily
 
 @admin.register(Sector)
 class SectorAdmin(admin.ModelAdmin):
-    list_display = ['name', 'enum', 'status', 'created_at']
+    list_display = ['symbol', 'name', 'status', 'last_synced_at']
     list_filter = ['status']
-    search_fields = ['name', 'enum']
+    search_fields = ['symbol', 'name']
 
 
 @admin.register(SectorPriceDaily)

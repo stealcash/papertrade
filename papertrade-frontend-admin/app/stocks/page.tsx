@@ -16,11 +16,21 @@ export default function StocksManagementPage() {
     const [editingStock, setEditingStock] = useState<any>(null);
     const [sectors, setSectors] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
+
+    // Pagination & Sorting State
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalStocks, setTotalStocks] = useState(0);
+    const [sortBy, setSortBy] = useState('symbol');
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+    // Bulk Selection State
+    const [selectedStocks, setSelectedStocks] = useState<Set<number>>(new Set());
+
     const [formData, setFormData] = useState({
-        enum: '',
         symbol: '',
+        name: '',
         exchange_suffix: 'NSE',
-        full_symbol: '',
         status: 'active',
         sectors: [] as string[],
         categories: [] as string[]
@@ -41,10 +51,10 @@ export default function StocksManagementPage() {
             router.push('/dashboard');
             return;
         }
-        fetchStocks();
+        fetchStocks(currentPage, sortBy, sortOrder);
         fetchSectors();
         fetchCategories();
-    }, [isAuthenticated, user, mounted, router]);
+    }, [isAuthenticated, user, mounted, router, currentPage, sortBy, sortOrder]);
 
     const fetchSectors = async () => {
         try {
@@ -64,12 +74,73 @@ export default function StocksManagementPage() {
         }
     };
 
-    const fetchStocks = async () => {
+    const fetchStocks = async (page: number, sort: string, order: string) => {
+        setLoading(true); // Ensure loading state is set
         try {
-            const response = await apiClient.get('/stocks/');
-            setStocks(response.data.data || []);
+            const response = await apiClient.get(`/stocks/?page=${page}&sort_by=${sort}&order=${order}`);
+            const data = response.data.data;
+            if (data.stocks && data.pagination) {
+                setStocks(data.stocks);
+                setTotalPages(data.pagination.total_pages);
+                setTotalStocks(data.pagination.total_count);
+            } else if (Array.isArray(data)) {
+                setStocks(data);
+            } else {
+                setStocks([]);
+            }
         } catch (error) {
             console.error('Failed to fetch stocks:', error);
+            setStocks([]); // Clear stocks on error
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSort = (field: string) => {
+        if (sortBy === field) {
+            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+        } else {
+            setSortBy(field);
+            setSortOrder('asc');
+        }
+        setCurrentPage(1);
+    };
+
+
+
+    const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.checked) {
+            setSelectedStocks(new Set(stocks.map(s => s.id)));
+        } else {
+            setSelectedStocks(new Set());
+        }
+    };
+
+    const handleSelectRow = (id: number) => {
+        const newSelected = new Set(selectedStocks);
+        if (newSelected.has(id)) {
+            newSelected.delete(id);
+        } else {
+            newSelected.add(id);
+        }
+        setSelectedStocks(newSelected);
+    };
+
+    const handleBulkDelete = async () => {
+        if (selectedStocks.size === 0) return;
+
+        if (!confirm(`Are you sure you want to delete ${selectedStocks.size} selected stocks?`)) return;
+
+        setLoading(true);
+        try {
+            await apiClient.post('/stocks/bulk_delete/', {
+                ids: Array.from(selectedStocks)
+            });
+            setSelectedStocks(new Set());
+            fetchStocks(currentPage, sortBy, sortOrder);
+        } catch (error: any) {
+            console.error('Bulk delete failed:', error);
+            alert(error.response?.data?.message || 'Failed to delete stocks');
         } finally {
             setLoading(false);
         }
@@ -85,8 +156,8 @@ export default function StocksManagementPage() {
             }
             setShowModal(false);
             setEditingStock(null);
-            setFormData({ enum: '', symbol: '', exchange_suffix: 'NSE', full_symbol: '', status: 'active', sectors: [], categories: [] });
-            fetchStocks();
+            setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [] });
+            fetchStocks(currentPage, sortBy, sortOrder);
         } catch (error: any) {
             alert(error.response?.data?.message || 'Operation failed');
         }
@@ -95,10 +166,9 @@ export default function StocksManagementPage() {
     const handleEdit = (stock: any) => {
         setEditingStock(stock);
         setFormData({
-            enum: stock.enum,
             symbol: stock.symbol,
+            name: stock.name || '',
             exchange_suffix: stock.exchange_suffix,
-            full_symbol: stock.full_symbol,
             status: stock.status,
             sectors: stock.sectors || [],
             categories: stock.categories || []
@@ -110,7 +180,7 @@ export default function StocksManagementPage() {
         if (!confirm('Are you sure you want to delete this stock? This action cannot be undone.')) return;
         try {
             await apiClient.delete(`/stocks/${id}/`);
-            fetchStocks();
+            fetchStocks(currentPage, sortBy, sortOrder);
         } catch (error: any) {
             alert(error.response?.data?.message || 'Failed to delete stock');
         }
@@ -124,14 +194,21 @@ export default function StocksManagementPage() {
         <div className="min-h-screen bg-gray-50">
             <header className="bg-white shadow-sm border-b">
                 <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-900">Stock Management</h1>
-                            <p className="text-sm text-gray-600">Manage platform stocks</p>
+                    <div className="flex justify-between items-center mb-4">
+                        <div className="flex items-center space-x-3">
+                            <h2 className="text-xl font-semibold text-gray-800">Stocks</h2>
+                            {selectedStocks.size > 0 && (
+                                <button
+                                    onClick={handleBulkDelete}
+                                    className="bg-red-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-red-700 transition-colors"
+                                >
+                                    Delete Selected ({selectedStocks.size})
+                                </button>
+                            )}
                         </div>
                         <div className="flex space-x-3">
                             <button
-                                onClick={() => { setEditingStock(null); setFormData({ enum: '', symbol: '', exchange_suffix: 'NSE', full_symbol: '', status: 'active', sectors: [], categories: [] }); setShowModal(true); }}
+                                onClick={() => { setEditingStock(null); setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [] }); setShowModal(true); }}
                                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all font-medium"
                             >
                                 + Create Stock
@@ -157,19 +234,43 @@ export default function StocksManagementPage() {
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Symbol</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Enum</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Exchange</th>
+                                    <th className="px-6 py-3 text-left">
+                                        <input
+                                            type="checkbox"
+                                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                            checked={stocks.length > 0 && selectedStocks.size === stocks.length}
+                                            onChange={handleSelectAll}
+                                        />
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100" onClick={() => handleSort('symbol')}>
+                                        Symbol {sortBy === 'symbol' && (sortOrder === 'asc' ? '↑' : '↓')}
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100" onClick={() => handleSort('name')}>
+                                        Name {sortBy === 'name' && (sortOrder === 'asc' ? '↑' : '↓')}
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100" onClick={() => handleSort('exchange_suffix')}>
+                                        Exchange {sortBy === 'exchange_suffix' && (sortOrder === 'asc' ? '↑' : '↓')}
+                                    </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Groups</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100" onClick={() => handleSort('status')}>
+                                        Status {sortBy === 'status' && (sortOrder === 'asc' ? '↑' : '↓')}
+                                    </th>
                                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {stocks.map((stock) => (
                                     <tr key={stock.id} className="hover:bg-gray-50">
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <input
+                                                type="checkbox"
+                                                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                checked={selectedStocks.has(stock.id)}
+                                                onChange={() => handleSelectRow(stock.id)}
+                                            />
+                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{stock.symbol}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{stock.enum}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{stock.name || '-'}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{stock.exchange_suffix}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <div className="flex flex-col gap-1">
@@ -215,6 +316,29 @@ export default function StocksManagementPage() {
                         </table>
                     )}
                 </div>
+
+                {/* Pagination Controls */}
+                <div className="mt-4 flex justify-between items-center text-sm text-gray-600">
+                    <div>
+                        Showing {stocks.length} stocks (Page {currentPage} of {totalPages})
+                    </div>
+                    <div className="flex space-x-2">
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1 || loading}
+                            className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Previous
+                        </button>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages || loading}
+                            className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
             </main>
 
             {showModal && (
@@ -228,19 +352,14 @@ export default function StocksManagementPage() {
                                     className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Enum *</label>
-                                <input type="text" required value={formData.enum} onChange={(e) => setFormData({ ...formData, enum: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" />
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                                <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" placeholder="e.g. Reliance Industries" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Exchange Suffix *</label>
-                                <input type="text" required value={formData.exchange_suffix} onChange={(e) => setFormData({ ...formData, exchange_suffix: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Full Symbol *</label>
-                                <input type="text" required value={formData.full_symbol} onChange={(e) => setFormData({ ...formData, full_symbol: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" />
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Exchange Suffix</label>
+                                <input type="text" value={formData.exchange_suffix} onChange={(e) => setFormData({ ...formData, exchange_suffix: e.target.value })}
+                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" placeholder="Default: NSE" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Status *</label>

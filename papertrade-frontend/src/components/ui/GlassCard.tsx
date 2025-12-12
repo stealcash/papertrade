@@ -10,7 +10,7 @@ interface GlassCardProps {
 export default function GlassCard({ children, className = '', hover = true, onClick }: GlassCardProps) {
     return (
         <div
-            className={`glass-card ${hover ? 'hover:scale-[1.02]' : ''} ${className}`}
+            className={`bg-white border border-gray-200 shadow-sm rounded-xl p-6 ${hover ? 'hover:shadow-md transition-shadow' : ''} ${className}`}
             onClick={onClick}
             style={{ cursor: onClick ? 'pointer' : 'default' }}
         >

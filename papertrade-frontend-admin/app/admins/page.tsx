@@ -14,6 +14,13 @@ export default function AdminsPage() {
     const [mounted, setMounted] = useState(false);
     const [actionLoading, setActionLoading] = useState<number | null>(null);
 
+    // Pagination & Sorting State
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalAdmins, setTotalAdmins] = useState(0);
+    const [sortBy, setSortBy] = useState('created_at');
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -29,18 +36,39 @@ export default function AdminsPage() {
             router.push('/dashboard');
             return;
         }
-        fetchAdmins();
-    }, [isAuthenticated, user, mounted]);
+        fetchAdmins(currentPage, sortBy, sortOrder);
+    }, [isAuthenticated, user, mounted, currentPage, sortBy, sortOrder]);
 
-    const fetchAdmins = async () => {
+    const fetchAdmins = async (page: number, sort: string, order: string) => {
+        setLoading(true); // Ensure loading state starts
         try {
-            const response = await apiClient.get('/admin-panel/admins/');
-            setAdmins(response.data.data || []);
+            const response = await apiClient.get(`/admin-panel/admins/?page=${page}&sort_by=${sort}&order=${order}`);
+            const data = response.data.data;
+            if (data.admins && data.pagination) {
+                setAdmins(data.admins);
+                setTotalPages(data.pagination.total_pages);
+                setTotalAdmins(data.pagination.total_count);
+            } else if (Array.isArray(data)) {
+                setAdmins(data);
+            } else {
+                setAdmins([]);
+            }
         } catch (error) {
             console.error('Failed to fetch admins:', error);
+            setAdmins([]);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleSort = (field: string) => {
+        if (sortBy === field) {
+            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+        } else {
+            setSortBy(field);
+            setSortOrder('asc');
+        }
+        setCurrentPage(1);
     };
 
     const handleToggleStatus = async (adminId: number, currentStatus: boolean) => {
@@ -116,10 +144,21 @@ export default function AdminsPage() {
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name / Email</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Login</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onClick={() => handleSort('name')}>
+                                        Name / Email {sortBy === 'name' && (sortOrder === 'asc' ? '↑' : '↓')}
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onClick={() => handleSort('role')}>
+                                        Role {sortBy === 'role' && (sortOrder === 'asc' ? '↑' : '↓')}
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onClick={() => handleSort('is_active')}>
+                                        Status {sortBy === 'is_active' && (sortOrder === 'asc' ? '↑' : '↓')}
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onClick={() => handleSort('last_login')}>
+                                        Last Login {sortBy === 'last_login' && (sortOrder === 'asc' ? '↑' : '↓')}
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Permissions
+                                    </th>
                                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
@@ -144,6 +183,29 @@ export default function AdminsPage() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {admin.last_login ? new Date(admin.last_login).toLocaleDateString() : 'Never'}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <div className="flex flex-col space-y-1">
+                                                {admin.role === 'superadmin' ? (
+                                                    <span className="text-xs text-gray-400">All Permissions</span>
+                                                ) : (
+                                                    <>
+                                                        {admin.can_manage_stocks && (
+                                                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                                                                Stocks & Sectors
+                                                            </span>
+                                                        )}
+                                                        {admin.can_manage_config && (
+                                                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800">
+                                                                Config
+                                                            </span>
+                                                        )}
+                                                        {!admin.can_manage_stocks && !admin.can_manage_config && (
+                                                            <span className="text-xs text-gray-400">Read Only</span>
+                                                        )}
+                                                    </>
+                                                )}
+                                            </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             {admin.id !== user?.id && (
@@ -180,6 +242,29 @@ export default function AdminsPage() {
                             </tbody>
                         </table>
                     )}
+                </div>
+
+                {/* Pagination Controls */}
+                <div className="mt-4 flex justify-between items-center text-sm text-gray-600">
+                    <div>
+                        Showing {admins.length} admins (Page {currentPage} of {totalPages})
+                    </div>
+                    <div className="flex space-x-2">
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1 || loading}
+                            className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Previous
+                        </button>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages || loading}
+                            className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Next
+                        </button>
+                    </div>
                 </div>
             </main>
         </div>

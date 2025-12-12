@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from apps.users.utils import get_success_response, get_error_response
 from .models import Stock, StockCategory, StockPriceDaily, Stock5MinByDay
@@ -102,16 +103,56 @@ class StockViewSet(viewsets.ModelViewSet):
         if category:
             queryset = queryset.filter(categories__name=category)
         
-        # Search by symbol or enum
+        # Search by symbol
         search = request.query_params.get('search')
         if search:
             queryset = queryset.filter(
                 models.Q(symbol__icontains=search) | 
-                models.Q(enum__icontains=search)
+                models.Q(name__icontains=search)
             )
         
-        serializer = self.get_serializer(queryset, many=True)
-        return get_success_response(serializer.data)
+        # Sorting
+        sort_by = request.query_params.get('sort_by', 'symbol')
+        order = request.query_params.get('order', 'asc')
+        
+        allowed_sort_fields = ['symbol', 'name', 'status', 'exchange_suffix']
+        if sort_by not in allowed_sort_fields:
+            sort_by = 'symbol'
+        
+        order_prefix = '-' if order == 'desc' else ''
+        queryset = queryset.order_by(f'{order_prefix}{sort_by}')
+
+        # Pagination parameters
+        page = request.query_params.get('page')
+        
+        # If page param is present, paginate. Else return all (backward compatibility mostly, or enforce pagination)
+        # Choosing to defaults to pagination is safer for large datasets, but let's stick to existing behavior 
+        # unless page is provided, or just always paginate if that's the requirement. 
+        # Given "implement pagination", I will default to pagination if not specified or just standard django pagination.
+        
+        page_size = request.query_params.get('page_size', 10)
+        
+        from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+        paginator = Paginator(queryset, page_size)
+    
+        try:
+            stocks_page = paginator.page(page or 1)
+        except PageNotAnInteger:
+            stocks_page = paginator.page(1)
+        except EmptyPage:
+            stocks_page = paginator.page(paginator.num_pages)
+
+        serializer = self.get_serializer(stocks_page, many=True)
+        
+        return get_success_response({
+            'stocks': serializer.data,
+            'pagination': {
+                'total_count': paginator.count,
+                'total_pages': paginator.num_pages,
+                'current_page': stocks_page.number,
+                'page_size': int(page_size)
+            }
+        })
     
     def retrieve(self, request, pk=None):
         """Get single stock details."""
@@ -162,6 +203,22 @@ class StockViewSet(viewsets.ModelViewSet):
             return get_success_response(None, message='Stock deleted successfully')
         except Stock.DoesNotExist:
             return get_error_response('STOCK_NOT_FOUND', 'Stock not found', status_code=404)
+
+    @action(detail=False, methods=['post'])
+    def bulk_delete(self, request):
+        """Delete multiple stocks."""
+        if not can_manage_stocks_sectors(request.user):
+            return get_error_response('FORBIDDEN', 'Admin access required', status_code=403)
+        
+        ids = request.data.get('ids', [])
+        if not ids or not isinstance(ids, list):
+            return get_error_response('VALIDATION_ERROR', 'List of IDs required', status_code=400)
+            
+        # Filter existing stocks
+        stocks_to_delete = self.get_queryset().filter(id__in=ids)
+        deleted_count, _ = stocks_to_delete.delete()
+        
+        return get_success_response(None, message=f'{deleted_count} stocks deleted successfully')
 
 
 class StockPriceDailyViewSet(viewsets.ReadOnlyModelViewSet):

@@ -146,14 +146,22 @@ export default function TablesPage() {
                             {tables.map((table) => (
                                 <li key={table}>
                                     <button
-                                        onClick={() => fetchSchema(table)}
+                                        onClick={() => {
+                                            if (activeTab === 'query') {
+                                                setQueryInput(`SELECT * FROM ${table} LIMIT 100;`);
+                                            } else {
+                                                fetchSchema(table);
+                                            }
+                                        }}
                                         className={`w-full text-left px-6 py-3 hover:bg-gray-50 transition-colors flex items-center justify-between group ${selectedTable === table && activeTab === 'schema' ? 'bg-blue-50 border-l-4 border-blue-600' : 'border-l-4 border-transparent'
                                             }`}
                                     >
                                         <span className={`font-medium ${selectedTable === table && activeTab === 'schema' ? 'text-blue-700' : 'text-gray-700'}`}>
                                             {table}
                                         </span>
-                                        <span className="text-gray-400 group-hover:text-gray-600 text-xs">Schema →</span>
+                                        <span className="text-gray-400 group-hover:text-gray-600 text-xs">
+                                            {activeTab === 'query' ? 'Select →' : 'Schema →'}
+                                        </span>
                                     </button>
                                 </li>
                             ))}

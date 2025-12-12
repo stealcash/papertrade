@@ -14,6 +14,16 @@ export default function UsersPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [mounted, setMounted] = useState(false);
 
+    // Pagination State
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalUsers, setTotalUsers] = useState(0);
+
+    // Sorting State
+    const [sortBy, setSortBy] = useState('created_at');
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -25,19 +35,41 @@ export default function UsersPage() {
             router.push('/login');
             return;
         }
-        fetchUsers();
-    }, [isAuthenticated, mounted, router]);
+        fetchUsers(currentPage, sortBy, sortOrder);
+    }, [isAuthenticated, mounted, router, currentPage, sortBy, sortOrder]);
 
-    const fetchUsers = async () => {
+    const fetchUsers = async (page: number, sort: string, order: string) => {
+        setLoading(true);
         try {
-            const response = await apiClient.get('/admin-panel/users/');
-            setUsers(response.data.data || []);
+            const response = await apiClient.get(`/admin-panel/users/?page=${page}&sort_by=${sort}&order=${order}`);
+            // Handle both old and new API response structures safely
+            const data = response.data.data;
+            if (data.users && data.pagination) {
+                setUsers(data.users);
+                setTotalPages(data.pagination.total_pages);
+                setTotalUsers(data.pagination.total_count);
+            } else if (Array.isArray(data)) {
+                // Fallback for non-paginated response (if any)
+                setUsers(data);
+            } else {
+                setUsers([]);
+            }
         } catch (error) {
             console.error('Failed to fetch users:', error);
             setUsers([]);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleSort = (field: string) => {
+        if (sortBy === field) {
+            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+        } else {
+            setSortBy(field);
+            setSortOrder('asc'); // Default to asc for new field
+        }
+        setCurrentPage(1); // Reset to first page when sorting changes
     };
 
     const filteredUsers = users.filter((u) =>
@@ -111,20 +143,35 @@ export default function UsersPage() {
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Email
+                                    <th
+                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                                        onClick={() => handleSort('email')}
+                                    >
+                                        Email {sortBy === 'email' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Role
+                                    <th
+                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                                        onClick={() => handleSort('role')}
+                                    >
+                                        Role {sortBy === 'role' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Status
+                                    <th
+                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                                        onClick={() => handleSort('is_active')}
+                                    >
+                                        Status {sortBy === 'is_active' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Wallet Balance
+                                    <th
+                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                                        onClick={() => handleSort('wallet_balance')}
+                                    >
+                                        Wallet Balance {sortBy === 'wallet_balance' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Created At
+                                    <th
+                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                                        onClick={() => handleSort('created_at')}
+                                    >
+                                        Created At {sortBy === 'created_at' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </th>
                                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Actions
@@ -175,8 +222,28 @@ export default function UsersPage() {
                 </div>
 
                 {/* Summary */}
-                <div className="mt-4 text-sm text-gray-600">
-                    Showing {filteredUsers.length} of {users.length} users
+                <div className="mt-4 flex justify-between items-center text-sm text-gray-600">
+                    <div>
+                        Showing {filteredUsers.length} users (Page {currentPage} of {totalPages})
+                    </div>
+
+                    {/* Pagination Controls */}
+                    <div className="flex space-x-2">
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1 || loading}
+                            className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Previous
+                        </button>
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages || loading}
+                            className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Next
+                        </button>
+                    </div>
                 </div>
             </main>
         </div>

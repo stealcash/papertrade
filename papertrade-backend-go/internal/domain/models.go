@@ -4,29 +4,29 @@ import "time"
 
 // StockData represents stock price data
 type StockData struct {
-	StockEnum  string          `json:"stock_enum"`
-	Date       string          `json:"date"`
-	OpenPrice  float64         `json:"open_price"`
-	HighPrice  float64         `json:"high_price"`
-	LowPrice   float64         `json:"low_price"`
-	ClosePrice float64         `json:"close_price"`
-	Volume     int64           `json:"volume"`
-	IV         float64         `json:"iv"`
-	Timewise   []TimewiseData  `json:"timewise,omitempty"`
+	Symbol     string                 `json:"symbol"`
+	Date       string                 `json:"date"`
+	OpenPrice  float64                `json:"open_price"`
+	HighPrice  float64                `json:"high_price"`
+	LowPrice   float64                `json:"low_price"`
+	ClosePrice float64                `json:"close_price"`
+	Volume     int64                  `json:"volume"`
+	IV         float64                `json:"iv"`
+	Timewise   []TimewiseData         `json:"timewise,omitempty"`
 	Extra      map[string]interface{} `json:"extra,omitempty"`
 }
 
 // SectorData represents sector price data
 type SectorData struct {
-	SectorEnum string          `json:"sector_enum"`
-	Date       string          `json:"date"`
-	OpenPrice  float64         `json:"open_price"`
-	HighPrice  float64         `json:"high_price"`
-	LowPrice   float64         `json:"low_price"`
-	ClosePrice float64         `json:"close_price"`
-	Volume     int64           `json:"volume"`
-	IV         float64         `json:"iv"`
-	Timewise   []TimewiseData  `json:"timewise,omitempty"`
+	Symbol     string                 `json:"symbol"`
+	Date       string                 `json:"date"`
+	OpenPrice  float64                `json:"open_price"`
+	HighPrice  float64                `json:"high_price"`
+	LowPrice   float64                `json:"low_price"`
+	ClosePrice float64                `json:"close_price"`
+	Volume     int64                  `json:"volume"`
+	IV         float64                `json:"iv"`
+	Timewise   []TimewiseData         `json:"timewise,omitempty"`
 	Extra      map[string]interface{} `json:"extra,omitempty"`
 }
 
@@ -51,9 +51,9 @@ type OptionContract struct {
 
 // OptionCandles represents 5-min premium candles for an option
 type OptionCandles struct {
-	Contract   OptionContract  `json:"contract"`
-	Date       string          `json:"date"`
-	Candles    []TimewiseData  `json:"candles"`
+	Contract OptionContract `json:"contract"`
+	Date     string         `json:"date"`
+	Candles  []TimewiseData `json:"candles"`
 }
 
 // ErrorResponse represents API error response

@@ -47,22 +47,22 @@ func (h *Handler) AuthMiddleware() gin.HandlerFunc {
 
 // GetStockData handles GET /api/v1/stock/data
 func (h *Handler) GetStockData(c *gin.Context) {
-	stockEnum := c.Query("stock_enum")
+	symbol := c.Query("symbol")
 	date := c.Query("date")
 	timewise := c.Query("timewise") == "true"
 
-	if stockEnum == "" || date == "" {
+	if symbol == "" || date == "" {
 		c.JSON(http.StatusBadRequest, domain.ErrorResponse{
 			Status:    "error",
 			Code:      "MISSING_PARAMETERS",
-			Message:   "stock_enum and date are required",
+			Message:   "symbol and date are required",
 			Details:   make(map[string]interface{}),
 			Timestamp: time.Now(),
 		})
 		return
 	}
 
-	data, err := h.dataService.GetStockData(stockEnum, date, timewise)
+	data, err := h.dataService.GetStockData(symbol, date, timewise)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, domain.ErrorResponse{
 			Status:    "error",
@@ -84,22 +84,22 @@ func (h *Handler) GetStockData(c *gin.Context) {
 
 // GetSectorData handles GET /api/v1/sector/data
 func (h *Handler) GetSectorData(c *gin.Context) {
-	sectorEnum := c.Query("sector_enum")
+	symbol := c.Query("symbol")
 	date := c.Query("date")
 	timewise := c.Query("timewise") == "true"
 
-	if sectorEnum == "" || date == "" {
+	if symbol == "" || date == "" {
 		c.JSON(http.StatusBadRequest, domain.ErrorResponse{
 			Status:    "error",
 			Code:      "MISSING_PARAMETERS",
-			Message:   "sector_enum and date are required",
+			Message:   "symbol and date are required",
 			Details:   make(map[string]interface{}),
 			Timestamp: time.Now(),
 		})
 		return
 	}
 
-	data, err := h.dataService.GetSectorData(sectorEnum, date, timewise)
+	data, err := h.dataService.GetSectorData(symbol, date, timewise)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, domain.ErrorResponse{
 			Status:    "error",

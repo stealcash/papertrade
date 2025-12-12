@@ -38,7 +38,9 @@ export default function MarketAnalysisPage() {
     const fetchStocks = async () => {
         try {
             const response = await stocksAPI.getAll();
-            setStocks(response.data.data || []);
+            // Backend returns { stocks: [...], pagination: {...} }
+            const stockData = response.data.data?.stocks || [];
+            setStocks(Array.isArray(stockData) ? stockData : []);
             // Select first stock by default if available
             if (response.data.data?.length > 0 && !selectedStock) {
                 // Optional: setSelectedStock(response.data.data[0]);

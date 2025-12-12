@@ -28,11 +28,9 @@ class Stock(models.Model):
         ('inactive', 'Inactive'),
     ]
     
-    enum = models.CharField(max_length=50, unique=True, db_index=True, 
-                           help_text='Unique identifier used for Go API')
-    symbol = models.CharField(max_length=50)
+    symbol = models.CharField(max_length=50, unique=True, db_index=True)
+    name = models.CharField(max_length=100, blank=True, default='')
     exchange_suffix = models.CharField(max_length=10, default='NSE')
-    full_symbol = models.CharField(max_length=100)
     
     categories = models.ManyToManyField(StockCategory, related_name='stocks', blank=True)
     sectors = models.ManyToManyField('sectors.Sector', related_name='stocks', blank=True)
@@ -51,7 +49,7 @@ class Stock(models.Model):
         ordering = ['symbol']
     
     def __str__(self):
-        return f"{self.symbol} ({self.enum})"
+        return self.symbol
 
 
 class StockPriceDaily(models.Model):

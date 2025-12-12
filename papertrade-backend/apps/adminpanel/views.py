@@ -80,13 +80,47 @@ def admin_profile(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def list_users(request):
-    """List all users (admin/superadmin only)."""
+    """List all users (admin/superadmin only) with pagination."""
     if not isinstance(request.user, AdminUser):
         return get_error_response('FORBIDDEN', 'Access denied', status_code=403)
     
-    users = User.objects.all().order_by('-created_at')
-    serializer = UserSerializer(users, many=True)
-    return get_success_response(serializer.data)
+    # Get query params
+    page = request.query_params.get('page', 1)
+    page_size = request.query_params.get('page_size', 10)
+    sort_by = request.query_params.get('sort_by', 'created_at')
+    order = request.query_params.get('order', 'desc')
+    
+    # Sorting validation
+    allowed_sort_fields = ['email', 'role', 'is_active', 'wallet_balance', 'created_at']
+    if sort_by not in allowed_sort_fields:
+        sort_by = 'created_at'
+        
+    order_prefix = '-' if order == 'desc' else ''
+    
+    users = User.objects.all().order_by(f'{order_prefix}{sort_by}')
+    
+    # Pagination
+    from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+    paginator = Paginator(users, page_size)
+    
+    try:
+        users_page = paginator.page(page)
+    except PageNotAnInteger:
+        users_page = paginator.page(1)
+    except EmptyPage:
+        users_page = paginator.page(paginator.num_pages)
+        
+    serializer = UserSerializer(users_page, many=True)
+    
+    return get_success_response({
+        'users': serializer.data,
+        'pagination': {
+            'total_count': paginator.count,
+            'total_pages': paginator.num_pages,
+            'current_page': users_page.number,
+            'page_size': int(page_size)
+        }
+    })
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -206,8 +240,41 @@ def list_admins(request):
     if not isinstance(request.user, AdminUser) or request.user.role != 'superadmin':
         return get_error_response('FORBIDDEN', 'Superadmin access required', status_code=403)
     
-    admins = AdminUser.objects.all().order_by('-created_at')
-    return get_success_response(AdminUserSerializer(admins, many=True).data)
+    # Get query params
+    page = request.query_params.get('page', 1)
+    page_size = request.query_params.get('page_size', 10)
+    sort_by = request.query_params.get('sort_by', 'created_at')
+    order = request.query_params.get('order', 'desc')
+    
+    # Sorting validation
+    allowed_sort_fields = ['name', 'email', 'role', 'is_active', 'last_login', 'created_at']
+    if sort_by not in allowed_sort_fields:
+        sort_by = 'created_at'
+        
+    order_prefix = '-' if order == 'desc' else ''
+    
+    admins = AdminUser.objects.all().order_by(f'{order_prefix}{sort_by}')
+    
+    # Pagination
+    from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+    paginator = Paginator(admins, page_size)
+    
+    try:
+        admins_page = paginator.page(page)
+    except PageNotAnInteger:
+        admins_page = paginator.page(1)
+    except EmptyPage:
+        admins_page = paginator.page(paginator.num_pages)
+        
+    return get_success_response({
+        'admins': AdminUserSerializer(admins_page, many=True).data,
+        'pagination': {
+            'total_count': paginator.count,
+            'total_pages': paginator.num_pages,
+            'current_page': admins_page.number,
+            'page_size': int(page_size)
+        }
+    })
 
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])

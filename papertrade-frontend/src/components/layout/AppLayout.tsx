@@ -4,8 +4,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { authAPI } from '@/lib/api';
-import { logout } from '@/store/slices/authSlice';
-import Sidebar from './Sidebar';
+import Header from '@/components/common/Header';
+import Navigation from '@/components/common/Navigation';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
 
@@ -20,10 +20,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             authAPI.profile()
                 .catch((error) => {
                     console.error("Token Validation Failed:", error);
-                    // Only logout if explicitly unauthorized (401)
                     if (error.response && error.response.status === 401) {
-                        // dispatch(logout()); // Disabled to prevent login bounce loop
-                        console.warn("Profile check failed 401, but keeping session active to prevent bounce.");
+                        // Session handled by api.ts interceptor
+                        console.warn("Profile check failed 401");
                     }
                 });
         }
@@ -52,22 +51,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         );
     }
 
-    // Exclude sidebar on Home, Login, Signup
-    const showSidebar = !["/", "/login", "/signup"].includes(pathname);
+    // Exclude header/nav on Home, Login, Signup
+    const showNav = !["/", "/login", "/signup"].includes(pathname);
+
+    if (!showNav) {
+        return <div className="min-h-screen bg-gray-50">{children}</div>;
+    }
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen w-full bg-gray-50 text-gray-900 gap-8">
-
-            {/* Sidebar (only for inner pages) */}
-            {showSidebar && <Sidebar />}
-
-            {/* Main content */}
-            <main className="flex-1 w-full p-8">
-                <div className="max-w-7xl mx-auto">
-                    {children}
-                </div>
+        <div className="min-h-screen bg-gray-50 text-gray-900">
+            <Header />
+            <Navigation />
+            <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+                {children}
             </main>
-
         </div>
     );
 }

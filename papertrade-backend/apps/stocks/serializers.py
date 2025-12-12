@@ -18,7 +18,7 @@ class StockSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Stock
-        fields = ['id', 'enum', 'symbol', 'exchange_suffix', 'full_symbol', 
+        fields = ['id', 'symbol', 'name', 'exchange_suffix', 
                  'categories', 'categories_details', 'sectors', 'status', 'last_synced_at', 
                  'extra', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']

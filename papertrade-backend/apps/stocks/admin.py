@@ -10,9 +10,9 @@ class StockCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin):
-    list_display = ['symbol', 'enum', 'exchange_suffix', 'status', 'last_synced_at']
+    list_display = ['symbol', 'name', 'exchange_suffix', 'status', 'last_synced_at']
     list_filter = ['status', 'exchange_suffix']
-    search_fields = ['symbol', 'enum', 'full_symbol']
+    search_fields = ['symbol', 'name']
     filter_horizontal = ['categories']
 
 

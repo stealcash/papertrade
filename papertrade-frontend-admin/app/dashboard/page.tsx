@@ -77,7 +77,19 @@ export default function AdminDashboard() {
                             </div>
                             <div>
                                 <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-                                <p className="text-sm text-gray-600">{user?.email} • {user?.role}</p>
+                                <div className="flex items-center space-x-2 mt-1">
+                                    <p className="text-sm text-gray-600">{user?.email} • {user?.role}</p>
+                                    {user?.role === 'admin' && (
+                                        <>
+                                            {user?.can_manage_stocks && (
+                                                <span className="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded font-medium">Stocks Access</span>
+                                            )}
+                                            {user?.can_manage_config && (
+                                                <span className="bg-purple-100 text-purple-800 text-xs px-2 py-0.5 rounded font-medium">Config Access</span>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
                             </div>
                         </div>
                         <button
@@ -227,16 +239,18 @@ export default function AdminDashboard() {
                             </>
                         )}
 
-                        <button
-                            onClick={() => router.push('/create-admin')}
-                            className="bg-green-600 text-white p-6 rounded-xl font-semibold hover:bg-green-700 transition-all text-left"
-                        >
-                            <svg className="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                            </svg>
-                            <div className="text-lg">Create Admin</div>
-                            <p className="text-green-200 text-sm mt-1">Add new admin account (Superadmin only)</p>
-                        </button>
+                        {isSuperadmin && (
+                            <button
+                                onClick={() => router.push('/create-admin')}
+                                className="bg-green-600 text-white p-6 rounded-xl font-semibold hover:bg-green-700 transition-all text-left"
+                            >
+                                <svg className="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                                </svg>
+                                <div className="text-lg">Create Admin</div>
+                                <p className="text-green-200 text-sm mt-1">Add new admin account (Superadmin only)</p>
+                            </button>
+                        )}
 
                         {isSuperadmin && (
                             <button
