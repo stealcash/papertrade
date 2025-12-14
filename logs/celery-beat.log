@@ -63,3 +63,16 @@ def xstarmap(task, it):
 Setting ssl_cert_reqs=CERT_NONE when connecting to redis means that celery will not validate the identity of the redis broker when connecting. This leaves you vulnerable to man in the middle attacks.
 
 [2025-12-12 21:23:51,739: INFO/MainProcess] Scheduler: Sending due task auto-sync-daily (apps.sync.tasks.auto_sync_daily)
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+celery beat v5.3.4 (emerald-rush) is starting.
+__    -    ... __   -        _
+LocalTime -> 2025-12-12 21:23:50
+Configuration ->
+    . broker -> rediss://default:**@pumped-turkey-23712.upstash.io:6379//
+    . loader -> celery.loaders.app.AppLoader
+    . scheduler -> celery.beat.PersistentScheduler
+    . db -> celerybeat-schedule
+    . logfile -> [stderr]@%INFO
+    . maxinterval -> 5.00 minutes (300s)

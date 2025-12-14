@@ -158,3 +158,5 @@ you should set broker_connection_retry_on_startup to True.
 [2025-12-12 21:24:56,873: WARNING/ForkPoolWorker-1] DTO-DEBUG: Skipping XYZ - already synced
 [2025-12-12 21:24:58,809: INFO/ForkPoolWorker-1] Stock sync completed: 3/6 successful
 [2025-12-12 21:25:00,151: INFO/ForkPoolWorker-1] Task apps.sync.tasks.sync_stocks_task[5237be1b-fb35-4307-8d6e-53042bdce360] succeeded in 51.81340866700339s: None
+
+worker: Warm shutdown (MainProcess)

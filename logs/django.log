@@ -1466,3 +1466,56 @@ Traceback (most recent call last):
     ^^^^^^
 NameError: name 'models' is not defined
 ERROR 2025-12-12 23:30:20,148 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 500 102491
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+Performing system checks...
+
+System check identified no issues (0 silenced).
+December 12, 2025 - 22:52:25
+Django version 5.0, using settings 'config.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+DTO-DEBUG: Starting sync_stocks_task. Instruments: None
+DTO-DEBUG: Got data for TCS on 2025-12-07
+DTO-DEBUG: Saved TCS 2025-12-07, created=True, id=576
+DTO-DEBUG: Got data for TCS on 2025-12-08
+DTO-DEBUG: Saved TCS 2025-12-08, created=True, id=577
+DTO-DEBUG: Got data for TCS on 2025-12-09
+DTO-DEBUG: Saved TCS 2025-12-09, created=True, id=578
+DTO-DEBUG: Got data for TCS on 2025-12-10
+DTO-DEBUG: Saved TCS 2025-12-10, created=True, id=579
+DTO-DEBUG: Got data for TCS on 2025-12-11
+DTO-DEBUG: Saved TCS 2025-12-11, created=True, id=580
+DTO-DEBUG: Got data for TCS on 2025-12-12
+DTO-DEBUG: Saved TCS 2025-12-12, created=True, id=581
+DTO-DEBUG: Updated TCS last_synced_at (saved 6 records)
+DTO-DEBUG: Starting sync_stocks_task. Instruments: None
+DTO-DEBUG: Got data for TCS on 2025-12-07
+DTO-DEBUG: Saved TCS 2025-12-07, created=True, id=582
+DTO-DEBUG: Got data for TCS on 2025-12-08
+DTO-DEBUG: Saved TCS 2025-12-08, created=True, id=583
+DTO-DEBUG: Got data for TCS on 2025-12-09
+DTO-DEBUG: Saved TCS 2025-12-09, created=True, id=584
+DTO-DEBUG: Got data for TCS on 2025-12-10
+DTO-DEBUG: Saved TCS 2025-12-10, created=True, id=585
+DTO-DEBUG: Got data for TCS on 2025-12-11
+DTO-DEBUG: Saved TCS 2025-12-11, created=True, id=586
+DTO-DEBUG: Got data for TCS on 2025-12-12
+DTO-DEBUG: Saved TCS 2025-12-12, created=True, id=587
+DTO-DEBUG: Updated TCS last_synced_at (saved 6 records)
+DTO-DEBUG API: Broker URL: rediss://default:AVygAAIncDI1ZmQ1NmMzNTg4MTY0YjFjOTFjZDU2YWJjYzZhMTYwNHAyMjM3MTI@pumped-turkey-23712.upstash.io:6379
+DTO-DEBUG API: Redis Backend: rediss://default:AVygAAIncDI1ZmQ1NmMzNTg4MTY0YjFjOTFjZDU2YWJjYzZhMTYwNHAyMjM3MTI@pumped-turkey-23712.upstash.io:6379
+DTO-DEBUG API: SSL Config: {'ssl_cert_reqs': 'none'}
+DTO-DEBUG: Starting sync_stocks_task. Instruments: []
+DTO-DEBUG: Got data for TCS on 2025-12-05
+DTO-DEBUG: Saved TCS 2025-12-05, created=True, id=588
+DTO-DEBUG: Got data for TCS on 2025-12-06
+DTO-DEBUG: Saved TCS 2025-12-06, created=True, id=589
+DTO-DEBUG: Got data for TCS on 2025-12-07
+DTO-DEBUG: Saved TCS 2025-12-07, created=False, id=582
+DTO-DEBUG: Updated TCS last_synced_at (saved 3 records)
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully

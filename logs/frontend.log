@@ -162,3 +162,4 @@ Press Ctrl+C to stop
  GET /subscription 200 in 12ms
  GET /profile 200 in 9ms
  GET /strategy 200 in 15ms
+[?25h

@@ -241,3 +241,4 @@ Press Ctrl+C to stop
  GET /users 200 in 22ms (compile: 5ms, render: 17ms)
  GET /dashboard 200 in 30ms (compile: 7ms, render: 23ms)
  GET /users 200 in 21ms (compile: 5ms, render: 17ms)
+[?25h
