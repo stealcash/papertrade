@@ -49,3 +49,5 @@
  ○ Compiling /favicon.ico ...
  ✓ Compiled /favicon.ico in 545ms (486 modules)
  GET /favicon.ico 200 in 607ms
+ GET /stocks 200 in 91ms
+ GET /favicon.ico 200 in 3ms

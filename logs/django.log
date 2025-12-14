@@ -383,3 +383,6 @@ INFO 2025-12-14 19:54:27,257 basehttp "GET /api/v1/stocks/prices/daily/?stock_id
 INFO 2025-12-14 19:54:32,310 basehttp "GET /api/v1/stocks/prices/daily/?stock_id=2&days=30 HTTP/1.1" 200 4194
 INFO 2025-12-14 19:54:34,165 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 1067
 INFO 2025-12-14 19:54:36,883 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 1067
+INFO 2025-12-14 19:56:12,470 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-14 19:56:14,194 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 1067
+INFO 2025-12-14 19:56:17,167 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 1067
