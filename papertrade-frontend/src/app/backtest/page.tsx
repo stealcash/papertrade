@@ -56,7 +56,7 @@ export default function BacktestPage() {
         }
     };
 
-    const exportCSV = async (id:number) => {
+    const exportCSV = async (id: number) => {
         alert("CSV export will work when backend is connected.");
     };
 
@@ -67,11 +67,26 @@ export default function BacktestPage() {
 
             {/* Header */}
             <div className="flex justify-between items-center">
-                <h1 className="text-4xl font-bold text-gray-900">Backtest Runs</h1>
-                
+                {/* Page Title */}
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Backtest Strategy</h1>
+
                 <button className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition">
-                    <PlayCircle size={20}/> New Backtest
+                    <PlayCircle size={20} /> New Backtest
                 </button>
+            </div>
+
+            {/* Chart Placeholder */}
+            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 h-96 flex items-center justify-center">
+                <p className="text-gray-400 dark:text-gray-500 text-lg">Strategy Performance Chart Placeholder</p>
+            </div>
+
+            {/* Configuration Card */}
+            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
+                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Configuration</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Placeholder for configuration items */}
+                    <div className="col-span-full text-gray-500 dark:text-gray-400">Configuration options will go here.</div>
+                </div>
             </div>
 
             {/* List Section */}
@@ -82,40 +97,52 @@ export default function BacktestPage() {
                     <div className="divide-y">
                         {runs.map(run => (
                             <Link key={run.id} href={`/backtest/${run.id}`} className="block hover:bg-gray-50 p-6 transition">
-                                
+
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <h2 className="font-semibold text-lg text-gray-900">
                                             {run.strategy_name || "Unnamed Strategy"}
                                         </h2>
                                         <div className="flex items-center text-gray-500 gap-2 text-sm mt-1">
-                                            <Calendar size={14}/>
+                                            <Calendar size={14} />
                                             {new Date(run.created_at).toLocaleDateString()}
                                         </div>
                                     </div>
 
                                     <button
                                         className="px-4 py-2 border border-gray-200 hover:bg-gray-100 rounded-md flex items-center gap-2 text-sm transition"
-                                        onClick={(e)=>{ e.preventDefault(); exportCSV(run.id); }}>
-                                        <Download size={15}/> Export
+                                        onClick={(e) => { e.preventDefault(); exportCSV(run.id); }}>
+                                        <Download size={15} /> Export
                                     </button>
+                                </div>
+
+                                {/* Results Section */}
+                                <div>
+                                    <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Backtest Results</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        {/* These StatsCard components are placeholders and need to be defined or replaced */}
+                                        {/* <StatsCard title="Total Return" value="+24.5%" change={12.5} isPositive={true} />
+                                        <StatsCard title="Win Rate" value="68%" change={-2.4} isPositive={false} />
+                                        <StatsCard title="Max Drawdown" value="-8.2%" change={1.2} isPositive={true} />
+                                        <StatsCard title="Profit Factor" value="1.85" change={0.1} isPositive={true} /> */}
+                                    </div>
                                 </div>
 
                                 {/* Stats Row */}
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
 
-                                    <Stat label="Total Return" 
-                                        value={`${run.total_return.toFixed(2)}%`} 
-                                        accent={run.total_return>=0?"text-green-600":"text-red-500"} />
+                                    <Stat label="Total Return"
+                                        value={`${run.total_return.toFixed(2)}%`}
+                                        accent={run.total_return >= 0 ? "text-green-600" : "text-red-500"} />
 
-                                    <Stat label="Sharpe Ratio" 
+                                    <Stat label="Sharpe Ratio"
                                         value={run.sharpe_ratio.toFixed(2)} />
 
-                                    <Stat label="Max Drawdown" 
+                                    <Stat label="Max Drawdown"
                                         value={`${run.max_drawdown.toFixed(2)}%`}
                                         accent="text-red-500" />
 
-                                    <Stat label="Win Rate" 
+                                    <Stat label="Win Rate"
                                         value={`${run.win_rate.toFixed(2)}%`} />
                                 </div>
 
@@ -130,8 +157,8 @@ export default function BacktestPage() {
 
 
 // UI Sub-component
-function Stat({label,value,accent="text-gray-900"}:{label:string,value:string,accent?:string}){
-    return(
+function Stat({ label, value, accent = "text-gray-900" }: { label: string, value: string, accent?: string }) {
+    return (
         <div>
             <p className="text-gray-500 text-xs">{label}</p>
             <p className={`text-lg font-semibold ${accent}`}>{value}</p>

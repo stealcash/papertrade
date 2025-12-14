@@ -87,61 +87,52 @@ export default function SectorsManagementPage() {
     };
 
     if (!isAuthenticated || (!user?.can_manage_stocks && user?.role !== 'superadmin') || !mounted) {
-        return <div className="min-h-screen flex items-center justify-center"><div>Loading...</div></div>;
+        return <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
+            <div className="text-gray-600 dark:text-gray-400">Loading...</div>
+        </div>;
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <header className="bg-white shadow-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-900">Sector Management</h1>
-                            <p className="text-sm text-gray-600">Manage platform sectors</p>
-                        </div>
-                        <div className="flex space-x-3">
-                            <button
-                                onClick={() => { setEditingSector(null); setFormData({ name: '', symbol: '', description: '' }); setShowModal(true); }}
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all font-medium"
-                            >
-                                + Create Sector
-                            </button>
-                            <button
-                                onClick={() => router.push('/dashboard')}
-                                className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-all"
-                            >
-                                ← Back
-                            </button>
-                        </div>
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+            <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center mb-6">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Sector Management</h1>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Manage platform sectors</p>
+                    </div>
+                    <div>
+                        <button
+                            onClick={() => { setEditingSector(null); setFormData({ name: '', symbol: '', description: '' }); setShowModal(true); }}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all font-medium"
+                        >
+                            + Create Sector
+                        </button>
                     </div>
                 </div>
-            </header>
-
-            <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-                <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+                <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border dark:border-gray-700 overflow-hidden">
                     {loading ? (
-                        <div className="p-8 text-center text-gray-600">Loading sectors...</div>
+                        <div className="p-8 text-center text-gray-600 dark:text-gray-400">Loading sectors...</div>
                     ) : sectors.length === 0 ? (
-                        <div className="p-8 text-center text-gray-600">No sectors found.</div>
+                        <div className="p-8 text-center text-gray-600 dark:text-gray-400">No sectors found.</div>
                     ) : (
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
+                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead className="bg-gray-50 dark:bg-gray-800">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Symbol</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Name</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Symbol</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Description</th>
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
                                 {sectors.map((sector) => (
-                                    <tr key={sector.id} className="hover:bg-gray-50">
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{sector.name}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{sector.symbol}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-500">{sector.description || '-'}</td>
+                                    <tr key={sector.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{sector.name}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{sector.symbol}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{sector.description || '-'}</td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <button onClick={() => handleEdit(sector)} className="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
-                                            <button onClick={() => handleDelete(sector.id)} className="text-red-600 hover:text-red-900">Delete</button>
+                                            <button onClick={() => handleEdit(sector)} className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-4">Edit</button>
+                                            <button onClick={() => handleDelete(sector.id)} className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -152,31 +143,31 @@ export default function SectorsManagementPage() {
             </main>
 
             {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-xl p-8 max-w-md w-full">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">{editingSector ? 'Edit Sector' : 'Create Sector'}</h2>
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-md w-full shadow-2xl border dark:border-gray-700">
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{editingSector ? 'Edit Sector' : 'Create Sector'}</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Name *</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name *</label>
                                 <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" />
+                                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Symbol *</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Symbol *</label>
                                 <input type="text" required value={formData.symbol} onChange={(e) => setFormData({ ...formData, symbol: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" />
+                                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
                                 <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" rows={3} />
+                                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" rows={3} />
                             </div>
                             <div className="flex space-x-3 pt-4">
-                                <button type="submit" className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                                <button type="submit" className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 font-medium transition-colors shadow-sm">
                                     {editingSector ? 'Update' : 'Create'}
                                 </button>
                                 <button type="button" onClick={() => { setShowModal(false); setEditingSector(null); }}
-                                    className="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300">
+                                    className="flex-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 font-medium transition-colors">
                                     Cancel
                                 </button>
                             </div>

@@ -109,7 +109,7 @@ export default function SignupPage() {
                 value={f.full_name}
                 onChange={(e) => setF({ ...f, full_name: e.target.value })}
                 placeholder="John Doe"
-                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none"
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
               />
             </div>
           </div>
@@ -124,7 +124,7 @@ export default function SignupPage() {
                 value={f.email}
                 onChange={(e) => setF({ ...f, email: e.target.value })}
                 placeholder="you@email.com"
-                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none"
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
               />
             </div>
           </div>
@@ -139,7 +139,7 @@ export default function SignupPage() {
                 value={f.password}
                 onChange={(e) => setF({ ...f, password: e.target.value })}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none"
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
               />
             </div>
 
@@ -170,7 +170,7 @@ export default function SignupPage() {
                 value={f.confirm_password}
                 onChange={(e) => setF({ ...f, confirm_password: e.target.value })}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none"
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
               />
             </div>
           </div>

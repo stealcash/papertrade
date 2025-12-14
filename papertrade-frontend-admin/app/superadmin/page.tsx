@@ -110,33 +110,14 @@ export default function SuperAdminPage() {
 
     return (
         <div className="min-h-screen bg-gray-50 pb-12">
-            {/* Header */}
-            <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-                <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                            <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-2 rounded-lg shadow-lg">
-                                <span className="text-xl font-bold text-white tracking-wider">SA</span>
-                            </div>
-                            <div>
-                                <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
-                                    Superadmin Console
-                                </h1>
-                                <p className="text-sm text-gray-500 font-medium">Elevated Previleges • {user?.email}</p>
-                            </div>
-                        </div>
-                        <button
-                            onClick={() => router.push('/dashboard')}
-                            className="bg-white text-gray-700 px-5 py-2.5 rounded-lg border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all font-medium flex items-center shadow-sm"
-                        >
-                            <span className="mr-2">←</span> Return to Dashboard
-                        </button>
-                    </div>
-                </div>
-            </header>
-
             {/* Main Content */}
             <main className="max-w-7xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
+                <div className="mb-6">
+                    <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600">
+                        Superadmin Console
+                    </h1>
+                    <p className="text-sm text-gray-500 font-medium">Elevated Previleges • {user?.email}</p>
+                </div>
                 {/* Welcome Banner */}
                 <div className="mb-10 bg-gradient-to-r from-gray-900 to-black rounded-2xl p-8 shadow-2xl relative overflow-hidden">
                     <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>

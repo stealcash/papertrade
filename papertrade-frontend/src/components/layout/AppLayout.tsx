@@ -4,8 +4,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { authAPI } from '@/lib/api';
-import Header from '@/components/common/Header';
-import Navigation from '@/components/common/Navigation';
+import { useState } from 'react';
+import Sidebar from '@/components/layout/Sidebar';
+import TopHeader from '@/components/layout/TopHeader';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
 
@@ -13,6 +14,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const dispatch = useDispatch();
     const { isAuthenticated, token, isInitialized } = useSelector((state: any) => state.auth);
+
+    const [isMobileOpen, setIsMobileOpen] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(false);
 
     // Verify token validity when authenticated
     useEffect(() => {
@@ -59,12 +63,29 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 text-gray-900">
-            <Header />
-            <Navigation />
-            <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-                {children}
-            </main>
+        <div className="h-screen w-full bg-gray-50 dark:bg-gray-950 flex flex-col overflow-hidden">
+            {/* Fixed Top Header */}
+            <TopHeader
+                handleMobileToggle={() => setIsMobileOpen(!isMobileOpen)}
+                handleDesktopToggle={() => setIsCollapsed(!isCollapsed)}
+                isCollapsed={isCollapsed}
+            />
+
+            <div className="flex flex-1 overflow-hidden pt-16">
+                {/* Fixed/Responsive Sidebar */}
+                <Sidebar
+                    isMobileOpen={isMobileOpen}
+                    isCollapsed={isCollapsed}
+                    setIsMobileOpen={setIsMobileOpen}
+                />
+
+                {/* Main Scrolling Content */}
+                <main className="flex-1 overflow-y-auto w-full transition-all duration-300">
+                    <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+                        {children}
+                    </div>
+                </main>
+            </div>
         </div>
     );
 }

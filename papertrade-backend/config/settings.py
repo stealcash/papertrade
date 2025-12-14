@@ -153,10 +153,16 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ALLOWED_ORIGINS = [
         "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3002",
+        "http://localhost:3003",
         "http://localhost:4000",
+        "http://localhost:4001",
+        "http://localhost:5173",
         "http://localhost:8000",
         "http://localhost:8080",
         "http://127.0.0.1:3000",
+        "http://127.0.0.1:3001",
         "http://127.0.0.1:4000",
         "http://127.0.0.1:8000",
     ]
@@ -165,22 +171,33 @@ if DEBUG:
     # even if you don't use session auth, sometimes it's enforced.
     CSRF_TRUSTED_ORIGINS = [
         "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3002",
+        "http://localhost:3003",
         "http://localhost:4000",
+        "http://localhost:4001",
+        "http://localhost:5173",
         "http://localhost:8000",
         "http://localhost:8080",
         "http://127.0.0.1:3000",
+        "http://127.0.0.1:3001",
         "http://127.0.0.1:4000",
         "http://127.0.0.1:8000",
     ]
 else:
     # In production, this will be managed via system_config in database
+    # But for now, allow these just in case DEBUG is accidentally False in dev
     CORS_ALLOWED_ORIGINS = [
         "http://localhost:3000",
+        "http://localhost:3001",
         "http://localhost:4000",
+        "http://localhost:5173",
     ]
     CSRF_TRUSTED_ORIGINS = [
         "http://localhost:3000",
+        "http://localhost:3001",
         "http://localhost:4000",
+        "http://localhost:5173",
     ]
 
 CORS_ALLOW_CREDENTIALS = True

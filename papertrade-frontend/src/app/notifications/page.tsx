@@ -27,80 +27,79 @@ export default function NotificationsPage() {
         setLoading(false);
     }
 
-    async function markRead(id:number){
-        setNotifications(n=>n.map(x=> x.id===id?{...x,is_read:true}:x ));
-        try{ await notificationsAPI.markRead(id); }catch{}
+    async function markRead(id: number) {
+        setNotifications(n => n.map(x => x.id === id ? { ...x, is_read: true } : x));
+        try { await notificationsAPI.markRead(id); } catch { }
     }
 
-    async function markAll(){
-        setNotifications(n=>n.map(x=>({...x,is_read:true})));
-        try{ await notificationsAPI.markAllRead(); }catch{}
+    async function markAll() {
+        setNotifications(n => n.map(x => ({ ...x, is_read: true })));
+        try { await notificationsAPI.markAllRead(); } catch { }
     }
 
-    if(loading) return(
+    if (loading) return (
         <div className="flex justify-center items-center h-60 text-gray-500 text-lg">
             Loading notifications...
         </div>
     );
 
-    const unread = notifications.filter(n=>!n.is_read).length;
+    const unread = notifications.filter(n => !n.is_read).length;
 
-    return(
+    return (
         <div className="max-w-6xl mx-auto space-y-8">
 
             {/* ─ HEADER ─ */}
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-4xl font-bold text-gray-900">Notifications</h1>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Notifications</h1>
                     <p className="text-gray-500">{unread} unread</p>
                 </div>
 
-                { unread > 0 &&
+                {unread > 0 &&
                     <button
                         onClick={markAll}
-                        className="px-5 py-2.5 bg-black text-white rounded-md hover:bg-gray-800 transition flex gap-2 items-center font-medium"
+                        className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
                     >
-                        <CheckCheck size={18}/>
                         Mark all as read
                     </button>
                 }
             </div>
 
             {/* ─ LIST ─ */}
-            <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden">
 
-                { notifications.length === 0 && (
-                    <div className="p-16 text-gray-500 text-center space-y-3">
+                {notifications.length === 0 && (
+                    <div className="p-16 text-gray-500 dark:text-gray-400 text-center space-y-3">
                         <Bell size={40} className="mx-auto opacity-40" />
                         <p>No new notifications</p>
                     </div>
                 )}
 
-                <div className="divide-y divide-gray-200">
-                    {notifications.map(n=>
-                        <div key={n.id} 
-                             className={`p-6 flex justify-between items-start 
-                                        ${n.is_read? "bg-white":"bg-gray-50"} hover:bg-gray-100 transition`}>
+                <div className="divide-y divide-gray-200 dark:divide-gray-800">
+                    {notifications.map(n =>
+                        <div key={n.id}
+                            className={`p-6 flex justify-between items-start 
+                                        ${n.is_read ? "bg-white dark:bg-gray-900" : "bg-gray-50 dark:bg-gray-800"} hover:bg-gray-100 dark:hover:bg-gray-700 transition`}>
 
                             <div className="flex-1 pr-4">
                                 <div className="flex gap-2 items-center">
-                                    <Bell size={16} className={n.is_read?"text-gray-500":"text-black"} />
-                                    <h3 className="font-semibold text-gray-900">{n.title}</h3>
-                                    {!n.is_read && <span className="h-2 w-2 bg-black rounded-full"></span>}
+                                    <Bell size={16} className={n.is_read ? "text-gray-500" : "text-black dark:text-white"} />
+                                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">{n.title}</h3>
+                                    {!n.is_read && <span className="h-2 w-2 bg-black dark:bg-blue-500 rounded-full"></span>}
                                 </div>
 
-                                <p className="text-gray-600 mt-1">{n.message}</p>
-                                <p className="text-xs text-gray-400 mt-2">
+                                <p className="text-gray-600 dark:text-gray-400 mt-1">{n.message}</p>
+                                <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
                                     {new Date(n.created_at).toLocaleString()}
                                 </p>
                             </div>
 
                             {!n.is_read && (
                                 <button
-                                    onClick={()=>markRead(n.id)}
-                                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-200 hover:text-black flex gap-2 items-center text-sm"
+                                    onClick={() => markRead(n.id)}
+                                    className="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white flex gap-2 items-center text-sm"
                                 >
-                                    <Check size={16}/>
+                                    <Check size={16} />
                                     Mark Read
                                 </button>
                             )}

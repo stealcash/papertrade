@@ -7,47 +7,11 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 1575ms
- ○ Compiling /login ...
- ✓ Compiled /login in 2.1s (775 modules)
- GET /login 200 in 2177ms
- ✓ Compiled /_not-found in 280ms (778 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 368ms
- ✓ Compiled /favicon.ico in 153ms (465 modules)
- GET /favicon.ico 200 in 188ms
- GET /login 200 in 74ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 35ms
- GET /favicon.ico 200 in 6ms
- ✓ Compiled /dashboard in 308ms (806 modules)
- ✓ Compiled /stocks in 154ms (818 modules)
- ✓ Compiled /stocks/[id] in 189ms (828 modules)
- GET /stocks 200 in 112ms
- GET /favicon.ico 200 in 14ms
- GET /stocks 200 in 22ms
- GET /favicon.ico 200 in 3ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 24ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 37ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 22ms
- GET /stocks 200 in 23ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 36ms
- GET /favicon.ico 200 in 11ms
- ✓ Compiled /stock-history in 452ms (826 modules)
- ○ Compiling /options ...
- ✓ Compiled /options in 1313ms (1831 modules)
- ✓ Compiled /market-analysis in 458ms (1844 modules)
- ✓ Compiled /backtest in 276ms (1856 modules)
- ✓ Compiled /strategy in 196ms (1870 modules)
- ✓ Compiled /wallet in 230ms (1882 modules)
- ✓ Compiled /profile in 281ms (1885 modules)
- ✓ Compiled /subscription in 197ms (1885 modules)
- ✓ Compiled /notifications in 363ms (1898 modules)
- ✓ Compiled /dashboard in 238ms (463 modules)
- ✓ Compiled /stocks in 282ms (471 modules)
- ✓ Compiled /stocks/[id] in 126ms (469 modules)
- ✓ Compiled in 688ms (910 modules)
- GET /stocks/2 200 in 265ms
- ○ Compiling /favicon.ico ...
- ✓ Compiled /favicon.ico in 545ms (486 modules)
- GET /favicon.ico 200 in 607ms
- GET /stocks 200 in 91ms
- GET /favicon.ico 200 in 3ms
+ ✓ Ready in 2.8s
+ ○ Compiling / ...
+ ✓ Compiled / in 806ms (801 modules)
+ GET / 200 in 944ms
+ ✓ Compiled /dashboard in 463ms (809 modules)
+ GET /dashboard 200 in 99ms
+ ○ Compiling /stock-history ...
+ ✓ Compiled /stock-history in 685ms (815 modules)

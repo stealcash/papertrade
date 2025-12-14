@@ -45,7 +45,7 @@ export default function StocksPage() {
         <div className="space-y-8">
 
             {/* Page Title */}
-            <h1 className="text-3xl font-bold text-gray-900">Stocks</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Stocks</h1>
 
             {/* Search Bar */}
             <div className="relative w-full max-w-md">
@@ -55,31 +55,31 @@ export default function StocksPage() {
                     placeholder="Search stocks..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-11 pr-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 placeholder-gray-400 
+                    className="w-full pl-11 pr-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 placeholder-gray-400 
                                focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
             </div>
 
             {/* White Card Stock List */}
-            <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden">
 
                 {filtered.length > 0 ? (
-                    <div className="divide-y divide-gray-200">
+                    <div className="divide-y divide-gray-200 dark:divide-gray-800">
                         {filtered.map(stock => (
                             <Link
                                 key={stock.id}
                                 href={`/stocks/${stock.id}`}
-                                className="block px-8 py-5 hover:bg-gray-50 transition"
+                                className="block px-8 py-5 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition"
                             >
                                 <div className="flex justify-between items-center">
 
                                     <div>
-                                        <p className="text-lg font-semibold text-gray-900">{stock.symbol}</p>
-                                        <p className="text-sm text-gray-500">{stock.name}</p>
+                                        <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{stock.symbol}</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">{stock.name}</p>
                                     </div>
 
                                     <div className="text-right">
-                                        <p className="font-semibold text-gray-900">
+                                        <p className="font-semibold text-gray-900 dark:text-gray-100">
                                             {/* TODO: Add live price usage when available */}
                                             {stock.last_price ? `₹${stock.last_price.toFixed(2)}` : '--'}
                                         </p>

@@ -30,7 +30,7 @@ export default function StatsCard({ title, value, change, icon, trend = 'neutral
             </div>
 
             <div className="flex items-baseline gap-2">
-                <h3 className="text-3xl font-bold text-white">{value}</h3>
+                <h3 className="text-3xl font-bold text-gray-900">{value}</h3>
                 {change !== undefined && (
                     <span className={`text-sm font-semibold flex items-center gap-1 ${getTrendColor()}`}>
                         <span>{getTrendIcon()}</span>

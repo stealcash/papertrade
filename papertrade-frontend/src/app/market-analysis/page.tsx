@@ -92,10 +92,10 @@ export default function MarketAnalysisPage() {
         <div className="flex h-[calc(100vh-theme(spacing.24))] gap-6">
 
             {/* LEFT SIDEBAR: Stock List */}
-            <div className="w-80 flex flex-col bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden shrink-0">
+            <div className="w-80 flex flex-col bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden shrink-0">
                 {/* Search Header */}
-                <div className="p-4 border-b border-gray-100 bg-gray-50/50">
-                    <h2 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                <div className="p-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50">
+                    <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
                         <Layout size={16} /> Select Stock
                     </h2>
                     <div className="relative">
@@ -105,7 +105,7 @@ export default function MarketAnalysisPage() {
                             placeholder="Search symbol..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-9 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black transition-all"
+                            className="w-full pl-9 pr-3 py-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black dark:focus:border-gray-500 transition-all"
                         />
                     </div>
                 </div>
@@ -121,8 +121,8 @@ export default function MarketAnalysisPage() {
                                 onClick={() => setSelectedStock(stock)}
                                 className={`w-full text-left p-3 rounded-lg text-sm transition-all border border-transparent 
                                     ${selectedStock?.id === stock.id
-                                        ? 'bg-black text-white shadow-md'
-                                        : 'hover:bg-gray-50 text-gray-700 hover:border-gray-200'
+                                        ? 'bg-black dark:bg-blue-600 text-white shadow-md'
+                                        : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 hover:border-gray-200 dark:hover:border-gray-700'
                                     }`}
                             >
                                 <div className="font-semibold flex justify-between">
@@ -139,16 +139,16 @@ export default function MarketAnalysisPage() {
             </div>
 
             {/* RIGHT CONTENT: Details & History */}
-            <div className="flex-1 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex flex-col">
+            <div className="flex-1 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col">
 
                 {selectedStock ? (
                     <>
                         {/* Header Details */}
-                        <div className="p-6 border-b border-gray-100 flex justify-between items-start bg-gray-50/30">
+                        <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-start bg-gray-50/30 dark:bg-gray-800/30">
                             <div>
-                                <h1 className="text-2xl font-bold text-gray-900">{selectedStock.name}</h1>
+                                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{selectedStock.name}</h1>
                                 <div className="flex items-center gap-3 mt-1">
-                                    <span className="px-2 py-1 bg-gray-100 rounded text-xs font-medium text-gray-600 border border-gray-200">
+                                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs font-medium text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
                                         {selectedStock.symbol}
                                     </span>
                                     <span className="text-sm text-gray-500">{selectedStock.sector?.name || 'N/A'}</span>
@@ -156,20 +156,20 @@ export default function MarketAnalysisPage() {
                             </div>
 
                             {/* Date Controls */}
-                            <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-gray-200 shadow-sm">
+                            <div className="flex items-center gap-2 bg-white dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
                                 <Calendar size={16} className="text-gray-400 ml-2" />
                                 <input
                                     type="date"
                                     value={dateRange.start}
                                     onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-                                    className="text-sm border-none focus:ring-0 text-gray-700 w-32"
+                                    className="text-sm border-none focus:ring-0 text-gray-700 dark:text-gray-200 bg-transparent w-32"
                                 />
                                 <span className="text-gray-300">|</span>
                                 <input
                                     type="date"
                                     value={dateRange.end}
                                     onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-                                    className="text-sm border-none focus:ring-0 text-gray-700 w-32"
+                                    className="text-sm border-none focus:ring-0 text-gray-700 dark:text-gray-200 bg-transparent w-32"
                                 />
                             </div>
                         </div>
@@ -182,7 +182,7 @@ export default function MarketAnalysisPage() {
                                 </div>
                             ) : priceHistory.length > 0 ? (
                                 <table className="w-full text-sm text-left">
-                                    <thead className="text-xs text-gray-500 uppercase bg-gray-50 sticky top-0 z-10 border-b border-gray-100">
+                                    <thead className="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-800 sticky top-0 z-10 border-b border-gray-100 dark:border-gray-800">
                                         <tr>
                                             <th className="px-6 py-3 font-medium">Date</th>
                                             <th className="px-6 py-3 font-medium text-right">Close</th>
@@ -193,7 +193,7 @@ export default function MarketAnalysisPage() {
                                             <th className="px-6 py-3 font-medium text-right">Change</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-gray-100">
+                                    <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                                         {priceHistory.map((day, idx) => {
                                             const prevClose = idx < priceHistory.length - 1 ? priceHistory[idx + 1].close_price : day.open_price;
                                             const change = day.close_price - prevClose;
@@ -201,23 +201,23 @@ export default function MarketAnalysisPage() {
                                             const isUp = change >= 0;
 
                                             return (
-                                                <tr key={day.date} className="hover:bg-gray-50/50 transition-colors">
-                                                    <td className="px-6 py-3 font-medium text-gray-900">
+                                                <tr key={day.date} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors">
+                                                    <td className="px-6 py-3 font-medium text-gray-900 dark:text-gray-100">
                                                         {new Date(day.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
                                                     </td>
-                                                    <td className="px-6 py-3 text-right font-semibold">
+                                                    <td className="px-6 py-3 text-right font-semibold dark:text-gray-200">
                                                         ₹{day.close_price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                                                     </td>
-                                                    <td className="px-6 py-3 text-right text-gray-600">
+                                                    <td className="px-6 py-3 text-right text-gray-600 dark:text-gray-400">
                                                         ₹{day.open_price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                                                     </td>
-                                                    <td className="px-6 py-3 text-right text-gray-600">
+                                                    <td className="px-6 py-3 text-right text-gray-600 dark:text-gray-400">
                                                         ₹{day.high_price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                                                     </td>
-                                                    <td className="px-6 py-3 text-right text-gray-600">
+                                                    <td className="px-6 py-3 text-right text-gray-600 dark:text-gray-400">
                                                         ₹{day.low_price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                                                     </td>
-                                                    <td className="px-6 py-3 text-right text-gray-500">
+                                                    <td className="px-6 py-3 text-right text-gray-500 dark:text-gray-500">
                                                         {day.volume?.toLocaleString() || '-'}
                                                     </td>
                                                     <td className={`px-6 py-3 text-right font-medium flex items-center justify-end gap-1 ${isUp ? 'text-green-600' : 'text-red-500'}`}>

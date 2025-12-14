@@ -66,8 +66,8 @@ export default function DashboardPage() {
 
       {/* HEADER */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 text-sm">Portfolio overview & recent alerts</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
+        <p className="text-gray-500 text-sm dark:text-gray-400">Portfolio overview & recent alerts</p>
       </div>
 
 
@@ -87,20 +87,20 @@ export default function DashboardPage() {
 
 
       {/* --- Notifications --- */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8">
+      <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm p-8">
 
         <div className="flex items-center gap-2 mb-5">
-          <Bell size={20} className="text-gray-700" />
-          <h2 className="text-xl font-semibold text-gray-800">Recent Notifications</h2>
+          <Bell size={20} className="text-gray-700 dark:text-gray-300" />
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Recent Notifications</h2>
         </div>
 
         {notifications.length > 0 ? (
           <div className="space-y-4">
             {notifications.map((n) => (
-              <div key={n.id} className="p-4 rounded-lg border border-gray-200 hover:shadow-md transition">
-                <p className="font-medium text-gray-800">{n.title}</p>
-                <p className="text-gray-600 text-sm mt-1">{n.message}</p>
-                <p className="text-gray-400 text-xs mt-2">{new Date(n.created_at).toLocaleString()}</p>
+              <div key={n.id} className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:shadow-md transition">
+                <p className="font-medium text-gray-800 dark:text-gray-200">{n.title}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{n.message}</p>
+                <p className="text-gray-400 dark:text-gray-500 text-xs mt-2">{new Date(n.created_at).toLocaleString()}</p>
               </div>
             ))}
           </div>
@@ -118,9 +118,9 @@ export default function DashboardPage() {
 
 function Card({ label, value, valueClass = "" }: any) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 hover:shadow-md transition">
-      <p className="text-sm text-gray-500">{label}</p>
-      <p className={`text-3xl font-semibold mt-1 ${valueClass}`}>{value}</p>
+    <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm p-8 hover:shadow-md transition">
+      <p className="text-sm text-gray-500 dark:text-gray-400">{label}</p>
+      <p className={`text-3xl font-semibold mt-1 ${valueClass || 'text-gray-900 dark:text-white'}`}>{value}</p>
     </div>
   );
 }

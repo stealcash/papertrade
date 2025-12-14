@@ -187,99 +187,90 @@ export default function StocksManagementPage() {
     };
 
     if (!isAuthenticated || (!user?.can_manage_stocks && user?.role !== 'superadmin') || !mounted) {
-        return <div className="min-h-screen flex items-center justify-center"><div>Loading...</div></div>;
+        return <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
+            <div className="text-gray-600 dark:text-gray-400">Loading...</div>
+        </div>;
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <header className="bg-white shadow-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center mb-4">
-                        <div className="flex items-center space-x-3">
-                            <h2 className="text-xl font-semibold text-gray-800">Stocks</h2>
-                            {selectedStocks.size > 0 && (
-                                <button
-                                    onClick={handleBulkDelete}
-                                    className="bg-red-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-red-700 transition-colors"
-                                >
-                                    Delete Selected ({selectedStocks.size})
-                                </button>
-                            )}
-                        </div>
-                        <div className="flex space-x-3">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+            <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center space-x-3">
+                        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">Stocks</h2>
+                        {selectedStocks.size > 0 && (
                             <button
-                                onClick={() => { setEditingStock(null); setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [] }); setShowModal(true); }}
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all font-medium"
+                                onClick={handleBulkDelete}
+                                className="bg-red-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-red-700 transition-colors"
                             >
-                                + Create Stock
+                                Delete Selected ({selectedStocks.size})
                             </button>
-                            <button
-                                onClick={() => router.push('/dashboard')}
-                                className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-all"
-                            >
-                                ← Back
-                            </button>
-                        </div>
+                        )}
+                    </div>
+                    <div className="flex space-x-3">
+                        <button
+                            onClick={() => { setEditingStock(null); setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [] }); setShowModal(true); }}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all font-medium"
+                        >
+                            + Create Stock
+                        </button>
                     </div>
                 </div>
-            </header>
-
-            <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-                <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+                <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border dark:border-gray-700 overflow-hidden">
                     {loading ? (
-                        <div className="p-8 text-center text-gray-600">Loading stocks...</div>
+                        <div className="p-8 text-center text-gray-600 dark:text-gray-400">Loading stocks...</div>
                     ) : stocks.length === 0 ? (
-                        <div className="p-8 text-center text-gray-600">No stocks found.</div>
+                        <div className="p-8 text-center text-gray-600 dark:text-gray-400">No stocks found.</div>
                     ) : (
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
+                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead className="bg-gray-50 dark:bg-gray-800">
                                 <tr>
                                     <th className="px-6 py-3 text-left">
                                         <input
                                             type="checkbox"
-                                            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                            className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 bg-white dark:bg-gray-700"
                                             checked={stocks.length > 0 && selectedStocks.size === stocks.length}
                                             onChange={handleSelectAll}
                                         />
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100" onClick={() => handleSort('symbol')}>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => handleSort('symbol')}>
                                         Symbol {sortBy === 'symbol' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100" onClick={() => handleSort('name')}>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => handleSort('name')}>
                                         Name {sortBy === 'name' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100" onClick={() => handleSort('exchange_suffix')}>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => handleSort('exchange_suffix')}>
                                         Exchange {sortBy === 'exchange_suffix' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Groups</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100" onClick={() => handleSort('status')}>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Groups</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => handleSort('status')}>
                                         Status {sortBy === 'status' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
                                 {stocks.map((stock) => (
-                                    <tr key={stock.id} className="hover:bg-gray-50">
+                                    <tr key={stock.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <input
                                                 type="checkbox"
-                                                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 bg-white dark:bg-gray-700"
                                                 checked={selectedStocks.has(stock.id)}
                                                 onChange={() => handleSelectRow(stock.id)}
                                             />
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{stock.symbol}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{stock.name || '-'}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{stock.exchange_suffix}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{stock.symbol}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{stock.name || '-'}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{stock.exchange_suffix}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                             <div className="flex flex-col gap-1">
                                                 {stock.sectors && stock.sectors.length > 0 && (
                                                     <div className="flex flex-wrap gap-1">
                                                         {stock.sectors.map((sid: string) => {
                                                             const sector = sectors.find(s => s.id === sid);
                                                             return sector ? (
-                                                                <span key={sid} className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs border border-blue-100">
+                                                                <span key={sid} className="px-2 py-0.5 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 rounded text-xs border border-blue-100 dark:border-blue-800">
                                                                     {sector.name}
                                                                 </span>
                                                             ) : null;
@@ -291,7 +282,7 @@ export default function StocksManagementPage() {
                                                         {stock.categories.map((cid: string) => {
                                                             const category = categories.find(c => c.id === cid);
                                                             return category ? (
-                                                                <span key={cid} className="px-2 py-0.5 bg-purple-50 text-purple-700 rounded text-xs border border-purple-100">
+                                                                <span key={cid} className="px-2 py-0.5 bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 rounded text-xs border border-purple-100 dark:border-purple-800">
                                                                     {category.name}
                                                                 </span>
                                                             ) : null;
@@ -302,13 +293,13 @@ export default function StocksManagementPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${stock.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                                            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${stock.status === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'}`}>
                                                 {stock.status}
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <button onClick={() => handleEdit(stock)} className="text-blue-600 hover:text-blue-900 mr-4">Edit</button>
-                                            <button onClick={() => handleDelete(stock.id)} className="text-red-600 hover:text-red-900">Delete</button>
+                                            <button onClick={() => handleEdit(stock)} className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-4">Edit</button>
+                                            <button onClick={() => handleDelete(stock.id)} className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Delete</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -318,7 +309,7 @@ export default function StocksManagementPage() {
                 </div>
 
                 {/* Pagination Controls */}
-                <div className="mt-4 flex justify-between items-center text-sm text-gray-600">
+                <div className="mt-4 flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
                     <div>
                         Showing {stocks.length} stocks (Page {currentPage} of {totalPages})
                     </div>
@@ -326,14 +317,14 @@ export default function StocksManagementPage() {
                         <button
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1 || loading}
-                            className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
                             Previous
                         </button>
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages || loading}
-                            className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
                             Next
                         </button>
@@ -343,42 +334,42 @@ export default function StocksManagementPage() {
 
             {showModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto p-4 backdrop-blur-sm">
-                    <div className="bg-white rounded-xl p-6 md:p-8 max-w-2xl w-full my-8 shadow-2xl transform transition-all">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">{editingStock ? 'Edit Stock' : 'Create Stock'}</h2>
+                    <div className="bg-white dark:bg-gray-800 rounded-xl p-6 md:p-8 max-w-2xl w-full my-8 shadow-2xl transform transition-all border dark:border-gray-700">
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{editingStock ? 'Edit Stock' : 'Create Stock'}</h2>
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Symbol *</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Symbol *</label>
                                 <input type="text" required value={formData.symbol} onChange={(e) => setFormData({ ...formData, symbol: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" />
+                                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name</label>
                                 <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" placeholder="e.g. Reliance Industries" />
+                                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" placeholder="e.g. Reliance Industries" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Exchange Suffix</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Exchange Suffix</label>
                                 <input type="text" value={formData.exchange_suffix} onChange={(e) => setFormData({ ...formData, exchange_suffix: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" placeholder="Default: NSE" />
+                                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" placeholder="Default: NSE" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Status *</label>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status *</label>
                                 <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none">
+                                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none">
                                     <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Sectors</label>
-                                <div className="max-h-32 overflow-y-auto border border-gray-300 rounded-lg p-2 bg-white scrollbar-thin scrollbar-thumb-gray-200">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sectors</label>
+                                <div className="max-h-32 overflow-y-auto border border-gray-300 dark:border-gray-600 rounded-lg p-2 bg-white dark:bg-gray-700 scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-600">
                                     {sectors.length === 0 ? (
-                                        <p className="text-sm text-gray-500 text-center">No sectors available</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 text-center">No sectors available</p>
                                     ) : (
                                         <div className="space-y-1">
                                             {sectors.map((sector) => (
-                                                <label key={sector.id} className="flex items-center space-x-2 p-1 hover:bg-gray-50 rounded cursor-pointer group transition-colors">
+                                                <label key={sector.id} className="flex items-center space-x-2 p-1 hover:bg-gray-50 dark:hover:bg-gray-600 rounded cursor-pointer group transition-colors">
                                                     <input
                                                         type="checkbox"
                                                         value={sector.id}
@@ -389,9 +380,9 @@ export default function StocksManagementPage() {
                                                                 : formData.sectors.filter(id => id !== sector.id);
                                                             setFormData({ ...formData, sectors: newSectors });
                                                         }}
-                                                        className="rounded text-blue-600 focus:ring-blue-500 h-4 w-4"
+                                                        className="rounded text-blue-600 focus:ring-blue-500 h-4 w-4 bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-500"
                                                     />
-                                                    <span className="text-sm text-gray-700 group-hover:text-gray-900">{sector.name}</span>
+                                                    <span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">{sector.name}</span>
                                                 </label>
                                             ))}
                                         </div>
@@ -400,14 +391,14 @@ export default function StocksManagementPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Categories</label>
-                                <div className="max-h-32 overflow-y-auto border border-gray-300 rounded-lg p-2 bg-white scrollbar-thin scrollbar-thumb-gray-200">
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Categories</label>
+                                <div className="max-h-32 overflow-y-auto border border-gray-300 dark:border-gray-600 rounded-lg p-2 bg-white dark:bg-gray-700 scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-600">
                                     {categories.length === 0 ? (
-                                        <p className="text-sm text-gray-500 text-center">No categories available</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 text-center">No categories available</p>
                                     ) : (
                                         <div className="space-y-1">
                                             {categories.map((category) => (
-                                                <label key={category.id} className="flex items-center space-x-2 p-1 hover:bg-gray-50 rounded cursor-pointer group transition-colors">
+                                                <label key={category.id} className="flex items-center space-x-2 p-1 hover:bg-gray-50 dark:hover:bg-gray-600 rounded cursor-pointer group transition-colors">
                                                     <input
                                                         type="checkbox"
                                                         value={category.id}
@@ -418,9 +409,9 @@ export default function StocksManagementPage() {
                                                                 : formData.categories.filter(id => id !== category.id);
                                                             setFormData({ ...formData, categories: newCategories });
                                                         }}
-                                                        className="rounded text-purple-600 focus:ring-purple-500 h-4 w-4"
+                                                        className="rounded text-purple-600 focus:ring-purple-500 h-4 w-4 bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-500"
                                                     />
-                                                    <span className="text-sm text-gray-700 group-hover:text-gray-900">{category.name}</span>
+                                                    <span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">{category.name}</span>
                                                 </label>
                                             ))}
                                         </div>
@@ -433,7 +424,7 @@ export default function StocksManagementPage() {
                                     {editingStock ? 'Update Stock' : 'Create Stock'}
                                 </button>
                                 <button type="button" onClick={() => { setShowModal(false); setEditingStock(null); }}
-                                    className="flex-1 bg-gray-100 text-gray-700 py-2.5 rounded-lg hover:bg-gray-200 font-medium transition-colors">
+                                    className="flex-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 py-2.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 font-medium transition-colors">
                                     Cancel
                                 </button>
                             </div>

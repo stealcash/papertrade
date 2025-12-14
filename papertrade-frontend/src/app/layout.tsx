@@ -6,6 +6,7 @@ import { store } from '@/store';
 import { loadFromStorage } from '@/store/slices/authSlice';
 import AppLayout from '@/components/layout/AppLayout';
 import { Toaster } from '@/components/ui/Toast';
+import { ThemeProvider } from '@/context/ThemeContext';
 import './globals.css';
 
 export default function RootLayout({
@@ -21,12 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased" suppressHydrationWarning>
-        <Provider store={store}>
-          <AppLayout>
-            {children}
-          </AppLayout>
-          <Toaster position="top-right" />
-        </Provider>
+        <ThemeProvider>
+          <Provider store={store}>
+            <AppLayout>
+              {children}
+            </AppLayout>
+            <Toaster position="top-right" />
+          </Provider>
+        </ThemeProvider>
       </body>
     </html>
   );

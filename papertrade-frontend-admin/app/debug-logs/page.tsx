@@ -83,61 +83,18 @@ export default function DebugLogsPage() {
     if (!user) return null;
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
             {/* Header */}
-            <header className="bg-white shadow-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
-                                <span className="text-xl font-bold text-white">PT</span>
-                            </div>
-                            <div>
-                                <h1 className="text-2xl font-bold text-gray-900">System Logs</h1>
-                                <p className="text-sm text-gray-600">{user?.email} • {user?.role}</p>
-                            </div>
-                        </div>
-                        <button
-                            onClick={handleLogout}
-                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
-                        >
-                            Logout
-                        </button>
-                    </div>
-                </div>
-            </header>
-
-            {/* Navigation */}
-            <nav className="bg-white border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex space-x-8">
-                        <button onClick={() => router.push('/dashboard')} className="px-4 py-4 text-gray-600 hover:text-blue-600 font-semibold">Dashboard</button>
-                        <button onClick={() => router.push('/users')} className="px-4 py-4 text-gray-600 hover:text-blue-600 font-semibold">User Management</button>
-                        {(isSuperadmin || user?.can_manage_stocks) && (
-                            <>
-                                <button onClick={() => router.push('/stocks')} className="px-4 py-4 text-gray-600 hover:text-blue-600 font-semibold">Stocks</button>
-                                <button onClick={() => router.push('/sectors')} className="px-4 py-4 text-gray-600 hover:text-blue-600 font-semibold">Sectors</button>
-                            </>
-                        )}
-                        <button onClick={() => router.push('/admins')} className="px-4 py-4 text-gray-600 hover:text-blue-600 font-semibold">Admins</button>
-                        {isSuperadmin && <button onClick={() => router.push('/tables')} className="px-4 py-4 text-gray-600 hover:text-blue-600 font-semibold">Tables</button>}
-                        {isSuperadmin && <button onClick={() => router.push('/sync')} className="px-4 py-4 text-gray-600 hover:text-blue-600 font-semibold">Data Sync</button>}
-                        {isSuperadmin && <button onClick={() => router.push('/debug-logs')} className="px-4 py-4 text-blue-600 border-b-2 border-blue-600 font-semibold">Logs</button>}
-                        {(isSuperadmin || user?.can_manage_config) && <button onClick={() => router.push('/config')} className="px-4 py-4 text-gray-600 hover:text-blue-600 font-semibold">System Config</button>}
-                    </div>
-                </div>
-            </nav>
-
             <div className="flex-1 p-8 overflow-y-auto">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex justify-between items-center mb-8">
                         <div>
-                            <h2 className="text-xl font-bold text-gray-900">External API Logs</h2>
-                            <p className="text-gray-500">Debug requests to the Go Service.</p>
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">External API Logs</h2>
+                            <p className="text-gray-500 dark:text-gray-400">Debug requests to the Go Service.</p>
                         </div>
                         <button
                             onClick={fetchLogs}
-                            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium text-gray-700 transition-colors"
+                            className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 transition-colors shadow-sm"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                             Refresh List
@@ -145,7 +102,7 @@ export default function DebugLogsPage() {
                     </div>
 
                     {error && (
-                        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3 text-red-700">
+                        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3 text-red-700 dark:text-red-400">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                             <p>{error}</p>
                         </div>
@@ -153,19 +110,19 @@ export default function DebugLogsPage() {
 
                     {!selectedLog ? (
                         // Log List View
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                            <div className="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-                                <h2 className="font-semibold text-gray-900">Available Log Files</h2>
-                                <span className="text-xs text-gray-500">Auto-deleted after 2 days</span>
+                        <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div className="p-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 flex justify-between items-center">
+                                <h2 className="font-semibold text-gray-900 dark:text-white">Available Log Files</h2>
+                                <span className="text-xs text-gray-500 dark:text-gray-400">Auto-deleted after 2 days</span>
                             </div>
 
                             {loading ? (
-                                <div className="p-8 text-center text-gray-500">Loading logs...</div>
+                                <div className="p-8 text-center text-gray-500 dark:text-gray-400">Loading logs...</div>
                             ) : logs.length === 0 ? (
-                                <div className="p-8 text-center text-gray-500">No logs found.</div>
+                                <div className="p-8 text-center text-gray-500 dark:text-gray-400">No logs found.</div>
                             ) : (
                                 <table className="w-full text-left text-sm">
-                                    <thead className="bg-gray-50 text-gray-500">
+                                    <thead className="bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400">
                                         <tr>
                                             <th className="px-6 py-3 font-medium">Filename</th>
                                             <th className="px-6 py-3 font-medium">Size</th>
@@ -173,23 +130,23 @@ export default function DebugLogsPage() {
                                             <th className="px-6 py-3 font-medium">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-gray-100">
+                                    <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                                         {logs.map((log) => (
-                                            <tr key={log.filename} className="hover:bg-gray-50">
-                                                <td className="px-6 py-4 font-medium text-gray-900 flex items-center gap-2">
+                                            <tr key={log.filename} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                                <td className="px-6 py-4 font-medium text-gray-900 dark:text-white flex items-center gap-2">
                                                     <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                                                     {log.filename}
                                                 </td>
-                                                <td className="px-6 py-4 text-gray-600 font-mono">
+                                                <td className="px-6 py-4 text-gray-600 dark:text-gray-400 font-mono">
                                                     {formatBytes(log.size_bytes)}
                                                 </td>
-                                                <td className="px-6 py-4 text-gray-600">
+                                                <td className="px-6 py-4 text-gray-600 dark:text-gray-400">
                                                     {new Date(log.modified_at).toLocaleString()}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <button
                                                         onClick={() => viewLog(log.filename)}
-                                                        className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
+                                                        className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium hover:underline"
                                                     >
                                                         View Content
                                                     </button>
@@ -202,18 +159,18 @@ export default function DebugLogsPage() {
                         </div>
                     ) : (
                         // Log Detail View
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col h-[calc(100vh-12rem)]">
-                            <div className="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
+                        <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col h-[calc(100vh-12rem)]">
+                            <div className="p-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 flex justify-between items-center">
                                 <div className="flex items-center gap-3">
                                     <button
                                         onClick={() => setSelectedLog(null)}
-                                        className="p-1 hover:bg-gray-200 rounded text-gray-500"
+                                        className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded text-gray-500 dark:text-gray-400 transition-colors"
                                     >
                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                                     </button>
                                     <div>
-                                        <h2 className="font-semibold text-gray-900 tracking-tight">{selectedLog.filename}</h2>
-                                        <p className="text-xs text-gray-500">Loaded {selectedLog.lines.length} entries</p>
+                                        <h2 className="font-semibold text-gray-900 dark:text-white tracking-tight">{selectedLog.filename}</h2>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">Loaded {selectedLog.lines.length} entries</p>
                                     </div>
                                 </div>
                                 <button
@@ -225,7 +182,7 @@ export default function DebugLogsPage() {
                                         a.download = selectedLog.filename;
                                         a.click();
                                     }}
-                                    className="flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-300 rounded text-xs font-medium text-gray-700 hover:bg-gray-50"
+                                    className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors shadow-sm"
                                 >
                                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                                     Download JSON
