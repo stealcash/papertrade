@@ -1,165 +1,37 @@
-=========================================
-Starting Next.js Frontend
-=========================================
-
-Starting Next.js development server on http://localhost:3000
-
-Press Ctrl+C to stop
-
 
 > papertrade-frontend@0.1.0 dev
 > next dev
 
-   ▲ Next.js 15.1.4
-   - Local:        http://localhost:3000
-   - Network:      http://192.168.0.111:3000
-   - Environments: .env.local
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 1295ms
+ ✓ Ready in 1342ms
  ○ Compiling / ...
- ✓ Compiled / in 910ms (856 modules)
- GET / 200 in 1094ms
- ✓ Compiled /dashboard in 190ms (865 modules)
- GET /dashboard 200 in 231ms
- GET /dashboard 200 in 7ms
- GET / 200 in 116ms
- GET /dashboard 200 in 15ms
- GET /dashboard 200 in 9ms
- GET / 200 in 68ms
- GET /dashboard 200 in 8ms
- GET /dashboard 200 in 6ms
- ✓ Compiled in 1362ms (872 modules)
- ✓ Compiled in 549ms (872 modules)
- ✓ Compiled / in 207ms (493 modules)
- GET / 200 in 415ms
- GET / 200 in 59ms
- GET /dashboard 200 in 17ms
- GET /dashboard 200 in 4ms
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 572ms (869 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 710ms
- GET /dashboard 200 in 22ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 32ms
- ✓ Compiled /favicon.ico in 218ms (509 modules)
- GET /favicon.ico 200 in 273ms
- ✓ Compiled in 796ms (872 modules)
- GET /dashboard 200 in 77ms
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 509ms (862 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 648ms
- GET /dashboard 200 in 78ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 13ms
- ✓ Compiled /login in 212ms (502 modules)
- ✓ Compiled in 275ms (381 modules)
- GET /favicon.ico 200 in 762ms
- GET /login 200 in 722ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 19ms
- GET /dashboard 200 in 28ms
- GET /dashboard 200 in 24ms
- GET /dashboard 200 in 9ms
- ✓ Compiled /stocks in 196ms (905 modules)
- GET /stocks 200 in 239ms
- GET /dashboard 200 in 13ms
- ✓ Compiled /market-analysis in 289ms (918 modules)
- GET /market-analysis 200 in 333ms
- GET /dashboard 200 in 50ms
+ ✓ Compiled / in 1771ms (775 modules)
+ GET / 200 in 1889ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 648ms (785 modules)
+ GET / 200 in 78ms
+ ✓ Compiled /favicon.ico in 91ms (470 modules)
+ GET /favicon.ico 200 in 124ms
+ ✓ Compiled /signup in 213ms (819 modules)
  GET /favicon.ico 200 in 9ms
- ✓ Compiled in 846ms (913 modules)
- GET /dashboard 200 in 66ms
- ✓ Compiled in 119ms (402 modules)
- GET /dashboard 200 in 6ms
- ✓ Compiled in 330ms (402 modules)
- GET /dashboard 200 in 68ms
- ✓ Compiled in 272ms (402 modules)
- GET /dashboard 200 in 11ms
- ✓ Compiled in 306ms (402 modules)
- ✓ Compiled in 107ms (402 modules)
- GET /dashboard 200 in 96ms
- GET /dashboard 200 in 20ms
- ✓ Compiled in 660ms (901 modules)
- GET /dashboard 200 in 54ms
- ✓ Compiled in 179ms (397 modules)
- GET /dashboard 200 in 22ms
- GET /stocks 200 in 48ms
- ✓ Compiled /options in 341ms (908 modules)
- GET /options 200 in 440ms
- GET /options 200 in 6ms
- GET /market-analysis 200 in 16ms
- GET /market-analysis 200 in 97ms
- ✓ Compiled /favicon.ico in 106ms (524 modules)
- GET /favicon.ico 200 in 159ms
- GET /options 200 in 102ms
- GET /favicon.ico 200 in 3ms
- ✓ Compiled /wallet in 384ms (924 modules)
- GET /wallet 200 in 425ms
- ✓ Compiled /notifications in 190ms (937 modules)
- GET /notifications 200 in 227ms
- ✓ Compiled /profile in 472ms (950 modules)
- GET /profile 200 in 496ms
- GET /wallet 200 in 15ms
- ✓ Compiled /strategy in 185ms (963 modules)
- GET /strategy 200 in 208ms
- ✓ Compiled /backtest in 208ms (970 modules)
- GET /backtest 200 in 247ms
- GET /market-analysis 200 in 14ms
- ✓ Compiled /_not-found in 238ms (968 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 335ms
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- GET /backtest 200 in 38ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 25ms
- GET /favicon.ico 200 in 22ms
- ✓ Compiled /dashboard in 213ms (554 modules)
- GET /dashboard 200 in 256ms
- ✓ Compiled /stocks in 186ms (560 modules)
- GET /stocks 200 in 247ms
- GET /dashboard 200 in 17ms
- GET /stocks 200 in 22ms
- ✓ Compiled in 678ms (938 modules)
- GET /stocks 200 in 74ms
- ✓ Compiled /stock-history in 469ms (931 modules)
- GET /stock-history 200 in 511ms
- GET /stock-history 200 in 130ms
- ✓ Compiled /favicon.ico in 278ms (525 modules)
- GET /favicon.ico 200 in 362ms
- GET /dashboard 200 in 49ms
- GET /stocks 200 in 15ms
- ✓ Compiled in 917ms (937 modules)
- GET /stocks 200 in 71ms
- GET /stocks 200 in 130ms
- ✓ Compiled /favicon.ico in 170ms (525 modules)
- GET /favicon.ico 200 in 255ms
- ✓ Compiled /_not-found in 209ms (942 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 299ms
- ○ Compiling /stocks/[id] ...
- ✓ Compiled /stocks/[id] in 524ms (953 modules)
- GET /stocks/25 200 in 1313ms
- GET /stock-history 200 in 18ms
- ✓ Compiled /options in 308ms (529 modules)
- GET /options 200 in 340ms
- ✓ Compiled /market-analysis in 337ms (537 modules)
- GET /market-analysis 200 in 367ms
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- ✓ Compiled in 889ms (944 modules)
- GET /market-analysis 200 in 349ms
- ✓ Compiled /_not-found in 207ms (934 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 291ms
- ✓ Compiled /favicon.ico in 381ms (529 modules)
- GET /favicon.ico 200 in 512ms
- ○ Compiling /backtest ...
- ✓ Compiled /backtest in 518ms (532 modules)
- GET /backtest 200 in 613ms
- ✓ Compiled /strategy in 329ms (541 modules)
- GET /strategy 200 in 400ms
- ✓ Compiled /wallet in 235ms (536 modules)
- GET /wallet 200 in 306ms
- ✓ Compiled /profile in 299ms (546 modules)
- GET /profile 200 in 379ms
- ✓ Compiled /subscription in 232ms (968 modules)
- GET /subscription 200 in 253ms
- ✓ Compiled /notifications in 120ms (555 modules)
- GET /notifications 200 in 153ms
- GET /subscription 200 in 12ms
- GET /profile 200 in 9ms
- GET /strategy 200 in 15ms
-[?25h
+ ✓ Compiled /stocks in 178ms (831 modules)
+ GET / 200 in 87ms
+ ✓ Compiled /stock-history in 202ms (837 modules)
+ ○ Compiling /options ...
+ ✓ Compiled /options in 1338ms (1877 modules)
+ ✓ Compiled /market-analysis in 253ms (1889 modules)
+ ✓ Compiled /backtest in 195ms (1901 modules)
+ ✓ Compiled /strategy in 274ms (1883 modules)
+ ✓ Compiled /wallet in 304ms (1895 modules)
+ ✓ Compiled /profile in 299ms (1905 modules)
+ ✓ Compiled /notifications in 396ms (1904 modules)
+ GET /notifications 200 in 84ms
+ ✓ Compiled /favicon.ico in 245ms (1030 modules)
+ GET /favicon.ico 200 in 282ms
+ ✓ Compiled /dashboard in 108ms (1035 modules)
+ ✓ Compiled / in 176ms (1034 modules)
+ GET / 200 in 240ms

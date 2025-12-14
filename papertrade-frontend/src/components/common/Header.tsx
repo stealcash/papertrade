@@ -36,7 +36,7 @@ export default function Header() {
                     <div className="flex items-center gap-4">
                         {/* Wallet Balance Placeholder - could be real later */}
                         <div className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium text-gray-700">
-                            Wallet: ₹{user?.wallet_balance?.toLocaleString('en-IN') || '0.00'}
+                            Wallet: ₹{user?.wallet_balance ? parseFloat(user.wallet_balance).toLocaleString('en-IN') : '0.00'}
                         </div>
 
                         <button

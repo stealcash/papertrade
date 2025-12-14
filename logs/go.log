@@ -1,15 +1,4 @@
-=========================================
-Starting Go Data Service
-=========================================
-Checking Go dependencies...
-
-Starting Go service on http://localhost:8080
-Health: http://localhost:8080/api/v1/health
-Stocks: http://localhost:8080/api/v1/stocks/daily
-
-Press Ctrl+C to stop
-
-2025/12/12 21:23:52 Configuration loaded: Port=8080
+2025/12/14 14:03:46 Configuration loaded: Port=8080
 [GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
 
 [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
@@ -21,49 +10,7 @@ Press Ctrl+C to stop
 [GIN-debug] GET    /api/v1/sector/data       --> github.com/papertrade/backend-go/internal/api.(*Handler).GetSectorData-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/contracts --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionContracts-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/candles/5min --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionCandles-fm (4 handlers)
-2025/12/12 21:23:52 Starting Go service on :8080
+2025/12/14 14:03:46 Starting Go service on :8080
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8080
-[GIN] 2025/12/12 - 21:24:11 | 200 |     343.208µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=INFY&date=2025-12-07&timewise=true"
-[GIN] 2025/12/12 - 21:24:11 | 200 |     143.875µs |             ::1 | GET      "/api/v1/sector/data?sector_enum=BANKNIFTY&date=2025-12-10&timewise=false"
-[GIN] 2025/12/12 - 21:24:12 | 200 |      27.083µs |             ::1 | GET      "/api/v1/sector/data?sector_enum=BANKNIFTY&date=2025-12-11&timewise=false"
-[GIN] 2025/12/12 - 21:24:13 | 200 |     154.834µs |             ::1 | GET      "/api/v1/sector/data?sector_enum=BANKNIFTY&date=2025-12-12&timewise=false"
-[GIN] 2025/12/12 - 21:24:13 | 200 |     902.875µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=INFY&date=2025-12-08&timewise=true"
-[GIN] 2025/12/12 - 21:24:15 | 200 |      34.416µs |             ::1 | GET      "/api/v1/sector/data?sector_enum=NIFTY50&date=2025-12-10&timewise=false"
-[GIN] 2025/12/12 - 21:24:15 | 200 |     175.875µs |             ::1 | GET      "/api/v1/sector/data?sector_enum=NIFTY50&date=2025-12-11&timewise=false"
-[GIN] 2025/12/12 - 21:24:16 | 200 |     101.375µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=INFY&date=2025-12-09&timewise=true"
-[GIN] 2025/12/12 - 21:24:17 | 200 |      23.083µs |             ::1 | GET      "/api/v1/sector/data?sector_enum=NIFTY50&date=2025-12-12&timewise=false"
-[GIN] 2025/12/12 - 21:24:18 | 200 |       38.25µs |             ::1 | GET      "/api/v1/sector/data?sector_enum=NIFTYIT&date=2025-12-10&timewise=false"
-[GIN] 2025/12/12 - 21:24:19 | 200 |     213.125µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=INFY&date=2025-12-10&timewise=true"
-[GIN] 2025/12/12 - 21:24:19 | 200 |      72.375µs |             ::1 | GET      "/api/v1/sector/data?sector_enum=NIFTYIT&date=2025-12-11&timewise=false"
-[GIN] 2025/12/12 - 21:24:20 | 200 |          33µs |             ::1 | GET      "/api/v1/sector/data?sector_enum=NIFTYIT&date=2025-12-12&timewise=false"
-[GIN] 2025/12/12 - 21:24:21 | 200 |     348.042µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=INFY&date=2025-12-11&timewise=true"
-[GIN] 2025/12/12 - 21:24:24 | 200 |         317µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=INFY&date=2025-12-12&timewise=true"
-[GIN] 2025/12/12 - 21:24:26 | 200 |     335.708µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=RELIANCE&date=2025-12-07&timewise=true"
-[GIN] 2025/12/12 - 21:24:29 | 200 |     497.958µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=RELIANCE&date=2025-12-08&timewise=true"
-[GIN] 2025/12/12 - 21:24:31 | 200 |         250µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=RELIANCE&date=2025-12-09&timewise=true"
-[GIN] 2025/12/12 - 21:24:34 | 200 |     394.542µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=RELIANCE&date=2025-12-10&timewise=true"
-[GIN] 2025/12/12 - 21:24:36 | 200 |     458.167µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=RELIANCE&date=2025-12-11&timewise=true"
-[GIN] 2025/12/12 - 21:24:39 | 200 |     429.375µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=RELIANCE&date=2025-12-12&timewise=true"
-[GIN] 2025/12/12 - 21:24:41 | 200 |     367.375µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-07&timewise=true"
-[GIN] 2025/12/12 - 21:24:44 | 200 |     457.375µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-08&timewise=true"
-[GIN] 2025/12/12 - 21:24:46 | 200 |     594.458µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-09&timewise=true"
-[GIN] 2025/12/12 - 21:24:49 | 200 |     315.833µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-10&timewise=true"
-[GIN] 2025/12/12 - 21:24:51 | 200 |     384.542µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-11&timewise=true"
-[GIN] 2025/12/12 - 21:24:54 | 200 |     245.375µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-12&timewise=true"
-[GIN] 2025/12/12 - 22:44:52 | 200 |    7.069666ms |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-07&timewise=true"
-[GIN] 2025/12/12 - 22:44:55 | 200 |     308.458µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-08&timewise=true"
-[GIN] 2025/12/12 - 22:44:57 | 200 |     174.875µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-09&timewise=true"
-[GIN] 2025/12/12 - 22:45:00 | 200 |     845.625µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-10&timewise=true"
-[GIN] 2025/12/12 - 22:45:03 | 200 |    1.035166ms |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-11&timewise=true"
-[GIN] 2025/12/12 - 22:45:06 | 200 |     418.375µs |             ::1 | GET      "/api/v1/stock/data?stock_enum=TCS&date=2025-12-12&timewise=true"
-[GIN] 2025/12/12 - 22:50:50 | 400 |    1.041792ms |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-07&timewise=true"
-[GIN] 2025/12/12 - 22:50:50 | 400 |      91.334µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-08&timewise=true"
-[GIN] 2025/12/12 - 22:50:50 | 400 |     516.167µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-09&timewise=true"
-[GIN] 2025/12/12 - 22:50:50 | 400 |      18.875µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-10&timewise=true"
-[GIN] 2025/12/12 - 22:50:50 | 400 |      17.417µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-11&timewise=true"
-[GIN] 2025/12/12 - 22:50:50 | 400 |      12.042µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-12&timewise=true"
-[GIN] 2025/12/12 - 22:53:17 | 200 |       1.831ms |       127.0.0.1 | GET      "/health"
-[GIN] 2025/12/12 - 22:55:45 | 400 |     245.791µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-12&timewise=true"
-signal: terminated

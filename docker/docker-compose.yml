@@ -113,6 +113,21 @@ services:
     networks:
       - papertrade_network
 
+  # Admin Frontend
+  frontend-admin:
+    build:
+      context: ../frontend-admin
+      dockerfile: ../docker/Dockerfile.frontend-admin
+    container_name: papertrade_frontend_admin
+    ports:
+      - "4000:4000"
+    environment:
+      - NEXT_PUBLIC_API_BASE=http://localhost:8000/api/v1
+    depends_on:
+      - django
+    networks:
+      - papertrade_network
+
 networks:
   papertrade_network:
     driver: bridge

@@ -1,64 +1,64 @@
-DEBUG 2025-12-12 21:23:48,775 functional 
+DEBUG 2025-12-14 14:03:46,758 functional 
 def accumulate(self, *args, **kwargs):
     return 1
 
-DEBUG 2025-12-12 21:23:48,776 functional 
-def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
-    return 1
-
-DEBUG 2025-12-12 21:23:48,776 functional 
-def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
-    return 1
-
-DEBUG 2025-12-12 21:23:48,776 functional 
-def chunks(task, it, n):
-    return 1
-
-DEBUG 2025-12-12 21:23:48,776 functional 
-def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
-    return 1
-
-DEBUG 2025-12-12 21:23:48,776 functional 
-def debug_task(self):
-    return 1
-
-DEBUG 2025-12-12 21:23:48,776 functional 
-def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
-    return 1
-
-DEBUG 2025-12-12 21:23:48,776 functional 
-def auto_sync_daily():
-    return 1
-
-DEBUG 2025-12-12 21:23:48,776 functional 
-def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
-    return 1
-
-DEBUG 2025-12-12 21:23:48,777 functional 
-def xmap(task, it):
-    return 1
-
-DEBUG 2025-12-12 21:23:48,777 functional 
-def backend_cleanup():
-    return 1
-
-DEBUG 2025-12-12 21:23:48,777 functional 
+DEBUG 2025-12-14 14:03:46,758 functional 
 def sync_sectors_task(is_auto=0, user_id=1, from_date=2, to_date=3):
     return 1
 
-DEBUG 2025-12-12 21:23:48,777 functional 
+DEBUG 2025-12-14 14:03:46,758 functional 
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+
+DEBUG 2025-12-14 14:03:46,758 functional 
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+
+DEBUG 2025-12-14 14:03:46,759 functional 
+def chunks(task, it, n):
+    return 1
+
+DEBUG 2025-12-14 14:03:46,759 functional 
 def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4):
     return 1
 
-DEBUG 2025-12-12 21:23:48,777 functional 
+DEBUG 2025-12-14 14:03:46,759 functional 
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+
+DEBUG 2025-12-14 14:03:46,760 functional 
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+
+DEBUG 2025-12-14 14:03:46,760 functional 
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+
+DEBUG 2025-12-14 14:03:46,760 functional 
+def auto_sync_daily():
+    return 1
+
+DEBUG 2025-12-14 14:03:46,760 functional 
+def xmap(task, it):
+    return 1
+
+DEBUG 2025-12-14 14:03:46,760 functional 
+def backend_cleanup():
+    return 1
+
+DEBUG 2025-12-14 14:03:46,760 functional 
+def debug_task(self):
+    return 1
+
+DEBUG 2025-12-14 14:03:46,760 functional 
 def chain(*args, **kwargs):
     return 1
 
-DEBUG 2025-12-12 21:23:48,777 functional 
+DEBUG 2025-12-14 14:03:46,760 functional 
 def xstarmap(task, it):
     return 1
 
-[2025-12-12 21:23:48,799: WARNING/MainProcess] 
+[2025-12-14 14:03:46,785: WARNING/MainProcess] 
 Setting ssl_cert_reqs=CERT_NONE when connecting to redis means that celery will not validate the identity of the redis broker when connecting. This leaves you vulnerable to man in the middle attacks.
 
 SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
@@ -67,10 +67,10 @@ SETTINGS-DEBUG: Loaded .env successfully
  
  -------------- celery@Chat360s-MacBook-Air.local v5.3.4 (emerald-rush)
 --- ***** ----- 
--- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2025-12-12 21:23:48
+-- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2025-12-14 14:03:46
 - *** --- * --- 
 - ** ---------- [config]
-- ** ---------- .> app:         papertrade:0x106b202f0
+- ** ---------- .> app:         papertrade:0x1069082f0
 - ** ---------- .> transport:   rediss://default:**@pumped-turkey-23712.upstash.io:6379//
 - ** ---------- .> results:     rediss://default:**@pumped-turkey-23712.upstash.io:6379/
 - *** --- * --- .> concurrency: 8 (prefork)
@@ -88,75 +88,24 @@ SETTINGS-DEBUG: Loaded .env successfully
   . apps.sync.tasks.sync_stocks_task
   . config.celery.debug_task
 
-[2025-12-12 21:23:49,035: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+[2025-12-14 14:03:47,131: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
 whether broker connection retries are made during startup in Celery 6.0 and above.
 If you wish to retain the existing behavior for retrying connections on startup,
 you should set broker_connection_retry_on_startup to True.
   warnings.warn(
 
-[2025-12-12 21:23:52,236: INFO/MainProcess] Connected to rediss://default:**@pumped-turkey-23712.upstash.io:6379//
-[2025-12-12 21:23:52,239: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+[2025-12-14 14:03:49,772: INFO/MainProcess] Connected to rediss://default:**@pumped-turkey-23712.upstash.io:6379//
+[2025-12-14 14:03:49,773: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
 whether broker connection retries are made during startup in Celery 6.0 and above.
 If you wish to retain the existing behavior for retrying connections on startup,
 you should set broker_connection_retry_on_startup to True.
   warnings.warn(
 
-[2025-12-12 21:23:54,338: INFO/MainProcess] mingle: searching for neighbors
-[2025-12-12 21:23:58,611: INFO/MainProcess] mingle: all alone
-[2025-12-12 21:24:04,405: INFO/MainProcess] celery@Chat360s-MacBook-Air.local ready.
-[2025-12-12 21:24:05,027: INFO/MainProcess] Task apps.sync.tasks.auto_sync_daily[b9c652fe-3d70-410d-bf03-2002437b9915] received
-[2025-12-12 21:24:05,032: INFO/ForkPoolWorker-8] Starting auto sync daily task
-[2025-12-12 21:24:08,339: INFO/MainProcess] Task apps.sync.tasks.sync_stocks_task[5237be1b-fb35-4307-8d6e-53042bdce360] received
-[2025-12-12 21:24:08,348: INFO/ForkPoolWorker-8] Auto sync daily task completed
-[2025-12-12 21:24:08,355: INFO/ForkPoolWorker-1] Deleted old sync log: go_service_2025-12-09.log
-[2025-12-12 21:24:08,759: INFO/MainProcess] Task apps.sync.tasks.sync_sectors_task[78b7e023-bf2a-4ea4-b7e9-cfe49228fd34] received
-[2025-12-12 21:24:09,610: INFO/ForkPoolWorker-8] Task apps.sync.tasks.auto_sync_daily[b9c652fe-3d70-410d-bf03-2002437b9915] succeeded in 4.578969499998493s: 'Sync tasks queued'
-[2025-12-12 21:24:10,015: WARNING/ForkPoolWorker-1] DTO-DEBUG: Starting sync_stocks_task. Instruments: None
-[2025-12-12 21:24:11,235: WARNING/ForkPoolWorker-1] DTO-DEBUG: Skipping ABC - already synced
-[2025-12-12 21:24:11,236: WARNING/ForkPoolWorker-1] DTO-DEBUG: Skipping HCL - already synced
-[2025-12-12 21:24:11,241: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for INFY on 2025-12-07
-[2025-12-12 21:24:12,483: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved INFY 2025-12-07, created=True, id=552
-[2025-12-12 21:24:13,760: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for INFY on 2025-12-08
-[2025-12-12 21:24:14,981: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved INFY 2025-12-08, created=True, id=553
-[2025-12-12 21:24:16,641: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for INFY on 2025-12-09
-[2025-12-12 21:24:17,861: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved INFY 2025-12-09, created=True, id=554
-[2025-12-12 21:24:19,090: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for INFY on 2025-12-10
-[2025-12-12 21:24:20,305: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved INFY 2025-12-10, created=True, id=555
-[2025-12-12 21:24:21,539: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for INFY on 2025-12-11
-[2025-12-12 21:24:22,266: INFO/ForkPoolWorker-2] Sector sync completed: 3/3 successful
-[2025-12-12 21:24:22,762: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved INFY 2025-12-11, created=True, id=556
-[2025-12-12 21:24:23,478: INFO/ForkPoolWorker-2] Task apps.sync.tasks.sync_sectors_task[78b7e023-bf2a-4ea4-b7e9-cfe49228fd34] succeeded in 14.719031790998997s: None
-[2025-12-12 21:24:24,008: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for INFY on 2025-12-12
-[2025-12-12 21:24:25,234: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved INFY 2025-12-12, created=True, id=557
-[2025-12-12 21:24:26,664: WARNING/ForkPoolWorker-1] DTO-DEBUG: Updated INFY last_synced_at (saved 6 records)
-[2025-12-12 21:24:26,671: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for RELIANCE on 2025-12-07
-[2025-12-12 21:24:27,894: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved RELIANCE 2025-12-07, created=True, id=558
-[2025-12-12 21:24:29,126: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for RELIANCE on 2025-12-08
-[2025-12-12 21:24:30,340: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved RELIANCE 2025-12-08, created=True, id=559
-[2025-12-12 21:24:31,682: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for RELIANCE on 2025-12-09
-[2025-12-12 21:24:32,903: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved RELIANCE 2025-12-09, created=True, id=560
-[2025-12-12 21:24:34,137: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for RELIANCE on 2025-12-10
-[2025-12-12 21:24:35,380: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved RELIANCE 2025-12-10, created=True, id=561
-[2025-12-12 21:24:36,804: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for RELIANCE on 2025-12-11
-[2025-12-12 21:24:38,023: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved RELIANCE 2025-12-11, created=True, id=562
-[2025-12-12 21:24:39,256: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for RELIANCE on 2025-12-12
-[2025-12-12 21:24:40,488: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved RELIANCE 2025-12-12, created=True, id=563
-[2025-12-12 21:24:41,917: WARNING/ForkPoolWorker-1] DTO-DEBUG: Updated RELIANCE last_synced_at (saved 6 records)
-[2025-12-12 21:24:41,926: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for TCS on 2025-12-07
-[2025-12-12 21:24:43,146: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved TCS 2025-12-07, created=True, id=564
-[2025-12-12 21:24:44,377: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for TCS on 2025-12-08
-[2025-12-12 21:24:45,597: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved TCS 2025-12-08, created=True, id=565
-[2025-12-12 21:24:46,840: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for TCS on 2025-12-09
-[2025-12-12 21:24:48,064: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved TCS 2025-12-09, created=True, id=566
-[2025-12-12 21:24:49,291: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for TCS on 2025-12-10
-[2025-12-12 21:24:50,514: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved TCS 2025-12-10, created=True, id=567
-[2025-12-12 21:24:51,750: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for TCS on 2025-12-11
-[2025-12-12 21:24:52,971: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved TCS 2025-12-11, created=True, id=568
-[2025-12-12 21:24:54,204: WARNING/ForkPoolWorker-1] DTO-DEBUG: Got data for TCS on 2025-12-12
-[2025-12-12 21:24:55,427: WARNING/ForkPoolWorker-1] DTO-DEBUG: Saved TCS 2025-12-12, created=True, id=569
-[2025-12-12 21:24:56,872: WARNING/ForkPoolWorker-1] DTO-DEBUG: Updated TCS last_synced_at (saved 6 records)
-[2025-12-12 21:24:56,873: WARNING/ForkPoolWorker-1] DTO-DEBUG: Skipping XYZ - already synced
-[2025-12-12 21:24:58,809: INFO/ForkPoolWorker-1] Stock sync completed: 3/6 successful
-[2025-12-12 21:25:00,151: INFO/ForkPoolWorker-1] Task apps.sync.tasks.sync_stocks_task[5237be1b-fb35-4307-8d6e-53042bdce360] succeeded in 51.81340866700339s: None
+[2025-12-14 14:03:51,830: INFO/MainProcess] mingle: searching for neighbors
+[2025-12-14 14:03:56,755: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/app/control.py:56: DuplicateNodenameWarning: Received multiple replies from node name: celery@Chat360s-MacBook-Air.local.
+Please make sure you give each node a unique nodename using
+the celery worker `-n` option.
+  warnings.warn(DuplicateNodenameWarning(
 
-worker: Warm shutdown (MainProcess)
+[2025-12-14 14:03:56,756: INFO/MainProcess] mingle: all alone
+[2025-12-14 14:04:01,886: INFO/MainProcess] celery@Chat360s-MacBook-Air.local ready.

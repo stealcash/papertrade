@@ -56,6 +56,19 @@ export const stocksAPI = {
     getAll: (params?: any) => apiClient.get('/stocks', { params }),
     getById: (id: number) => apiClient.get(`/stocks/${id}`),
     getPrices: (params: any) => apiClient.get('/stocks/prices/daily', { params }),
+    get5MinData: (params: any) => apiClient.get('/stocks/prices/5min', { params }),
+    getCategories: () => apiClient.get('/stocks/categories'),
+};
+
+export const sectorsAPI = {
+    getAll: (params?: any) => apiClient.get('/sectors', { params }),
+    getById: (id: number) => apiClient.get(`/sectors/${id}`),
+    getPrices: (params: any) => apiClient.get('/sectors/prices/daily', { params }),
+};
+
+export const optionsAPI = {
+    getContracts: (params: any) => apiClient.get('/options/contracts/', { params }),
+    getCandles5Min: (params: any) => apiClient.get('/options/candles/5min/', { params }),
 };
 
 export const backtestAPI = {
@@ -79,8 +92,10 @@ export const notificationsAPI = {
 };
 
 export const syncAPI = {
-    trigger: (data: any) => apiClient.post('/sync/trigger', data),
+    triggerNormal: (data: any) => apiClient.post('/sync/trigger-normal/', data),
+    triggerHard: (data: any) => apiClient.post('/sync/trigger-hard/', data),
     getLogs: () => apiClient.get('/sync/logs'),
+    getMarketStatus: () => apiClient.get('/sync/market-status'),
 };
 
 export const paymentsAPI = {
