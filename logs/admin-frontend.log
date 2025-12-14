@@ -7,12 +7,23 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 1354ms
- ○ Compiling / ...
- ✓ Compiled / in 1427ms (514 modules)
- GET / 200 in 1589ms
- ✓ Compiled in 109ms (252 modules)
- ○ Compiling /dashboard ...
- ✓ Compiled /dashboard in 733ms (690 modules)
- GET / 200 in 87ms
- ✓ Compiled /users in 266ms (696 modules)
+ ✓ Ready in 1523ms
+ ○ Compiling /users ...
+ ✓ Compiled /users in 774ms (686 modules)
+ GET /users 200 in 974ms
+ ✓ Compiled /favicon.ico in 119ms (427 modules)
+ GET /favicon.ico 200 in 192ms
+ ✓ Compiled /dashboard in 346ms (724 modules)
+ ✓ Compiled /sync in 326ms (730 modules)
+ ✓ Compiled /_not-found in 253ms (733 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 386ms
+ GET /sync 200 in 59ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 17ms
+ GET /favicon.ico 200 in 64ms
+ ✓ Compiled /login in 348ms (739 modules)
+ GET /login 200 in 415ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 20ms
+ GET /sync 200 in 44ms
+ GET /sync 200 in 12ms
+ ✓ Compiled /tables in 346ms (745 modules)
+ ✓ Compiled /config in 170ms (716 modules)

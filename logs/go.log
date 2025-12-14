@@ -1,4 +1,4 @@
-2025/12/14 14:03:46 Configuration loaded: Port=8080
+2025/12/14 19:41:40 Configuration loaded: Port=8080
 [GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
 
 [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
@@ -10,7 +10,33 @@
 [GIN-debug] GET    /api/v1/sector/data       --> github.com/papertrade/backend-go/internal/api.(*Handler).GetSectorData-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/contracts --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionContracts-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/candles/5min --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionCandles-fm (4 handlers)
-2025/12/14 14:03:46 Starting Go service on :8080
+2025/12/14 19:41:40 Starting Go service on :8080
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2025/12/14 - 19:43:21 | 200 |    8.025417ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-02&timewise=true"
+[GIN] 2025/12/14 - 19:43:24 | 200 |    1.751625ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-03&timewise=true"
+[GIN] 2025/12/14 - 19:43:27 | 200 |       299.5µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-04&timewise=true"
+[GIN] 2025/12/14 - 19:43:29 | 200 |     116.084µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-05&timewise=true"
+[GIN] 2025/12/14 - 19:43:31 | 200 |     251.166µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-06&timewise=true"
+[GIN] 2025/12/14 - 19:43:34 | 200 |     249.542µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-07&timewise=true"
+[GIN] 2025/12/14 - 19:43:37 | 200 |     318.625µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-08&timewise=true"
+[GIN] 2025/12/14 - 19:43:39 | 200 |     109.167µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-09&timewise=true"
+[GIN] 2025/12/14 - 19:43:42 | 200 |     295.917µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-10&timewise=true"
+[GIN] 2025/12/14 - 19:43:45 | 200 |       256.5µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-11&timewise=true"
+[GIN] 2025/12/14 - 19:43:48 | 200 |       191.5µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-12&timewise=true"
+[GIN] 2025/12/14 - 19:43:50 | 200 |      283.25µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-13&timewise=true"
+[GIN] 2025/12/14 - 19:43:53 | 200 |     235.917µs |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2025-12-14&timewise=true"
+[GIN] 2025/12/14 - 19:43:56 | 200 |     250.917µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-02&timewise=true"
+[GIN] 2025/12/14 - 19:43:58 | 200 |     144.875µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-03&timewise=true"
+[GIN] 2025/12/14 - 19:44:01 | 200 |     261.291µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-04&timewise=true"
+[GIN] 2025/12/14 - 19:44:03 | 200 |     119.625µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-05&timewise=true"
+[GIN] 2025/12/14 - 19:44:06 | 200 |      251.25µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-06&timewise=true"
+[GIN] 2025/12/14 - 19:44:08 | 200 |     169.458µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-07&timewise=true"
+[GIN] 2025/12/14 - 19:44:11 | 200 |     281.833µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-08&timewise=true"
+[GIN] 2025/12/14 - 19:44:13 | 200 |     300.417µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-09&timewise=true"
+[GIN] 2025/12/14 - 19:44:16 | 200 |     119.791µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-10&timewise=true"
+[GIN] 2025/12/14 - 19:44:19 | 200 |     118.208µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-11&timewise=true"
+[GIN] 2025/12/14 - 19:44:22 | 200 |     251.542µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-12&timewise=true"
+[GIN] 2025/12/14 - 19:44:24 | 200 |     119.291µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-13&timewise=true"
+[GIN] 2025/12/14 - 19:44:27 | 200 |     258.084µs |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2025-12-14&timewise=true"

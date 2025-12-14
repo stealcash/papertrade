@@ -331,7 +331,7 @@ export default function AdminSyncPage() {
                     {/* Info Panel */}
                     <div className="bg-blue-900/20 border border-blue-600/30 rounded-lg p-4">
                         <h3 className="text-blue-400 font-medium mb-2">💡 Sync Modes Explained</h3>
-                        <ul className="text-sm text-blue-200 space-y-1">
+                        <ul className="text-sm text-gray-600 space-y-1">
                             <li><strong>Normal Sync:</strong> Fetches data from the last sync timestamp to today</li>
                             <li><strong>Hard Sync:</strong> Fetches data for a specific date range, optionally for selected instruments only</li>
                             <li><strong>Run Immediately:</strong> Executes sync directly in API request (reliable, no Redis issues). Uncheck to use background worker</li>

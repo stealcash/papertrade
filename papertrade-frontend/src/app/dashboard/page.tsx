@@ -4,17 +4,7 @@ import { useEffect, useState } from 'react';
 import { authAPI, notificationsAPI } from '@/lib/api';
 import { Bell } from 'lucide-react';
 
-// Mock fallback
-const MOCK_DATA = {
-  wallet: 100000,
-  totalPnl: 2500,
-  totalTrades: 15,
-  winRate: 66.7,
-  notifications: [
-    { id: 1, title: 'Welcome to PaperTrade!', message: 'Start your virtual trading journey', created_at: new Date().toISOString() },
-    { id: 2, title: 'Market Update', message: 'NIFTY 50 up by 1.2% today', created_at: new Date().toISOString() },
-  ]
-};
+// Mock fallback removed
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({
@@ -59,12 +49,6 @@ export default function DashboardPage() {
           totalTrades: 0,
           winRate: 0,
         });
-        // Still use mock notifications as we don't cache them
-        setNotifications(MOCK_DATA.notifications);
-      } else {
-        console.log("API Offline & No Cache — Using Mock Dashboard Data");
-        setStats(MOCK_DATA);
-        setNotifications(MOCK_DATA.notifications);
       }
     } finally {
       setLoading(false);

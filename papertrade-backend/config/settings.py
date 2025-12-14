@@ -148,11 +148,40 @@ SPECTACULAR_SETTINGS = {
 }
 
 # CORS Configuration
+# CORS Configuration
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:3000",
+        "http://localhost:4000",
+        "http://localhost:8000",
+        "http://localhost:8080",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:4000",
+        "http://127.0.0.1:8000",
+    ]
+    
+    # Django 4.0+ requires trusted origins for cross-origin POSTs 
+    # even if you don't use session auth, sometimes it's enforced.
+    CSRF_TRUSTED_ORIGINS = [
+        "http://localhost:3000",
+        "http://localhost:4000",
+        "http://localhost:8000",
+        "http://localhost:8080",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:4000",
+        "http://127.0.0.1:8000",
+    ]
 else:
     # In production, this will be managed via system_config in database
-    CORS_ALLOWED_ORIGINS = []
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:3000",
+        "http://localhost:4000",
+    ]
+    CSRF_TRUSTED_ORIGINS = [
+        "http://localhost:3000",
+        "http://localhost:4000",
+    ]
 
 CORS_ALLOW_CREDENTIALS = True
 

@@ -48,12 +48,12 @@ pip install -r requirements.txt
 
 # Run migrations
 # print_step "Running Django migrations..."
-python manage.py makemigrations users stocks sectors strategies backtests payments sync notifications adminpanel
+# python manage.py makemigrations users stocks sectors strategies backtests payments sync notifications adminpanel
 python manage.py migrate
 
 # Seed data
 # print_step "Seeding sample data..."
-python manage.py seed_data || true
+# python manage.py seed_data || true
 
 # Go Backend
 # print_step "Setting up Go service..."

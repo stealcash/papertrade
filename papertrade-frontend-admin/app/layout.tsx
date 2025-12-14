@@ -6,6 +6,8 @@ import { store } from '@/store';
 import { loadFromStorage } from '@/store/slices/authSlice';
 import './globals.css';
 
+import AuthVerifier from '@/components/AuthVerifier';
+
 export default function RootLayout({
   children,
 }: {
@@ -19,7 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased bg-white" suppressHydrationWarning>
         <Provider store={store}>
-          {children}
+          <AuthVerifier>
+            {children}
+          </AuthVerifier>
         </Provider>
       </body>
     </html>

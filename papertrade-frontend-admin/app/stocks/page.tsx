@@ -342,29 +342,29 @@ export default function StocksManagementPage() {
             </main>
 
             {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto">
-                    <div className="bg-white rounded-xl p-8 max-w-md w-full my-8">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto p-4 backdrop-blur-sm">
+                    <div className="bg-white rounded-xl p-6 md:p-8 max-w-2xl w-full my-8 shadow-2xl transform transition-all">
                         <h2 className="text-2xl font-bold text-gray-900 mb-6">{editingStock ? 'Edit Stock' : 'Create Stock'}</h2>
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Symbol *</label>
                                 <input type="text" required value={formData.symbol} onChange={(e) => setFormData({ ...formData, symbol: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" />
+                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
                                 <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" placeholder="e.g. Reliance Industries" />
+                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" placeholder="e.g. Reliance Industries" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Exchange Suffix</label>
                                 <input type="text" value={formData.exchange_suffix} onChange={(e) => setFormData({ ...formData, exchange_suffix: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg" placeholder="Default: NSE" />
+                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none" placeholder="Default: NSE" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Status *</label>
                                 <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg">
+                                    className="w-full px-3 py-2 bg-white text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none">
                                     <option value="active">Active</option>
                                     <option value="inactive">Inactive</option>
                                 </select>
@@ -372,13 +372,13 @@ export default function StocksManagementPage() {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Sectors</label>
-                                <div className="max-h-32 overflow-y-auto border border-gray-300 rounded-lg p-2 bg-white">
+                                <div className="max-h-32 overflow-y-auto border border-gray-300 rounded-lg p-2 bg-white scrollbar-thin scrollbar-thumb-gray-200">
                                     {sectors.length === 0 ? (
                                         <p className="text-sm text-gray-500 text-center">No sectors available</p>
                                     ) : (
                                         <div className="space-y-1">
                                             {sectors.map((sector) => (
-                                                <label key={sector.id} className="flex items-center space-x-2 p-1 hover:bg-gray-50 rounded cursor-pointer">
+                                                <label key={sector.id} className="flex items-center space-x-2 p-1 hover:bg-gray-50 rounded cursor-pointer group transition-colors">
                                                     <input
                                                         type="checkbox"
                                                         value={sector.id}
@@ -391,7 +391,7 @@ export default function StocksManagementPage() {
                                                         }}
                                                         className="rounded text-blue-600 focus:ring-blue-500 h-4 w-4"
                                                     />
-                                                    <span className="text-sm text-gray-700">{sector.name}</span>
+                                                    <span className="text-sm text-gray-700 group-hover:text-gray-900">{sector.name}</span>
                                                 </label>
                                             ))}
                                         </div>
@@ -401,13 +401,13 @@ export default function StocksManagementPage() {
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">Categories</label>
-                                <div className="max-h-32 overflow-y-auto border border-gray-300 rounded-lg p-2 bg-white">
+                                <div className="max-h-32 overflow-y-auto border border-gray-300 rounded-lg p-2 bg-white scrollbar-thin scrollbar-thumb-gray-200">
                                     {categories.length === 0 ? (
                                         <p className="text-sm text-gray-500 text-center">No categories available</p>
                                     ) : (
                                         <div className="space-y-1">
                                             {categories.map((category) => (
-                                                <label key={category.id} className="flex items-center space-x-2 p-1 hover:bg-gray-50 rounded cursor-pointer">
+                                                <label key={category.id} className="flex items-center space-x-2 p-1 hover:bg-gray-50 rounded cursor-pointer group transition-colors">
                                                     <input
                                                         type="checkbox"
                                                         value={category.id}
@@ -420,7 +420,7 @@ export default function StocksManagementPage() {
                                                         }}
                                                         className="rounded text-purple-600 focus:ring-purple-500 h-4 w-4"
                                                     />
-                                                    <span className="text-sm text-gray-700">{category.name}</span>
+                                                    <span className="text-sm text-gray-700 group-hover:text-gray-900">{category.name}</span>
                                                 </label>
                                             ))}
                                         </div>
@@ -428,12 +428,12 @@ export default function StocksManagementPage() {
                                 </div>
                             </div>
 
-                            <div className="flex space-x-3 pt-4">
-                                <button type="submit" className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                                    {editingStock ? 'Update' : 'Create'}
+                            <div className="md:col-span-2 flex space-x-3 pt-2">
+                                <button type="submit" className="flex-1 bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 font-medium transition-colors shadow-sm">
+                                    {editingStock ? 'Update Stock' : 'Create Stock'}
                                 </button>
                                 <button type="button" onClick={() => { setShowModal(false); setEditingStock(null); }}
-                                    className="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300">
+                                    className="flex-1 bg-gray-100 text-gray-700 py-2.5 rounded-lg hover:bg-gray-200 font-medium transition-colors">
                                     Cancel
                                 </button>
                             </div>

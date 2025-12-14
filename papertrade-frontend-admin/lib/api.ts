@@ -36,4 +36,9 @@ apiClient.interceptors.response.use(
     }
 );
 
+export const authAPI = {
+    login: (credentials: any) => apiClient.post('/admin-panel/auth/login/', credentials),
+    profile: () => apiClient.get('/admin-panel/auth/profile/'),
+};
+
 export default apiClient;

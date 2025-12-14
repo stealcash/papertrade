@@ -5,20 +5,6 @@ import Link from 'next/link';
 import { stocksAPI } from '@/lib/api';
 import { Search, TrendingUp, TrendingDown } from 'lucide-react';
 
-// Mock fallback dataset
-const MOCK_STOCKS = [
-    { id: 1, symbol: 'RELIANCE', name: 'Reliance Industries Ltd', last_price: 2456.75, price_change: 2.3 },
-    { id: 2, symbol: 'TCS', name: 'Tata Consultancy Services', last_price: 3678.90, price_change: -0.8 },
-    { id: 3, symbol: 'HDFCBANK', name: 'HDFC Bank Ltd', last_price: 1654.30, price_change: 1.2 },
-    { id: 4, symbol: 'INFY', name: 'Infosys Ltd', last_price: 1432.50, price_change: 0.5 },
-    { id: 5, symbol: 'ICICIBANK', name: 'ICICI Bank Ltd', last_price: 987.65, price_change: -1.1 },
-    { id: 6, symbol: 'HINDUNILVR', name: 'Hindustan Unilever Ltd', last_price: 2341.20, price_change: 0.9 },
-    { id: 7, symbol: 'ITC', name: 'ITC Ltd', last_price: 432.80, price_change: 1.5 },
-    { id: 8, symbol: 'SBIN', name: 'State Bank of India', last_price: 623.45, price_change: -0.3 },
-    { id: 9, symbol: 'BHARTIARTL', name: 'Bharti Airtel Ltd', last_price: 1123.90, price_change: 2.1 },
-    { id: 10, symbol: 'KOTAKBANK', name: 'Kotak Mahindra Bank', last_price: 1789.30, price_change: 0.7 },
-];
-
 export default function StocksPage() {
     const [stocks, setStocks] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -35,8 +21,8 @@ export default function StocksPage() {
             const stockData = response.data.data?.stocks || [];
             setStocks(Array.isArray(stockData) ? stockData : []);
         } catch (error) {
-            console.log('API unavailable — using mock stocks');
-            setStocks(MOCK_STOCKS);
+            console.error('Failed to fetch stocks', error);
+            setStocks([]);
         } finally {
             setLoading(false);
         }
