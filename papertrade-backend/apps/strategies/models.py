@@ -22,7 +22,7 @@ class StrategyMaster(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
 
     type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='MANUAL')
-    logic = models.TextField(blank=True, null=True, help_text="Strategy logic for AUTO type")
+    rule_based_strategy = models.ForeignKey('StrategyRuleBased', on_delete=models.SET_NULL, null=True, blank=True, help_text="Linked rule-based strategy for AUTO type")
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -70,7 +70,8 @@ class StrategySignal(models.Model):
 class StrategyRuleBased(models.Model):
     """User-created rule-based strategies."""
     
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rule_strategies')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rule_strategies', null=True, blank=True)
+    created_by_admin = models.ForeignKey('adminpanel.AdminUser', on_delete=models.SET_NULL, null=True, blank=True, related_name='created_strategies')
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     rules_json = models.JSONField(help_text='Strategy rules in JSON format')
@@ -85,4 +86,5 @@ class StrategyRuleBased(models.Model):
         verbose_name_plural = 'Rule-Based Strategies'
     
     def __str__(self):
-        return f"{self.name} by {self.user.email}"
+        owner = self.user.email if self.user else (self.created_by_admin.email if self.created_by_admin else "Unknown")
+        return f"{self.name} by {owner}"

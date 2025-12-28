@@ -42,8 +42,15 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
         // Fetch all data in parallel for speed and isolation
         const fetchStrategies = async () => {
             try {
-                const res = await strategiesAPI.getAll();
-                setStrategies(res.data.data.results || res.data.data || []);
+                const [resSys, resUser] = await Promise.all([
+                    strategiesAPI.getAll(),
+                    strategiesAPI.getRuleBased()
+                ]);
+
+                const sysStrats = (resSys.data.data.results || resSys.data.data || []).map((s: any) => ({ ...s, is_system: true }));
+                const userStrats = (resUser.data.data.results || resUser.data.data || []).map((s: any) => ({ ...s, is_system: false }));
+
+                setStrategies([...sysStrats, ...userStrats]);
             } catch (e) {
                 console.error("Strategies Error:", e);
             }
@@ -88,8 +95,10 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            const payload = {
-                strategy_id: Number(formData.strategy_id),
+            const selectedStrat = strategies.find(s => s.id === Number(formData.strategy_id));
+            if (!selectedStrat) throw new Error("Strategy not found");
+
+            const payload: any = {
                 selection_mode: formData.selection_mode,
                 selection_config: { ids: formData.selection_ids },
                 criteria_type: formData.criteria_type,
@@ -98,6 +107,12 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                 end_date: formData.end_date,
                 initial_wallet: 100000
             };
+
+            if (selectedStrat.is_system) {
+                payload.strategy_id = selectedStrat.id;
+            } else {
+                payload.strategy_rule_based = selectedStrat.id;
+            }
 
             await backtestAPI.run(payload);
             setLoading(false);
@@ -132,22 +147,56 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
 
                     {/* STEP 1: Strategy */}
                     {step === 1 && (
-                        <div className="space-y-6">
-                            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Select Strategy</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {strategies.map((strat) => (
-                                    <div
-                                        key={strat.id}
-                                        onClick={() => setFormData({ ...formData, strategy_id: strat.id })}
-                                        className={`p-4 border rounded-xl cursor-pointer transition ${Number(formData.strategy_id) === strat.id
-                                            ? 'border-black bg-gray-50 dark:border-white dark:bg-gray-800 ring-1 ring-black dark:ring-white'
-                                            : 'border-gray-200 dark:border-gray-700 hover:border-gray-400'
-                                            }`}
-                                    >
-                                        <div className="font-semibold text-gray-900 dark:text-gray-100">{strat.name}</div>
-                                        <div className="text-xs text-gray-500 mt-1">{strat.type} • {strat.status}</div>
+                        <div className="space-y-8">
+                            <div className="flex justify-between items-center">
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">Select Strategy</h3>
+                                <a href="/backtest/strategies/create" className="text-sm text-blue-600 hover:underline font-medium">+ Create New Strategy</a>
+                            </div>
+
+                            {/* My Strategies */}
+                            {strategies.filter(s => !s.is_system && s.user).length > 0 && (
+                                <div className="space-y-3">
+                                    <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider">My Strategies</h4>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {strategies.filter(s => !s.is_system && s.user).map((strat) => (
+                                            <div
+                                                key={strat.id}
+                                                onClick={() => setFormData({ ...formData, strategy_id: strat.id })}
+                                                className={`p-4 border rounded-xl cursor-pointer transition relative group ${Number(formData.strategy_id) === strat.id
+                                                    ? 'border-black bg-gray-50 dark:border-white dark:bg-gray-800 ring-1 ring-black dark:ring-white'
+                                                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-400'
+                                                    }`}
+                                            >
+                                                <div className="font-semibold text-gray-900 dark:text-gray-100">{strat.name}</div>
+                                                <div className="text-xs text-gray-500 mt-1">{strat.description || 'Custom Strategy'}</div>
+                                                {/* Badge */}
+                                                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <span className="bg-blue-100 text-blue-800 text-[10px] font-bold px-1.5 py-0.5 rounded">MINE</span>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
+                                </div>
+                            )}
+
+                            {/* System Strategies */}
+                            <div className="space-y-3">
+                                <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider">System Strategies</h4>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {strategies.filter(s => s.is_system || !s.user).map((strat) => (
+                                        <div
+                                            key={strat.id}
+                                            onClick={() => setFormData({ ...formData, strategy_id: strat.id })}
+                                            className={`p-4 border rounded-xl cursor-pointer transition ${Number(formData.strategy_id) === strat.id
+                                                ? 'border-black bg-gray-50 dark:border-white dark:bg-gray-800 ring-1 ring-black dark:ring-white'
+                                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-400'
+                                                }`}
+                                        >
+                                            <div className="font-semibold text-gray-900 dark:text-gray-100">{strat.name}</div>
+                                            <div className="text-xs text-gray-500 mt-1">{strat.type} • {strat.status}</div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     )}

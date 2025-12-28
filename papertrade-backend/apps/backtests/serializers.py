@@ -32,8 +32,14 @@ class TradeSerializer(serializers.ModelSerializer):
 class BacktestRunRequestSerializer(serializers.Serializer):
     """Serializer for backtest run request."""
     
-    # Strategy
-    strategy_id = serializers.IntegerField(required=True)
+    # Strategy (One of them is required)
+    strategy_id = serializers.IntegerField(required=False, help_text="ID of StrategyMaster (System/Auto)")
+    strategy_rule_based = serializers.IntegerField(required=False, help_text="ID of StrategyRuleBased (User Custom)")
+
+    def validate(self, attrs):
+        if not attrs.get('strategy_id') and not attrs.get('strategy_rule_based'):
+            raise serializers.ValidationError("Must provide either 'strategy_id' or 'strategy_rule_based'.")
+        return attrs
     
     # Selection
     selection_mode = serializers.ChoiceField(choices=['stock', 'sector', 'category', 'watchlist'])

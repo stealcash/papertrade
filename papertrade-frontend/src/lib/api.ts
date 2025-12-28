@@ -112,4 +112,11 @@ export const paymentsAPI = {
 export const strategiesAPI = {
     getAll: () => apiClient.get('/strategies/master/'),
     get: (idOrCode: string | number) => apiClient.get(`/strategies/master/${idOrCode}/`),
+
+    // Rule Based (User)
+    getRuleBased: () => apiClient.get('/strategies/rule-based/'),
+    getRuleBasedById: (id: number) => apiClient.get(`/strategies/rule-based/${id}/`),
+    createRuleBased: (data: any) => apiClient.post('/strategies/rule-based/', data),
+    updateRuleBased: (id: number, data: any) => apiClient.put(`/strategies/rule-based/${id}/`, data),
+    deleteRuleBased: (id: number) => apiClient.delete(`/strategies/rule-based/${id}/`),
 };

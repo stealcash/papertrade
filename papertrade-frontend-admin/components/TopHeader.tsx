@@ -64,7 +64,7 @@ export default function TopHeader({
 
                 {user && (
                     <div className="text-right hidden sm:block">
-                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.email}</p>
+                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">{user.email}</p>
                         <div className="flex justify-end items-center gap-2">
                             <span className={`text-xs px-2 py-0.5 rounded-full ${user.role === 'superadmin' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' :
                                 user.role === 'admin' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300'

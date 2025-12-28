@@ -16,9 +16,63 @@ const Alert = ({ type, message, onClose }: { type: 'success' | 'error', message:
     </div>
 );
 
+interface Rule {
+    field: string;
+    operator: string;
+    value: string;
+}
+
+interface Block {
+    rules: Rule[];
+    outputPercentage: string;
+    action: 'BUY' | 'SELL';
+}
+
+// RuleRow Component - External Definition to avoid scope issues
+const RuleRow = ({ rule, onChange, onDelete }: { rule: Rule, onChange: (f: keyof Rule, v: string) => void, onDelete: () => void }) => (
+    <div className="flex gap-2 items-center mb-2">
+        <span className="text-xs font-bold text-gray-500 w-6">IF</span>
+        <select
+            value={rule.field}
+            onChange={(e) => onChange('field', e.target.value)}
+            className="border rounded px-2 py-1 text-sm bg-white dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500"
+        >
+            <option value="RSI">RSI</option>
+            <option value="SMA_5">SMA 5 (% of Close)</option>
+            <option value="SMA_10">SMA 10 (% of Close)</option>
+            <option value="SMA_20">SMA 20 (% of Close)</option>
+            <option value="SMA_50">SMA 50 (% of Close)</option>
+            <option value="CLOSE_PCT_CHANGE_0">Close % Change (Day 0 - Day -1)</option>
+            <option value="CLOSE_PCT_CHANGE_1">Close % Change (Day -1 - Day -2)</option>
+        </select>
+        <select
+            value={rule.operator}
+            onChange={(e) => onChange('operator', e.target.value)}
+            className="border rounded px-2 py-1 text-sm w-16 bg-white dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+        >
+            <option value="gt">&gt;</option>
+            <option value="lt">&lt;</option>
+            <option value="eq">=</option>
+            <option value="gte">≥</option>
+            <option value="lte">≤</option>
+        </select>
+        <input
+            type="number"
+            value={rule.value}
+            onChange={(e) => onChange('value', e.target.value)}
+            className="border rounded px-2 py-1 text-sm w-20 bg-white dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+            placeholder="Val"
+        />
+        <button type="button" onClick={onDelete} className="text-gray-400 hover:text-red-500">
+            <TrashIcon className="h-4 w-4" />
+        </button>
+    </div>
+);
+
 export default function StrategiesPage() {
     const router = useRouter();
     const dispatch = useDispatch();
+    // @ts-ignore
     const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
     const [mounted, setMounted] = useState(false);
     const [showHelp, setShowHelp] = useState(false);
@@ -39,6 +93,11 @@ export default function StrategiesPage() {
         logic: '',
         status: 'active'
     });
+
+    // Unified Rule Builder State
+    const [strategyBlocks, setStrategyBlocks] = useState<Block[]>([
+        { action: 'BUY', rules: [{ field: 'RSI', operator: 'lt', value: '30' }], outputPercentage: '2' }
+    ]);
 
     useEffect(() => {
         setMounted(true);
@@ -73,6 +132,7 @@ export default function StrategiesPage() {
             logic: '',
             status: 'active'
         });
+        setStrategyBlocks([{ action: 'BUY', rules: [{ field: 'RSI', operator: 'lt', value: '30' }], outputPercentage: '2' }]);
         setIsEditMode(false);
         setIsModalOpen(true);
         setError('');
@@ -87,11 +147,11 @@ export default function StrategiesPage() {
         setSuccessMessage('');
     };
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (code: string) => {
         if (!confirm('Are you sure you want to delete this strategy?')) return;
         try {
             const { strategiesAPI } = await import('@/lib/api');
-            await strategiesAPI.deleteMaster(id);
+            await strategiesAPI.deleteMaster(code);
             setSuccessMessage('Strategy deleted successfully');
             fetchStrategies();
         } catch (err: any) {
@@ -106,12 +166,35 @@ export default function StrategiesPage() {
 
         try {
             const { strategiesAPI } = await import('@/lib/api');
-            if (isEditMode) {
-                await strategiesAPI.updateMaster(currentStrategy.id, currentStrategy);
-                setSuccessMessage('Strategy updated successfully');
+
+            if (currentStrategy.type === 'AUTO' && !isEditMode) {
+                // Rule Based Creation (AUTO mode)
+                // Backend will automatically create the linked StrategyMaster using the provided code.
+                const payload = {
+                    name: currentStrategy.name,
+                    description: currentStrategy.description,
+                    code: currentStrategy.code,
+                    is_public: true, // Admin created strategies are public
+                    rules_json: {
+                        strategy_blocks: strategyBlocks.map(b => ({
+                            action: b.action,
+                            rules: b.rules,
+                            output_percentage: parseFloat(b.outputPercentage) || 0
+                        }))
+                    }
+                };
+
+                await strategiesAPI.createRuleBased(payload);
+                setSuccessMessage('Auto Strategy created successfully');
             } else {
-                await strategiesAPI.createMaster(currentStrategy);
-                setSuccessMessage('Strategy created successfully');
+                // Legacy StrategyMaster (Manual)
+                if (isEditMode) {
+                    await strategiesAPI.updateMaster(currentStrategy.code, currentStrategy);
+                    setSuccessMessage('Strategy updated successfully');
+                } else {
+                    await strategiesAPI.createMaster(currentStrategy);
+                    setSuccessMessage('Strategy created successfully');
+                }
             }
             setIsModalOpen(false);
             fetchStrategies();
@@ -119,6 +202,41 @@ export default function StrategiesPage() {
             setError(err.response?.data?.message || 'Failed to save strategy');
         }
     };
+
+    // --- Unified Strategy Blocks Helpers ---
+
+    const addBlock = () => {
+        setStrategyBlocks([...strategyBlocks, { action: 'BUY', rules: [{ field: 'RSI', operator: 'lt', value: '30' }], outputPercentage: '2' }]);
+    };
+
+    const removeBlock = (index: number) => {
+        setStrategyBlocks(strategyBlocks.filter((_, i) => i !== index));
+    };
+
+    const updateBlock = (index: number, field: keyof Block, val: string) => {
+        const newBlocks = [...strategyBlocks];
+        newBlocks[index] = { ...newBlocks[index], [field]: val };
+        setStrategyBlocks(newBlocks);
+    };
+
+    const addRuleToBlock = (blockIndex: number) => {
+        const newBlocks = [...strategyBlocks];
+        newBlocks[blockIndex].rules.push({ field: 'RSI', operator: 'lt', value: '30' });
+        setStrategyBlocks(newBlocks);
+    };
+
+    const removeRuleFromBlock = (blockIndex: number, ruleIndex: number) => {
+        const newBlocks = [...strategyBlocks];
+        newBlocks[blockIndex].rules = newBlocks[blockIndex].rules.filter((_, i) => i !== ruleIndex);
+        setStrategyBlocks(newBlocks);
+    };
+
+    const updateRuleInBlock = (blockIndex: number, ruleIndex: number, field: keyof Rule, val: string) => {
+        const newBlocks = [...strategyBlocks];
+        newBlocks[blockIndex].rules[ruleIndex] = { ...newBlocks[blockIndex].rules[ruleIndex], [field]: val };
+        setStrategyBlocks(newBlocks);
+    };
+
 
     if (!mounted || !isAuthenticated) return null;
 
@@ -192,7 +310,7 @@ export default function StrategiesPage() {
                                                 <button onClick={() => handleOpenEdit(strategy)} className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-4">
                                                     <PencilIcon className="h-5 w-5" />
                                                 </button>
-                                                <button onClick={() => handleDelete(strategy.id)} className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
+                                                <button onClick={() => handleDelete(strategy.code)} className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">
                                                     <TrashIcon className="h-5 w-5" />
                                                 </button>
                                             </td>
@@ -214,7 +332,7 @@ export default function StrategiesPage() {
 
                             <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                                 <div className="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                    <div className="sm:flex sm:items-start">
+                                    <div className="sm:flex sm:items-start text-left">
                                         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                             <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white" id="modal-title">
                                                 {isEditMode ? 'Edit Strategy' : 'Create Strategy'}
@@ -229,25 +347,27 @@ export default function StrategiesPage() {
                                                         className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 dark:text-white"
                                                     />
                                                 </div>
-                                                <div>
-                                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Code (Unique)</label>
-                                                    <input
-                                                        type="text"
-                                                        value={currentStrategy.code}
-                                                        onChange={e => setCurrentStrategy({ ...currentStrategy, code: e.target.value.toUpperCase() })}
-                                                        disabled={isEditMode}
-                                                        className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 dark:text-white disabled:bg-gray-100 dark:disabled:bg-gray-600"
-                                                    />
-                                                </div>
+                                                {!isEditMode && (
+                                                    <div>
+                                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Code (Unique)</label>
+                                                        <input
+                                                            type="text"
+                                                            value={currentStrategy.code}
+                                                            onChange={e => setCurrentStrategy({ ...currentStrategy, code: e.target.value.toUpperCase() })}
+                                                            className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 dark:text-white"
+                                                        />
+                                                    </div>
+                                                )}
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
                                                     <select
                                                         value={currentStrategy.type}
                                                         onChange={e => setCurrentStrategy({ ...currentStrategy, type: e.target.value })}
-                                                        className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 dark:text-white"
+                                                        disabled={isEditMode}
+                                                        className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 dark:text-white disabled:opacity-50"
                                                     >
                                                         <option value="MANUAL">MANUAL (Python Code)</option>
-                                                        <option value="AUTO">AUTO (Dynamic Logic)</option>
+                                                        <option value="AUTO">AUTO (Rule Builder)</option>
                                                     </select>
                                                 </div>
                                                 <div>
@@ -255,108 +375,110 @@ export default function StrategiesPage() {
                                                     <textarea
                                                         value={currentStrategy.description}
                                                         onChange={e => setCurrentStrategy({ ...currentStrategy, description: e.target.value })}
-                                                        rows={3}
+                                                        rows={2}
                                                         className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white dark:bg-gray-700 dark:text-white"
                                                     />
                                                 </div>
-                                                {currentStrategy.type === 'AUTO' && (
-                                                    <div>
-                                                        <div className="mb-2">
-                                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                                                Load Template
-                                                            </label>
-                                                            <select
-                                                                onChange={(e) => {
-                                                                    const tmpl = e.target.value;
-                                                                    let code = '';
-                                                                    if (tmpl === 'ONE_DAY') {
-                                                                        code = `EXPECTED: CLOSE + (CLOSE - CLOSE_1)`;
-                                                                    } else if (tmpl === 'THREE_DAY') {
-                                                                        code = `EXPECTED: CLOSE + ((CLOSE - CLOSE_1) + (CLOSE_1 - CLOSE_2)) / 2 if ((CLOSE > CLOSE_1) == (CLOSE_1 > CLOSE_2)) else None`;
-                                                                    }
-                                                                    if (code) {
-                                                                        setCurrentStrategy({ ...currentStrategy, logic: code });
-                                                                    }
-                                                                }}
-                                                                className="block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-1 px-2 text-sm bg-white dark:bg-gray-700 dark:text-white"
-                                                            >
-                                                                <option value="">Select a template...</option>
-                                                                <option value="ONE_DAY">One Day Trend (Momentum)</option>
-                                                                <option value="THREE_DAY">Three Day Trend (Avg Momentum)</option>
-                                                            </select>
-                                                        </div>
 
-                                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                                                            Logic Expression
+                                                {/* AUTO Mode: Rule Builder */}
+                                                {currentStrategy.type === 'AUTO' && !isEditMode && (
+                                                    <div className="space-y-4 border-t pt-4 border-gray-200 dark:border-gray-600">
+                                                        <h4 className="font-semibold text-gray-800 dark:text-gray-200">Rule Builder</h4>
+
+                                                        {/* Unified Strategy Blocks */}
+                                                        <div className="space-y-4">
+                                                            {strategyBlocks.map((block, bIndex) => {
+                                                                const isBuy = block.action === 'BUY';
+                                                                const colorClass = isBuy ? 'green' : 'red';
+                                                                const bgClass = isBuy ? 'bg-green-50 dark:bg-green-900/20 border-green-100 dark:border-green-900' : 'bg-red-50 dark:bg-red-900/20 border-red-100 dark:border-red-900';
+                                                                const textClass = isBuy ? 'text-green-800 dark:text-green-300' : 'text-red-800 dark:text-red-300';
+
+                                                                return (
+                                                                    <div key={bIndex} className={`${bgClass} p-3 rounded-lg border relative transition-colors duration-300`}>
+                                                                        <div className="flex justify-between items-center mb-2">
+                                                                            <div className="flex items-center gap-2">
+                                                                                <span className={`text-sm font-bold ${textClass}`}>
+                                                                                    {bIndex === 0 ? 'IF' : 'ELSE IF'} (Block {bIndex + 1})
+                                                                                </span>
+                                                                                <select
+                                                                                    value={block.action}
+                                                                                    onChange={(e) => updateBlock(bIndex, 'action', e.target.value)}
+                                                                                    className={`text-xs font-bold border rounded px-2 py-0.5 ${isBuy ? 'bg-green-100 text-green-800 border-green-300' : 'bg-red-100 text-red-800 border-red-300'}`}
+                                                                                >
+                                                                                    <option value="BUY">Action: BUY (UP)</option>
+                                                                                    <option value="SELL">Action: SELL (DOWN)</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div className="flex gap-2">
+                                                                                {strategyBlocks.length > 1 && (
+                                                                                    <button type="button" onClick={() => removeBlock(bIndex)} className="text-xs text-gray-400 hover:text-red-500">Remove</button>
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+
+                                                                        {/* Rules in Block */}
+                                                                        {block.rules.map((r, rIndex) => (
+                                                                            <RuleRow
+                                                                                key={rIndex}
+                                                                                rule={r}
+                                                                                onChange={(f, v) => updateRuleInBlock(bIndex, rIndex, f, v)}
+                                                                                onDelete={() => removeRuleFromBlock(bIndex, rIndex)}
+                                                                            />
+                                                                        ))}
+                                                                        <button type="button" onClick={() => addRuleToBlock(bIndex)} className={`text-xs px-2 py-1 rounded mb-3 ${isBuy ? 'bg-green-200 dark:bg-green-800 hover:bg-green-300' : 'bg-red-200 dark:bg-red-800 hover:bg-red-300'}`}>+ Add Rule</button>
+
+                                                                        {/* Outcome */}
+                                                                        <div className={`mt-2 pt-2 border-t flex items-center gap-2 ${isBuy ? 'border-green-200 dark:border-green-800' : 'border-red-200 dark:border-red-800'}`}>
+                                                                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                                                {isBuy ? 'Target Profit Increase:' : 'Target Profit Drop:'}
+                                                                            </span>
+                                                                            <input
+                                                                                type="number"
+                                                                                value={block.outputPercentage}
+                                                                                onChange={(e) => updateBlock(bIndex, 'outputPercentage', e.target.value)}
+                                                                                className="w-20 border rounded px-2 py-1 text-sm bg-white dark:bg-gray-700 dark:text-white"
+                                                                                placeholder="%"
+                                                                            />
+                                                                            <span className="text-sm text-gray-500">%</span>
+                                                                        </div>
+                                                                    </div>
+                                                                );
+                                                            })}
+
                                                             <button
                                                                 type="button"
-                                                                onClick={() => setShowHelp(!showHelp)}
-                                                                className="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none"
-                                                                title="Click for syntax help"
+                                                                onClick={addBlock}
+                                                                className="w-full py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-gray-500 hover:border-blue-500 hover:text-blue-500 text-sm font-medium transition-colors"
                                                             >
-                                                                <InformationCircleIcon className="h-5 w-5 inline" />
+                                                                + Add 'Else If' Block
                                                             </button>
-                                                        </label>
+                                                        </div>
 
-                                                        {showHelp && (
-                                                            <div className="mb-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-md text-sm text-blue-800 dark:text-blue-200 border border-blue-100 dark:border-blue-800">
-                                                                <p className="font-semibold mb-1">Syntax Format:</p>
-                                                                <pre className="text-xs bg-white dark:bg-gray-800 p-2 rounded mb-2 border border-blue-100 dark:border-blue-700 overflow-x-auto">
-                                                                    {`UP: CLOSE > OPEN
-DOWN: CLOSE < OPEN
-EXPECTED: CLOSE + (CLOSE - CLOSE_1) if (CLOSE > OPEN) else CLOSE`}
-                                                                </pre>
-                                                                <p className="font-semibold mb-1">Available Variables:</p>
-                                                                <ul className="list-disc list-inside text-xs space-y-1 ml-1">
-                                                                    <li><code className="bg-white dark:bg-gray-800 px-1 rounded">CLOSE</code>, <code className="bg-white dark:bg-gray-800 px-1 rounded">OPEN</code>, <code className="bg-white dark:bg-gray-800 px-1 rounded">HIGH</code>, <code className="bg-white dark:bg-gray-800 px-1 rounded">LOW</code>, <code className="bg-white dark:bg-gray-800 px-1 rounded">VOLUME</code> (Current)</li>
-                                                                    <li><code className="bg-white dark:bg-gray-800 px-1 rounded">CLOSE_1</code>, <code className="bg-white dark:bg-gray-800 px-1 rounded">OPEN_1</code>... (Yesterday)</li>
-                                                                    <li><code className="bg-white dark:bg-gray-800 px-1 rounded">CLOSE_2</code>, <code className="bg-white dark:bg-gray-800 px-1 rounded">OPEN_2</code>... (Day Before)</li>
-                                                                </ul>
-                                                                <p className="mt-2 text-xs italic">
-                                                                    Supports standard Python operators including if-else.
-                                                                </p>
-                                                            </div>
-                                                        )}
-
-                                                        <textarea
-                                                            value={currentStrategy.logic}
-                                                            onChange={e => setCurrentStrategy({ ...currentStrategy, logic: e.target.value })}
-                                                            rows={4}
-                                                            className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-mono bg-white dark:bg-gray-700 dark:text-white"
-                                                            placeholder="Example: CLOSE > MOVING_AVERAGE(20)"
-                                                        />
+                                                        <div>
+                                                            <p className="text-xs text-gray-500 mt-2">Note: This strategy will be saved as a public 'Rule-Based Strategy'.</p>
+                                                        </div>
                                                     </div>
                                                 )}
-                                                <div>
-                                                    <label className="flex items-center">
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={currentStrategy.status === 'active'}
-                                                            onChange={e => setCurrentStrategy({ ...currentStrategy, status: e.target.checked ? 'active' : 'inactive' })}
-                                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                                        />
-                                                        <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Active</span>
-                                                    </label>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="bg-gray-50 dark:bg-gray-700/50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                    <button
-                                        type="button"
-                                        onClick={handleSubmit}
-                                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                                    >
-                                        {isEditMode ? 'Update' : 'Create'}
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsModalOpen(false)}
-                                        className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                    >
-                                        Cancel
-                                    </button>
+                                    <div className="bg-gray-50 dark:bg-gray-700/50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                        <button
+                                            type="button"
+                                            onClick={handleSubmit}
+                                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                                        >
+                                            {isEditMode ? 'Update' : 'Create'}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsModalOpen(false)}
+                                            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

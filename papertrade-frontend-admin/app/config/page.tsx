@@ -252,6 +252,37 @@ export default function ConfigPage() {
                                     </button>
                                 </div>
 
+                                <div className="flex items-center justify-between mb-4 pt-4 border-t dark:border-gray-700">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                            Backtest Execution Mode
+                                        </label>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                            Method for running backtests (Background=Async, Direct=Sync)
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                                        <button
+                                            onClick={() => handleUpdate('BACKTEST_EXECUTION_MODE', 'background')}
+                                            className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${getConfig('BACKTEST_EXECUTION_MODE')?.value !== 'direct'
+                                                ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                                                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                                                }`}
+                                        >
+                                            Background
+                                        </button>
+                                        <button
+                                            onClick={() => handleUpdate('BACKTEST_EXECUTION_MODE', 'direct')}
+                                            className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${getConfig('BACKTEST_EXECUTION_MODE')?.value === 'direct'
+                                                ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                                                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                                                }`}
+                                        >
+                                            Direct
+                                        </button>
+                                    </div>
+                                </div>
+
                                 <div className="space-y-3 pt-3 border-t dark:border-gray-700">
                                     <div>
                                         <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">Go Service URL</label>

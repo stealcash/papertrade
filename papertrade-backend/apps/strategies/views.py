@@ -21,6 +21,12 @@ class StrategyMasterViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return get_success_response(serializer.data)
 
+    def perform_destroy(self, instance):
+        # If AUTO strategy, delete linked rule_based strategy
+        if instance.type == 'AUTO' and instance.rule_based_strategy:
+            instance.rule_based_strategy.delete()
+        instance.delete()
+
 
 class StrategySignalViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -110,12 +116,36 @@ class StrategyRuleBasedViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         # Users can only see their own strategies and public ones
+        user = self.request.user
+        if hasattr(user, '_meta') and user._meta.object_name == 'AdminUser':
+             return self.queryset.all()
+             
         return self.queryset.filter(
-            models.Q(user=self.request.user) | models.Q(is_public=True)
+            models.Q(user=user) | models.Q(is_public=True)
         )
     
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        import uuid
+        code = serializer.validated_data.pop('code', None)
+        user = self.request.user
+        
+        # Check if user is an AdminUser (based on model name or properties)
+        if hasattr(user, '_meta') and user._meta.object_name == 'AdminUser':
+            instance = serializer.save(created_by_admin=user)
+            
+            # Auto-create StrategyMaster
+            final_code = code if code else f"AUTO_{instance.id}_{uuid.uuid4().hex[:4].upper()}"
+            
+            StrategyMaster.objects.create(
+                name=instance.name,
+                description=instance.description,
+                code=final_code,
+                type='AUTO',
+                rule_based_strategy=instance,
+                status='active'
+            )
+        else:
+            serializer.save(user=user)
     
     def list(self, request):
         queryset = self.get_queryset()

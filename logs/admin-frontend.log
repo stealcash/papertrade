@@ -2,23 +2,9 @@
 > frontend-admin@0.1.0 dev
 > next dev -p 4000
 
- ⨯ Failed to start server
-Error: listen EADDRINUSE: address already in use :::4000
-    at Server.setupListenHandle [as _listen[?25h
-e:net:1940:16)
-    at listenInCluster (node:net:1997:12)
-    at Server.listen (node:net:2102:7)
-    at /Users/chat360team/Documents/papertrade/papertrade-frontend-admin/node_modules/next/dist/server/lib/start-server.js:280:16
-    at new Promise (<anonymous>)
-    at startServer (/Users/chat360team/Documents/papertrade/papertrade-frontend-admin/node_modules/next/dist/server/lib/start-server.js:191:11)
-    at /Users/chat360team/Documents/papertrade/papertrade-frontend-admin/node_modules/next/dist/server/lib/start-server.js:310:52
-    at Span.traceAsyncFn (/Users/chat360team/Documents/papertrade/papertrade-frontend-admin/node_modules/next/dist/trace/trace.js:154:26)
-    at process.<anonymous> (/Users/chat360team/Documents/papertrade/papertrade-frontend-admin/node_modules/next/dist/server/lib/start-server.js:310:35)
-    at process.emit (node:events:508:28) {
-  code: 'EADDRINUSE',
-  errno: -48,
-  syscall: 'listen',
-  address: '::',
-  port: 4000
-}
-[?25h
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:4000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1919ms

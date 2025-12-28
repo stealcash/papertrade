@@ -187,16 +187,31 @@ def run_backtest(request):
     run_id = f"BT-{uuid.uuid4().hex[:12].upper()}"
     
     # Get Strategy
-    from apps.strategies.models import StrategyMaster
-    try:
-        strategy = StrategyMaster.objects.get(id=serializer.validated_data['strategy_id'])
-    except StrategyMaster.DoesNotExist:
-        return get_error_response('INVALID_STRATEGY', 'Strategy not found', status_code=400)
+    from apps.strategies.models import StrategyMaster, StrategyRuleBased
+    
+    strategy_predefined = None
+    strategy_rule_based = None
+    
+    if serializer.validated_data.get('strategy_id'):
+        try:
+            strategy_predefined = StrategyMaster.objects.get(id=serializer.validated_data['strategy_id'])
+        except StrategyMaster.DoesNotExist:
+            return get_error_response('INVALID_STRATEGY', 'StrategyMaster not found', status_code=400)
+            
+    elif serializer.validated_data.get('strategy_rule_based'):
+        try:
+            strategy_rule_based = StrategyRuleBased.objects.get(id=serializer.validated_data['strategy_rule_based'])
+            # Optional: Check permission
+            if strategy_rule_based.user and strategy_rule_based.user != request.user and not strategy_rule_based.is_public:
+                 return get_error_response('PERMISSION_DENIED', 'You do not have access to this strategy', status_code=403)
+        except StrategyRuleBased.DoesNotExist:
+            return get_error_response('INVALID_STRATEGY', 'StrategyRuleBased not found', status_code=400)
     
     backtest = BacktestRun.objects.create(
         run_id=run_id,
         user=request.user,
-        strategy_predefined=strategy,
+        strategy_predefined=strategy_predefined,
+        strategy_rule_based=strategy_rule_based,
         selection_mode=selection_mode,
         selection_config=selection_config,
         criteria_type=serializer.validated_data['criteria_type'],

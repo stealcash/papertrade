@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { backtestAPI } from '@/lib/api';
-import { PlayCircle, Download, Calendar, Trash2 } from 'lucide-react';
+import { PlayCircle, Download, Calendar, Trash2, Settings } from 'lucide-react';
 import NewBacktestModal from '@/components/backtest/NewBacktestModal';
 
 export default function BacktestPage() {
@@ -70,6 +70,12 @@ export default function BacktestPage() {
                             <Trash2 size={20} /> Clear All
                         </button>
                     )}
+                    <Link
+                        href="/backtest/strategies"
+                        className="flex items-center gap-2 px-4 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition shadow-sm"
+                    >
+                        <Settings size={20} /> My Strategies
+                    </Link>
                     <button
                         onClick={() => setIsModalOpen(true)}
                         className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition shadow-lg hover:shadow-xl"

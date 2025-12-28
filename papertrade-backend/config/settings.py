@@ -199,11 +199,8 @@ REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')
 
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': REDIS_URL + '?ssl_cert_reqs=none' if REDIS_URL.startswith('rediss://') else REDIS_URL,
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        },
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
     }
 }
 

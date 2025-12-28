@@ -50,8 +50,10 @@ class BacktestEngine:
             
             # Strategy Code
             strategy = self.backtest_run.strategy_predefined
-            if not strategy:
-                raise ValueError("No predefined strategy selected")
+            strategy_rule = self.backtest_run.strategy_rule_based
+            
+            if not strategy and not strategy_rule:
+                raise ValueError("No strategy selected")
                 
             # Process each stock
             for stock in stocks:
@@ -97,8 +99,18 @@ class BacktestEngine:
 
         # 2. Generate Signals (Hypothetical)
         generated_signals = []
-        if strategy.type == 'AUTO':
-            generated_signals = StrategyEngine.calculate_auto_strategy(prices, strategy.logic)
+        
+        if self.backtest_run.strategy_rule_based:
+             generated_signals = StrategyEngine.calculate_rule_based_strategy(
+                 prices, 
+                 self.backtest_run.strategy_rule_based.rules_json
+             )
+        elif strategy.type == 'AUTO':
+            if strategy.rule_based_strategy:
+                generated_signals = StrategyEngine.calculate_rule_based_strategy(
+                    prices, 
+                    strategy.rule_based_strategy.rules_json
+                )
         elif strategy.code == 'ONE_DAY_TREND':
             generated_signals = StrategyEngine.calculate_one_day_trend(prices)
         elif strategy.code == 'THREE_DAY_TREND':
