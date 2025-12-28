@@ -120,9 +120,7 @@ class StrategyRuleBasedViewSet(viewsets.ModelViewSet):
         if hasattr(user, '_meta') and user._meta.object_name == 'AdminUser':
              return self.queryset.all()
              
-        return self.queryset.filter(
-            models.Q(user=user) | models.Q(is_public=True)
-        )
+        return self.queryset.filter(user=user)
     
     def perform_create(self, serializer):
         import uuid

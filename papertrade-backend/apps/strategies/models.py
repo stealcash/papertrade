@@ -17,7 +17,7 @@ class StrategyMaster(models.Model):
     
     code = models.CharField(max_length=50, unique=True, help_text='Unique code for the strategy (e.g., ONE_DAY_TREND)')
     name = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='created_strategies')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
 

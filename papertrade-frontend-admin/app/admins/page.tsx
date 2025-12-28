@@ -6,15 +6,19 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import apiClient from '@/lib/api';
 
+import { useConfirm } from '@/context/ConfirmContext';
+import { toast } from 'react-hot-toast';
+
 export default function AdminsPage() {
     const router = useRouter();
     const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
+    const { confirm } = useConfirm();
     const [admins, setAdmins] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [mounted, setMounted] = useState(false);
     const [actionLoading, setActionLoading] = useState<number | null>(null);
 
-    // Pagination & Sorting State
+    // ... (Keep existing state)
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [totalAdmins, setTotalAdmins] = useState(0);
@@ -56,6 +60,7 @@ export default function AdminsPage() {
         } catch (error) {
             console.error('Failed to fetch admins:', error);
             setAdmins([]);
+            toast.error('Failed to load admins');
         } finally {
             setLoading(false);
         }
@@ -72,28 +77,45 @@ export default function AdminsPage() {
     };
 
     const handleToggleStatus = async (adminId: number, currentStatus: boolean) => {
-        if (!confirm(`Are you sure you want to ${currentStatus ? 'deactivate' : 'activate'} this admin?`)) return;
+        const action = currentStatus ? 'deactivate' : 'activate';
+        const isConfirmed = await confirm({
+            title: `${action.charAt(0).toUpperCase() + action.slice(1)} Admin`,
+            message: `Are you sure you want to ${action} this admin?`,
+            confirmText: action.charAt(0).toUpperCase() + action.slice(1),
+            type: currentStatus ? 'warning' : 'success'
+        });
+
+        if (!isConfirmed) return;
 
         setActionLoading(adminId);
         try {
             await apiClient.put(`/admin-panel/admins/${adminId}/`, { is_active: !currentStatus });
             setAdmins(admins.map(a => a.id === adminId ? { ...a, is_active: !currentStatus } : a));
+            toast.success(`Admin ${action}d successfully`);
         } catch (error: any) {
-            alert(error.response?.data?.message || 'Failed to update status');
+            toast.error(error.response?.data?.message || 'Failed to update status');
         } finally {
             setActionLoading(null);
         }
     };
 
     const handleDelete = async (adminId: number) => {
-        if (!confirm('Are you sure you want to delete this admin? This action cannot be undone.')) return;
+        const isConfirmed = await confirm({
+            title: 'Delete Admin',
+            message: 'Are you sure you want to delete this admin? This action cannot be undone.',
+            confirmText: 'Delete',
+            type: 'danger'
+        });
+
+        if (!isConfirmed) return;
 
         setActionLoading(adminId);
         try {
             await apiClient.delete(`/admin-panel/admins/${adminId}/delete/`);
             setAdmins(admins.filter(a => a.id !== adminId));
+            toast.success("Admin deleted successfully");
         } catch (error: any) {
-            alert(error.response?.data?.message || 'Failed to delete admin');
+            toast.error(error.response?.data?.message || 'Failed to delete admin');
         } finally {
             setActionLoading(null);
         }

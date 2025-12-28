@@ -23,6 +23,7 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
     // Form State
     const [formData, setFormData] = useState({
         strategy_id: '',
+        is_system_strategy: false,
         selection_mode: 'stock', // stock, sector, category, watchlist
         selection_ids: [] as number[],
         criteria_type: 'direction', // direction, magnitude
@@ -48,7 +49,13 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                 ]);
 
                 const sysStrats = (resSys.data.data.results || resSys.data.data || []).map((s: any) => ({ ...s, is_system: true }));
-                const userStrats = (resUser.data.data.results || resUser.data.data || []).map((s: any) => ({ ...s, is_system: false }));
+
+                // Deduplicate: If a user strategy is actively linked to a system strategy, hide it from "My Strategies"
+                const linkedRuleIds = sysStrats.map((s: any) => s.rule_based_strategy).filter(Boolean);
+
+                const userStrats = (resUser.data.data.results || resUser.data.data || [])
+                    .filter((s: any) => !linkedRuleIds.includes(s.id))
+                    .map((s: any) => ({ ...s, is_system: false }));
 
                 setStrategies([...sysStrats, ...userStrats]);
             } catch (e) {
@@ -95,7 +102,12 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            const selectedStrat = strategies.find(s => s.id === Number(formData.strategy_id));
+            // Find specific strategy using ID AND Type
+            const selectedStrat = strategies.find(s =>
+                s.id === Number(formData.strategy_id) &&
+                s.is_system === formData.is_system_strategy
+            );
+
             if (!selectedStrat) throw new Error("Strategy not found");
 
             const payload: any = {
@@ -161,10 +173,10 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                                         {strategies.filter(s => !s.is_system && s.user).map((strat) => (
                                             <div
                                                 key={strat.id}
-                                                onClick={() => setFormData({ ...formData, strategy_id: strat.id })}
-                                                className={`p-4 border rounded-xl cursor-pointer transition relative group ${Number(formData.strategy_id) === strat.id
-                                                    ? 'border-black bg-gray-50 dark:border-white dark:bg-gray-800 ring-1 ring-black dark:ring-white'
-                                                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-400'
+                                                onClick={() => setFormData({ ...formData, strategy_id: strat.id, is_system_strategy: false })}
+                                                className={`p-4 border rounded-xl cursor-pointer transition relative group ${Number(formData.strategy_id) === strat.id && formData.is_system_strategy === false
+                                                        ? 'border-black bg-gray-50 dark:border-white dark:bg-gray-800 ring-1 ring-black dark:ring-white'
+                                                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-400'
                                                     }`}
                                             >
                                                 <div className="font-semibold text-gray-900 dark:text-gray-100">{strat.name}</div>
@@ -186,10 +198,10 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                                     {strategies.filter(s => s.is_system || !s.user).map((strat) => (
                                         <div
                                             key={strat.id}
-                                            onClick={() => setFormData({ ...formData, strategy_id: strat.id })}
-                                            className={`p-4 border rounded-xl cursor-pointer transition ${Number(formData.strategy_id) === strat.id
-                                                ? 'border-black bg-gray-50 dark:border-white dark:bg-gray-800 ring-1 ring-black dark:ring-white'
-                                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-400'
+                                            onClick={() => setFormData({ ...formData, strategy_id: strat.id, is_system_strategy: true })}
+                                            className={`p-4 border rounded-xl cursor-pointer transition ${Number(formData.strategy_id) === strat.id && formData.is_system_strategy === true
+                                                    ? 'border-black bg-gray-50 dark:border-white dark:bg-gray-800 ring-1 ring-black dark:ring-white'
+                                                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-400'
                                                 }`}
                                         >
                                             <div className="font-semibold text-gray-900 dark:text-gray-100">{strat.name}</div>

@@ -44,12 +44,13 @@ export const authAPI = {
 export const strategiesAPI = {
     getAllMasters: () => apiClient.get('/strategies/master/'),
     createMaster: (data: any) => apiClient.post('/strategies/master/', data),
-    updateMaster: (code: string, data: any) => apiClient.put(`/strategies/master/${code}/`, data),
+    updateMaster: (code: string, data: any) => apiClient.patch(`/strategies/master/${code}/`, data),
     deleteMaster: (code: string) => apiClient.delete(`/strategies/master/${code}/`),
     sync: (data: any) => apiClient.post('/strategies/sync/', data),
 
     // User/Rule Based
     createRuleBased: (data: any) => apiClient.post('/strategies/rule-based/', data),
+    updateRuleBased: (id: number, data: any) => apiClient.put(`/strategies/rule-based/${id}/`, data),
 };
 
 export default apiClient;

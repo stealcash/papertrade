@@ -7,4 +7,28 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 1919ms
+ ✓ Ready in 2.2s
+ ○ Compiling /strategies ...
+ ✓ Compiled /strategies in 1064ms (1541 modules)
+ GET /strategies 200 in 1222ms
+ ✓ Compiled /_not-found in 177ms (1544 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 278ms
+ ✓ Compiled /favicon.ico in 132ms (855 modules)
+ GET /favicon.ico 200 in 215ms
+ GET /strategies 200 in 105ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 46ms
+ GET /favicon.ico 200 in 11ms
+ GET /strategies 200 in 36ms
+ GET /favicon.ico 200 in 5ms
+ ✓ Compiled /login in 500ms (1579 modules)
+ GET /login 200 in 568ms
+ ✓ Compiled in 1316ms (1561 modules)
+ ✓ Compiled in 727ms (1561 modules)
+ GET /login 200 in 90ms
+ ✓ Compiled /favicon.ico in 170ms (858 modules)
+ GET /favicon.ico 200 in 211ms
+ ✓ Compiled /dashboard in 446ms (1585 modules)
+ ✓ Compiled in 603ms (1567 modules)
+ ✓ Compiled in 731ms (1567 modules)
+ ○ Compiling /stocks ...
+ ✓ Compiled /stocks in 801ms (1559 modules)

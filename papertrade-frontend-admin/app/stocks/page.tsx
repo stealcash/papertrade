@@ -6,9 +6,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import apiClient from '@/lib/api';
 
+import { useConfirm } from '@/context/ConfirmContext';
+import { toast } from 'react-hot-toast';
+
 export default function StocksManagementPage() {
     const router = useRouter();
     const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
+    const { confirm } = useConfirm();
     const [stocks, setStocks] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [mounted, setMounted] = useState(false);
@@ -17,14 +21,13 @@ export default function StocksManagementPage() {
     const [sectors, setSectors] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
 
-    // Pagination & Sorting State
+    // ... (State declarations same as before)
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [totalStocks, setTotalStocks] = useState(0);
     const [sortBy, setSortBy] = useState('symbol');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-    // Bulk Selection State
     const [selectedStocks, setSelectedStocks] = useState<Set<number>>(new Set());
 
     const [formData, setFormData] = useState({
@@ -91,6 +94,7 @@ export default function StocksManagementPage() {
         } catch (error) {
             console.error('Failed to fetch stocks:', error);
             setStocks([]); // Clear stocks on error
+            toast.error("Failed to load stocks");
         } finally {
             setLoading(false);
         }
@@ -129,7 +133,14 @@ export default function StocksManagementPage() {
     const handleBulkDelete = async () => {
         if (selectedStocks.size === 0) return;
 
-        if (!confirm(`Are you sure you want to delete ${selectedStocks.size} selected stocks?`)) return;
+        const isConfirmed = await confirm({
+            title: 'Delete Selected Stocks',
+            message: `Are you sure you want to delete ${selectedStocks.size} selected stocks?`,
+            confirmText: `Delete ${selectedStocks.size} Stocks`,
+            type: 'danger'
+        });
+
+        if (!isConfirmed) return;
 
         setLoading(true);
         try {
@@ -138,9 +149,10 @@ export default function StocksManagementPage() {
             });
             setSelectedStocks(new Set());
             fetchStocks(currentPage, sortBy, sortOrder);
+            toast.success("Stocks deleted successfully");
         } catch (error: any) {
             console.error('Bulk delete failed:', error);
-            alert(error.response?.data?.message || 'Failed to delete stocks');
+            toast.error(error.response?.data?.message || 'Failed to delete stocks');
         } finally {
             setLoading(false);
         }
@@ -151,15 +163,17 @@ export default function StocksManagementPage() {
         try {
             if (editingStock) {
                 await apiClient.put(`/stocks/${editingStock.id}/`, formData);
+                toast.success("Stock updated successfully");
             } else {
                 await apiClient.post('/stocks/', formData);
+                toast.success("Stock created successfully");
             }
             setShowModal(false);
             setEditingStock(null);
             setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [] });
             fetchStocks(currentPage, sortBy, sortOrder);
         } catch (error: any) {
-            alert(error.response?.data?.message || 'Operation failed');
+            toast.error(error.response?.data?.message || 'Operation failed');
         }
     };
 
@@ -177,12 +191,21 @@ export default function StocksManagementPage() {
     };
 
     const handleDelete = async (id: number) => {
-        if (!confirm('Are you sure you want to delete this stock? This action cannot be undone.')) return;
+        const isConfirmed = await confirm({
+            title: 'Delete Stock',
+            message: 'Are you sure you want to delete this stock? This action cannot be undone.',
+            confirmText: 'Delete',
+            type: 'danger'
+        });
+
+        if (!isConfirmed) return;
+
         try {
             await apiClient.delete(`/stocks/${id}/`);
+            toast.success("Stock deleted successfully");
             fetchStocks(currentPage, sortBy, sortOrder);
         } catch (error: any) {
-            alert(error.response?.data?.message || 'Failed to delete stock');
+            toast.error(error.response?.data?.message || 'Failed to delete stock');
         }
     };
 

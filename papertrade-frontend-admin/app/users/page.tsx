@@ -6,15 +6,18 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import apiClient from '@/lib/api';
 
+import { useConfirm } from '@/context/ConfirmContext';
+import { toast } from 'react-hot-toast';
+
 export default function UsersPage() {
     const router = useRouter();
     const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+    const { confirm } = useConfirm();
     const [users, setUsers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [mounted, setMounted] = useState(false);
 
-    // Pagination State
     // Pagination State
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -57,6 +60,7 @@ export default function UsersPage() {
         } catch (error) {
             console.error('Failed to fetch users:', error);
             setUsers([]);
+            toast.error('Failed to load users');
         } finally {
             setLoading(false);
         }
@@ -79,14 +83,23 @@ export default function UsersPage() {
     const [actionLoading, setActionLoading] = useState<number | null>(null);
 
     const handleToggleStatus = async (userId: number, currentStatus: boolean) => {
-        if (!confirm(`Are you sure you want to ${currentStatus ? 'deactivate' : 'activate'} this user?`)) return;
+        const action = currentStatus ? 'deactivate' : 'activate';
+        const isConfirmed = await confirm({
+            title: `${action.charAt(0).toUpperCase() + action.slice(1)} User`,
+            message: `Are you sure you want to ${action} this user?`,
+            confirmText: action.charAt(0).toUpperCase() + action.slice(1),
+            type: currentStatus ? 'warning' : 'success'
+        });
+
+        if (!isConfirmed) return;
 
         setActionLoading(userId);
         try {
             await apiClient.post(`/admin-panel/users/${userId}/toggle-status/`);
             setUsers(users.map(u => u.id === userId ? { ...u, is_active: !currentStatus } : u));
+            toast.success(`User ${action}d successfully`);
         } catch (error: any) {
-            alert(error.response?.data?.message || 'Failed to update status');
+            toast.error(error.response?.data?.message || 'Failed to update status');
         } finally {
             setActionLoading(null);
         }

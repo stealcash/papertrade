@@ -5,11 +5,14 @@ import Link from 'next/link';
 import { backtestAPI } from '@/lib/api';
 import { PlayCircle, Download, Calendar, Trash2, Settings } from 'lucide-react';
 import NewBacktestModal from '@/components/backtest/NewBacktestModal';
+import { useConfirm } from '@/context/ConfirmContext';
+import { toast } from 'react-hot-toast';
 
 export default function BacktestPage() {
     const [runs, setRuns] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { confirm } = useConfirm();
 
     useEffect(() => {
         fetchRuns();
@@ -22,6 +25,7 @@ export default function BacktestPage() {
             setRuns(res.data.data.results || res.data.data || []);
         } catch {
             console.log("API Fail");
+            toast.error("Failed to fetch backtests");
             setRuns([]);
         } finally {
             setLoading(false);
@@ -29,13 +33,40 @@ export default function BacktestPage() {
     };
 
     const handleDelete = async (id: number) => {
-        if (!confirm("Are you sure you want to delete this backtest report?")) return;
+        const isConfirmed = await confirm({
+            title: "Delete Report",
+            message: "Are you sure you want to delete this backtest report?",
+            confirmText: "Delete",
+            type: 'danger'
+        });
+        if (!isConfirmed) return;
+
         try {
             await backtestAPI.delete(id);
+            toast.success("Backtest deleted");
             fetchRuns(); // Refresh list
         } catch (e) {
             console.error("Delete Failed", e);
-            alert("Failed to delete backtest");
+            toast.error("Failed to delete backtest");
+        }
+    };
+
+    const handleClearAll = async () => {
+        const isConfirmed = await confirm({
+            title: "Delete All Reports",
+            message: "Are you sure you want to delete ALL backtest reports? This action cannot be undone.",
+            confirmText: "Delete All",
+            type: 'danger'
+        });
+        if (!isConfirmed) return;
+
+        const ids = runs.map(r => r.id);
+        try {
+            await backtestAPI.deleteBulk(ids);
+            toast.success("All backtests deleted");
+            fetchRuns();
+        } catch (e) {
+            toast.error("Bulk delete failed");
         }
     };
 
@@ -57,14 +88,7 @@ export default function BacktestPage() {
                 <div className="flex gap-3">
                     {runs.length > 0 && (
                         <button
-                            onClick={async () => {
-                                if (!confirm("Delete ALL backtests? This cannot be undone.")) return;
-                                const ids = runs.map(r => r.id);
-                                try {
-                                    await backtestAPI.deleteBulk(ids);
-                                    fetchRuns();
-                                } catch (e) { alert("Bulk delete failed"); }
-                            }}
+                            onClick={handleClearAll}
                             className="flex items-center gap-2 px-4 py-3 bg-red-50 text-red-600 rounded-lg font-semibold hover:bg-red-100 transition"
                         >
                             <Trash2 size={20} /> Clear All

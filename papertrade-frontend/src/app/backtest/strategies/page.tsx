@@ -5,11 +5,15 @@ import { strategiesAPI } from '@/lib/api';
 import Link from 'next/link';
 import { Plus, Trash2, Edit2, ArrowLeft, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useConfirm } from '@/context/ConfirmContext';
+import { toast } from 'react-hot-toast';
 
 export default function MyStrategiesPage() {
     const router = useRouter();
     const [strategies, setStrategies] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+
+    const { confirm } = useConfirm();
 
     useEffect(() => {
         fetchStrategies();
@@ -20,23 +24,32 @@ export default function MyStrategiesPage() {
             setLoading(true);
             const res = await strategiesAPI.getRuleBased();
             // Filter only strategies owned by user (s.user is truthy)
-            // Note: Admin public strategies have user=null
             const myStrats = (res.data.data.results || res.data.data || []).filter((s: any) => s.user);
             setStrategies(myStrats);
         } catch (e) {
             console.error("Failed to fetch strategies", e);
+            toast.error("Failed to load strategies");
         } finally {
             setLoading(false);
         }
     };
 
     const handleDelete = async (id: number) => {
-        if (!confirm("Are you sure you want to delete this strategy?")) return;
+        const isConfirmed = await confirm({
+            title: "Delete Strategy",
+            message: "Are you sure you want to delete this strategy? This action cannot be undone.",
+            confirmText: "Delete",
+            type: 'danger'
+        });
+
+        if (!isConfirmed) return;
+
         try {
             await strategiesAPI.deleteRuleBased(id);
+            toast.success("Strategy deleted successfully");
             fetchStrategies();
         } catch (e) {
-            alert("Failed to delete strategy");
+            toast.error("Failed to delete strategy");
         }
     };
 

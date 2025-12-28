@@ -6,9 +6,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import apiClient from '@/lib/api';
 
+import { useConfirm } from '@/context/ConfirmContext';
+import { toast } from 'react-hot-toast';
+
 export default function StockCategoriesPage() {
     const router = useRouter();
     const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
+    const { confirm } = useConfirm();
     const [categories, setCategories] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [mounted, setMounted] = useState(false);
@@ -43,6 +47,7 @@ export default function StockCategoriesPage() {
             setCategories(response.data.data || []);
         } catch (error) {
             console.error('Failed to fetch categories:', error);
+            toast.error('Failed to load categories');
         } finally {
             setLoading(false);
         }
@@ -53,15 +58,17 @@ export default function StockCategoriesPage() {
         try {
             if (editingCategory) {
                 await apiClient.put(`/stocks/categories/${editingCategory.id}/`, formData);
+                toast.success("Category updated successfully");
             } else {
                 await apiClient.post('/stocks/categories/', formData);
+                toast.success("Category created successfully");
             }
             setShowModal(false);
             setEditingCategory(null);
             setFormData({ name: '', description: '' });
             fetchCategories();
         } catch (error: any) {
-            alert(error.response?.data?.message || 'Operation failed');
+            toast.error(error.response?.data?.message || 'Operation failed');
         }
     };
 
@@ -75,12 +82,21 @@ export default function StockCategoriesPage() {
     };
 
     const handleDelete = async (id: number) => {
-        if (!confirm('Are you sure you want to delete this category? This action cannot be undone.')) return;
+        const isConfirmed = await confirm({
+            title: 'Delete Category',
+            message: 'Are you sure you want to delete this category? This action cannot be undone.',
+            confirmText: 'Delete',
+            type: 'danger'
+        });
+
+        if (!isConfirmed) return;
+
         try {
             await apiClient.delete(`/stocks/categories/${id}/`);
+            toast.success("Category deleted successfully");
             fetchCategories();
         } catch (error: any) {
-            alert(error.response?.data?.message || 'Failed to delete category');
+            toast.error(error.response?.data?.message || 'Failed to delete category');
         }
     };
 

@@ -213,44 +213,64 @@ export default function CreateStrategyPage() {
     );
 }
 
+// Field Descriptions
+const FIELD_DESCRIPTIONS: Record<string, string> = {
+    'RSI': 'Relative Strength Index (14-period). Momentum indicator (0-100).',
+    'SMA_5': 'Simple Moving Average (5-day). Value is % of Close Price relative to SMA.',
+    'SMA_10': 'Simple Moving Average (10-day). Value is % of Close Price relative to SMA.',
+    'SMA_20': 'Simple Moving Average (20-day). Value is % of Close Price relative to SMA.',
+    'SMA_50': 'Simple Moving Average (50-day). Value is % of Close Price relative to SMA.',
+    'CLOSE_PCT_CHANGE_0': 'Percentage change between Day -1 (Yesterday) and Day -2.',
+    'CLOSE_PCT_CHANGE_1': 'Percentage change between Day -2 and Day -3.',
+    'CLOSE_PCT_CHANGE_1_3': 'Percentage change between Day -1 (Yesterday) and Day -3.',
+    'CLOSE_PCT_CHANGE_1_7': 'Percentage change between Day -1 (Yesterday) and Day -7.'
+};
+
 const RuleRow = ({ rule, onChange, onDelete }: {
     rule: Rule,
     onChange: (field: keyof Rule, val: string) => void,
     onDelete: () => void
 }) => (
-    <div className="flex gap-2 items-center bg-white p-3 rounded-lg shadow-sm">
-        <span className="text-xs font-bold text-gray-500 w-6">IF</span>
-        <select
-            value={rule.field}
-            onChange={(e) => onChange('field', e.target.value)}
-            className="border rounded px-2 py-1 text-sm flex-1"
-        >
-            <option value="RSI">RSI</option>
-            <option value="SMA_5">SMA 5 (% of Close)</option>
-            <option value="SMA_10">SMA 10 (% of Close)</option>
-            <option value="SMA_20">SMA 20 (% of Close)</option>
-            <option value="SMA_50">SMA 50 (% of Close)</option>
-            <option value="CLOSE_PCT_CHANGE_0">Close % Change (Day 0 - Day -1)</option>
-            <option value="CLOSE_PCT_CHANGE_1">Close % Change (Day -1 - Day -2)</option>
-        </select>
-        <select
-            value={rule.operator}
-            onChange={(e) => onChange('operator', e.target.value)}
-            className="border rounded px-2 py-1 text-sm w-16"
-        >
-            <option value="gt">&gt;</option>
-            <option value="lt">&lt;</option>
-            <option value="eq">=</option>
-            <option value="gte">&gt;=</option>
-            <option value="lte">&lt;=</option>
-        </select>
-        <input
-            type="number"
-            value={rule.value}
-            onChange={(e) => onChange('value', e.target.value)}
-            className="border rounded px-2 py-1 text-sm w-20"
-            placeholder="Value"
-        />
-        <button onClick={onDelete} className="text-gray-400 hover:text-red-500"><Trash2 size={16} /></button>
+    <div className="flex flex-col gap-2 bg-white p-3 rounded-lg shadow-sm">
+        <div className="flex gap-2 items-center">
+            <span className="text-xs font-bold text-gray-500 w-6">IF</span>
+            <select
+                value={rule.field}
+                onChange={(e) => onChange('field', e.target.value)}
+                className="border rounded px-2 py-1 text-sm flex-1"
+            >
+                <option value="RSI">RSI</option>
+                <option value="SMA_5">SMA 5 (% of Close)</option>
+                <option value="SMA_10">SMA 10 (% of Close)</option>
+                <option value="SMA_20">SMA 20 (% of Close)</option>
+                <option value="SMA_50">SMA 50 (% of Close)</option>
+                <option value="CLOSE_PCT_CHANGE_0">Close % Change (Day -1 vs Day -2)</option>
+                <option value="CLOSE_PCT_CHANGE_1">Close % Change (Day -2 vs Day -3)</option>
+                <option value="CLOSE_PCT_CHANGE_1_3">Close % Change (Day -1 vs Day -3)</option>
+                <option value="CLOSE_PCT_CHANGE_1_7">Close % Change (Day -1 vs Day -7)</option>
+            </select>
+            <select
+                value={rule.operator}
+                onChange={(e) => onChange('operator', e.target.value)}
+                className="border rounded px-2 py-1 text-sm w-16"
+            >
+                <option value="gt">&gt;</option>
+                <option value="lt">&lt;</option>
+                <option value="eq">=</option>
+                <option value="gte">&gt;=</option>
+                <option value="lte">&lt;=</option>
+            </select>
+            <input
+                type="number"
+                value={rule.value}
+                onChange={(e) => onChange('value', e.target.value)}
+                className="border rounded px-2 py-1 text-sm w-20"
+                placeholder="Value"
+            />
+            <button onClick={onDelete} className="text-gray-400 hover:text-red-500"><Trash2 size={16} /></button>
+        </div>
+        <div className="ml-8 text-xs text-gray-500 italic">
+            {FIELD_DESCRIPTIONS[rule.field]}
+        </div>
     </div>
 );

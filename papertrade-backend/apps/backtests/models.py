@@ -19,9 +19,9 @@ class BacktestRun(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='backtest_runs')
     
     # Strategy reference (can be predefined, rule-based, or custom script)
-    strategy_predefined = models.ForeignKey(StrategyMaster, on_delete=models.SET_NULL, 
+    strategy_predefined = models.ForeignKey(StrategyMaster, on_delete=models.CASCADE, 
                                            null=True, blank=True)
-    strategy_rule_based = models.ForeignKey(StrategyRuleBased, on_delete=models.SET_NULL, 
+    strategy_rule_based = models.ForeignKey(StrategyRuleBased, on_delete=models.CASCADE, 
                                            null=True, blank=True)
     strategy_custom_script = models.TextField(blank=True, help_text='Custom script (not persisted)')
     

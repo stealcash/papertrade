@@ -12,6 +12,9 @@ import Sidebar from '@/components/Sidebar';
 import TopHeader from '@/components/TopHeader';
 
 import { ThemeProvider } from '@/context/ThemeContext';
+import { ConfirmProvider } from '@/context/ConfirmContext';
+import { Toaster } from 'react-hot-toast';
+
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -34,7 +37,6 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           />
 
           <div className="flex h-[calc(100vh-4rem)] overflow-hidden">
-
             <Sidebar
               isMobileOpen={isMobileOpen}
               setIsMobileOpen={setIsMobileOpen}
@@ -55,7 +57,6 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
     </>
   );
 }
-
 export default function RootLayout({
   children,
 }: {
@@ -70,9 +71,12 @@ export default function RootLayout({
       <body className="antialiased bg-gray-50 dark:bg-gray-950" suppressHydrationWarning>
         <Provider store={store}>
           <ThemeProvider>
-            <AuthVerifier>
-              <LayoutContent>{children}</LayoutContent>
-            </AuthVerifier>
+            <ConfirmProvider>
+              <AuthVerifier>
+                <LayoutContent>{children}</LayoutContent>
+                <Toaster position="bottom-center" />
+              </AuthVerifier>
+            </ConfirmProvider>
           </ThemeProvider>
         </Provider>
       </body>

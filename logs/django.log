@@ -1,99 +1,82 @@
-INFO 2025-12-28 16:41:18,776 autoreload Watching for file changes with StatReloader
-INFO 2025-12-28 16:41:29,212 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2025-12-28 16:41:29,213 basehttp "OPTIONS /api/v1/backtest/runs/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:41:29,215 basehttp "OPTIONS /api/v1/backtest/runs/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:41:29,221 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2025-12-28 16:41:31,485 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
-INFO 2025-12-28 16:41:32,469 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 6241
-INFO 2025-12-28 16:41:33,745 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
-INFO 2025-12-28 16:41:33,977 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 6241
-INFO 2025-12-28 16:41:36,082 basehttp "OPTIONS /api/v1/strategies/rule-based/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:41:36,085 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:41:36,085 basehttp "OPTIONS /api/v1/sectors/?page_size=100 HTTP/1.1" 200 0
-INFO 2025-12-28 16:41:36,091 basehttp "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:41:36,091 basehttp "OPTIONS /api/v1/stocks/?page_size=1000 HTTP/1.1" 200 0
-INFO 2025-12-28 16:41:36,850 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
-INFO 2025-12-28 16:41:36,852 basehttp "GET /api/v1/sectors/?page_size=100 HTTP/1.1" 200 558
-INFO 2025-12-28 16:41:38,596 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 628
-INFO 2025-12-28 16:41:38,642 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 428
-INFO 2025-12-28 16:41:44,059 basehttp "GET /api/v1/stocks/?page_size=1000 HTTP/1.1" 200 3098
-INFO 2025-12-28 16:41:49,712 basehttp "OPTIONS /api/v1/backtest/run/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:41:52,617 engine Backtest BT-3C11E21E66C5 completed successfully
-INFO 2025-12-28 16:41:52,858 basehttp "POST /api/v1/backtest/run/ HTTP/1.1" 201 219
-INFO 2025-12-28 16:41:54,356 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 7160
-INFO 2025-12-28 16:42:06,771 basehttp "OPTIONS /api/v1/backtest/runs/16/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:42:06,771 basehttp "OPTIONS /api/v1/backtest/runs/16/results/?page=1&page_size=10&search= HTTP/1.1" 200 0
-INFO 2025-12-28 16:42:06,771 basehttp "OPTIONS /api/v1/backtest/runs/16/results/?page=1&page_size=10&search= HTTP/1.1" 200 0
-INFO 2025-12-28 16:42:06,771 basehttp "OPTIONS /api/v1/backtest/runs/16/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:42:07,530 basehttp "GET /api/v1/backtest/runs/16/ HTTP/1.1" 200 1013
-INFO 2025-12-28 16:42:07,533 basehttp "GET /api/v1/backtest/runs/16/results/?page=1&page_size=10&search= HTTP/1.1" 200 338
-INFO 2025-12-28 16:42:08,294 basehttp "GET /api/v1/backtest/runs/16/results/?page=1&page_size=10&search= HTTP/1.1" 200 338
-INFO 2025-12-28 16:42:08,301 basehttp "GET /api/v1/backtest/runs/16/ HTTP/1.1" 200 1013
-INFO 2025-12-28 16:42:51,883 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
-INFO 2025-12-28 16:42:52,127 basehttp "GET /api/v1/backtest/runs/16/results/?page=1&page_size=10&search= HTTP/1.1" 200 338
-INFO 2025-12-28 16:42:52,146 basehttp "GET /api/v1/backtest/runs/16/ HTTP/1.1" 200 1013
-INFO 2025-12-28 16:42:52,385 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
-INFO 2025-12-28 16:42:52,900 basehttp "GET /api/v1/backtest/runs/16/results/?page=1&page_size=10&search= HTTP/1.1" 200 338
-INFO 2025-12-28 16:42:52,912 basehttp "GET /api/v1/backtest/runs/16/ HTTP/1.1" 200 1013
-INFO 2025-12-28 16:43:00,660 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 7160
-INFO 2025-12-28 16:43:01,801 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 428
-INFO 2025-12-28 16:43:02,444 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 7160
-INFO 2025-12-28 16:43:02,594 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 428
-INFO 2025-12-28 16:43:03,735 basehttp "OPTIONS /api/v1/strategies/rule-based/6/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:43:03,736 basehttp "OPTIONS /api/v1/strategies/rule-based/6/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:43:04,512 basehttp "GET /api/v1/strategies/rule-based/6/ HTTP/1.1" 200 331
-INFO 2025-12-28 16:43:06,218 basehttp "GET /api/v1/strategies/rule-based/6/ HTTP/1.1" 200 331
-INFO 2025-12-28 16:43:16,586 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
-INFO 2025-12-28 16:43:16,825 basehttp "GET /api/v1/strategies/rule-based/6/ HTTP/1.1" 200 331
-INFO 2025-12-28 16:43:17,079 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
-INFO 2025-12-28 16:43:17,610 basehttp "GET /api/v1/strategies/rule-based/6/ HTTP/1.1" 200 331
-INFO 2025-12-28 16:43:20,037 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:43:20,037 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
-INFO 2025-12-28 16:43:28,080 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 3096
-INFO 2025-12-28 16:43:29,064 basehttp "OPTIONS /api/v1/stocks/prices/daily?stock_symbol=AUBANK&start_date=2025-11-28&end_date=2025-12-28 HTTP/1.1" 200 0
-INFO 2025-12-28 16:43:29,071 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_symbol=AUBANK&start_date=2025-11-28&end_date=2025-12-28 HTTP/1.1" 200 0
-INFO 2025-12-28 16:43:36,100 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 3096
-INFO 2025-12-28 16:43:36,101 basehttp "GET /api/v1/stocks/prices/daily/?stock_symbol=AUBANK&start_date=2025-11-28&end_date=2025-12-28 HTTP/1.1" 200 7712
-INFO 2025-12-28 17:31:29,689 basehttp "PUT /api/v1/strategies/rule-based/6/ HTTP/1.1" 200 441
-INFO 2025-12-28 17:31:30,595 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 538
-INFO 2025-12-28 17:31:33,067 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 538
-INFO 2025-12-28 17:31:35,598 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 7160
-INFO 2025-12-28 17:31:39,084 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 7160
-INFO 2025-12-28 17:31:40,972 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 538
-INFO 2025-12-28 17:31:40,975 basehttp "GET /api/v1/sectors/?page_size=100 HTTP/1.1" 200 558
-INFO 2025-12-28 17:31:40,976 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
-INFO 2025-12-28 17:31:40,983 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 628
-INFO 2025-12-28 17:31:48,357 basehttp "GET /api/v1/stocks/?page_size=1000 HTTP/1.1" 200 3098
-INFO 2025-12-28 17:33:12,904 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 628
-INFO 2025-12-28 17:33:12,925 basehttp "GET /api/v1/sectors/?page_size=100 HTTP/1.1" 200 558
-INFO 2025-12-28 17:33:12,932 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 538
-INFO 2025-12-28 17:33:12,947 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
-INFO 2025-12-28 17:33:20,244 basehttp "GET /api/v1/stocks/?page_size=1000 HTTP/1.1" 200 3098
-INFO 2025-12-28 17:33:27,640 engine Backtest BT-8915E639E92F completed successfully
-INFO 2025-12-28 17:33:27,892 basehttp "POST /api/v1/backtest/run/ HTTP/1.1" 201 219
-INFO 2025-12-28 17:33:29,633 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 8832
-INFO 2025-12-28 17:33:32,967 basehttp "OPTIONS /api/v1/backtest/runs/17/ HTTP/1.1" 200 0
-INFO 2025-12-28 17:33:32,969 basehttp "OPTIONS /api/v1/backtest/runs/17/results/?page=1&page_size=10&search= HTTP/1.1" 200 0
-INFO 2025-12-28 17:33:32,970 basehttp "OPTIONS /api/v1/backtest/runs/17/results/?page=1&page_size=10&search= HTTP/1.1" 200 0
-INFO 2025-12-28 17:33:32,970 basehttp "OPTIONS /api/v1/backtest/runs/17/ HTTP/1.1" 200 0
-INFO 2025-12-28 17:33:35,510 basehttp "GET /api/v1/backtest/runs/17/ HTTP/1.1" 200 1766
-INFO 2025-12-28 17:33:35,512 basehttp "GET /api/v1/backtest/runs/17/results/?page=1&page_size=10&search= HTTP/1.1" 200 1089
-INFO 2025-12-28 17:33:36,268 basehttp "GET /api/v1/backtest/runs/17/results/?page=1&page_size=10&search= HTTP/1.1" 200 1089
-INFO 2025-12-28 17:33:38,039 basehttp "GET /api/v1/backtest/runs/17/ HTTP/1.1" 200 1766
-INFO 2025-12-28 17:34:06,466 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
-INFO 2025-12-28 17:34:06,468 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
-INFO 2025-12-28 17:34:06,761 basehttp "OPTIONS /api/v1/stocks/prices/daily/?start_date=2025-11-28&end_date=2025-12-28 HTTP/1.1" 200 0
-INFO 2025-12-28 17:34:08,053 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 3096
-INFO 2025-12-28 17:34:08,980 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
-INFO 2025-12-28 17:34:09,022 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 558
-INFO 2025-12-28 17:34:09,781 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 558
-INFO 2025-12-28 17:34:11,513 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
-INFO 2025-12-28 17:34:15,515 basehttp "GET /api/v1/stocks/prices/daily/?start_date=2025-11-28&end_date=2025-12-28 HTTP/1.1" 200 7712
-INFO 2025-12-28 17:34:16,002 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 3096
-INFO 2025-12-28 17:34:36,864 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
-INFO 2025-12-28 17:34:37,085 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
-INFO 2025-12-28 17:34:37,088 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 558
-INFO 2025-12-28 17:34:37,844 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 558
-INFO 2025-12-28 17:34:37,849 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
-INFO 2025-12-28 17:34:39,126 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
-INFO 2025-12-28 17:34:43,647 basehttp "GET /api/v1/stocks/prices/daily/?start_date=2025-11-28&end_date=2025-12-28 HTTP/1.1" 200 7712
+INFO 2025-12-28 22:59:53,072 autoreload Watching for file changes with StatReloader
+INFO 2025-12-28 23:00:05,617 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:00:05,677 basehttp "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:00:08,133 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2025-12-28 23:00:08,962 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1487
+INFO 2025-12-28 23:00:12,297 basehttp "OPTIONS /api/v1/strategies/rule-based/10/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:00:13,517 basehttp "PUT /api/v1/strategies/rule-based/10/ HTTP/1.1" 200 441
+INFO 2025-12-28 23:00:13,522 basehttp "OPTIONS /api/v1/strategies/master/TEST3/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:01:23,369 basehttp "OPTIONS /api/v1/strategies/master/TEST3/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:02:41,016 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2025-12-28 23:02:41,767 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1487
+INFO 2025-12-28 23:02:45,499 basehttp "PUT /api/v1/strategies/rule-based/10/ HTTP/1.1" 200 441
+INFO 2025-12-28 23:02:45,503 basehttp "OPTIONS /api/v1/strategies/master/TEST3/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:02:58,581 basehttp "OPTIONS /api/v1/strategies/master/TEST3/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:02,954 basehttp "DELETE /api/v1/strategies/master/TEST3/ HTTP/1.1" 204 0
+INFO 2025-12-28 23:03:04,096 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1072
+INFO 2025-12-28 23:03:13,795 basehttp "OPTIONS /api/v1/backtest/runs/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:13,795 basehttp "OPTIONS /api/v1/backtest/runs/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:23,521 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:23,523 basehttp "OPTIONS /api/v1/backtest/runs/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:23,523 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:23,523 basehttp "OPTIONS /api/v1/backtest/runs/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:28,506 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:28,507 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:31,798 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:31,805 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:31,806 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:31,806 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:34,206 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:03:34,705 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:03:35,188 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:03:35,195 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:35,682 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:03:35,947 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 97
+INFO 2025-12-28 23:03:36,795 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 97
+INFO 2025-12-28 23:03:39,120 basehttp "OPTIONS /api/v1/backtest/runs/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:39,120 basehttp "OPTIONS /api/v1/backtest/runs/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:03:41,356 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 14602
+INFO 2025-12-28 23:03:43,577 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 14602
+INFO 2025-12-28 23:07:16,982 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2025-12-28 23:07:17,479 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1072
+INFO 2025-12-28 23:07:23,725 basehttp "OPTIONS /api/v1/strategies/rule-based/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:07:23,726 basehttp "OPTIONS /api/v1/strategies/rule-based/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:15:42,663 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:15:43,180 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:15:43,703 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:20:07,449 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:20:07,998 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:20:08,506 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:20:28,377 basehttp "OPTIONS /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:20:29,151 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
+INFO 2025-12-28 23:20:29,649 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2025-12-28 23:20:29,697 basehttp "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:20:31,459 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
+INFO 2025-12-28 23:20:34,693 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1072
+INFO 2025-12-28 23:26:01,318 autoreload /Users/chat360team/Documents/papertrade/papertrade-backend/apps/strategies/logic.py changed, reloading.
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+Performing system checks...
+
+System check identified no issues (0 silenced).
+December 28, 2025 - 22:59:56
+Django version 5.1.4, using settings 'config.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+INFO 2025-12-28 23:26:01,932 autoreload Watching for file changes with StatReloader
+INFO 2025-12-28 23:27:06,160 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:27:06,772 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:27:07,387 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 23:33:06,042 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 14602
+INFO 2025-12-28 23:33:08,242 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 14602
+INFO 2025-12-28 23:33:10,542 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 14602
+INFO 2025-12-28 23:33:19,518 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:33:19,518 basehttp "OPTIONS /api/v1/stocks/?page=1&sort_by=symbol&order=asc HTTP/1.1" 200 0
+INFO 2025-12-28 23:33:19,524 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
+INFO 2025-12-28 23:33:22,147 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 558
+INFO 2025-12-28 23:33:22,162 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
+INFO 2025-12-28 23:33:26,483 basehttp "GET /api/v1/stocks/?page=1&sort_by=symbol&order=asc HTTP/1.1" 200 1901
+INFO 2025-12-28 23:34:57,828 basehttp "OPTIONS /api/v1/watchlist/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2025-12-28 23:34:57,828 basehttp "OPTIONS /api/v1/watchlist/?page=1&page_size=10 HTTP/1.1" 200 0

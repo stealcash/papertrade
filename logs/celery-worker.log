@@ -1,64 +1,64 @@
-DEBUG 2025-12-28 16:41:15,352 functional 
+DEBUG 2025-12-28 22:59:49,440 functional 
 def accumulate(self, *args, **kwargs):
     return 1
 
-DEBUG 2025-12-28 16:41:15,353 functional 
+DEBUG 2025-12-28 22:59:49,440 functional 
 def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
     return 1
 
-DEBUG 2025-12-28 16:41:15,353 functional 
+DEBUG 2025-12-28 22:59:49,440 functional 
 def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
     return 1
 
-DEBUG 2025-12-28 16:41:15,353 functional 
+DEBUG 2025-12-28 22:59:49,441 functional 
 def chunks(task, it, n):
     return 1
 
-DEBUG 2025-12-28 16:41:15,353 functional 
+DEBUG 2025-12-28 22:59:49,441 functional 
 def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
     return 1
 
-DEBUG 2025-12-28 16:41:15,353 functional 
+DEBUG 2025-12-28 22:59:49,441 functional 
 def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
     return 1
 
-DEBUG 2025-12-28 16:41:15,353 functional 
+DEBUG 2025-12-28 22:59:49,441 functional 
 def sync_sectors_task(is_auto=0, user_id=1, from_date=2, to_date=3):
     return 1
 
-DEBUG 2025-12-28 16:41:15,354 functional 
+DEBUG 2025-12-28 22:59:49,441 functional 
 def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4):
     return 1
 
-DEBUG 2025-12-28 16:41:15,354 functional 
+DEBUG 2025-12-28 22:59:49,441 functional 
 def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
     return 1
 
-DEBUG 2025-12-28 16:41:15,354 functional 
+DEBUG 2025-12-28 22:59:49,442 functional 
 def auto_sync_daily():
     return 1
 
-DEBUG 2025-12-28 16:41:15,354 functional 
+DEBUG 2025-12-28 22:59:49,442 functional 
 def xmap(task, it):
     return 1
 
-DEBUG 2025-12-28 16:41:15,354 functional 
+DEBUG 2025-12-28 22:59:49,442 functional 
 def debug_task(self):
     return 1
 
-DEBUG 2025-12-28 16:41:15,354 functional 
+DEBUG 2025-12-28 22:59:49,442 functional 
 def backend_cleanup():
     return 1
 
-DEBUG 2025-12-28 16:41:15,354 functional 
+DEBUG 2025-12-28 22:59:49,442 functional 
 def chain(*args, **kwargs):
     return 1
 
-DEBUG 2025-12-28 16:41:15,354 functional 
+DEBUG 2025-12-28 22:59:49,442 functional 
 def xstarmap(task, it):
     return 1
 
-[2025-12-28 16:41:15,444: WARNING/MainProcess] 
+[2025-12-28 22:59:49,545: WARNING/MainProcess] 
 Setting ssl_cert_reqs=CERT_NONE when connecting to redis means that celery will not validate the identity of the redis broker when connecting. This leaves you vulnerable to man in the middle attacks.
 
 SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
@@ -67,10 +67,10 @@ SETTINGS-DEBUG: Loaded .env successfully
  
  -------------- celery@Chat360s-Air.lan v5.3.4 (emerald-rush)
 --- ***** ----- 
--- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2025-12-28 16:41:15
+-- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2025-12-28 22:59:49
 - *** --- * --- 
 - ** ---------- [config]
-- ** ---------- .> app:         papertrade:0x1066082f0
+- ** ---------- .> app:         papertrade:0x104f082f0
 - ** ---------- .> transport:   rediss://default:**@pumped-turkey-23712.upstash.io:6379//
 - ** ---------- .> results:     rediss://default:**@pumped-turkey-23712.upstash.io:6379/
 - *** --- * --- .> concurrency: 8 (prefork)
@@ -88,28 +88,13 @@ SETTINGS-DEBUG: Loaded .env successfully
   . apps.sync.tasks.sync_stocks_task
   . config.celery.debug_task
 
-[2025-12-28 16:41:15,880: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+[2025-12-28 22:59:49,985: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
 whether broker connection retries are made during startup in Celery 6.0 and above.
 If you wish to retain the existing behavior for retrying connections on startup,
 you should set broker_connection_retry_on_startup to True.
   warnings.warn(
 
-[2025-12-28 16:41:16,542: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
-Trying again in 2.00 seconds... (1/100)
-
-[2025-12-28 16:41:19,106: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
-Trying again in 4.00 seconds... (2/100)
-
-[2025-12-28 16:41:23,694: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
-Trying again in 6.00 seconds... (3/100)
-
-[2025-12-28 16:41:30,304: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
-Trying again in 8.00 seconds... (4/100)
-
-[2025-12-28 16:41:38,958: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
-Trying again in 10.00 seconds... (5/100)
-
-[2025-12-28 16:41:51,631: CRITICAL/MainProcess] Unrecoverable error: ResponseError('max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details')
+[2025-12-28 22:59:52,734: CRITICAL/MainProcess] Unrecoverable error: ResponseError('max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details')
 Traceback (most recent call last):
   File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/worker.py", line 202, in start
     self.blueprint.start(self)

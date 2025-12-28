@@ -28,50 +28,74 @@ interface Block {
     action: 'BUY' | 'SELL';
 }
 
+// Field Descriptions
+const FIELD_DESCRIPTIONS: Record<string, string> = {
+    'RSI': 'Relative Strength Index (14-period). Momentum indicator (0-100).',
+    'SMA_5': 'Simple Moving Average (5-day). Value is % of Close Price relative to SMA.',
+    'SMA_10': 'Simple Moving Average (10-day). Value is % of Close Price relative to SMA.',
+    'SMA_20': 'Simple Moving Average (20-day). Value is % of Close Price relative to SMA.',
+    'SMA_50': 'Simple Moving Average (50-day). Value is % of Close Price relative to SMA.',
+    'CLOSE_PCT_CHANGE_0': 'Percentage change between Day -1 (Yesterday) and Day -2.',
+    'CLOSE_PCT_CHANGE_1': 'Percentage change between Day -2 and Day -3.',
+    'CLOSE_PCT_CHANGE_1_3': 'Percentage change between Day -1 (Yesterday) and Day -3.',
+    'CLOSE_PCT_CHANGE_1_7': 'Percentage change between Day -1 (Yesterday) and Day -7.'
+};
+
 // RuleRow Component - External Definition to avoid scope issues
 const RuleRow = ({ rule, onChange, onDelete }: { rule: Rule, onChange: (f: keyof Rule, v: string) => void, onDelete: () => void }) => (
-    <div className="flex gap-2 items-center mb-2">
-        <span className="text-xs font-bold text-gray-500 w-6">IF</span>
-        <select
-            value={rule.field}
-            onChange={(e) => onChange('field', e.target.value)}
-            className="border rounded px-2 py-1 text-sm bg-white dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500"
-        >
-            <option value="RSI">RSI</option>
-            <option value="SMA_5">SMA 5 (% of Close)</option>
-            <option value="SMA_10">SMA 10 (% of Close)</option>
-            <option value="SMA_20">SMA 20 (% of Close)</option>
-            <option value="SMA_50">SMA 50 (% of Close)</option>
-            <option value="CLOSE_PCT_CHANGE_0">Close % Change (Day 0 - Day -1)</option>
-            <option value="CLOSE_PCT_CHANGE_1">Close % Change (Day -1 - Day -2)</option>
-        </select>
-        <select
-            value={rule.operator}
-            onChange={(e) => onChange('operator', e.target.value)}
-            className="border rounded px-2 py-1 text-sm w-16 bg-white dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600"
-        >
-            <option value="gt">&gt;</option>
-            <option value="lt">&lt;</option>
-            <option value="eq">=</option>
-            <option value="gte">≥</option>
-            <option value="lte">≤</option>
-        </select>
-        <input
-            type="number"
-            value={rule.value}
-            onChange={(e) => onChange('value', e.target.value)}
-            className="border rounded px-2 py-1 text-sm w-20 bg-white dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600"
-            placeholder="Val"
-        />
-        <button type="button" onClick={onDelete} className="text-gray-400 hover:text-red-500">
-            <TrashIcon className="h-4 w-4" />
-        </button>
+    <div className="flex flex-col mb-2 bg-gray-50 dark:bg-gray-800/50 p-2 rounded border border-gray-100 dark:border-gray-700">
+        <div className="flex gap-2 items-center">
+            <span className="text-xs font-bold text-gray-500 w-6">IF</span>
+            <select
+                value={rule.field}
+                onChange={(e) => onChange('field', e.target.value)}
+                className="border rounded px-2 py-1 text-sm flex-grow bg-white dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-blue-500"
+            >
+                <option value="RSI">RSI</option>
+                <option value="SMA_5">SMA 5 (% of Close)</option>
+                <option value="SMA_10">SMA 10 (% of Close)</option>
+                <option value="SMA_20">SMA 20 (% of Close)</option>
+                <option value="SMA_50">SMA 50 (% of Close)</option>
+                <option value="CLOSE_PCT_CHANGE_0">Close % Change (Day -1 vs Day -2)</option>
+                <option value="CLOSE_PCT_CHANGE_1">Close % Change (Day -2 vs Day -3)</option>
+                <option value="CLOSE_PCT_CHANGE_1_3">Close % Change (Day -1 vs Day -3)</option>
+                <option value="CLOSE_PCT_CHANGE_1_7">Close % Change (Day -1 vs Day -7)</option>
+            </select>
+            <select
+                value={rule.operator}
+                onChange={(e) => onChange('operator', e.target.value)}
+                className="border rounded px-2 py-1 text-sm w-16 bg-white dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+            >
+                <option value="gt">&gt;</option>
+                <option value="lt">&lt;</option>
+                <option value="eq">=</option>
+                <option value="gte">≥</option>
+                <option value="lte">≤</option>
+            </select>
+            <input
+                type="number"
+                value={rule.value}
+                onChange={(e) => onChange('value', e.target.value)}
+                className="border rounded px-2 py-1 text-sm w-20 bg-white dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600"
+                placeholder="Val"
+            />
+            <button type="button" onClick={onDelete} className="text-gray-400 hover:text-red-500">
+                <TrashIcon className="h-4 w-4" />
+            </button>
+        </div>
+        <div className="ml-8 mt-1 text-xs text-gray-500 dark:text-gray-400 italic">
+            {FIELD_DESCRIPTIONS[rule.field]}
+        </div>
     </div>
 );
+
+
+import { useConfirm } from '@/context/ConfirmContext';
 
 export default function StrategiesPage() {
     const router = useRouter();
     const dispatch = useDispatch();
+    const { confirm } = useConfirm();
     // @ts-ignore
     const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
     const [mounted, setMounted] = useState(false);
@@ -142,13 +166,34 @@ export default function StrategiesPage() {
     const handleOpenEdit = (strategy: any) => {
         setCurrentStrategy(strategy);
         setIsEditMode(true);
+
+        // Populate Rule Builder if AUTO and rules exist
+        if (strategy.type === 'AUTO' && strategy.rules_json?.strategy_blocks) {
+            const blocks = strategy.rules_json.strategy_blocks.map((b: any) => ({
+                action: b.action,
+                rules: b.rules,
+                outputPercentage: b.output_percentage?.toString() || '0'
+            }));
+            setStrategyBlocks(blocks);
+        } else {
+            // Default block if empty logic (shouldn't happen for valid AUTO)
+            setStrategyBlocks([{ action: 'BUY', rules: [{ field: 'RSI', operator: 'lt', value: '30' }], outputPercentage: '2' }]);
+        }
+
         setIsModalOpen(true);
         setError('');
         setSuccessMessage('');
     };
 
     const handleDelete = async (code: string) => {
-        if (!confirm('Are you sure you want to delete this strategy?')) return;
+        const isConfirmed = await confirm({
+            title: 'Delete Strategy',
+            message: 'Are you sure you want to delete this strategy? This action cannot be undone.',
+            confirmText: 'Delete',
+            type: 'danger'
+        });
+        if (!isConfirmed) return;
+
         try {
             const { strategiesAPI } = await import('@/lib/api');
             await strategiesAPI.deleteMaster(code);
@@ -167,9 +212,8 @@ export default function StrategiesPage() {
         try {
             const { strategiesAPI } = await import('@/lib/api');
 
-            if (currentStrategy.type === 'AUTO' && !isEditMode) {
-                // Rule Based Creation (AUTO mode)
-                // Backend will automatically create the linked StrategyMaster using the provided code.
+            if (currentStrategy.type === 'AUTO') {
+                // Rule Based Strategy Payload
                 const payload = {
                     name: currentStrategy.name,
                     description: currentStrategy.description,
@@ -184,8 +228,23 @@ export default function StrategiesPage() {
                     }
                 };
 
-                await strategiesAPI.createRuleBased(payload);
-                setSuccessMessage('Auto Strategy created successfully');
+                if (isEditMode) {
+                    if (!currentStrategy.rule_based_strategy) throw new Error("Missing Rule Based ID");
+
+                    // Update the underlying RuleBased strategy
+                    await strategiesAPI.updateRuleBased(currentStrategy.rule_based_strategy, payload);
+
+                    // Also update the Master metadata (Name/Desc)
+                    await strategiesAPI.updateMaster(currentStrategy.code, {
+                        name: currentStrategy.name,
+                        description: currentStrategy.description
+                    });
+
+                    setSuccessMessage('Auto Strategy updated successfully');
+                } else {
+                    await strategiesAPI.createRuleBased(payload);
+                    setSuccessMessage('Auto Strategy created successfully');
+                }
             } else {
                 // Legacy StrategyMaster (Manual)
                 if (isEditMode) {
@@ -330,15 +389,15 @@ export default function StrategiesPage() {
 
                             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-                            <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                            <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
                                 <div className="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                     <div className="sm:flex sm:items-start text-left">
                                         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                                            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white" id="modal-title">
+                                            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white mb-4" id="modal-title">
                                                 {isEditMode ? 'Edit Strategy' : 'Create Strategy'}
                                             </h3>
-                                            <div className="mt-4 space-y-4">
-                                                <div>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                <div className="col-span-1">
                                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Strategy Name</label>
                                                     <input
                                                         type="text"
@@ -348,7 +407,7 @@ export default function StrategiesPage() {
                                                     />
                                                 </div>
                                                 {!isEditMode && (
-                                                    <div>
+                                                    <div className="col-span-1">
                                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Code (Unique)</label>
                                                         <input
                                                             type="text"
@@ -358,7 +417,7 @@ export default function StrategiesPage() {
                                                         />
                                                     </div>
                                                 )}
-                                                <div>
+                                                <div className="col-span-1">
                                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
                                                     <select
                                                         value={currentStrategy.type}
@@ -370,7 +429,7 @@ export default function StrategiesPage() {
                                                         <option value="AUTO">AUTO (Rule Builder)</option>
                                                     </select>
                                                 </div>
-                                                <div>
+                                                <div className="col-span-2">
                                                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
                                                     <textarea
                                                         value={currentStrategy.description}
@@ -381,8 +440,8 @@ export default function StrategiesPage() {
                                                 </div>
 
                                                 {/* AUTO Mode: Rule Builder */}
-                                                {currentStrategy.type === 'AUTO' && !isEditMode && (
-                                                    <div className="space-y-4 border-t pt-4 border-gray-200 dark:border-gray-600">
+                                                {currentStrategy.type === 'AUTO' && (
+                                                    <div className="col-span-2 space-y-4 border-t pt-4 border-gray-200 dark:border-gray-600">
                                                         <h4 className="font-semibold text-gray-800 dark:text-gray-200">Rule Builder</h4>
 
                                                         {/* Unified Strategy Blocks */}

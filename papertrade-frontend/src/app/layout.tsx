@@ -7,6 +7,7 @@ import { loadFromStorage } from '@/store/slices/authSlice';
 import AppLayout from '@/components/layout/AppLayout';
 import { Toaster } from '@/components/ui/Toast';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { ConfirmProvider } from '@/context/ConfirmContext';
 import './globals.css';
 
 export default function RootLayout({
@@ -24,10 +25,12 @@ export default function RootLayout({
       <body className="antialiased" suppressHydrationWarning>
         <ThemeProvider>
           <Provider store={store}>
-            <AppLayout>
-              {children}
-            </AppLayout>
-            <Toaster position="top-right" />
+            <ConfirmProvider>
+              <AppLayout>
+                {children}
+              </AppLayout>
+              <Toaster position="bottom-center" />
+            </ConfirmProvider>
           </Provider>
         </ThemeProvider>
       </body>

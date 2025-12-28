@@ -6,9 +6,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import apiClient from '@/lib/api';
 
+import { useConfirm } from '@/context/ConfirmContext';
+import { toast } from 'react-hot-toast';
+
 export default function SectorsManagementPage() {
     const router = useRouter();
     const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
+    const { confirm } = useConfirm();
     const [sectors, setSectors] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [mounted, setMounted] = useState(false);
@@ -44,6 +48,7 @@ export default function SectorsManagementPage() {
             setSectors(response.data.data || []);
         } catch (error) {
             console.error('Failed to fetch sectors:', error);
+            toast.error('Failed to load sectors');
         } finally {
             setLoading(false);
         }
@@ -54,15 +59,17 @@ export default function SectorsManagementPage() {
         try {
             if (editingSector) {
                 await apiClient.put(`/sectors/${editingSector.id}/`, formData);
+                toast.success("Sector updated successfully");
             } else {
                 await apiClient.post('/sectors/', formData);
+                toast.success("Sector created successfully");
             }
             setShowModal(false);
             setEditingSector(null);
             setFormData({ name: '', symbol: '', description: '' });
             fetchSectors();
         } catch (error: any) {
-            alert(error.response?.data?.message || 'Operation failed');
+            toast.error(error.response?.data?.message || 'Operation failed');
         }
     };
 
@@ -77,12 +84,21 @@ export default function SectorsManagementPage() {
     };
 
     const handleDelete = async (id: number) => {
-        if (!confirm('Are you sure you want to delete this sector? This action cannot be undone.')) return;
+        const isConfirmed = await confirm({
+            title: 'Delete Sector',
+            message: 'Are you sure you want to delete this sector? This action cannot be undone.',
+            confirmText: 'Delete',
+            type: 'danger'
+        });
+
+        if (!isConfirmed) return;
+
         try {
             await apiClient.delete(`/sectors/${id}/`);
+            toast.success("Sector deleted successfully");
             fetchSectors();
         } catch (error: any) {
-            alert(error.response?.data?.message || 'Failed to delete sector');
+            toast.error(error.response?.data?.message || 'Failed to delete sector');
         }
     };
 

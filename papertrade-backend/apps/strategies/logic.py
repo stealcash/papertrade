@@ -100,6 +100,9 @@ class StrategyEngine:
         # Always calculate Percentage Changes as they are core now
         df['CLOSE_PCT_CHANGE_0'] = df['close_price'].pct_change() * 100
         df['CLOSE_PCT_CHANGE_1'] = df['CLOSE_PCT_CHANGE_0'].shift(1)
+        # New Rules: Day -1 vs Day -3 (Period=2) and Day -1 vs Day -7 (Period=6)
+        df['CLOSE_PCT_CHANGE_1_3'] = df['close_price'].pct_change(periods=2) * 100
+        df['CLOSE_PCT_CHANGE_1_7'] = df['close_price'].pct_change(periods=6) * 100
 
         for field in needed_fields:
             if field.startswith('SMA_'):
@@ -110,7 +113,7 @@ class StrategyEngine:
 
         # Iterate through Days
         for i in range(len(df)):
-            if i < 2: continue # Need at least 2 days for Prev Day Change logic
+            if i < 1: continue # Need at least 1 day for Momentum/Change logic
             
             row = df.iloc[i]
             prev_row = df.iloc[i-1]
@@ -123,6 +126,8 @@ class StrategyEngine:
                 if field == 'CLOSE': return row['close_price']
                 if field == 'CLOSE_PCT_CHANGE_0': return row['CLOSE_PCT_CHANGE_0']
                 if field == 'CLOSE_PCT_CHANGE_1': return row['CLOSE_PCT_CHANGE_1']
+                if field == 'CLOSE_PCT_CHANGE_1_3': return row['CLOSE_PCT_CHANGE_1_3']
+                if field == 'CLOSE_PCT_CHANGE_1_7': return row['CLOSE_PCT_CHANGE_1_7']
                 return 0
                 
             def check_conditions(rules):

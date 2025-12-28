@@ -2,9 +2,16 @@ from rest_framework import serializers
 from .models import StrategyMaster, StrategyRuleBased, StrategySignal
 
 class StrategyMasterSerializer(serializers.ModelSerializer):
+    rules_json = serializers.SerializerMethodField()
+    
     class Meta:
         model = StrategyMaster
-        fields = ['id', 'code', 'name', 'description', 'status', 'type', 'rule_based_strategy', 'created_at']
+        fields = ['id', 'code', 'name', 'description', 'status', 'type', 'rule_based_strategy', 'created_at', 'rules_json']
+
+    def get_rules_json(self, obj):
+        if obj.rule_based_strategy:
+            return obj.rule_based_strategy.rules_json
+        return None
 
 class StrategySignalSerializer(serializers.ModelSerializer):
     strategy_name = serializers.CharField(source='strategy.name', read_only=True)
