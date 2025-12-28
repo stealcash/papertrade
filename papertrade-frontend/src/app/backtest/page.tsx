@@ -3,165 +3,157 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { backtestAPI } from '@/lib/api';
-import { PlayCircle, Download, Calendar } from 'lucide-react';
-
-// Mock Data Fallback
-const MOCK_RUNS = [
-    {
-        id: 1,
-        strategy_name: 'Moving Average Crossover',
-        created_at: new Date(Date.now() - 86400000 * 7).toISOString(),
-        total_return: 12.5,
-        sharpe_ratio: 1.8,
-        max_drawdown: -8.3,
-        win_rate: 62.5,
-    },
-    {
-        id: 2,
-        strategy_name: 'RSI Mean Reversion',
-        created_at: new Date(Date.now() - 86400000 * 3).toISOString(),
-        total_return: 8.2,
-        sharpe_ratio: 1.4,
-        max_drawdown: -6.1,
-        win_rate: 58.3,
-    },
-    {
-        id: 3,
-        strategy_name: 'Breakout Strategy',
-        created_at: new Date(Date.now() - 86400000).toISOString(),
-        total_return: -3.5,
-        sharpe_ratio: 0.6,
-        max_drawdown: -12.7,
-        win_rate: 45.0,
-    },
-];
+import { PlayCircle, Download, Calendar, Trash2 } from 'lucide-react';
+import NewBacktestModal from '@/components/backtest/NewBacktestModal';
 
 export default function BacktestPage() {
     const [runs, setRuns] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         fetchRuns();
     }, []);
 
     const fetchRuns = async () => {
+        setLoading(true);
         try {
             const res = await backtestAPI.getRuns();
-            setRuns(res.data.data || []);
+            setRuns(res.data.data.results || res.data.data || []);
         } catch {
-            console.log("API Offline → Using Mock");
-            setRuns(MOCK_RUNS);
+            console.log("API Fail");
+            setRuns([]);
         } finally {
             setLoading(false);
         }
     };
 
-    const exportCSV = async (id: number) => {
-        alert("CSV export will work when backend is connected.");
+    const handleDelete = async (id: number) => {
+        if (!confirm("Are you sure you want to delete this backtest report?")) return;
+        try {
+            await backtestAPI.delete(id);
+            fetchRuns(); // Refresh list
+        } catch (e) {
+            console.error("Delete Failed", e);
+            alert("Failed to delete backtest");
+        }
     };
-
-    if (loading) return <div className="flex justify-center items-center h-60 text-gray-500">Loading backtests...</div>;
 
     return (
         <div className="space-y-10">
+            <NewBacktestModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSuccess={fetchRuns}
+            />
 
             {/* Header */}
             <div className="flex justify-between items-center">
-                {/* Page Title */}
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Backtest Strategy</h1>
+                <div>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Backtest Strategy</h1>
+                    <p className="text-gray-500 mt-1">Test your strategies against historical data to verify accuracy.</p>
+                </div>
 
-                <button className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition">
-                    <PlayCircle size={20} /> New Backtest
-                </button>
-            </div>
-
-            {/* Chart Placeholder */}
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 h-96 flex items-center justify-center">
-                <p className="text-gray-400 dark:text-gray-500 text-lg">Strategy Performance Chart Placeholder</p>
-            </div>
-
-            {/* Configuration Card */}
-            <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800">
-                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Configuration</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* Placeholder for configuration items */}
-                    <div className="col-span-full text-gray-500 dark:text-gray-400">Configuration options will go here.</div>
+                <div className="flex gap-3">
+                    {runs.length > 0 && (
+                        <button
+                            onClick={async () => {
+                                if (!confirm("Delete ALL backtests? This cannot be undone.")) return;
+                                const ids = runs.map(r => r.id);
+                                try {
+                                    await backtestAPI.deleteBulk(ids);
+                                    fetchRuns();
+                                } catch (e) { alert("Bulk delete failed"); }
+                            }}
+                            className="flex items-center gap-2 px-4 py-3 bg-red-50 text-red-600 rounded-lg font-semibold hover:bg-red-100 transition"
+                        >
+                            <Trash2 size={20} /> Clear All
+                        </button>
+                    )}
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition shadow-lg hover:shadow-xl"
+                    >
+                        <PlayCircle size={20} /> New Backtest
+                    </button>
                 </div>
             </div>
 
             {/* List Section */}
-            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-3">
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden">
+                <div className="grid grid-cols-12 bg-gray-50 dark:bg-gray-800 p-4 font-semibold text-gray-500 dark:text-gray-400 text-sm border-b border-gray-100 dark:border-gray-700">
+                    <div className="col-span-1 text-center">ID</div>
+                    <div className="col-span-3">Strategy Name</div>
+                    <div className="col-span-2">Date Range</div>
+                    <div className="col-span-2 text-center">Criteria</div>
+                    <div className="col-span-2 text-center">Accuracy (Win Rate)</div>
+                    <div className="col-span-2 text-right">Actions</div>
+                </div>
+
                 {runs.length === 0 ? (
-                    <div className="text-center py-10 text-gray-500 text-lg">No runs yet — Create your first backtest!</div>
+                    <div className="text-center py-20 text-gray-500">
+                        <p className="text-lg">No backtests run yet.</p>
+                        <p className="text-sm">Click "New Backtest" to start.</p>
+                    </div>
                 ) : (
-                    <div className="divide-y">
+                    <div className="divide-y divide-gray-100 dark:divide-gray-800">
                         {runs.map(run => (
-                            <Link key={run.id} href={`/backtest/${run.id}`} className="block hover:bg-gray-50 p-6 transition">
+                            <div key={run.id} className="grid grid-cols-12 p-4 items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition text-sm text-gray-900 dark:text-gray-100">
 
-                                <div className="flex justify-between items-start mb-4">
-                                    <div>
-                                        <h2 className="font-semibold text-lg text-gray-900">
-                                            {run.strategy_name || "Unnamed Strategy"}
-                                        </h2>
-                                        <div className="flex items-center text-gray-500 gap-2 text-sm mt-1">
-                                            <Calendar size={14} />
-                                            {new Date(run.created_at).toLocaleDateString()}
+                                <div className="col-span-1 text-center font-mono text-gray-400">#{run.id}</div>
+
+                                <div className="col-span-3 font-semibold">
+                                    {/* Display Strategy Name if available, else ID if not expanded */}
+                                    {run.strategy_details?.name || `Strategy #${run.strategy_predefined}`}
+                                </div>
+
+                                <div className="col-span-2 text-gray-500 text-xs">
+                                    {run.start_date} <br /> to {run.end_date}
+                                </div>
+
+                                <div className="col-span-2 text-center capitalize">
+                                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">
+                                        {run.criteria_type}
+                                    </span>
+                                </div>
+
+                                <div className="col-span-2 text-center">
+                                    {run.status === 'completed' ? (
+                                        <div className="flex flex-col items-center">
+                                            <span className={`text-lg font-bold ${Number(run.win_rate) >= 50 ? 'text-green-600' : 'text-red-500'
+                                                }`}>
+                                                {run.win_rate}%
+                                            </span>
+                                            <span className="text-xs text-gray-400">
+                                                {run.win_count}W / {run.loss_count}L
+                                            </span>
                                         </div>
-                                    </div>
+                                    ) : (
+                                        <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs animate-pulse">
+                                            {run.status}
+                                        </span>
+                                    )}
+                                </div>
 
+                                <div className="col-span-2 flex justify-end gap-2">
+                                    <Link
+                                        href={`/backtest/${run.id}`}
+                                        className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded text-gray-600"
+                                    >
+                                        <Download size={16} />
+                                    </Link>
                                     <button
-                                        className="px-4 py-2 border border-gray-200 hover:bg-gray-100 rounded-md flex items-center gap-2 text-sm transition"
-                                        onClick={(e) => { e.preventDefault(); exportCSV(run.id); }}>
-                                        <Download size={15} /> Export
+                                        onClick={() => handleDelete(run.id)}
+                                        className="p-2 hover:bg-red-50 hover:text-red-600 rounded text-gray-400 transition"
+                                    >
+                                        <Trash2 size={16} />
                                     </button>
                                 </div>
-
-                                {/* Results Section */}
-                                <div>
-                                    <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Backtest Results</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                                        {/* These StatsCard components are placeholders and need to be defined or replaced */}
-                                        {/* <StatsCard title="Total Return" value="+24.5%" change={12.5} isPositive={true} />
-                                        <StatsCard title="Win Rate" value="68%" change={-2.4} isPositive={false} />
-                                        <StatsCard title="Max Drawdown" value="-8.2%" change={1.2} isPositive={true} />
-                                        <StatsCard title="Profit Factor" value="1.85" change={0.1} isPositive={true} /> */}
-                                    </div>
-                                </div>
-
-                                {/* Stats Row */}
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-
-                                    <Stat label="Total Return"
-                                        value={`${run.total_return.toFixed(2)}%`}
-                                        accent={run.total_return >= 0 ? "text-green-600" : "text-red-500"} />
-
-                                    <Stat label="Sharpe Ratio"
-                                        value={run.sharpe_ratio.toFixed(2)} />
-
-                                    <Stat label="Max Drawdown"
-                                        value={`${run.max_drawdown.toFixed(2)}%`}
-                                        accent="text-red-500" />
-
-                                    <Stat label="Win Rate"
-                                        value={`${run.win_rate.toFixed(2)}%`} />
-                                </div>
-
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 )}
             </div>
-        </div>
-    );
-}
-
-
-// UI Sub-component
-function Stat({ label, value, accent = "text-gray-900" }: { label: string, value: string, accent?: string }) {
-    return (
-        <div>
-            <p className="text-gray-500 text-xs">{label}</p>
-            <p className={`text-lg font-semibold ${accent}`}>{value}</p>
         </div>
     );
 }

@@ -3,11 +3,22 @@ from .models import BacktestRun, Trade
 
 
 class BacktestRunSerializer(serializers.ModelSerializer):
+    strategy_details = serializers.SerializerMethodField()
+
     class Meta:
         model = BacktestRun
         fields = '__all__'
         read_only_fields = ['user', 'run_id', 'status', 'final_wallet_amount', 
                            'total_pnl', 'pnl_percentage', 'time_taken']
+
+    def get_strategy_details(self, obj):
+        if obj.strategy_predefined:
+            return {
+                'id': obj.strategy_predefined.id,
+                'name': obj.strategy_predefined.name,
+                'code': obj.strategy_predefined.code
+            }
+        return None
 
 
 class TradeSerializer(serializers.ModelSerializer):
@@ -21,11 +32,21 @@ class TradeSerializer(serializers.ModelSerializer):
 class BacktestRunRequestSerializer(serializers.Serializer):
     """Serializer for backtest run request."""
     
-    stock_ids = serializers.ListField(child=serializers.IntegerField())
+    # Strategy
+    strategy_id = serializers.IntegerField(required=True)
+    
+    # Selection
+    selection_mode = serializers.ChoiceField(choices=['stock', 'sector', 'category', 'watchlist'])
+    selection_config = serializers.JSONField(default=dict) # e.g. {ids: [1,2]}
+    
+    # Criteria
+    criteria_type = serializers.ChoiceField(choices=['direction', 'magnitude'], default='direction')
+    magnitude_threshold = serializers.IntegerField(required=False, default=50, min_value=0, max_value=100)
+    
+    # Range
     start_date = serializers.DateField()
     end_date = serializers.DateField()
+    
+    # Legacy / Optional
     initial_wallet = serializers.DecimalField(max_digits=15, decimal_places=2, default=100000)
-    strategy_type = serializers.ChoiceField(choices=['predefined', 'rule_based', 'custom'])
-    strategy_id = serializers.IntegerField(required=False)
-    custom_script = serializers.CharField(required=False, allow_blank=True)
     execution_mode = serializers.ChoiceField(choices=['signal_close', 'next_open'], default='signal_close')

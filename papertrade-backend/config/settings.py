@@ -53,11 +53,13 @@ INSTALLED_APPS = [
     'apps.sync',
     'apps.notifications',
     'apps.adminpanel',
+    'apps.watchlist',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    'apps.common.middleware.ForceCorsMiddleware',  # FORCE CORS FIX
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -148,57 +150,39 @@ SPECTACULAR_SETTINGS = {
 }
 
 # CORS Configuration
-# CORS Configuration
-if DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3002",
-        "http://localhost:3003",
-        "http://localhost:4000",
-        "http://localhost:4001",
-        "http://localhost:5173",
-        "http://localhost:8000",
-        "http://localhost:8080",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:3001",
-        "http://127.0.0.1:4000",
-        "http://127.0.0.1:8000",
-    ]
-    
-    # Django 4.0+ requires trusted origins for cross-origin POSTs 
-    # even if you don't use session auth, sometimes it's enforced.
-    CSRF_TRUSTED_ORIGINS = [
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3002",
-        "http://localhost:3003",
-        "http://localhost:4000",
-        "http://localhost:4001",
-        "http://localhost:5173",
-        "http://localhost:8000",
-        "http://localhost:8080",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:3001",
-        "http://127.0.0.1:4000",
-        "http://127.0.0.1:8000",
-    ]
-else:
-    # In production, this will be managed via system_config in database
-    # But for now, allow these just in case DEBUG is accidentally False in dev
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:4000",
-        "http://localhost:5173",
-    ]
-    CSRF_TRUSTED_ORIGINS = [
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:4000",
-        "http://localhost:5173",
-    ]
+# "Fix it all at once": Enabling ALL origins to prevent intermittent local dev issues.
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+# We keep this list for CSRF_TRUSTED_ORIGINS, which validates the Referer/Origin for unsafe requests (POST/PUT).
+# But for typical CORS (getting resources), CORS_ALLOW_ALL_ORIGINS handles it.
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3002",
+    "http://localhost:3003",
+    "http://localhost:4000",
+    "http://localhost:4001",
+    "http://localhost:5173",
+    "http://localhost:8000",
+    "http://localhost:8080",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:3001",
+    "http://127.0.0.1:4000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:8080",
+]
+
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+
+from corsheaders.defaults import default_headers, default_methods
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'sentry-trace',
+    'baggage',
+]
+
+CORS_ALLOW_METHODS = list(default_methods)
 
 CORS_ALLOW_CREDENTIALS = True
 

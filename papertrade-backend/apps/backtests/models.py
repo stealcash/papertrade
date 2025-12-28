@@ -2,7 +2,7 @@ from django.db import models
 from apps.users.models import User
 from apps.stocks.models import Stock
 from apps.sectors.models import Sector
-from apps.strategies.models import StrategyPredefined, StrategyRuleBased
+from apps.strategies.models import StrategyMaster, StrategyRuleBased
 
 
 class BacktestRun(models.Model):
@@ -19,44 +19,51 @@ class BacktestRun(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='backtest_runs')
     
     # Strategy reference (can be predefined, rule-based, or custom script)
-    strategy_predefined = models.ForeignKey(StrategyPredefined, on_delete=models.SET_NULL, 
+    strategy_predefined = models.ForeignKey(StrategyMaster, on_delete=models.SET_NULL, 
                                            null=True, blank=True)
     strategy_rule_based = models.ForeignKey(StrategyRuleBased, on_delete=models.SET_NULL, 
                                            null=True, blank=True)
     strategy_custom_script = models.TextField(blank=True, help_text='Custom script (not persisted)')
     
-    # Instrument details (supports stocks, sectors, and options)
-    INSTRUMENT_TYPE_CHOICES = [
-        ('stock', 'Stock'),
+    # Selection Mode
+    SELECTION_MODE_CHOICES = [
+        ('stock', 'Specific Stocks'),
         ('sector', 'Sector'),
-        ('option', 'Option'),
+        ('category', 'Category'),
+        ('watchlist', 'My Watchlist'),
     ]
-    instrument_type = models.CharField(
-        max_length=10,
-        choices=INSTRUMENT_TYPE_CHOICES,
-        default='stock',
-        help_text='Type of instrument being backtested'
-    )
-    instrument_identifier = models.CharField(
-        max_length=100,
-        default='',
-        help_text='Stock enum, sector enum, or option contract identifier'
-    )
+    selection_mode = models.CharField(max_length=20, choices=SELECTION_MODE_CHOICES, default='stock')
+    selection_config = models.JSONField(default=dict, blank=True, help_text='IDs of selected stocks/sectors/categories')
+    
+    CRITERIA_TYPE_CHOICES = [
+        ('direction', 'Direction Only (UP/DOWN)'),
+        ('magnitude', 'Direction + Magnitude (50%)'),
+    ]
+    criteria_type = models.CharField(max_length=20, choices=CRITERIA_TYPE_CHOICES, default='direction')
+    magnitude_threshold = models.IntegerField(default=50, help_text='Percentage verification threshold (0-100)')
     
     # Backtest parameters
     start_date = models.DateField()
     end_date = models.DateField()
-    initial_wallet_amount = models.DecimalField(max_digits=15, decimal_places=2)
+    initial_wallet_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     
-    # Results
+    # Results (Accuracy Metrics)
+    total_signals = models.IntegerField(default=0)
+    win_count = models.IntegerField(default=0)
+    loss_count = models.IntegerField(default=0)
+    win_rate = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    
+    # Detailed results
+    list_of_trades_json = models.JSONField(default=list, blank=True) # Renamed conceptually to "predictions" but keeping field name for now
+    equity_curve_json = models.JSONField(default=list, blank=True)
+    
+    # Deprecated / Legacy
+    instrument_type = models.CharField(max_length=10, default='stock')
+    instrument_identifier = models.CharField(max_length=100, default='')
     final_wallet_amount = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
     total_pnl = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
     pnl_percentage = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     number_of_trades = models.IntegerField(default=0)
-    
-    # Detailed results
-    list_of_trades_json = models.JSONField(default=list, blank=True)
-    equity_curve_json = models.JSONField(default=list, blank=True)
     
     # Execution metadata
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')

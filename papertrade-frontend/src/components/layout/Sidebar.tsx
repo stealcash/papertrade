@@ -27,11 +27,11 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
     { name: "Stocks", href: "/stocks", icon: TrendingUp },
+    { name: "My Watchlist", href: "/watchlist", icon: BookOpen },
     { name: "History", href: "/stock-history", icon: BookOpen },
     { name: "Options", href: "/options", icon: Zap },
     { name: "Analysis", href: "/market-analysis", icon: BarChart3 },
     { name: "Backtest", href: "/backtest", icon: BarChart3 },
-    { name: "Strategy", href: "/strategy", icon: PieChart },
     { name: "Wallet", href: "/wallet", icon: Wallet },
     { name: "Notifications", href: "/notifications", icon: Bell },
     { name: "Profile", href: "/profile", icon: User },

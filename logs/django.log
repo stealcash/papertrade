@@ -1,41 +1,87 @@
-INFO 2025-12-15 00:09:16,079 autoreload Watching for file changes with StatReloader
-INFO 2025-12-15 00:09:37,477 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:37,477 basehttp "OPTIONS /api/v1/admin-panel/config/ HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:39,308 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2025-12-15 00:09:39,557 basehttp "GET /api/v1/admin-panel/config/ HTTP/1.1" 200 1160
-INFO 2025-12-15 00:09:40,923 basehttp "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:41,091 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2025-12-15 00:09:42,137 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2025-12-15 00:09:42,912 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:42,912 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:42,913 basehttp "OPTIONS /api/v1/stocks/?page=1&sort_by=symbol&order=asc HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:43,578 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 376
-INFO 2025-12-15 00:09:44,981 basehttp "GET /api/v1/stocks/?page=1&sort_by=symbol&order=asc HTTP/1.1" 200 1067
-INFO 2025-12-15 00:09:45,164 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 559
-INFO 2025-12-15 00:09:52,680 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:52,694 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:54,501 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 412
-INFO 2025-12-15 00:09:55,329 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 412
-INFO 2025-12-15 00:09:56,200 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 412
-INFO 2025-12-15 00:09:56,204 basehttp "OPTIONS /api/v1/notifications?limit=5 HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:56,212 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:57,102 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 412
-INFO 2025-12-15 00:09:58,156 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 97
-INFO 2025-12-15 00:09:58,157 basehttp - Broken pipe from ('127.0.0.1', 57439)
-INFO 2025-12-15 00:09:58,344 basehttp - Broken pipe from ('127.0.0.1', 57430)
-INFO 2025-12-15 00:09:58,396 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 412
-INFO 2025-12-15 00:09:59,022 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:59,023 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:59,027 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:59,027 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
-INFO 2025-12-15 00:09:59,224 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 412
-INFO 2025-12-15 00:09:59,312 basehttp "OPTIONS /api/v1/stocks/prices/daily/?start_date=2025-11-14&end_date=2025-12-14 HTTP/1.1" 200 0
-INFO 2025-12-15 00:10:00,875 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 97
-INFO 2025-12-15 00:10:01,503 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 559
-INFO 2025-12-15 00:10:01,557 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 376
-INFO 2025-12-15 00:10:02,372 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 412
-INFO 2025-12-15 00:10:02,554 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 559
-INFO 2025-12-15 00:10:02,561 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 376
-INFO 2025-12-15 00:10:03,228 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 412
-INFO 2025-12-15 00:10:03,441 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 97
-INFO 2025-12-15 00:10:05,857 basehttp "GET /api/v1/stocks/prices/daily/?start_date=2025-11-14&end_date=2025-12-14 HTTP/1.1" 200 8263
+INFO 2025-12-28 00:52:20,568 autoreload Watching for file changes with StatReloader
+INFO 2025-12-28 00:52:33,406 basehttp "OPTIONS /api/v1/stocks/12/ HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:33,409 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_id=12&days=30 HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:33,416 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_id=12&days=30 HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:33,416 basehttp "OPTIONS /api/v1/stocks/12/ HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:33,417 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:33,418 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:37,242 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 00:52:39,501 basehttp "GET /api/v1/stocks/12/ HTTP/1.1" 200 803
+INFO 2025-12-28 00:52:39,984 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 00:52:40,728 basehttp "GET /api/v1/stocks/prices/daily/?stock_id=12&days=30 HTTP/1.1" 200 3910
+INFO 2025-12-28 00:52:42,734 basehttp "GET /api/v1/stocks/12/ HTTP/1.1" 200 803
+INFO 2025-12-28 00:52:44,870 basehttp "OPTIONS /api/v1/backtest/runs/ HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:44,884 basehttp "OPTIONS /api/v1/backtest/runs/ HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:45,192 basehttp "GET /api/v1/stocks/prices/daily/?stock_id=12&days=30 HTTP/1.1" 200 3910
+INFO 2025-12-28 00:52:46,406 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 3950
+INFO 2025-12-28 00:52:47,892 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 3950
+INFO 2025-12-28 00:52:48,516 basehttp "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:48,520 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:48,521 basehttp "OPTIONS /api/v1/sectors/?page_size=100 HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:48,524 basehttp "OPTIONS /api/v1/stocks/?page_size=1000 HTTP/1.1" 200 0
+INFO 2025-12-28 00:52:49,759 basehttp "GET /api/v1/sectors/?page_size=100 HTTP/1.1" 200 619
+INFO 2025-12-28 00:52:49,759 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 376
+INFO 2025-12-28 00:52:49,768 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 600
+INFO 2025-12-28 00:52:54,790 basehttp "GET /api/v1/stocks/?page_size=1000 HTTP/1.1" 200 1456
+INFO 2025-12-28 00:53:20,569 basehttp "OPTIONS /api/v1/backtest/run/ HTTP/1.1" 200 0
+WARNING 2025-12-28 00:53:21,329 log Not Found: /api/v1/backtest/run/
+WARNING 2025-12-28 00:53:21,330 basehttp "POST /api/v1/backtest/run/ HTTP/1.1" 404 13729
+WARNING 2025-12-28 00:53:31,695 log Not Found: /api/v1/backtest/run/
+WARNING 2025-12-28 00:53:31,696 basehttp "POST /api/v1/backtest/run/ HTTP/1.1" 404 13729
+WARNING 2025-12-28 00:53:45,064 log Not Found: /api/v1/backtest/run/
+WARNING 2025-12-28 00:53:45,064 basehttp "POST /api/v1/backtest/run/ HTTP/1.1" 404 13729
+INFO 2025-12-28 00:54:02,974 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 600
+INFO 2025-12-28 00:54:02,990 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 376
+INFO 2025-12-28 00:54:02,991 basehttp "GET /api/v1/sectors/?page_size=100 HTTP/1.1" 200 619
+INFO 2025-12-28 00:54:06,992 basehttp "GET /api/v1/stocks/?page_size=1000 HTTP/1.1" 200 1456
+WARNING 2025-12-28 00:54:15,164 log Not Found: /api/v1/backtest/run/
+WARNING 2025-12-28 00:54:15,165 basehttp "POST /api/v1/backtest/run/ HTTP/1.1" 404 13729
+INFO 2025-12-28 00:55:28,335 autoreload /Users/chat360team/Documents/papertrade/papertrade-backend/apps/backtests/urls.py changed, reloading.
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+Performing system checks...
+
+System check identified no issues (0 silenced).
+December 28, 2025 - 00:52:11
+Django version 5.1.4, using settings 'config.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+INFO 2025-12-28 00:55:29,347 autoreload Watching for file changes with StatReloader
+INFO 2025-12-28 00:55:54,284 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 00:55:54,781 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 3950
+INFO 2025-12-28 00:55:55,414 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 600
+INFO 2025-12-28 00:55:55,440 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 376
+INFO 2025-12-28 00:55:56,265 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 3950
+INFO 2025-12-28 00:55:56,320 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2025-12-28 00:55:56,515 basehttp "GET /api/v1/sectors/?page_size=100 HTTP/1.1" 200 619
+INFO 2025-12-28 00:56:00,583 basehttp "GET /api/v1/stocks/?page_size=1000 HTTP/1.1" 200 1456
+INFO 2025-12-28 00:56:11,736 engine Backtest BT-BC26CA99F910 completed successfully
+INFO 2025-12-28 00:56:11,984 basehttp "POST /api/v1/backtest/run/ HTTP/1.1" 201 219
+INFO 2025-12-28 00:56:13,738 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 6309
+INFO 2025-12-28 00:56:18,816 basehttp "OPTIONS /api/v1/backtest/runs/10/results/?page=1&page_size=10&search= HTTP/1.1" 200 0
+INFO 2025-12-28 00:56:18,818 basehttp "OPTIONS /api/v1/backtest/runs/10/ HTTP/1.1" 200 0
+INFO 2025-12-28 00:56:18,818 basehttp "OPTIONS /api/v1/backtest/runs/10/ HTTP/1.1" 200 0
+INFO 2025-12-28 00:56:18,836 basehttp "OPTIONS /api/v1/backtest/runs/10/results/?page=1&page_size=10&search= HTTP/1.1" 200 0
+INFO 2025-12-28 00:56:21,833 basehttp "GET /api/v1/backtest/runs/10/results/?page=1&page_size=10&search= HTTP/1.1" 200 1717
+INFO 2025-12-28 00:56:22,082 basehttp "GET /api/v1/backtest/runs/10/ HTTP/1.1" 200 2453
+INFO 2025-12-28 00:56:23,555 basehttp "GET /api/v1/backtest/runs/10/ HTTP/1.1" 200 2453
+INFO 2025-12-28 00:56:24,865 basehttp "GET /api/v1/backtest/runs/10/results/?page=1&page_size=10&search= HTTP/1.1" 200 1717
+INFO 2025-12-28 00:57:05,655 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
+INFO 2025-12-28 00:57:05,667 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
+INFO 2025-12-28 00:57:12,641 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 1454
+INFO 2025-12-28 00:57:19,383 basehttp "OPTIONS /api/v1/stocks/prices/daily?stock_symbol=TCS&start_date=2025-11-27&end_date=2025-12-27 HTTP/1.1" 200 0
+INFO 2025-12-28 00:57:19,743 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 1454
+INFO 2025-12-28 00:57:22,001 basehttp "GET /api/v1/stocks/prices/daily?stock_symbol=TCS&start_date=2025-11-27&end_date=2025-12-27 HTTP/1.1" 301 0
+INFO 2025-12-28 00:57:22,014 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_symbol=TCS&start_date=2025-11-27&end_date=2025-12-27 HTTP/1.1" 200 0
+INFO 2025-12-28 00:57:22,027 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_symbol=TCS&start_date=2025-11-27&end_date=2025-12-27 HTTP/1.1" 200 0
+INFO 2025-12-28 00:57:29,577 basehttp "GET /api/v1/stocks/prices/daily/?stock_symbol=TCS&start_date=2025-11-27&end_date=2025-12-27 HTTP/1.1" 200 7690
+INFO 2025-12-28 00:57:39,065 basehttp "GET /api/v1/stocks/prices/daily/?stock_symbol=TCS&start_date=2025-11-27&end_date=2025-12-27 HTTP/1.1" 200 7690
+INFO 2025-12-28 00:57:41,363 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 6309
+INFO 2025-12-28 00:57:43,115 basehttp "GET /api/v1/backtest/runs/ HTTP/1.1" 200 6309
+INFO 2025-12-28 00:57:54,119 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 1454
+INFO 2025-12-28 00:58:01,268 basehttp - Broken pipe from ('127.0.0.1', 55525)
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully

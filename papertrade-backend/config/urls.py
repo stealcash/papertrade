@@ -25,6 +25,7 @@ urlpatterns = [
         path('payments/', include('apps.payments.urls')),
         path('sync/', include('apps.sync.urls')),
         path('notifications/', include('apps.notifications.urls')),
+        path('watchlist/', include('apps.watchlist.urls')),
         path('admin-panel/', include('apps.adminpanel.urls')),
     ])),
 ]

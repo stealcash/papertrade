@@ -9,10 +9,11 @@ import requests
 import logging
 import time
 from datetime import datetime, timedelta
-from .models import SyncLog, MarketStatus
+from .models import SyncLog
 from .utils import ExternalAPILogger
 from apps.stocks.models import Stock, StockPriceDaily, Stock5MinByDay
 from apps.sectors.models import Sector, SectorPriceDaily
+from apps.common.market_schedule import MarketSchedule
 
 logger = logging.getLogger(__name__)
 
@@ -120,8 +121,16 @@ def sync_stocks_task(is_auto=False, user_id=None, from_date=None, to_date=None, 
                 saved_records_count = 0  # Track if we saved any data
                 current_date = stock_start_date
                 while current_date <= end_date:
+                    # Check Market Status (File-Based)
+                    is_open, reason = MarketSchedule.is_market_open(current_date)
+                    if not is_open:
+                        logger.info(f"Skipping {stock.symbol} for {current_date}: Market Closed ({reason})")
+                        current_date += timedelta(days=1)
+                        continue
+
                     try:
                         req_start = time.time()
+                        # ... (Rest of existing logic)
                         url = f"{go_service_base_url}/stock/data"
                         params = {
                             'symbol': stock.symbol,
@@ -236,8 +245,6 @@ def sync_stocks_task(is_auto=False, user_id=None, from_date=None, to_date=None, 
                 })
                 logger.error(f"Failed to sync stock {stock.symbol}: {str(e)}")
         
-        # Check market status (if RELIANCE and TCS both missing, mark closed)
-        check_market_status(end_date)
         
         # Update sync log
         sync_log.end_time = timezone.now()
@@ -321,6 +328,13 @@ def sync_sectors_task(is_auto=False, user_id=None, from_date=None, to_date=None)
                         current_date = start_date
 
                 while current_date <= end_date:
+                    # Check Market Status (File-Based)
+                    is_open, reason = MarketSchedule.is_market_open(current_date)
+                    if not is_open:
+                        logger.info(f"Skipping {sector.name} for {current_date}: Market Closed ({reason})")
+                        current_date += timedelta(days=1)
+                        continue
+
                     try:
                         req_start = time.time()
                         url = f"{go_service_base_url}/sector/data"
@@ -413,29 +427,7 @@ def sync_sectors_task(is_auto=False, user_id=None, from_date=None, to_date=None)
         sync_log.save()
 
 
-def check_market_status(date):
-    """Check if market was open on given date."""
-    # Check if RELIANCE and TCS both have data
-    reliance_data = StockPriceDaily.objects.filter(
-        stock__symbol='RELIANCE',
-        date=date
-    ).exists()
-    
-    tcs_data = StockPriceDaily.objects.filter(
-        stock__symbol='TCS',
-        date=date
-    ).exists()
-    
-    is_open = reliance_data and tcs_data
-    
-    
-    MarketStatus.objects.update_or_create(
-        date=date,
-        defaults={
-            'is_market_open': is_open,
-            'reason': '' if is_open else 'No data available for major stocks',
-        }
-    )
+
 
 
 @shared_task

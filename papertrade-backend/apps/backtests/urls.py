@@ -7,6 +7,6 @@ router.register(r'runs', views.BacktestRunViewSet, basename='backtest-run')
 router.register(r'trades', views.TradeViewSet, basename='trade')
 
 urlpatterns = [
-    path('run', views.run_backtest, name='run-backtest'),
+    path('run/', views.run_backtest, name='run-backtest'),
     path('', include(router.urls)),
 ]

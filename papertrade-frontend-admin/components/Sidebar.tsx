@@ -68,10 +68,22 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen, isCollapsed, to
             show: isSuperadmin
         },
         {
+            name: 'Strategies',
+            path: '/strategies',
+            icon: ConfigIcon, // Reusing ConfigIcon or maybe I should import another if available. Let's use ConfigIcon for now or similar.
+            show: isSuperadmin || user?.role === 'admin'
+        },
+        {
             name: 'Data Sync',
             path: '/sync',
             icon: SyncIcon,
-            show: isSuperadmin
+            show: isSuperadmin || user?.role === 'admin'
+        },
+        {
+            name: 'Strategy Sync',
+            path: '/strategy-sync',
+            icon: SyncIcon,
+            show: isSuperadmin || user?.role === 'admin'
         },
         {
             name: 'Logs',

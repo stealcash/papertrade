@@ -8,8 +8,8 @@ from .models import BacktestRun, Trade
 from .serializers import BacktestRunSerializer, TradeSerializer, BacktestRunRequestSerializer
 
 
-class BacktestRunViewSet(viewsets.ReadOnlyModelViewSet):
-    """ViewSet for viewing backtest runs."""
+class BacktestRunViewSet(viewsets.ModelViewSet):
+    """ViewSet for viewing and managing backtest runs."""
     
     queryset = BacktestRun.objects.all()
     serializer_class = BacktestRunSerializer
@@ -19,9 +19,32 @@ class BacktestRunViewSet(viewsets.ReadOnlyModelViewSet):
         return self.queryset.filter(user=self.request.user)
     
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = self.get_queryset().order_by('-created_at')
         serializer = self.get_serializer(queryset, many=True)
         return get_success_response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return get_success_response(serializer.data)
+
+    def destroy(self, request, pk=None):
+        try:
+            backtest = self.get_queryset().get(pk=pk)
+            backtest.delete()
+            return get_success_response(None, message='Backtest deleted successfully')
+        except BacktestRun.DoesNotExist:
+            return get_error_response('NOT_FOUND', 'Backtest not found', status_code=404)
+
+    @action(detail=False, methods=['post'])
+    def bulk_delete(self, request):
+        """Delete multiple backtests."""
+        ids = request.data.get('ids', [])
+        if not ids:
+            return get_error_response('VALIDATION_ERROR', 'No IDs provided', status_code=400)
+        
+        self.get_queryset().filter(id__in=ids).delete()
+        return get_success_response(None, message='Backtests deleted successfully')
     
     @action(detail=True, methods=['get'])
     def export_csv(self, request, pk=None):
@@ -79,6 +102,49 @@ class BacktestRunViewSet(viewsets.ReadOnlyModelViewSet):
         except BacktestRun.DoesNotExist:
             return get_error_response('BACKTEST_NOT_FOUND', 'Backtest not found', status_code=404)
 
+    @action(detail=True, methods=['get'])
+    def results(self, request, pk=None):
+        """Paginated results for a backtest run."""
+        try:
+            backtest = self.get_queryset().get(pk=pk)
+            trades = backtest.list_of_trades_json
+            
+            # Filtering
+            search = request.query_params.get('search', '').lower()
+            if search:
+                trades = [t for t in trades if search in t.get('stock_symbol', '').lower()]
+            
+            # Sorting (Default by date desc for recent first)
+            # Assuming trades are stored by-date-asc, let's just reverse for display if needed? 
+            # Or just rely on natural order. Let's keep natural order (by-date-asc usually) unless requested.
+            
+            # Pagination
+            page = int(request.query_params.get('page', 1))
+            page_size = int(request.query_params.get('page_size', 10))
+            
+            total_count = len(trades)
+            total_pages = (total_count + page_size - 1) // page_size
+            
+            start = (page - 1) * page_size
+            end = start + page_size
+            
+            paginated_trades = trades[start:end]
+            
+            return get_success_response({
+                'results': paginated_trades,
+                'pagination': {
+                    'total_count': total_count,
+                    'total_pages': total_pages,
+                    'current_page': page,
+                    'page_size': page_size
+                }
+            })
+            
+        except BacktestRun.DoesNotExist:
+            return get_error_response('NOT_FOUND', 'Backtest not found', status_code=404)
+        except ValueError:
+             return get_error_response('INVALID_PARAM', 'Invalid page parameters', status_code=400)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -93,36 +159,90 @@ def run_backtest(request):
                                  serializer.errors, status_code=400)
     
     # Validate date range
-    if serializer.validated_data['start_date'] >= serializer.validated_data['end_date']:
-        return get_error_response('INVALID_DATE_RANGE', 
-                                 'Start date must be before end date', 
-                                 status_code=400)
+    # Resolve selection to stock_ids
+    stock_ids = []
+    selection_mode = serializer.validated_data['selection_mode']
+    selection_config = serializer.validated_data['selection_config']
     
+    if selection_mode == 'stock':
+        stock_ids = selection_config.get('ids', [])
+    elif selection_mode == 'sector':
+        # Fetch stocks in sectors
+        from apps.stocks.models import Stock
+        sector_ids = selection_config.get('ids', [])
+        stock_ids = list(Stock.objects.filter(sectors__id__in=sector_ids).values_list('id', flat=True))
+    elif selection_mode == 'category':
+        from apps.stocks.models import Stock
+        category_ids = selection_config.get('ids', [])
+        stock_ids = list(Stock.objects.filter(categories__id__in=category_ids).values_list('id', flat=True))
+    elif selection_mode == 'watchlist':
+        from apps.stocks.models import Stock
+        # Get user's watchlist
+        stock_ids = list(Stock.objects.filter(watched_by__user=request.user).values_list('id', flat=True))
+        
+    if not stock_ids:
+        return get_error_response('NO_STOCKS_SELECTED', 'No stocks found for the selection', status_code=400)
+
     # Create backtest run
     run_id = f"BT-{uuid.uuid4().hex[:12].upper()}"
+    
+    # Get Strategy
+    from apps.strategies.models import StrategyMaster
+    try:
+        strategy = StrategyMaster.objects.get(id=serializer.validated_data['strategy_id'])
+    except StrategyMaster.DoesNotExist:
+        return get_error_response('INVALID_STRATEGY', 'Strategy not found', status_code=400)
     
     backtest = BacktestRun.objects.create(
         run_id=run_id,
         user=request.user,
+        strategy_predefined=strategy,
+        selection_mode=selection_mode,
+        selection_config=selection_config,
+        criteria_type=serializer.validated_data['criteria_type'],
+        magnitude_threshold=serializer.validated_data.get('magnitude_threshold', 50),
         start_date=serializer.validated_data['start_date'],
         end_date=serializer.validated_data['end_date'],
-        initial_wallet_amount=serializer.validated_data['initial_wallet'],
+        initial_wallet_amount=serializer.validated_data.get('initial_wallet', 100000),
         status='pending',
     )
     
-    # Trigger Celery task for backtest execution
-    execute_backtest_task.delay(
-        backtest.id,
-        serializer.validated_data['stock_ids'],
-        serializer.validated_data.get('execution_mode', 'signal_close')
-    )
+    # Determine Execution Mode
+    from apps.adminpanel.models import SystemConfig
+    config = SystemConfig.objects.filter(key='BACKTEST_EXECUTION_MODE').first()
+    mode = config.value if config else 'background'
     
-    return get_success_response({
-        'run_id': run_id,
-        'backtest_id': backtest.id,
-        'status': 'pending',
-        'message': 'Backtest queued for execution'
-    }, status_code=201)
+    if mode == 'direct':
+        # Synchronous Execution
+        from .engine import BacktestEngine
+        try:
+            engine = BacktestEngine(backtest)
+            engine.execute(stock_ids)
+            backtest.refresh_from_db()
+            return get_success_response({
+                'run_id': run_id,
+                'backtest_id': backtest.id,
+                'status': backtest.status,
+                'message': 'Backtest completed successfully (Direct Mode)'
+            }, status_code=201)
+        except Exception as e:
+            backtest.status = 'failed'
+            backtest.save()
+            return get_error_response('EXECUTION_FAILED', f'Direct execution failed: {str(e)}', status_code=500)
+    else:
+        # Background Execution (Celery)
+        execute_backtest_task.delay(
+            backtest.id,
+            stock_ids,
+            serializer.validated_data.get('execution_mode', 'signal_close')
+        )
+        
+        return get_success_response({
+            'run_id': run_id,
+            'backtest_id': backtest.id,
+            'status': 'pending',
+            'message': 'Backtest queued for execution'
+        }, status_code=201)
 
 
 class TradeViewSet(viewsets.ReadOnlyModelViewSet):

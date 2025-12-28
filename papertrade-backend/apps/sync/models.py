@@ -47,22 +47,4 @@ class SyncLog(models.Model):
         return f"{self.sync_type} - {self.start_time}"
 
 
-class MarketStatus(models.Model):
-    """Market open/closed status."""
-    
-    date = models.DateField(unique=True, db_index=True)
-    is_market_open = models.BooleanField(default=True)
-    reason = models.CharField(max_length=200, blank=True)
-    extra = models.JSONField(default=dict, blank=True)
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        db_table = 'market_status'
-        verbose_name = 'Market Status'
-        verbose_name_plural = 'Market Statuses'
-        ordering = ['-date']
-    
-    def __str__(self):
-        return f"{self.date} - {'Open' if self.is_market_open else 'Closed'}"
+

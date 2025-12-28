@@ -41,4 +41,12 @@ export const authAPI = {
     profile: () => apiClient.get('/admin-panel/auth/profile/'),
 };
 
+export const strategiesAPI = {
+    getAllMasters: () => apiClient.get('/strategies/master/'),
+    createMaster: (data: any) => apiClient.post('/strategies/master/', data),
+    updateMaster: (id: number, data: any) => apiClient.put(`/strategies/master/${id}/`, data),
+    deleteMaster: (id: number) => apiClient.delete(`/strategies/master/${id}/`),
+    sync: (data: any) => apiClient.post('/strategies/sync/', data),
+};
+
 export default apiClient;

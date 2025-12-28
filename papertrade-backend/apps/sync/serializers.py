@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import SyncLog, MarketStatus
+from .models import SyncLog
 
 
 class SyncLogSerializer(serializers.ModelSerializer):
@@ -8,7 +8,4 @@ class SyncLogSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class MarketStatusSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MarketStatus
-        fields = '__all__'
+

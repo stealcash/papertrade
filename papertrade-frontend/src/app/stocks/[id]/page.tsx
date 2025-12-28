@@ -89,6 +89,42 @@ export default function StockDetailPage() {
                 />
             </div>
 
+            {/* Strategy Predictions */}
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm rounded-xl p-6 overflow-hidden">
+                <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Strategy Predictions</h2>
+
+                {stock.active_signals && stock.active_signals.length > 0 ? (
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="border-b border-gray-100 dark:border-gray-800 text-gray-500 dark:text-gray-400 text-sm">
+                                    <th className="py-2">Strategy Name</th>
+                                    <th className="py-2">Date</th>
+                                    <th className="py-2">Expected Price</th>
+                                    <th className="py-2">Direction</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {stock.active_signals.map((signal: any, idx: number) => (
+                                    <tr key={idx} className="border-b border-gray-50 dark:border-gray-800 last:border-0 text-sm text-gray-800 dark:text-gray-200">
+                                        <td className="py-3 font-medium">{signal.strategy_name}</td>
+                                        <td className="py-3">{signal.date}</td>
+                                        <td className="py-3 font-semibold">
+                                            {signal.expected_value ? `₹${Number(signal.expected_value).toFixed(2)}` : '--'}
+                                        </td>
+                                        <td className={`py-3 font-bold ${signal.signal_direction === 'UP' ? 'text-green-600' : 'text-red-600'}`}>
+                                            {signal.signal_direction || '--'}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                    <p className="text-gray-500 dark:text-gray-400 text-center py-4">No active predictions available for this stock.</p>
+                )}
+            </div>
+
             {/* Chart Area */}
             <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm rounded-xl p-6">
                 <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Price Chart</h2>

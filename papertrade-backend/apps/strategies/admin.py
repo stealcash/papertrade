@@ -1,11 +1,18 @@
 from django.contrib import admin
-from .models import StrategyPredefined, StrategyRuleBased
+from .models import StrategyMaster, StrategySignal, StrategyRuleBased
 
 
-@admin.register(StrategyPredefined)
-class StrategyPredefinedAdmin(admin.ModelAdmin):
-    list_display = ['name', 'created_by', 'status', 'created_at']
-    list_filter = ['status']
+@admin.register(StrategyMaster)
+class StrategyMasterAdmin(admin.ModelAdmin):
+    list_display = ['name', 'code', 'created_by', 'status', 'created_at']
+    list_filter = ['status', 'created_by']
+
+
+@admin.register(StrategySignal)
+class StrategySignalAdmin(admin.ModelAdmin):
+    list_display = ('stock', 'strategy', 'date', 'signal_direction', 'expected_value')
+    list_filter = ('strategy', 'signal_direction', 'date')
+    search_fields = ('stock__symbol', 'strategy__code')
 
 
 @admin.register(StrategyRuleBased)

@@ -2,16 +2,25 @@
 > papertrade-frontend@0.1.0 dev
 > next dev
 
+ ⚠ Port 3000 is in use, trying 3001 instead.
   ▲ Next.js 14.2.35
-  - Local:        http://localhost:3000
-  - Environments: .env.local
-
- ✓ Starting...
- ✓ Ready in 2.8s
- ○ Compiling / ...
- ✓ Compiled / in 806ms (801 modules)
- GET / 200 in 944ms
- ✓ Compiled /dashboard in 463ms (809 modules)
- GET /dashboard 200 in 99ms
- ○ Compiling /stock-history ...
- ✓ Compiled /stock-history in 685ms (815 modules)
+  - Local:        http://localhost:3001
+  - Environments: . ○ Compiling /stocks/[id] ...
+ ✓ Compiled /[?25h
+[id] in 1881ms (803 modules)
+ GET /stocks/12 200 in 2832ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 641ms (486 modules)
+ GET /favicon.ico 200 in 756ms
+ ○ Compiling /backtest ...
+ ✓ Compiled /backtest in 748ms (857 modules)
+ ✓ Compiled /_not-found in 404ms (860 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 665ms
+ GET /backtest 200 in 153ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 78ms
+ GET /favicon.ico 200 in 80ms
+ ○ Compiling /backtest/[id] ...
+ ✓ Compiled /backtest/[id] in 1498ms (874 modules)
+ ○ Compiling /market-analysis ...
+ ✓ Compiled /market-analysis in 1544ms (852 modules)
+[?25h

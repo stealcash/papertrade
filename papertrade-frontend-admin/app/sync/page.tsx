@@ -54,7 +54,6 @@ export default function AdminSyncPage() {
                 }
             }
 
-            // Add run_sync parameter if checkbox is checked
             if (runSyncImmediately) {
                 body.run_sync = true;
             }
@@ -74,16 +73,14 @@ export default function AdminSyncPage() {
             } else {
                 setMessage(`❌ ${data.message}`);
             }
-        } catch {
-            setMessage('❌ Error triggering sync');
+        } catch (e: any) {
+            setMessage(`❌ Error triggering sync: ${e.message}`);
         } finally {
             setLoading(false);
         }
     };
 
     if (!mounted || !isAuthenticated) return null;
-
-    const isSuperadmin = user?.role === 'superadmin';
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
@@ -127,9 +124,9 @@ export default function AdminSyncPage() {
                                 onChange={(e) => setSyncType(e.target.value)}
                                 className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700 px-4 py-2 rounded-lg w-full max-w-xs focus:ring-2 focus:ring-purple-500 focus:outline-none"
                             >
-                                <option value="stock">Stocks</option>
-                                <option value="sector">Sectors</option>
-                                <option value="option">Options</option>
+                                <option value="stock">Stocks (Market Data)</option>
+                                <option value="sector">Sectors (Market Data)</option>
+                                <option value="option">Options (Market Data)</option>
                             </select>
                         </div>
 

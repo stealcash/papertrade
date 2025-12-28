@@ -10,8 +10,8 @@ import json
 
 from apps.users.utils import get_success_response, get_error_response
 from apps.adminpanel.models import SystemConfig
-from .models import SyncLog, MarketStatus
-from .serializers import SyncLogSerializer, MarketStatusSerializer
+from .models import SyncLog
+from .serializers import SyncLogSerializer
 
 
 class SyncLogViewSet(viewsets.ReadOnlyModelViewSet):
@@ -25,15 +25,38 @@ class SyncLogViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(get_success_response(serializer.data))
 
 
-class MarketStatusViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = MarketStatus.objects.all()
-    serializer_class = MarketStatusSerializer
+class MarketStatusViewSet(viewsets.ViewSet):
+    """
+    Market Open/Closed Status (File-Based).
+    Source: fixtures/market_holidays/{year}.json
+    """
     permission_classes = [IsAuthenticated]
     
     def list(self, request):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(get_success_response(serializer.data))
+        year = request.query_params.get('year', datetime.now().year)
+        try:
+            year = int(year)
+        except ValueError:
+            year = datetime.now().year
+            
+        from apps.common.market_schedule import MarketSchedule
+        holidays_map = MarketSchedule.get_holidays_for_year(year)
+        
+        # Convert {date: reasoning} -> List of objects for frontend consistency
+        data = []
+        for date_str, reason in holidays_map.items():
+            # Format YYYYMMDD -> YYYY-MM-DD
+            formatted_date = f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:]}"
+            data.append({
+                'date': formatted_date,
+                'is_market_open': False,
+                'reason': reason
+            })
+            
+        # Sort by date
+        data.sort(key=lambda x: x['date'])
+        
+        return Response(get_success_response(data))
 
 
 @api_view(['POST'])
