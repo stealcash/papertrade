@@ -144,6 +144,18 @@ export const reorderWatchlist = createAsyncThunk(
   }
 );
 
+export const bulkUpdateWatchlist = createAsyncThunk(
+  'myStocks/bulkUpdate',
+  async (params: { add: number[], remove: number[] }, { rejectWithValue }) => {
+    try {
+      await watchlistAPI.bulkUpdate(params.add, params.remove);
+      return params;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to update watchlist');
+    }
+  }
+);
+
 
 const myStocksSlice = createSlice({
   name: 'myStocks',

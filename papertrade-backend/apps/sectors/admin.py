@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Sector, SectorPriceDaily
+from .models import Sector
 
 
 @admin.register(Sector)
@@ -9,8 +9,4 @@ class SectorAdmin(admin.ModelAdmin):
     search_fields = ['symbol', 'name']
 
 
-@admin.register(SectorPriceDaily)
-class SectorPriceDailyAdmin(admin.ModelAdmin):
-    list_display = ['sector', 'date', 'close_price', 'volume']
-    list_filter = ['date']
-    date_hierarchy = 'date'
+

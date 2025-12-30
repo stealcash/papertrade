@@ -25,6 +25,8 @@ export default function StocksManagementPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [totalStocks, setTotalStocks] = useState(0);
+    const [error, setError] = useState('');
+    const [filterType, setFilterType] = useState<'all' | 'equity' | 'index'>('all');
     const [sortBy, setSortBy] = useState('symbol');
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
@@ -36,7 +38,8 @@ export default function StocksManagementPage() {
         exchange_suffix: 'NSE',
         status: 'active',
         sectors: [] as string[],
-        categories: [] as string[]
+        categories: [] as string[],
+        is_index: false
     });
 
     useEffect(() => {
@@ -57,7 +60,7 @@ export default function StocksManagementPage() {
         fetchStocks(currentPage, sortBy, sortOrder);
         fetchSectors();
         fetchCategories();
-    }, [isAuthenticated, user, mounted, router, currentPage, sortBy, sortOrder]);
+    }, [isAuthenticated, user, mounted, router, currentPage, sortBy, sortOrder, filterType]);
 
     const fetchSectors = async () => {
         try {
@@ -80,7 +83,11 @@ export default function StocksManagementPage() {
     const fetchStocks = async (page: number, sort: string, order: string) => {
         setLoading(true); // Ensure loading state is set
         try {
-            const response = await apiClient.get(`/stocks/?page=${page}&sort_by=${sort}&order=${order}`);
+            let url = `/stocks/?page=${page}&page_size=10&sort_by=${sortBy}&order=${sortOrder}`;
+            if (filterType === 'equity') url += '&is_index=false';
+            if (filterType === 'index') url += '&is_index=true';
+
+            const response = await apiClient.get(url);
             const data = response.data.data;
             if (data.stocks && data.pagination) {
                 setStocks(data.stocks);
@@ -170,7 +177,7 @@ export default function StocksManagementPage() {
             }
             setShowModal(false);
             setEditingStock(null);
-            setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [] });
+            setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [], is_index: false });
             fetchStocks(currentPage, sortBy, sortOrder);
         } catch (error: any) {
             toast.error(error.response?.data?.message || 'Operation failed');
@@ -185,7 +192,8 @@ export default function StocksManagementPage() {
             exchange_suffix: stock.exchange_suffix,
             status: stock.status,
             sectors: stock.sectors || [],
-            categories: stock.categories || []
+            categories: stock.categories || [],
+            is_index: stock.is_index || false
         });
         setShowModal(true);
     };
@@ -232,14 +240,46 @@ export default function StocksManagementPage() {
                     </div>
                     <div className="flex space-x-3">
                         <button
-                            onClick={() => { setEditingStock(null); setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [] }); setShowModal(true); }}
+                            onClick={() => { setEditingStock(null); setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [], is_index: false }); setShowModal(true); }}
                             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all font-medium"
                         >
                             + Create Stock
                         </button>
                     </div>
                 </div>
-                <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border dark:border-gray-700 overflow-hidden">
+                {/* Filters */}
+                <div className="flex space-x-2 mb-6">
+                    <button
+                        onClick={() => { setFilterType('all'); setCurrentPage(1); }}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filterType === 'all'
+                                ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
+                                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
+                            }`}
+                    >
+                        All
+                    </button>
+                    <button
+                        onClick={() => { setFilterType('equity'); setCurrentPage(1); }}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filterType === 'equity'
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
+                            }`}
+                    >
+                        Equities
+                    </button>
+                    <button
+                        onClick={() => { setFilterType('index'); setCurrentPage(1); }}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filterType === 'index'
+                                ? 'bg-purple-600 text-white'
+                                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
+                            }`}
+                    >
+                        Indices
+                    </button>
+                </div>
+
+                {/* Table */}
+                <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                     {loading ? (
                         <div className="p-8 text-center text-gray-600 dark:text-gray-400">Loading stocks...</div>
                     ) : stocks.length === 0 ? (
@@ -440,6 +480,21 @@ export default function StocksManagementPage() {
                                         </div>
                                     )}
                                 </div>
+                            </div>
+
+                            <div className="md:col-span-2">
+                                <label className="flex items-center space-x-2 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={formData.is_index}
+                                        onChange={(e) => setFormData({ ...formData, is_index: e.target.checked })}
+                                        className="rounded text-blue-600 focus:ring-blue-500 h-4 w-4 bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-500"
+                                    />
+                                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Is Index/Sector? (e.g. NIFTY 50)</span>
+                                </label>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 ml-6">
+                                    Check this if the instrument is a Sector Index rather than a Company.
+                                </p>
                             </div>
 
                             <div className="md:col-span-2 flex space-x-3 pt-2">

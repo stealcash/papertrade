@@ -7,34 +7,14 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2.1s
+ ✓ Ready in 12s
  ○ Compiling /backtest ...
- ✓ Compiled /backtest in 1171ms (1535 modules)
+ ✓ Compiled /backtest in 10.8s (1539 modules)
+ GET /backtest 200 in 10950ms
  ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 609ms (1538 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 776ms
- GET /backtest 200 in 34ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 70ms
- ✓ Compiled /favicon.ico in 205ms (854 modules)
- GET /favicon.ico 200 in 248ms
- ✓ Compiled /dashboard in 457ms (1578 modules)
- GET /dashboard 200 in 107ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 30ms
- GET /favicon.ico 200 in 44ms
- ○ Compiling /backtest/strategies ...
- ✓ Compiled /backtest/strategies in 799ms (1560 modules)
- ✓ Compiled /backtest/strategies/create in 257ms (1570 modules)
- ✓ Compiled in 1649ms (1577 modules)
- GET /backtest/strategies/create 200 in 127ms
- ✓ Compiled /favicon.ico in 240ms (865 modules)
- GET /favicon.ico 200 in 295ms
- ✓ Compiled in 559ms (1577 modules)
- GET /backtest/strategies/create 200 in 125ms
- ✓ Compiled /favicon.ico in 113ms (865 modules)
- GET /favicon.ico 200 in 162ms
- ✓ Compiled in 591ms (1577 modules)
- GET /backtest/strategies/create 200 in 104ms
- ✓ Compiled /favicon.ico in 123ms (865 modules)
- GET /favicon.ico 200 in 204ms
- ○ Compiling /watchlist ...
- ✓ Compiled /watchlist in 784ms (1583 modules)
+ ✓ Compiled /_not-found in 3.7s (1542 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3989ms
+ ○ Compiling /market-analysis ...
+ ✓ Compiled /market-analysis in 2.3s (1560 modules)
+ ○ Compiling /stock-history ...
+ ✓ Compiled /stock-history in 2.3s (1578 modules)

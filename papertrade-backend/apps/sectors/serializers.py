@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Sector, SectorPriceDaily
+from .models import Sector
 
 
 class SectorSerializer(serializers.ModelSerializer):
@@ -8,9 +8,4 @@ class SectorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class SectorPriceDailySerializer(serializers.ModelSerializer):
-    sector_name = serializers.CharField(source='sector.name', read_only=True)
-    
-    class Meta:
-        model = SectorPriceDaily
-        fields = '__all__'
+

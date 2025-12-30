@@ -3,28 +3,38 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { backtestAPI } from '@/lib/api';
-import { PlayCircle, Download, Calendar, Trash2, Settings } from 'lucide-react';
+import { PlayCircle, Download, Calendar, Trash2, Settings, Eye } from 'lucide-react';
 import NewBacktestModal from '@/components/backtest/NewBacktestModal';
 import { useConfirm } from '@/context/ConfirmContext';
 import { toast } from 'react-hot-toast';
 
 export default function BacktestPage() {
     const [runs, setRuns] = useState<any[]>([]);
+    const [pagination, setPagination] = useState({ page: 1, total_pages: 1, total_count: 0 });
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { confirm } = useConfirm();
 
     useEffect(() => {
-        fetchRuns();
-    }, []);
+        fetchRuns(pagination.page);
+    }, [pagination.page]);
 
-    const fetchRuns = async () => {
+    const fetchRuns = async (page = 1) => {
         setLoading(true);
         try {
-            const res = await backtestAPI.getRuns();
-            setRuns(res.data.data.results || res.data.data || []);
-        } catch {
-            console.log("API Fail");
+            const res = await backtestAPI.getRuns({ page, page_size: 10 });
+            if (res.data.data.results) {
+                setRuns(res.data.data.results);
+                setPagination(prev => ({
+                    ...prev,
+                    total_pages: res.data.data.pagination.total_pages,
+                    total_count: res.data.data.pagination.total_count
+                }));
+            } else {
+                // Fallback if API hasn't updated yet or different format
+                setRuns(res.data.data || []);
+            }
+        } catch (e) {
             toast.error("Failed to fetch backtests");
             setRuns([]);
         } finally {
@@ -168,9 +178,9 @@ export default function BacktestPage() {
                                 <div className="col-span-2 flex justify-end gap-2">
                                     <Link
                                         href={`/backtest/${run.id}`}
-                                        className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded text-gray-600"
+                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/30 rounded-lg text-xs font-medium transition"
                                     >
-                                        <Download size={16} />
+                                        <Eye size={14} /> View
                                     </Link>
                                     <button
                                         onClick={() => handleDelete(run.id)}
@@ -181,6 +191,31 @@ export default function BacktestPage() {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                )}
+
+                {/* Pagination */}
+                {runs.length > 0 && (
+                    <div className="flex justify-between items-center p-4 border-t border-gray-100 dark:border-gray-800">
+                        <div className="text-xs text-gray-500">
+                            Page {pagination.page} of {pagination.total_pages} ({pagination.total_count} items)
+                        </div>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setPagination(prev => ({ ...prev, page: Math.max(1, prev.page - 1) }))}
+                                disabled={pagination.page === 1}
+                                className="px-3 py-1 border rounded hover:bg-gray-50 disabled:opacity-50 text-xs font-medium"
+                            >
+                                Prev
+                            </button>
+                            <button
+                                onClick={() => setPagination(prev => ({ ...prev, page: Math.min(pagination.total_pages, prev.page + 1) }))}
+                                disabled={pagination.page === pagination.total_pages}
+                                className="px-3 py-1 border rounded hover:bg-gray-50 disabled:opacity-50 text-xs font-medium"
+                            >
+                                Next
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>

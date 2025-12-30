@@ -65,6 +65,7 @@ export const watchlistAPI = {
     add: (stockId: number) => apiClient.post('/watchlist/', { stock: stockId }),
     remove: (id: number) => apiClient.delete(`/watchlist/${id}/`),
     reorder: (items: { id: number, order: number }[]) => apiClient.post('/watchlist/reorder/', { items }),
+    bulkUpdate: (add: number[], remove: number[]) => apiClient.post('/watchlist/bulk_update/', { add, remove }),
 };
 
 
@@ -82,7 +83,7 @@ export const optionsAPI = {
 
 export const backtestAPI = {
     run: (data: any) => apiClient.post('/backtest/run/', data),
-    getRuns: () => apiClient.get('/backtest/runs/'),
+    getRuns: (params?: any) => apiClient.get('/backtest/runs/', { params }),
     getRunById: (id: number) => apiClient.get(`/backtest/runs/${id}/`),
     getResults: (id: number, params: any) => apiClient.get(`/backtest/runs/${id}/results/`, { params }),
     exportCSV: (id: number) => apiClient.get(`/backtest/runs/${id}/export_csv/`),

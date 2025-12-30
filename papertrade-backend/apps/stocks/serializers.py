@@ -23,7 +23,7 @@ class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
         fields = ['id', 'symbol', 'name', 'exchange_suffix', 
-                 'categories', 'categories_details', 'sectors', 'status', 
+                 'categories', 'categories_details', 'sectors', 'status', 'is_index',
                  'last_synced_at', 'last_sync_at', 'last_price', 'is_in_watchlist',
                  'active_signals',
                  'extra', 'created_at', 'updated_at']
@@ -63,13 +63,29 @@ class StockPriceDailySerializer(serializers.ModelSerializer):
     """Serializer for StockPriceDaily model."""
     
     stock_symbol = serializers.CharField(source='stock.symbol', read_only=True)
+    predicted_price = serializers.SerializerMethodField()
+    predicted_direction = serializers.SerializerMethodField()
     
     class Meta:
         model = StockPriceDaily
         fields = ['id', 'stock', 'stock_symbol', 'date', 'open_price', 'high_price', 
                  'low_price', 'close_price', 'volume', 'iv', 'timewise_json', 
-                 'extra', 'created_at', 'updated_at']
+                 'extra', 'predicted_price', 'predicted_direction', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']
+
+    def get_predicted_price(self, obj):
+        signal_map = self.context.get('signal_map')
+        if signal_map:
+            data = signal_map.get((obj.stock_id, obj.date))
+            return data.get('price') if data else None
+        return None
+
+    def get_predicted_direction(self, obj):
+        signal_map = self.context.get('signal_map')
+        if signal_map:
+            data = signal_map.get((obj.stock_id, obj.date))
+            return data.get('direction') if data else None
+        return None
 
 
 class Stock5MinByDaySerializer(serializers.ModelSerializer):

@@ -20,8 +20,31 @@ class BacktestRunViewSet(viewsets.ModelViewSet):
     
     def list(self, request):
         queryset = self.get_queryset().order_by('-created_at')
-        serializer = self.get_serializer(queryset, many=True)
-        return get_success_response(serializer.data)
+        
+        # Pagination parameters
+        page_size = int(request.query_params.get('page_size', 10))
+        page = request.query_params.get('page', 1)
+
+        from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+        paginator = Paginator(queryset, page_size)
+
+        try:
+            runs_page = paginator.page(page)
+        except PageNotAnInteger:
+            runs_page = paginator.page(1)
+        except EmptyPage:
+            runs_page = paginator.page(paginator.num_pages)
+
+        serializer = self.get_serializer(runs_page, many=True)
+        return get_success_response({
+            'results': serializer.data,
+            'pagination': {
+                'total_count': paginator.count,
+                'total_pages': paginator.num_pages,
+                'current_page': runs_page.number,
+                'page_size': page_size
+            }
+        })
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -114,9 +137,10 @@ class BacktestRunViewSet(viewsets.ModelViewSet):
             if search:
                 trades = [t for t in trades if search in t.get('stock_symbol', '').lower()]
             
-            # Sorting (Default by date desc for recent first)
-            # Assuming trades are stored by-date-asc, let's just reverse for display if needed? 
-            # Or just rely on natural order. Let's keep natural order (by-date-asc usually) unless requested.
+            # Sorting (Default: Symbol ASC, Date DESC)
+            # Python sort is stable. Sort by secondary (Date DESC) first, then primary (Symbol ASC).
+            trades.sort(key=lambda x: x.get('signal_date', ''), reverse=True)
+            trades.sort(key=lambda x: x.get('stock_symbol', ''))
             
             # Pagination
             page = int(request.query_params.get('page', 1))

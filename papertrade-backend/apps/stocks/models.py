@@ -38,6 +38,7 @@ class Stock(models.Model):
     
     last_synced_at = models.DateTimeField(null=True, blank=True)
     extra = models.JSONField(default=dict, blank=True)
+    is_index = models.BooleanField(default=False, help_text="True if this is an Index/Sector, False if Equity")
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

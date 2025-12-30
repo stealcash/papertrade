@@ -70,7 +70,7 @@ def trigger_normal_sync(request):
         "sync_type": "stock" | "sector" | "option"
     }
     """
-    from .tasks import sync_stocks_task, sync_sectors_task
+    from .tasks import sync_stocks_task
     
     # Check permissions
     allowed_roles_config = SystemConfig.objects.filter(key='sync.allowed_roles').first()
@@ -91,14 +91,14 @@ def trigger_normal_sync(request):
 
     if sync_type == 'stock':
         if run_sync:
-             task = sync_stocks_task.apply(kwargs={'is_auto': False, 'user_id': request.user.id})
+             task = sync_stocks_task.apply(kwargs={'is_auto': False, 'user_id': request.user.id, 'sync_indices': False})
         else:
-             task = sync_stocks_task.delay(is_auto=False, user_id=request.user.id)
+             task = sync_stocks_task.delay(is_auto=False, user_id=request.user.id, sync_indices=False)
     elif sync_type == 'sector':
         if run_sync:
-             task = sync_sectors_task.apply(kwargs={'is_auto': False, 'user_id': request.user.id})
+             task = sync_stocks_task.apply(kwargs={'is_auto': False, 'user_id': request.user.id, 'sync_indices': True})
         else:
-             task = sync_sectors_task.delay(is_auto=False, user_id=request.user.id)
+             task = sync_stocks_task.delay(is_auto=False, user_id=request.user.id, sync_indices=True)
     elif sync_type == 'option':
         # Option sync not implemented yet
         return get_error_response(
@@ -196,7 +196,7 @@ def trigger_hard_sync(request):
     
     if run_sync:
         # Run synchronously (bypass Celery AND Dispatcher Queue)
-        from .tasks import sync_stocks_task, sync_sectors_task
+        from .tasks import sync_stocks_task
         
         if sync_type == 'stock':
              task = sync_stocks_task.apply(kwargs={
@@ -204,14 +204,17 @@ def trigger_hard_sync(request):
                 'user_id': request.user.id,
                 'from_date': start_date_str,
                 'to_date': end_date_str,
-                'instruments': instruments
+                'instruments': instruments,
+                'sync_indices': False
              })
         elif sync_type == 'sector':
-             task = sync_sectors_task.apply(kwargs={
+             task = sync_stocks_task.apply(kwargs={
                 'is_auto': False,
                 'user_id': request.user.id,
                 'from_date': start_date_str,
-                'to_date': end_date_str
+                'to_date': end_date_str,
+                'instruments': None, # Sectors hard sync usually all
+                'sync_indices': True
              })
         else:
              # Fallback/Option not supported yet in sync mode or handled above already

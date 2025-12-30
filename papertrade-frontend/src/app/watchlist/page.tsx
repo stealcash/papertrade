@@ -6,11 +6,18 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { RootState } from '@/store';
-import { fetchMyStocks, removeStockFromWatchlist, reorderWatchlist, MyStock } from '@/store/slices/myStocksSlice';
+import { fetchMyStocks, removeStockFromWatchlist, reorderWatchlist, bulkUpdateWatchlist, MyStock } from '@/store/slices/myStocksSlice';
 import { TrendingUp, TrendingDown, Trash2, GripVertical } from 'lucide-react';
 import Link from 'next/link';
 
-function SortableItem({ stock, onRemove }: { stock: any, onRemove: (id: number) => void }) {
+interface SortableItemProps {
+    stock: any;
+    onRemove: (id: number) => void;
+    isSelected: boolean;
+    onToggle: (id: number) => void;
+}
+
+function SortableItem({ stock, onRemove, isSelected, onToggle }: SortableItemProps) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: stock.id });
 
     const style = {
@@ -21,6 +28,12 @@ function SortableItem({ stock, onRemove }: { stock: any, onRemove: (id: number) 
     return (
         <div ref={setNodeRef} style={style} className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-4 mb-3 flex items-center justify-between shadow-sm group">
             <div className="flex items-center gap-4">
+                <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => onToggle(stock.id)}
+                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                />
                 <div {...attributes} {...listeners} className="cursor-grab text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                     <GripVertical size={20} />
                 </div>
@@ -64,6 +77,50 @@ export default function MyStocksPage() {
     // Pagination State
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
+    const [selectedIds, setSelectedIds] = useState<number[]>([]);
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    // Reorder State
+    const [localStocks, setLocalStocks] = useState<MyStock[]>([]);
+    const [hasUnsavedOrder, setHasUnsavedOrder] = useState(false);
+    const [isSavingOrder, setIsSavingOrder] = useState(false);
+
+    const handleToggleSelection = (id: number) => {
+        setSelectedIds(prev => {
+            if (prev.includes(id)) {
+                return prev.filter(item => item !== id);
+            } else {
+                return [...prev, id];
+            }
+        });
+    };
+
+    const handleBulkDelete = async () => {
+        if (selectedIds.length === 0) return;
+
+        setIsDeleting(true);
+        try {
+            await dispatch(bulkUpdateWatchlist({ add: [], remove: selectedIds })).unwrap();
+            setSelectedIds([]);
+            dispatch(fetchMyStocks({ page, page_size: pageSize }));
+        } catch (error) {
+            console.error('Failed to bulk delete', error);
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    const handleSaveOrder = async () => {
+        setIsSavingOrder(true);
+        try {
+            await dispatch(reorderWatchlist(localStocks)).unwrap();
+            setHasUnsavedOrder(false);
+        } catch (error) {
+            console.error('Failed to save order', error);
+        } finally {
+            setIsSavingOrder(false);
+        }
+    };
 
     useEffect(() => {
         setIsMounted(true);
@@ -72,6 +129,15 @@ export default function MyStocksPage() {
     useEffect(() => {
         dispatch(fetchMyStocks({ page, page_size: pageSize }));
     }, [dispatch, page, pageSize]);
+
+    // Sync remote stocks to localStocks unless we have unsaved changes
+    useEffect(() => {
+        if (!hasUnsavedOrder && stocks.length > 0) {
+            setLocalStocks(stocks);
+        } else if (stocks.length === 0 && !loading) {
+            setLocalStocks([]);
+        }
+    }, [stocks, hasUnsavedOrder, loading]);
 
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -84,14 +150,12 @@ export default function MyStocksPage() {
         const { active, over } = event;
 
         if (active.id !== over?.id) {
-            const oldIndex = stocks.findIndex((stock: any) => stock.id === active.id);
-            const newIndex = stocks.findIndex((stock: any) => stock.id === over?.id);
-            const newOrder = arrayMove(stocks, oldIndex, newIndex);
-
-            // Optimistic update
-            // dispatch(setStocks(newOrder)); 
-            // We can dispatch reorder action which will handle backend sync
-            dispatch(reorderWatchlist(newOrder as MyStock[]));
+            setLocalStocks((items) => {
+                const oldIndex = items.findIndex((stock: any) => stock.id === active.id);
+                const newIndex = items.findIndex((stock: any) => stock.id === over?.id);
+                return arrayMove(items, oldIndex, newIndex);
+            });
+            setHasUnsavedOrder(true);
         }
     };
 
@@ -101,7 +165,30 @@ export default function MyStocksPage() {
 
     return (
         <div className="max-w-4xl mx-auto space-y-6">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">My Watchlist</h1>
+            <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">My Watchlist</h1>
+                <div className="flex items-center gap-2">
+                    {hasUnsavedOrder && (
+                        <button
+                            onClick={handleSaveOrder}
+                            disabled={isSavingOrder}
+                            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 transition text-sm font-medium"
+                        >
+                            {isSavingOrder ? 'Saving Order...' : 'Save Order'}
+                        </button>
+                    )}
+                    {selectedIds.length > 0 && (
+                        <button
+                            onClick={handleBulkDelete}
+                            disabled={isDeleting}
+                            className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 transition text-sm font-medium"
+                        >
+                            <Trash2 size={18} />
+                            {isDeleting ? 'Deleting...' : `Delete Selected (${selectedIds.length})`}
+                        </button>
+                    )}
+                </div>
+            </div>
 
             {stocks.length === 0 && !loading ? (
                 <div className="text-center py-20 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 border-dashed">
@@ -118,14 +205,16 @@ export default function MyStocksPage() {
                         onDragEnd={handleDragEnd}
                     >
                         <SortableContext
-                            items={stocks.map((s: any) => s.id)}
+                            items={localStocks.map((s: any) => s.id)}
                             strategy={verticalListSortingStrategy}
                         >
-                            {stocks.map((stock: any) => (
+                            {localStocks.map((stock: any) => (
                                 <SortableItem
                                     key={stock.id}
                                     stock={stock}
                                     onRemove={(id) => dispatch(removeStockFromWatchlist({ id }))}
+                                    isSelected={selectedIds.includes(stock.id)}
+                                    onToggle={handleToggleSelection}
                                 />
                             ))}
                         </SortableContext>

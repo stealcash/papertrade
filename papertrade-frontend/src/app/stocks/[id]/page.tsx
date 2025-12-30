@@ -28,7 +28,6 @@ export default function StockDetailPage() {
             setStock(s.data.data);
             setPrices(p.data.data || []);
         } catch {
-            console.log("API Offline – Using Mock");
 
             setStock({
                 id: stockId,

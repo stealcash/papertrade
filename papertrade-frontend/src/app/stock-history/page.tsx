@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import apiClient from '@/lib/api';
+import FilterSidebar from '@/components/ui/FilterSidebar';
+import { Filter } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function StockHistoryPage() {
     const router = useRouter();
@@ -21,11 +24,25 @@ export default function StockHistoryPage() {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
 
+    // New Filters
+    const [filterType, setFilterType] = useState('all'); // 'all', 'stock', 'index'
+    const [showWatchlistOnly, setShowWatchlistOnly] = useState(false);
+
     // Default range: Last 30 days
     const [dateRange, setDateRange] = useState({
         start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         end: new Date().toISOString().split('T')[0]
     });
+
+
+
+    // ... (existing imports)
+
+    // Sidebar State
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+    // Pagination State
+    const [visibleRowCount, setVisibleRowCount] = useState(10);
 
     useEffect(() => {
         setMounted(true);
@@ -37,12 +54,31 @@ export default function StockHistoryPage() {
         if (!mounted) return;
         if (!isAuthenticated) return router.push('/login');
 
-        const timer = setTimeout(() => {
-            fetchPrices();
-        }, 300); // Debounce fetch
+        // Only fetch when applied filters change (no debounce needed now if explicit apply, but kept for safety)
+        fetchPrices();
+    }, [isAuthenticated, mounted, dateRange, selectedSectors, selectedCategories, filterType, showWatchlistOnly]);
 
-        return () => clearTimeout(timer);
-    }, [isAuthenticated, mounted, dateRange, selectedSectors, selectedCategories]);
+    const handleApplyFilters = (newFilters: any) => {
+        // Date Validation
+        const start = new Date(newFilters.dateRange.start);
+        const end = new Date(newFilters.dateRange.end);
+        const diffTime = Math.abs(end.getTime() - start.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays > 30) {
+            toast.error('Date range cannot exceed 30 days.');
+            return;
+        }
+
+        setDateRange(newFilters.dateRange);
+        setSelectedSectors(newFilters.selectedSectors);
+        setSelectedCategories(newFilters.selectedCategories);
+        setSearchQuery(newFilters.searchQuery);
+        setFilterType(newFilters.filterType);
+        setShowWatchlistOnly(newFilters.showWatchlistOnly);
+        setIsFilterOpen(false); // Close sidebar after applying filters
+        setVisibleRowCount(10); // Reset pagination
+    };
 
     const fetchSectors = async () => {
         try {
@@ -79,6 +115,17 @@ export default function StockHistoryPage() {
                 params.category_ids = selectedCategories.join(',');
             }
 
+            // New Filters
+            if (filterType === 'stock') {
+                params.is_index = 'false';
+            } else if (filterType === 'index') {
+                params.is_index = 'true';
+            }
+
+            if (showWatchlistOnly) {
+                params.watchlist_only = 'true';
+            }
+
             const response = await apiClient.get('/stocks/prices/daily/', { params });
             setPrices(response.data.data || []);
         } catch (error) {
@@ -92,7 +139,9 @@ export default function StockHistoryPage() {
     const pivotData = useMemo(() => {
         let filteredPrices = prices;
 
-        // Apply client-side search filtering
+        // Client-side search is now also handled by server-side or just handled here if we want immediate feedback?
+        // Wait, the plan was explicit apply. If I use `searchQuery` state, it will only update on Apply.
+        // So this logic works.
         if (searchQuery) {
             const query = searchQuery.toLowerCase();
             filteredPrices = prices.filter(p => p.stock_symbol.toLowerCase().includes(query));
@@ -139,106 +188,61 @@ export default function StockHistoryPage() {
         return <div className="min-h-screen flex items-center justify-center"><div>Redirecting...</div></div>;
     }
 
+    const activeFilterCount =
+        (selectedSectors.length > 0 ? 1 : 0) +
+        (selectedCategories.length > 0 ? 1 : 0) +
+        (filterType !== 'all' ? 1 : 0) +
+        (showWatchlistOnly ? 1 : 0) +
+        (searchQuery ? 1 : 0);
+
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col text-gray-900 dark:text-gray-100">
             <div className="bg-white dark:bg-gray-900 shadow-sm border-b dark:border-gray-800 shrink-0 transition-all duration-300">
                 <div className="max-w-7xl mx-auto px-6 md:px-12 py-6"> {/* Increased padding */}
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-row items-center justify-between gap-6">
                         {/* Title Row */}
                         <div>
                             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Stock Price History</h1>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Daily closing prices (Last 30 Days)</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Daily closing prices</p>
                         </div>
 
-                        {/* Row 1: Filters (Sectors and Categories) */}
-                        <div className="flex flex-col md:flex-row gap-6">
-                            {/* Sector Multi-Select */}
-                            <div className="flex-1">
-                                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Sectors (Select Multiple)</label>
-                                <div className="h-24 overflow-y-auto border dark:border-gray-700 rounded-md p-2 bg-gray-50 dark:bg-gray-800 text-sm">
-                                    {sectors.map(sector => (
-                                        <div key={sector.id} className="flex items-center space-x-2 mb-1">
-                                            <input
-                                                type="checkbox"
-                                                id={`sector-${sector.id}`}
-                                                checked={selectedSectors.includes(String(sector.id))}
-                                                onChange={() => toggleSelection(String(sector.id), selectedSectors, setSelectedSectors)}
-                                                className="rounded text-blue-600 focus:ring-blue-500"
-                                            />
-                                            <label htmlFor={`sector-${sector.id}`} className="cursor-pointer select-none text-gray-700 dark:text-gray-300">
-                                                {sector.name}
-                                            </label>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Category Multi-Select */}
-                            <div className="flex-1">
-                                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Categories (Select Multiple)</label>
-                                <div className="h-24 overflow-y-auto border dark:border-gray-700 rounded-md p-2 bg-gray-50 dark:bg-gray-800 text-sm">
-                                    {categories.map(cat => (
-                                        <div key={cat.id} className="flex items-center space-x-2 mb-1">
-                                            <input
-                                                type="checkbox"
-                                                id={`cat-${cat.id}`}
-                                                checked={selectedCategories.includes(String(cat.id))}
-                                                onChange={() => toggleSelection(String(cat.id), selectedCategories, setSelectedCategories)}
-                                                className="rounded text-purple-600 focus:ring-purple-500"
-                                            />
-                                            <label htmlFor={`cat-${cat.id}`} className="cursor-pointer select-none text-gray-700 dark:text-gray-300">
-                                                {cat.name}
-                                            </label>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Row 2: Search and Date Range */}
-                        <div className="flex flex-col md:flex-row gap-6 items-end">
-                            {/* Stock Search */}
-                            <div className="flex-1">
-                                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Search Stock</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter symbol..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md leading-5 bg-white dark:bg-gray-800 placeholder-gray-500 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                />
-                            </div>
-
-                            {/* Date Range */}
-                            <div className="flex items-center gap-2">
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">From</label>
-                                    <input
-                                        type="date"
-                                        value={dateRange.start}
-                                        onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-                                        className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded px-3 py-2 text-sm text-gray-900 dark:text-gray-100 outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
-                                <span className="text-gray-400 mb-2">–</span>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">To</label>
-                                    <input
-                                        type="date"
-                                        value={dateRange.end}
-                                        onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-                                        className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded px-3 py-2 text-sm text-gray-900 dark:text-gray-100 outline-none focus:ring-2 focus:ring-blue-500"
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        <button
+                            onClick={() => setIsFilterOpen(true)}
+                            className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition shadow-sm text-sm font-medium"
+                        >
+                            <Filter size={18} />
+                            Filters
+                            {activeFilterCount > 0 && (
+                                <span className="bg-blue-600 text-white text-xs px-1.5 py-0.5 rounded-full ml-1">
+                                    {activeFilterCount}
+                                </span>
+                            )}
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <main className="flex-1 overflow-hidden p-6 md:p-12 transition-all duration-300">
+            <FilterSidebar
+                isOpen={isFilterOpen}
+                onClose={() => setIsFilterOpen(false)}
+                onApply={handleApplyFilters}
+                initialFilters={{
+                    dateRange,
+                    selectedSectors,
+                    selectedCategories,
+                    searchQuery,
+                    filterType,
+                    showWatchlistOnly
+                }}
+                options={{
+                    sectors,
+                    categories
+                }}
+            />
+
+            <main className="flex-1 overflow-hidden pb-6 transition-all duration-300">
                 <div className="max-w-7xl mx-auto h-full">
-                    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border dark:border-gray-800 flex flex-col h-full overflow-hidden">
+                    <div className="bg-white dark:bg-gray-900 rounded-b-xl shadow-sm border dark:border-gray-800 border-t-0 flex flex-col h-full overflow-hidden">
                         {loading ? (
                             <div className="flex items-center justify-center h-full text-gray-600">Loading history data...</div>
                         ) : pivotData.rows.length === 0 ? (
@@ -262,7 +266,7 @@ export default function StockHistoryPage() {
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
-                                        {pivotData.rows.map((row) => (
+                                        {pivotData.rows.slice(0, visibleRowCount).map((row) => (
                                             <tr key={row.symbol} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
                                                 <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 sticky left-0 bg-white dark:bg-gray-900 border-r dark:border-r-gray-800 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] z-10">
                                                     {row.symbol}
@@ -281,11 +285,22 @@ export default function StockHistoryPage() {
                                         ))}
                                     </tbody>
                                 </table>
+                                {visibleRowCount < pivotData.rows.length && (
+                                    <div className="p-4 flex justify-center border-t dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+                                        <button
+                                            onClick={() => setVisibleRowCount(prev => prev + 10)}
+                                            className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition shadow-sm"
+                                        >
+                                            Show More ({pivotData.rows.length - visibleRowCount} remaining)
+                                        </button>
+                                    </div>
+                                )}
+
                             </div>
                         )}
                     </div>
                 </div>
-            </main>
-        </div>
+            </main >
+        </div >
     );
 }
