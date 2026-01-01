@@ -1,60 +1,60 @@
-DEBUG 2025-12-30 23:25:21,325 functional 
+DEBUG 2026-01-01 21:51:51,666 functional 
 def accumulate(self, *args, **kwargs):
     return 1
 
-DEBUG 2025-12-30 23:25:21,330 functional 
+DEBUG 2026-01-01 21:51:51,666 functional 
 def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
     return 1
 
-DEBUG 2025-12-30 23:25:21,335 functional 
+DEBUG 2026-01-01 21:51:51,667 functional 
 def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
     return 1
 
-DEBUG 2025-12-30 23:25:21,336 functional 
+DEBUG 2026-01-01 21:51:51,667 functional 
 def chunks(task, it, n):
     return 1
 
-DEBUG 2025-12-30 23:25:21,339 functional 
+DEBUG 2026-01-01 21:51:51,667 functional 
 def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
     return 1
 
-DEBUG 2025-12-30 23:25:21,341 functional 
+DEBUG 2026-01-01 21:51:51,667 functional 
 def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
     return 1
 
-DEBUG 2025-12-30 23:25:21,342 functional 
+DEBUG 2026-01-01 21:51:51,667 functional 
 def xmap(task, it):
     return 1
 
-DEBUG 2025-12-30 23:25:21,343 functional 
+DEBUG 2026-01-01 21:51:51,667 functional 
 def debug_task(self):
     return 1
 
-DEBUG 2025-12-30 23:25:21,344 functional 
+DEBUG 2026-01-01 21:51:51,668 functional 
 def backend_cleanup():
     return 1
 
-DEBUG 2025-12-30 23:25:21,346 functional 
+DEBUG 2026-01-01 21:51:51,668 functional 
 def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
     return 1
 
-DEBUG 2025-12-30 23:25:21,348 functional 
+DEBUG 2026-01-01 21:51:51,668 functional 
 def auto_sync_daily():
     return 1
 
-DEBUG 2025-12-30 23:25:21,351 functional 
+DEBUG 2026-01-01 21:51:51,668 functional 
 def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
     return 1
 
-DEBUG 2025-12-30 23:25:21,352 functional 
+DEBUG 2026-01-01 21:51:51,668 functional 
 def chain(*args, **kwargs):
     return 1
 
-DEBUG 2025-12-30 23:25:21,353 functional 
+DEBUG 2026-01-01 21:51:51,668 functional 
 def xstarmap(task, it):
     return 1
 
-[2025-12-30 23:25:22,716: WARNING/MainProcess] 
+[2026-01-01 21:51:51,758: WARNING/MainProcess] 
 Setting ssl_cert_reqs=CERT_NONE when connecting to redis means that celery will not validate the identity of the redis broker when connecting. This leaves you vulnerable to man in the middle attacks.
 
 SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
@@ -63,10 +63,10 @@ SETTINGS-DEBUG: Loaded .env successfully
  
  -------------- celery@Chat360s-Air.lan v5.3.4 (emerald-rush)
 --- ***** ----- 
--- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2025-12-30 23:25:22
+-- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2026-01-01 21:51:51
 - *** --- * --- 
 - ** ---------- [config]
-- ** ---------- .> app:         papertrade:0x1070002f0
+- ** ---------- .> app:         papertrade:0x1025082f0
 - ** ---------- .> transport:   rediss://default:**@pumped-turkey-23712.upstash.io:6379//
 - ** ---------- .> results:     rediss://default:**@pumped-turkey-23712.upstash.io:6379/
 - *** --- * --- .> concurrency: 8 (prefork)
@@ -83,74 +83,24 @@ SETTINGS-DEBUG: Loaded .env successfully
   . apps.sync.tasks.sync_stocks_task
   . config.celery.debug_task
 
-[2025-12-30 23:25:27,250: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+[2026-01-01 21:51:52,266: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
 whether broker connection retries are made during startup in Celery 6.0 and above.
 If you wish to retain the existing behavior for retrying connections on startup,
 you should set broker_connection_retry_on_startup to True.
   warnings.warn(
 
-[2025-12-30 23:25:30,567: CRITICAL/MainProcess] Unrecoverable error: ResponseError('max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details')
-Traceback (most recent call last):
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/worker.py", line 202, in start
-    self.blueprint.start(self)
-    ~~~~~~~~~~~~~~~~~~~~^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bootsteps.py", line 116, in start
-    step.start(parent)
-    ~~~~~~~~~~^^^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bootsteps.py", line 365, in start
-    return self.obj.start()
-           ~~~~~~~~~~~~~~^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py", line 340, in start
-    blueprint.start(self)
-    ~~~~~~~~~~~~~~~^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bootsteps.py", line 116, in start
-    step.start(parent)
-    ~~~~~~~~~~^^^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/connection.py", line 21, in start
-    c.connection = c.connect()
-                   ~~~~~~~~~^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py", line 471, in connect
-    conn.transport.register_with_event_loop(conn.connection, self.hub)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 1361, in register_with_event_loop
-    cycle.on_poll_init(loop.poller)
-    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 556, in on_poll_init
-    return channel.qos.restore_visible(
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        num=channel.unacked_restore_limit,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 417, in restore_visible
-    with Mutex(client, self.unacked_mutex_key,
-         ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-               self.unacked_mutex_expire):
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 141, in __enter__
-    return next(self.gen)
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 173, in Mutex
-    lock_acquired = lock.acquire(blocking=False)
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/lock.py", line 207, in acquire
-    if self.do_acquire(token):
-       ~~~~~~~~~~~~~~~^^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/lock.py", line 223, in do_acquire
-    if self.redis.set(self.name, token, nx=True, px=timeout):
-       ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/commands/core.py", line 2341, in set
-    return self.execute_command("SET", *pieces, **options)
-           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/client.py", line 533, in execute_command
-    conn = self.connection or pool.get_connection(command_name, **options)
-                              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 1086, in get_connection
-    connection.connect()
-    ~~~~~~~~~~~~~~~~~~^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 276, in connect
-    self.on_connect()
-    ~~~~~~~~~~~~~~~^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 342, in on_connect
-    auth_response = self.read_response()
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 524, in read_response
-    raise response
-redis.exceptions.ResponseError: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details
+[2026-01-01 21:51:55,976: INFO/MainProcess] Connected to rediss://default:**@pumped-turkey-23712.upstash.io:6379//
+[2026-01-01 21:51:55,979: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2026-01-01 21:51:57,292: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-01 21:52:03,259: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/app/control.py:56: DuplicateNodenameWarning: Received multiple replies from node name: celery@Chat360s-Air.lan.
+Please make sure you give each node a unique nodename using
+the celery worker `-n` option.
+  warnings.warn(DuplicateNodenameWarning(
+
+[2026-01-01 21:52:03,260: INFO/MainProcess] mingle: all alone
+[2026-01-01 21:52:11,780: INFO/MainProcess] celery@Chat360s-Air.lan ready.

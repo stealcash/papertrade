@@ -1,4 +1,7 @@
-2025/12/30 23:25:18 Configuration loaded: Port=8080
+2026/01/01 21:51:52 Configuration loaded: Port=8080
+Initializing Data Service: Loading Upstox Instruments...
+Loaded 76426 instruments from Upstox.
+Successfully loaded Upstox instruments.
 [GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
 
 [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
@@ -10,7 +13,47 @@
 [GIN-debug] GET    /api/v1/sector/data       --> github.com/papertrade/backend-go/internal/api.(*Handler).GetSectorData-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/contracts --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionContracts-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/candles/5min --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionCandles-fm (4 handlers)
-2025/12/30 23:25:18 Starting Go service on :8080
+2026/01/01 21:51:53 Starting Go service on :8080
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2026/01/01 - 21:52:39 | 500 |  258.245417ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-01-01&timewise=true"
+[GIN] 2026/01/01 - 21:52:39 | 500 |      49.083µs |             ::1 | GET      "/api/v1/stock/data?symbol=INFO&date=2025-12-30&timewise=true"
+[GIN] 2026/01/01 - 21:52:39 | 500 |      86.666µs |             ::1 | GET      "/api/v1/stock/data?symbol=INFO&date=2025-12-31&timewise=true"
+[GIN] 2026/01/01 - 21:52:39 | 500 |     176.334µs |             ::1 | GET      "/api/v1/stock/data?symbol=INFO&date=2026-01-01&timewise=true"
+[GIN] 2026/01/01 - 21:52:39 | 500 |   99.691625ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITC&date=2026-01-01&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:39 | 200 |    210.2185ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-10&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:41 | 200 |  188.032292ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-11&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:43 | 200 |  210.063958ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-12&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:45 | 200 |  296.133709ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-15&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:47 | 200 |  221.892833ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-16&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:49 | 200 |  299.960458ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-17&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:51 | 200 |  215.497791ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-18&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:53 | 200 |  233.335208ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-19&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:55 | 200 |  229.144541ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-22&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:56 | 200 |  314.526834ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-23&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:52:58 | 200 |  207.162125ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-24&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:53:00 | 200 |    208.9755ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-26&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:53:03 | 200 |  330.519833ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-29&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:53:05 | 200 |     217.811ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-30&timewise=true"
+Warning: Failed to fetch intraday for ITCHOTELS: status: 400, body: {"status":"error","errors":[{"errorCode":"UDAPI1020","message":"Interval accepts one of (1minute,30minute,day,week,month)","propertyPath":"getHistoricalCandleData.interval","invalidValue":"5minute","error_code":"UDAPI1020","property_path":"getHistoricalCandleData.interval","invalid_value":"5minute"}]}
+[GIN] 2026/01/01 - 21:53:06 | 200 |  197.312875ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-31&timewise=true"
+[GIN] 2026/01/01 - 21:53:08 | 500 |   93.264666ms |             ::1 | GET      "/api/v1/stock/data?symbol=ITCHOTELS&date=2026-01-01&timewise=true"
+[GIN] 2026/01/01 - 21:53:08 | 500 |      85.667µs |             ::1 | GET      "/api/v1/stock/data?symbol=Reliance&date=2025-12-30&timewise=true"
+[GIN] 2026/01/01 - 21:53:08 | 500 |      60.167µs |             ::1 | GET      "/api/v1/stock/data?symbol=Reliance&date=2025-12-31&timewise=true"
+[GIN] 2026/01/01 - 21:53:08 | 500 |      33.875µs |             ::1 | GET      "/api/v1/stock/data?symbol=Reliance&date=2026-01-01&timewise=true"
+[GIN] 2026/01/01 - 21:53:08 | 500 |       93.48ms |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2026-01-01&timewise=true"

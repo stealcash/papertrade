@@ -1,28 +1,145 @@
-INFO 2025-12-30 23:25:33,354 autoreload Watching for file changes with StatReloader
-INFO 2025-12-30 23:26:13,292 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2025-12-30 23:26:13,291 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2025-12-30 23:26:13,298 basehttp "OPTIONS /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 0
-INFO 2025-12-30 23:26:13,298 basehttp "OPTIONS /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 0
-INFO 2025-12-30 23:26:16,907 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
-INFO 2025-12-30 23:26:19,794 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
-INFO 2025-12-30 23:26:20,854 basehttp "GET /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 39024
-INFO 2025-12-30 23:26:25,315 basehttp "GET /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 39024
-INFO 2025-12-30 23:26:48,243 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
-INFO 2025-12-30 23:26:48,248 basehttp "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
-INFO 2025-12-30 23:26:48,250 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
-INFO 2025-12-30 23:26:48,250 basehttp "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
-INFO 2025-12-30 23:26:52,023 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1072
-INFO 2025-12-30 23:26:54,884 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1072
-INFO 2025-12-30 23:27:04,127 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 4637
-INFO 2025-12-30 23:27:19,176 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 4637
-INFO 2025-12-30 23:27:56,144 basehttp "OPTIONS /api/v1/stocks/prices/daily?stock_symbol=HDFCBANK&start_date=2025-11-30&end_date=2025-12-30 HTTP/1.1" 200 0
-INFO 2025-12-30 23:27:56,214 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_symbol=HDFCBANK&start_date=2025-11-30&end_date=2025-12-30 HTTP/1.1" 200 0
-INFO 2025-12-30 23:28:04,756 basehttp "GET /api/v1/stocks/prices/daily/?stock_symbol=HDFCBANK&start_date=2025-11-30&end_date=2025-12-30 HTTP/1.1" 200 5251
-INFO 2025-12-30 23:28:14,799 basehttp "OPTIONS /api/v1/stocks/prices/daily?stock_symbol=HDFCBANK&start_date=2025-11-30&end_date=2025-12-30&strategy=ONE_DAY_TREND HTTP/1.1" 200 0
-INFO 2025-12-30 23:28:14,857 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_symbol=HDFCBANK&start_date=2025-11-30&end_date=2025-12-30&strategy=ONE_DAY_TREND HTTP/1.1" 200 0
-INFO 2025-12-30 23:28:22,598 basehttp "GET /api/v1/stocks/prices/daily/?stock_symbol=HDFCBANK&start_date=2025-11-30&end_date=2025-12-30&strategy=ONE_DAY_TREND HTTP/1.1" 200 5292
-INFO 2025-12-30 23:29:40,115 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
-INFO 2025-12-30 23:29:40,118 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
-INFO 2025-12-30 23:29:40,119 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
-INFO 2025-12-30 23:29:40,120 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
-INFO 2025-12-30 23:29:40,121 basehttp "OPTIONS /api/v1/stocks/prices/daily/?start_date=2025-11-30&end_date=2025-12-30 HTTP/1.1" 200 0
+INFO 2026-01-01 21:51:56,082 autoreload Watching for file changes with StatReloader
+INFO 2026-01-01 21:52:08,842 basehttp "OPTIONS /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 0
+INFO 2026-01-01 21:52:11,536 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
+INFO 2026-01-01 21:52:11,551 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
+INFO 2026-01-01 21:52:12,075 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-01-01 21:52:12,109 basehttp "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2026-01-01 21:52:13,785 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 168
+INFO 2026-01-01 21:52:15,663 basehttp "OPTIONS /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 0
+INFO 2026-01-01 21:52:15,664 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
+INFO 2026-01-01 21:52:15,665 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
+INFO 2026-01-01 21:52:16,457 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 558
+INFO 2026-01-01 21:52:18,210 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
+INFO 2026-01-01 21:52:26,851 basehttp "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 3386
+INFO 2026-01-01 21:52:27,633 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
+INFO 2026-01-01 21:52:31,484 basehttp "POST /api/v1/stocks/ HTTP/1.1" 201 487
+INFO 2026-01-01 21:52:36,314 basehttp "OPTIONS /api/v1/sync/trigger-normal/ HTTP/1.1" 200 0
+DEBUG 2026-01-01 21:52:37,198 functional 
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+
+DEBUG 2026-01-01 21:52:37,198 functional 
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+
+DEBUG 2026-01-01 21:52:37,199 functional 
+def xmap(task, it):
+    return 1
+
+DEBUG 2026-01-01 21:52:37,199 functional 
+def backend_cleanup():
+    return 1
+
+DEBUG 2026-01-01 21:52:37,199 functional 
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+
+DEBUG 2026-01-01 21:52:37,199 functional 
+def chain(*args, **kwargs):
+    return 1
+
+DEBUG 2026-01-01 21:52:37,200 functional 
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+
+DEBUG 2026-01-01 21:52:37,200 functional 
+def xstarmap(task, it):
+    return 1
+
+DEBUG 2026-01-01 21:52:37,200 functional 
+def auto_sync_daily():
+    return 1
+
+DEBUG 2026-01-01 21:52:37,200 functional 
+def accumulate(self, *args, **kwargs):
+    return 1
+
+DEBUG 2026-01-01 21:52:37,200 functional 
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+
+DEBUG 2026-01-01 21:52:37,201 functional 
+def chunks(task, it, n):
+    return 1
+
+DEBUG 2026-01-01 21:52:39,070 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:39,332 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-01-01&timewise=true HTTP/1.1" 500 155
+DEBUG 2026-01-01 21:52:39,335 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:39,336 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=INFO&date=2025-12-30&timewise=true HTTP/1.1" 500 154
+DEBUG 2026-01-01 21:52:39,338 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:39,340 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=INFO&date=2025-12-31&timewise=true HTTP/1.1" 500 155
+DEBUG 2026-01-01 21:52:39,342 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:39,346 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=INFO&date=2026-01-01&timewise=true HTTP/1.1" 500 155
+DEBUG 2026-01-01 21:52:39,348 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:39,449 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITC&date=2026-01-01&timewise=true HTTP/1.1" 500 155
+DEBUG 2026-01-01 21:52:39,450 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:39,661 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-10&timewise=true HTTP/1.1" 200 263
+DEBUG 2026-01-01 21:52:41,241 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:41,431 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-11&timewise=true HTTP/1.1" 200 264
+INFO 2026-01-01 21:52:42,067 basehttp "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 3760
+DEBUG 2026-01-01 21:52:43,066 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:43,281 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-12&timewise=true HTTP/1.1" 200 267
+INFO 2026-01-01 21:52:44,808 tasks Skipping ITCHOTELS for 2025-12-13: Market Closed (Weekend)
+INFO 2026-01-01 21:52:44,809 tasks Skipping ITCHOTELS for 2025-12-14: Market Closed (Weekend)
+DEBUG 2026-01-01 21:52:44,810 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:45,108 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-15&timewise=true HTTP/1.1" 200 267
+DEBUG 2026-01-01 21:52:47,580 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:47,803 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-16&timewise=true HTTP/1.1" 200 265
+DEBUG 2026-01-01 21:52:49,324 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:49,626 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-17&timewise=true HTTP/1.1" 200 263
+DEBUG 2026-01-01 21:52:51,217 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:51,433 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-18&timewise=true HTTP/1.1" 200 266
+DEBUG 2026-01-01 21:52:53,055 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:53,291 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-19&timewise=true HTTP/1.1" 200 263
+INFO 2026-01-01 21:52:54,832 tasks Skipping ITCHOTELS for 2025-12-20: Market Closed (Weekend)
+INFO 2026-01-01 21:52:54,832 tasks Skipping ITCHOTELS for 2025-12-21: Market Closed (Weekend)
+DEBUG 2026-01-01 21:52:54,835 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:55,067 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-22&timewise=true HTTP/1.1" 200 263
+DEBUG 2026-01-01 21:52:56,604 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:56,920 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-23&timewise=true HTTP/1.1" 200 265
+DEBUG 2026-01-01 21:52:58,466 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:52:58,675 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-24&timewise=true HTTP/1.1" 200 266
+INFO 2026-01-01 21:53:00,313 tasks Skipping ITCHOTELS for 2025-12-25: Market Closed (Christmas)
+DEBUG 2026-01-01 21:53:00,315 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:53:00,526 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-26&timewise=true HTTP/1.1" 200 266
+INFO 2026-01-01 21:53:02,953 tasks Skipping ITCHOTELS for 2025-12-27: Market Closed (Weekend)
+INFO 2026-01-01 21:53:02,954 tasks Skipping ITCHOTELS for 2025-12-28: Market Closed (Weekend)
+DEBUG 2026-01-01 21:53:02,956 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:53:03,289 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-29&timewise=true HTTP/1.1" 200 267
+DEBUG 2026-01-01 21:53:04,946 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:53:05,167 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-30&timewise=true HTTP/1.1" 200 263
+DEBUG 2026-01-01 21:53:06,674 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:53:06,875 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2025-12-31&timewise=true HTTP/1.1" 200 264
+DEBUG 2026-01-01 21:53:08,387 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:53:08,482 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=ITCHOTELS&date=2026-01-01&timewise=true HTTP/1.1" 500 155
+DEBUG 2026-01-01 21:53:08,740 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:53:08,742 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=Reliance&date=2025-12-30&timewise=true HTTP/1.1" 500 159
+DEBUG 2026-01-01 21:53:08,745 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:53:08,747 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=Reliance&date=2025-12-31&timewise=true HTTP/1.1" 500 159
+DEBUG 2026-01-01 21:53:08,748 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:53:08,749 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=Reliance&date=2026-01-01&timewise=true HTTP/1.1" 500 159
+DEBUG 2026-01-01 21:53:08,751 connectionpool Starting new HTTP connection (1): localhost:8080
+DEBUG 2026-01-01 21:53:08,846 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=TCS&date=2026-01-01&timewise=true HTTP/1.1" 500 155
+INFO 2026-01-01 21:53:09,110 tasks Stock sync completed: 6/6 successful
+INFO 2026-01-01 21:53:09,128 trace Task apps.sync.tasks.sync_stocks_task[aa1f0182-b196-4ae4-8166-de5bcc854421] succeeded in 31.915560375000496s: None
+INFO 2026-01-01 21:53:09,130 basehttp "POST /api/v1/sync/trigger-normal/ HTTP/1.1" 202 228
+INFO 2026-01-01 21:53:50,007 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
+INFO 2026-01-01 21:53:50,022 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-01-01 21:53:50,022 basehttp "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
+INFO 2026-01-01 21:53:50,024 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
+INFO 2026-01-01 21:53:50,025 basehttp "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
+INFO 2026-01-01 21:53:50,026 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-01-01 21:53:52,572 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2026-01-01 21:53:53,076 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1072
+INFO 2026-01-01 21:53:54,613 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1072
+INFO 2026-01-01 21:53:55,853 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 419
+INFO 2026-01-01 21:54:08,136 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 3817
+INFO 2026-01-01 21:54:09,624 basehttp "OPTIONS /api/v1/stocks/prices/daily?stock_symbol=ITCHOTELS&start_date=2025-12-02&end_date=2026-01-01 HTTP/1.1" 200 0
+INFO 2026-01-01 21:54:09,897 basehttp "GET /api/v1/stocks/prices/daily?stock_symbol=ITCHOTELS&start_date=2025-12-02&end_date=2026-01-01 HTTP/1.1" 301 0
+INFO 2026-01-01 21:54:09,902 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_symbol=ITCHOTELS&start_date=2025-12-02&end_date=2026-01-01 HTTP/1.1" 200 0
+INFO 2026-01-01 21:54:16,612 basehttp "GET /api/v1/stocks/prices/daily/?stock_symbol=ITCHOTELS&start_date=2025-12-02&end_date=2026-01-01 HTTP/1.1" 200 5586
+INFO 2026-01-01 21:54:22,349 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 3817
+INFO 2026-01-01 21:55:34,206 basehttp "OPTIONS /api/v1/stocks/prices/daily?stock_symbol=ITCHOTELS&start_date=2025-12-02&end_date=2026-01-01&strategy=ONE_DAY_TREND HTTP/1.1" 200 0
+INFO 2026-01-01 21:55:36,325 basehttp "GET /api/v1/stocks/prices/daily?stock_symbol=ITCHOTELS&start_date=2025-12-02&end_date=2026-01-01&strategy=ONE_DAY_TREND HTTP/1.1" 301 0
+INFO 2026-01-01 21:55:36,330 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_symbol=ITCHOTELS&start_date=2025-12-02&end_date=2026-01-01&strategy=ONE_DAY_TREND HTTP/1.1" 200 0
+INFO 2026-01-01 21:55:43,233 basehttp "GET /api/v1/stocks/prices/daily/?stock_symbol=ITCHOTELS&start_date=2025-12-02&end_date=2026-01-01&strategy=ONE_DAY_TREND HTTP/1.1" 200 5586

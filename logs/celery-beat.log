@@ -1,60 +1,60 @@
-DEBUG 2025-12-30 23:25:21,322 functional 
+DEBUG 2026-01-01 21:51:51,492 functional 
 def accumulate(self, *args, **kwargs):
     return 1
 
-DEBUG 2025-12-30 23:25:21,331 functional 
+DEBUG 2026-01-01 21:51:51,492 functional 
 def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
     return 1
 
-DEBUG 2025-12-30 23:25:21,333 functional 
+DEBUG 2026-01-01 21:51:51,493 functional 
 def chunks(task, it, n):
     return 1
 
-DEBUG 2025-12-30 23:25:21,334 functional 
+DEBUG 2026-01-01 21:51:51,493 functional 
 def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
     return 1
 
-DEBUG 2025-12-30 23:25:21,340 functional 
+DEBUG 2026-01-01 21:51:51,493 functional 
 def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
     return 1
 
-DEBUG 2025-12-30 23:25:21,342 functional 
+DEBUG 2026-01-01 21:51:51,493 functional 
 def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
     return 1
 
-DEBUG 2025-12-30 23:25:21,343 functional 
+DEBUG 2026-01-01 21:51:51,493 functional 
 def auto_sync_daily():
     return 1
 
-DEBUG 2025-12-30 23:25:21,344 functional 
+DEBUG 2026-01-01 21:51:51,493 functional 
 def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
     return 1
 
-DEBUG 2025-12-30 23:25:21,345 functional 
+DEBUG 2026-01-01 21:51:51,493 functional 
 def xmap(task, it):
     return 1
 
-DEBUG 2025-12-30 23:25:21,350 functional 
+DEBUG 2026-01-01 21:51:51,494 functional 
 def debug_task(self):
     return 1
 
-DEBUG 2025-12-30 23:25:21,351 functional 
+DEBUG 2026-01-01 21:51:51,494 functional 
 def backend_cleanup():
     return 1
 
-DEBUG 2025-12-30 23:25:21,352 functional 
+DEBUG 2026-01-01 21:51:51,494 functional 
 def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
     return 1
 
-DEBUG 2025-12-30 23:25:21,352 functional 
+DEBUG 2026-01-01 21:51:51,494 functional 
 def chain(*args, **kwargs):
     return 1
 
-DEBUG 2025-12-30 23:25:21,353 functional 
+DEBUG 2026-01-01 21:51:51,495 functional 
 def xstarmap(task, it):
     return 1
 
-[2025-12-30 23:25:22,622: INFO/MainProcess] beat: Starting...
-[2025-12-30 23:25:22,883: WARNING/MainProcess] 
+[2026-01-01 21:51:51,589: INFO/MainProcess] beat: Starting...
+[2026-01-01 21:51:51,623: WARNING/MainProcess] 
 Setting ssl_cert_reqs=CERT_NONE when connecting to redis means that celery will not validate the identity of the redis broker when connecting. This leaves you vulnerable to man in the middle attacks.
 

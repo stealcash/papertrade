@@ -7,14 +7,11 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 12s
- ○ Compiling /backtest ...
- ✓ Compiled /backtest in 10.8s (1539 modules)
- GET /backtest 200 in 10950ms
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 3.7s (1542 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 3989ms
+ ✓ Ready in 2.1s
  ○ Compiling /market-analysis ...
- ✓ Compiled /market-analysis in 2.3s (1560 modules)
- ○ Compiling /stock-history ...
- ✓ Compiled /stock-history in 2.3s (1578 modules)
+ ✓ Compiled /market-analysis in 1360ms (1533 modules)
+ GET /market-analysis 200 in 1523ms
+ ✓ Compiled /_not-found in 358ms (1536 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 444ms
+ ✓ Compiled /favicon.ico in 358ms (853 modules)
+ GET /favicon.ico 200 in 412ms
