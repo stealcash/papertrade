@@ -124,6 +124,9 @@ class StrategyRuleBasedViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         import uuid
+        from rest_framework.exceptions import ValidationError
+        from apps.subscriptions.services import SubscriptionService
+
         code = serializer.validated_data.pop('code', None)
         user = self.request.user
         
@@ -143,6 +146,12 @@ class StrategyRuleBasedViewSet(viewsets.ModelViewSet):
                 status='active'
             )
         else:
+            # Subscription Enforcement
+            # Check Count limit (Implicitly checks 'enabled' status too)
+            allowed, msg = SubscriptionService.check_limit(user, 'STRATEGY_CREATE')
+            if not allowed:
+                 raise ValidationError({"subscription": msg})
+
             serializer.save(user=user)
     
     def list(self, request):

@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'apps.notifications',
     'apps.adminpanel',
     'apps.watchlist',
+    'apps.portfolio',
+    'apps.subscriptions',
 ]
 
 MIDDLEWARE = [

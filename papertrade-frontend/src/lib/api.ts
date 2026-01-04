@@ -30,8 +30,11 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response?.status === 401) {
-            // Token expired or invalid
+        const status = error.response?.status;
+        const url = error.config?.url;
+
+        // Token expired (401) or User not found (404 on profile/auth)
+        if (status === 401 || (status === 404 && (url?.includes('/auth/profile') || url?.includes('/auth/me')))) {
             if (typeof window !== 'undefined') {
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('user');
@@ -120,4 +123,17 @@ export const strategiesAPI = {
     createRuleBased: (data: any) => apiClient.post('/strategies/rule-based/', data),
     updateRuleBased: (id: number, data: any) => apiClient.put(`/strategies/rule-based/${id}/`, data),
     deleteRuleBased: (id: number) => apiClient.delete(`/strategies/rule-based/${id}/`),
+};
+
+export const portfolioAPI = {
+    getHoldings: () => apiClient.get('/portfolio/holdings/'),
+    getHistory: (params?: any) => apiClient.get('/portfolio/holdings/history/', { params }),
+    trade: (data: { stock_id: number, quantity: number, action: 'BUY' | 'SELL' }) => apiClient.post('/portfolio/holdings/trade/', data),
+};
+
+export const subscriptionsAPI = {
+    getPlans: () => apiClient.get('/subscriptions/plans/'),
+    getCurrent: () => apiClient.get('/subscriptions/current/'),
+    validateCoupon: (data: any) => apiClient.post('/subscriptions/validate_coupon/', data),
+    subscribe: (data: any) => apiClient.post('/subscriptions/subscribe/', data),
 };

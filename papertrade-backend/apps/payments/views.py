@@ -7,9 +7,12 @@ from .models import PaymentRecord
 from .serializers import PaymentRecordSerializer
 
 
-class PaymentRecordViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = PaymentRecord.objects.all()
-    serializer_class = PaymentRecordSerializer
+class WalletTransactionViewSet(viewsets.ReadOnlyModelViewSet):
+    from .models import WalletTransaction
+    from .serializers import WalletTransactionSerializer
+    
+    queryset = WalletTransaction.objects.all()
+    serializer_class = WalletTransactionSerializer
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
@@ -26,10 +29,27 @@ class PaymentRecordViewSet(viewsets.ReadOnlyModelViewSet):
 def refill_wallet(request):
     """Refill user wallet (for testing/demo purposes)."""
     from apps.adminpanel.utils import ConfigManager
-    amount = request.data.get('amount', ConfigManager.get_default_wallet_amount())
+    from .models import WalletTransaction
+    from decimal import Decimal
     
-    request.user.wallet_balance = amount
+    amount = request.data.get('amount')
+    if amount:
+        amount = Decimal(str(amount))
+    else:
+        amount = Decimal(str(ConfigManager.get_default_wallet_amount()))
+    
+    # Update balance (Add, don't replace)
+    request.user.wallet_balance += amount
     request.user.save()
+    
+    # Create Transaction Record
+    WalletTransaction.objects.create(
+        user=request.user,
+        transaction_type='CREDIT',
+        amount=amount,
+        balance_after=request.user.wallet_balance,
+        description='Wallet Refill'
+    )
     
     return get_success_response({
         'wallet_balance': str(request.user.wallet_balance),

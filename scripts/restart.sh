@@ -2,7 +2,14 @@
 
 set -e
 
+
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+# Create logs directory if it doesn't exist
+if [ ! -d "$PROJECT_ROOT/logs" ]; then
+    mkdir -p "$PROJECT_ROOT/logs"
+fi
+
 
 # print_step() {
 #     echo ""

@@ -42,11 +42,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     
-    # Trial and subscription
-    trial_start_date = models.DateField(null=True, blank=True)
-    trial_end_date = models.DateField(null=True, blank=True)
-    subscription_start_date = models.DateField(null=True, blank=True)
-    subscription_end_date = models.DateField(null=True, blank=True)
+    # Personal Info
+    first_name = models.CharField(max_length=50, blank=True, null=True)
+    last_name = models.CharField(max_length=50, blank=True, null=True)
     
     # Wallet
     wallet_balance = models.DecimalField(max_digits=15, decimal_places=2, default=100000.00)
@@ -72,21 +70,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
     
-    @property
-    def is_trial_active(self):
-        """Check if user's trial is currently active."""
-        if not self.trial_start_date or not self.trial_end_date:
-            return False
-        today = timezone.now().date()
-        return self.trial_start_date <= today <= self.trial_end_date
-    
-    @property
-    def is_subscription_active(self):
-        """Check if user's subscription is currently active."""
-        if not self.subscription_start_date or not self.subscription_end_date:
-            return False
-        today = timezone.now().date()
-        return self.subscription_start_date <= today <= self.subscription_end_date
+
     
     def is_locked(self):
         """Check if account is locked due to failed login attempts."""

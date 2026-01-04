@@ -25,7 +25,10 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response?.status === 401) {
+        const status = error.response?.status;
+        const url = error.config?.url;
+
+        if (status === 401 || (status === 404 && (url?.includes('/auth/profile/') || url?.includes('/auth/me/')))) {
             if (typeof window !== 'undefined') {
                 localStorage.removeItem('admin_token');
                 localStorage.removeItem('admin_user');
@@ -51,6 +54,24 @@ export const strategiesAPI = {
     // User/Rule Based
     createRuleBased: (data: any) => apiClient.post('/strategies/rule-based/', data),
     updateRuleBased: (id: number, data: any) => apiClient.put(`/strategies/rule-based/${id}/`, data),
+};
+
+export const plansAPI = {
+    getAll: () => apiClient.get('/subscriptions/admin/plans/'),
+    getById: (id: number) => apiClient.get(`/subscriptions/admin/plans/${id}/`),
+    create: (data: any) => apiClient.post('/subscriptions/admin/plans/', data),
+    update: (id: number, data: any) => apiClient.put(`/subscriptions/admin/plans/${id}/`, data),
+    delete: (id: number) => apiClient.delete(`/subscriptions/admin/plans/${id}/`),
+};
+
+export const couponsAPI = {
+    getAll: () => apiClient.get('/subscriptions/admin/coupons/'),
+    create: (data: any) => apiClient.post('/subscriptions/admin/coupons/', data),
+    delete: (id: number) => apiClient.delete(`/subscriptions/admin/coupons/${id}/`),
+};
+
+export const featuresAPI = {
+    getAll: () => apiClient.get('/subscriptions/admin/features/'),
 };
 
 export default apiClient;

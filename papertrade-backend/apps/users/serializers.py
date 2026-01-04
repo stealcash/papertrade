@@ -8,9 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['id', 'email', 'mobile', 'role', 'is_active', 'wallet_balance',
-                 'trial_start_date', 'trial_end_date', 'subscription_start_date',
-                 'subscription_end_date', 'created_at', 'updated_at']
+        fields = ['id', 'email', 'first_name', 'last_name', 'mobile', 'role', 'is_active', 'wallet_balance',
+                 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at', 'wallet_balance']
 
 
@@ -18,6 +17,8 @@ class SignupSerializer(serializers.Serializer):
     """Serializer for user signup."""
     
     email = serializers.EmailField()
+    first_name = serializers.CharField(required=False, allow_blank=True)
+    last_name = serializers.CharField(required=False, allow_blank=True)
     password = serializers.CharField(write_only=True, validators=[validate_password])
     mobile = serializers.CharField(required=False, allow_blank=True)
     
@@ -32,8 +33,40 @@ class SignupSerializer(serializers.Serializer):
         user = User.objects.create_user(
             email=validated_data['email'],
             password=validated_data['password'],
+            first_name=validated_data.get('first_name', ''),
+            last_name=validated_data.get('last_name', ''),
             mobile=validated_data.get('mobile', ''),
         )
+        
+        # Get default balance from SystemConfig (User requested: default_wallet_amount=1002)
+        initial_balance = 100000.00 # Default fallback
+        try:
+            from apps.adminpanel.models import SystemConfig
+            # Check for 'default_wallet_amount' first as user specified 1002
+            config = SystemConfig.objects.filter(key='default_wallet_amount').first()
+            if not config:
+                 config = SystemConfig.objects.filter(key='default_wallet_balance').first()
+            
+            if config:
+                initial_balance = float(config.value)
+        except Exception:
+            pass # Fallback to default
+        
+        # Update user balance
+        user.wallet_balance = initial_balance
+        user.save()
+
+        # Record initial wallet balance transaction
+        if user.wallet_balance > 0:
+            from apps.payments.models import WalletTransaction
+            WalletTransaction.objects.create(
+                user=user,
+                transaction_type='CREDIT',
+                amount=user.wallet_balance,
+                balance_after=user.wallet_balance,
+                description='Initial Signup Bonus'
+            )
+            
         return user
 
 

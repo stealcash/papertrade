@@ -1,7 +1,0 @@
-# github.com/papertrade/backend-go/internal/service
-internal/service/data_service.go:139:3: unknown field Range in struct literal of type chart.Params
-internal/service/data_service.go:153:37: cannot convert 0 (untyped int constant) to type struct{value *big.Int; exp int32}
-internal/service/data_service.go:162:25: bar.Open.InexactFloat64 undefined (type decimal.Decimal has no field or method InexactFloat64)
-internal/service/data_service.go:163:25: bar.High.InexactFloat64 undefined (type decimal.Decimal has no field or method InexactFloat64)
-internal/service/data_service.go:164:24: bar.Low.InexactFloat64 undefined (type decimal.Decimal has no field or method InexactFloat64)
-internal/service/data_service.go:165:26: bar.Close.InexactFloat64 undefined (type decimal.Decimal has no field or method InexactFloat64)

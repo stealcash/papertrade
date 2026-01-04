@@ -156,6 +156,28 @@ export default function BacktestDetailPage() {
                 />
             </div>
 
+            {/* ───────── PnL Stats (If Enabled & Trades Executed) ───────── */}
+            {Number(run.initial_wallet_amount) > 0 && Number(run.number_of_trades) > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <Card label="Total Invested" value={`₹${Number(run.initial_wallet_amount).toLocaleString()}`} />
+                    <Card label="Final Amount" value={`₹${Number(run.final_wallet_amount || run.initial_wallet_amount).toLocaleString()}`} />
+                    <Card label="Total Trades" value={run.number_of_trades} />
+                    <Card
+                        label="Total PnL"
+                        value={
+                            <span>
+                                {`${Number(run.total_pnl) >= 0 ? '+' : ''}₹${Number(run.total_pnl || 0).toLocaleString()}`}
+                                <span className="text-sm ml-2 opacity-80">
+                                    ({Number(run.pnl_percentage || 0).toFixed(2)}%)
+                                </span>
+                            </span>
+                        }
+                        color={Number(run.total_pnl) >= 0 ? "text-green-600" : "text-red-600"}
+                    />
+                </div>
+            )}
+
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 {/* ───────── MAIN: Detailed Predictions Table ───────── */}

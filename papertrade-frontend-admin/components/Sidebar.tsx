@@ -97,6 +97,18 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen, isCollapsed, to
             icon: ConfigIcon,
             show: isSuperadmin || user?.can_manage_config
         },
+        {
+            name: 'Plans',
+            path: '/plans',
+            icon: ConfigIcon,
+            show: isSuperadmin || user?.role === 'admin'
+        },
+        {
+            name: 'Coupons',
+            path: '/coupons',
+            icon: TablesIcon,
+            show: isSuperadmin || user?.role === 'admin'
+        },
     ];
 
     const handleLogout = () => {

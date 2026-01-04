@@ -13,7 +13,7 @@ class Sector(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
-    last_synced_at = models.DateTimeField(null=True, blank=True)
+
     extra = models.JSONField(default=dict, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)

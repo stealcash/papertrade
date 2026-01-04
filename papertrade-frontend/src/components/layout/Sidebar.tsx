@@ -109,7 +109,10 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
                   <span className="font-semibold text-xs text-indigo-900 dark:text-indigo-200 border-b-2 border-indigo-200 dark:border-indigo-700">PRO PLAN</span>
                 </div>
                 <p className="text-xs text-indigo-700 dark:text-indigo-300 mb-3">Unlock advanced strategies & unlimited backtests.</p>
-                <button className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm">
+                <button
+                  onClick={() => router.push('/subscription')}
+                  className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm"
+                >
                   Upgrade Now
                 </button>
               </div>

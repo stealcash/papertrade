@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { X, ChevronRight, Check, Search, Filter, Plus, Trash2 } from 'lucide-react';
 import { strategiesAPI, stocksAPI, backtestAPI, sectorsAPI } from '@/lib/api';
+import UpgradeModal from '@/components/common/UpgradeModal';
 
 interface ModalProps {
     isOpen: boolean;
@@ -43,7 +44,16 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
         magnitude_threshold: 50,
         start_date: '',
         end_date: new Date().toISOString().split('T')[0],
+
+        // PnL Options
+        pnl_enabled: false,
+        initial_wallet: 100000,
+        trade_strategy: 're_entry', // re_entry, buy_hold
+
     });
+
+    const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
+    const [upgradeMessage, setUpgradeMessage] = useState('');
 
     useEffect(() => {
         if (isOpen) {
@@ -54,7 +64,10 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                 ...prev,
                 selection_ids: [],
                 backend_selection_mode: 'stock',
-                backend_context_id: ''
+                backend_context_id: '',
+                pnl_enabled: false,
+                initial_wallet: 100000,
+                trade_strategy: 're_entry'
             }));
         }
     }, [isOpen]);
@@ -125,7 +138,10 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                 magnitude_threshold: formData.criteria_type === 'magnitude' ? formData.magnitude_threshold : undefined,
                 start_date: formData.start_date,
                 end_date: formData.end_date,
-                initial_wallet: 100000
+
+                // PnL Logic
+                initial_wallet: formData.pnl_enabled ? formData.initial_wallet : 0,
+                trade_strategy: formData.pnl_enabled ? formData.trade_strategy : null
             };
 
             // Handle Config
@@ -153,8 +169,28 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
             setLoading(false);
             onSuccess();
             onClose();
-        } catch (e) {
+        } catch (e: any) {
             console.error(e);
+
+            // Limit Check Logic (Explicit View Check)
+            if (e.response && e.response.status === 403 && e.response.data?.code === 'SUBSCRIPTION_LIMIT_REACHED') {
+                setUpgradeMessage(e.response.data.message);
+                setUpgradeModalOpen(true);
+                setLoading(false);
+                return;
+            }
+
+            // Limit Check Logic (Serializer Validation)
+            if (e.response && e.response.status === 400) {
+                const subError = e.response.data?.details?.subscription || e.response.data?.subscription;
+                if (subError) {
+                    setUpgradeMessage(Array.isArray(subError) ? subError[0] : subError);
+                    setUpgradeModalOpen(true);
+                    setLoading(false);
+                    return;
+                }
+            }
+
             alert("Failed to start backtest");
             setLoading(false);
         }
@@ -447,6 +483,46 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                                     </label>
                                 </div>
                             </div>
+
+                            {/* PnL Calculation Options */}
+                            <div className="pt-6 border-t border-dashed">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">PnL Calculation (Optional)</h3>
+                                    <label className="flex items-center cursor-pointer">
+                                        <input type="checkbox" checked={formData.pnl_enabled} onChange={e => setFormData({ ...formData, pnl_enabled: e.target.checked })} className="sr-only peer" />
+                                        <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
+                                    </label>
+                                </div>
+
+                                {formData.pnl_enabled && (
+                                    <div className="bg-gray-50 p-4 rounded-xl space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium mb-1">Initial Investment (₹)</label>
+                                            <input type="number" value={formData.initial_wallet} onChange={e => setFormData({ ...formData, initial_wallet: Number(e.target.value) })}
+                                                className="w-full p-2 border border-gray-200 rounded-lg" />
+                                            <p className="text-xs text-gray-500 mt-1">Amount is distributed equally among selected stocks.</p>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium mb-1">Execution Strategy</label>
+                                            <select value={formData.trade_strategy} onChange={e => setFormData({ ...formData, trade_strategy: e.target.value })}
+                                                className="w-full p-2 border border-gray-200 rounded-lg bg-white">
+                                                <option value="re_entry">Active Trading (Enter & Exit on Signals)</option>
+                                                <option value="buy_hold">Buy & Hold (First Signal -&gt; Last Day)</option>
+                                            </select>
+                                            {/* Info Box */}
+                                            <div className="mt-2 text-xs text-gray-500 bg-white p-2 rounded border border-gray-200 flex gap-2">
+                                                <div className="flex-shrink-0 w-4 h-4 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold text-[10px]">i</div>
+                                                <div>
+                                                    {formData.trade_strategy === 're_entry' ?
+                                                        "Exits stock on Sell signal, Re-enters on next Buy signal." :
+                                                        "Enters on first Buy signal and holds until the end date."}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
                 </div>
@@ -468,6 +544,12 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                     )}
                 </div>
             </div>
-        </div>
+
+            <UpgradeModal
+                isOpen={upgradeModalOpen}
+                onClose={() => setUpgradeModalOpen(false)}
+                message={upgradeMessage}
+            />
+        </div >
     );
 }

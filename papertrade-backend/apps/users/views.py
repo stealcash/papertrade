@@ -24,6 +24,36 @@ def signup(request):
                                  serializer.errors, status_code=400)
     
     user = serializer.save()
+    
+    # Assign Trial Plan
+    try:
+        from apps.subscriptions.models import Plan, UserSubscription
+        
+        # Get active default plan, prioritizing recently updated ones
+        default_plan = Plan.objects.filter(is_active=True, is_default=True).order_by('-id').first()
+        
+        if default_plan:
+            UserSubscription.objects.create(
+                user=user,
+                plan=default_plan,
+                status='active',
+                end_date=timezone.now() + timezone.timedelta(days=default_plan.default_period_days)
+            )
+        else:
+             # Fallback to 'trial' slug if no default is explicitly marked
+             # Optional: remove this if strict 'is_default' is required, but safer to keep fallback.
+            trial_plan = Plan.objects.filter(slug='trial').first()
+            if trial_plan:
+                 UserSubscription.objects.create(
+                    user=user,
+                    plan=trial_plan,
+                    status='active',
+                    end_date=timezone.now() + timezone.timedelta(days=30)
+                )
+    except Exception as e:
+        print(f"Error assigning trial plan: {e}")
+        # Non-blocking error, user is created but subscription failed
+    
     token = generate_access_token(user)
     
     return get_success_response({

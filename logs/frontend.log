@@ -7,11 +7,24 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2.1s
- ○ Compiling /market-analysis ...
- ✓ Compiled /market-analysis in 1360ms (1533 modules)
- GET /market-analysis 200 in 1523ms
- ✓ Compiled /_not-found in 358ms (1536 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 444ms
- ✓ Compiled /favicon.ico in 358ms (853 modules)
- GET /favicon.ico 200 in 412ms
+ ✓ Ready in 1941ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2.7s (1537 modules)
+ GET / 200 in 2818ms
+ ✓ Compiled /favicon.ico in 203ms (846 modules)
+ GET /favicon.ico 200 in 242ms
+ ✓ Compiled /signup in 410ms (1583 modules)
+ GET /favicon.ico 200 in 10ms
+ ✓ Compiled /dashboard in 304ms (1577 modules)
+ GET /favicon.ico 200 in 6ms
+ ✓ Compiled /profile in 225ms (1587 modules)
+ GET /favicon.ico 200 in 6ms
+ ✓ Compiled /wallet in 309ms (1601 modules)
+ GET /favicon.ico 200 in 5ms
+ ○ Compiling /stock-history ...
+ ✓ Compiled /stock-history in 539ms (1623 modules)
+ GET /stock-history 200 in 169ms
+ ✓ Compiled /_not-found in 458ms (1588 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 559ms
+ ✓ Compiled /favicon.ico in 161ms (881 modules)
+ GET /favicon.ico 200 in 201ms

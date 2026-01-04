@@ -151,6 +151,12 @@ export default function UsersPage() {
                                 <tr>
                                     <th
                                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        onClick={() => handleSort('first_name')}
+                                    >
+                                        Name {sortBy === 'first_name' && (sortOrder === 'asc' ? '↑' : '↓')}
+                                    </th>
+                                    <th
+                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                                         onClick={() => handleSort('email')}
                                     >
                                         Email {sortBy === 'email' && (sortOrder === 'asc' ? '↑' : '↓')}
@@ -188,6 +194,9 @@ export default function UsersPage() {
                                 {filteredUsers.map((user) => (
                                     <tr key={user.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                                            {user.first_name} {user.last_name}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                             {user.email}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">

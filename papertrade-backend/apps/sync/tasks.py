@@ -207,10 +207,8 @@ def sync_stocks_task(is_auto=False, user_id=None, from_date=None, to_date=None, 
                                         'extra': data.get('extra', {}),
                                     }
                                 )
-                                print(f"DTO-DEBUG: Saved {stock.symbol} {current_date}, created={created}, id={obj.id}")
                                 saved_records_count += 1  # Increment counter on successful save
                             except Exception as save_err:
-                                print(f"DTO-DEBUG: SAVE FAILED for {stock.symbol} {current_date}: {save_err}")
                                 raise save_err
                             
                             # Save 5-min candles if available
@@ -247,9 +245,7 @@ def sync_stocks_task(is_auto=False, user_id=None, from_date=None, to_date=None, 
                 if saved_records_count > 0:
                     stock.last_synced_at = timezone.now()
                     stock.save()
-                    print(f"DTO-DEBUG: Updated {stock.symbol} last_synced_at (saved {saved_records_count} records)")
-                else:
-                    print(f"DTO-DEBUG: Skipped updating {stock.symbol} last_synced_at (no records saved)")
+                
                 
                 success_count += 1
                 

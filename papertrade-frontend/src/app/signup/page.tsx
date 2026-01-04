@@ -14,7 +14,7 @@ export default function SignupPage() {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state: any) => state.auth);
 
-  const [f, setF] = useState({ full_name: '', email: '', password: '', confirm_password: '' });
+  const [f, setF] = useState({ first_name: '', last_name: '', email: '', password: '', confirm_password: '' });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [strength, setStrength] = useState(0);
@@ -99,18 +99,32 @@ export default function SignupPage() {
         {/* ------- FORM ------- */}
         <form onSubmit={submit} className="space-y-6">
 
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 block">Full Name</label>
-            <div className="relative">
-              <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                required
-                value={f.full_name}
-                onChange={(e) => setF({ ...f, full_name: e.target.value })}
-                placeholder="John Doe"
-                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
-              />
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <label className="text-sm font-medium text-gray-700 mb-1 block">First Name <span className="text-gray-400 font-normal">(Optional)</span></label>
+              <div className="relative">
+                <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  value={f.first_name}
+                  onChange={(e) => setF({ ...f, first_name: e.target.value })}
+                  placeholder="John"
+                  className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
+                />
+              </div>
+            </div>
+            <div className="flex-1">
+              <label className="text-sm font-medium text-gray-700 mb-1 block">Last Name <span className="text-gray-400 font-normal">(Optional)</span></label>
+              <div className="relative">
+                <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  value={f.last_name}
+                  onChange={(e) => setF({ ...f, last_name: e.target.value })}
+                  placeholder="Doe"
+                  className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
+                />
+              </div>
             </div>
           </div>
 

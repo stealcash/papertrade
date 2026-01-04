@@ -7,8 +7,8 @@ import { Wallet as WalletIcon, Plus, History, ArrowDownLeft, ArrowUpRight } from
 const MOCK = {
     balance: 97500,
     records: [
-        { id: 1, type: "Refill", amount: 100000, status: "completed", created_at: new Date(Date.now() - 86400000 * 5).toISOString() },
-        { id: 2, type: "Trade", amount: -2500, status: "completed", created_at: new Date(Date.now() - 86400000 * 3).toISOString() },
+        { id: 1, transaction_type: "CREDIT", amount: 100000, description: "Initial Refill", created_at: new Date(Date.now() - 86400000 * 5).toISOString() },
+        { id: 2, transaction_type: "DEBIT", amount: -2500, description: "Trade Loss", created_at: new Date(Date.now() - 86400000 * 3).toISOString() },
     ]
 };
 
@@ -86,21 +86,21 @@ export default function WalletPage() {
                                     {records.map(x => (
                                         <div key={x.id} className="p-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition">
                                             <div className="flex items-center gap-4">
-                                                <div className={`p-2 rounded-lg ${x.amount >= 0 ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' : 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'}`}>
-                                                    {x.amount >= 0 ? <ArrowDownLeft size={20} /> : <ArrowUpRight size={20} />}
+                                                <div className={`p-2 rounded-lg ${x.transaction_type === 'CREDIT' ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400' : 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'}`}>
+                                                    {x.transaction_type === 'CREDIT' ? <ArrowDownLeft size={20} /> : <ArrowUpRight size={20} />}
                                                 </div>
                                                 <div>
-                                                    <p className="font-semibold text-gray-900 dark:text-gray-100">{x.type}</p>
+                                                    <p className="font-semibold text-gray-900 dark:text-gray-100 capitalize">{(x.transaction_type || 'Unknown').toLowerCase()}</p>
                                                     <p className="text-sm text-gray-500 dark:text-gray-400">
                                                         {new Date(x.created_at).toLocaleString()}
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="text-right">
-                                                <p className={`font-bold ${x.amount >= 0 ? "text-green-600 dark:text-green-400" : "text-gray-900 dark:text-gray-100"}`}>
-                                                    {x.amount >= 0 ? "+" : ""}₹{Math.abs(x.amount).toLocaleString()}
+                                                <p className={`font-bold ${x.transaction_type === 'CREDIT' ? "text-green-600 dark:text-green-400" : "text-gray-900 dark:text-gray-100"}`}>
+                                                    {x.transaction_type === 'CREDIT' ? "+" : "-"}₹{Number(x.amount).toLocaleString()}
                                                 </p>
-                                                <p className="text-gray-500 dark:text-gray-400 text-xs capitalize">{x.status}</p>
+                                                <p className="text-gray-500 dark:text-gray-400 text-xs capitalize">{x.description || 'Success'}</p>
                                             </div>
                                         </div>
                                     ))}
@@ -133,8 +133,11 @@ export default function WalletPage() {
                                     onClick={refillWallet}
                                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition shadow-sm"
                                 >
-                                    Proceed to Pay
+                                    Add Balance
                                 </button>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                                    Note: This is not real money. It is only available for papertrade.
+                                </p>
                             </div>
                         </div>
                     </div>

@@ -54,5 +54,6 @@ class BacktestRunRequestSerializer(serializers.Serializer):
     end_date = serializers.DateField()
     
     # Legacy / Optional
-    initial_wallet = serializers.DecimalField(max_digits=15, decimal_places=2, default=100000)
+    initial_wallet = serializers.DecimalField(max_digits=15, decimal_places=2, default=0, required=False)
+    trade_strategy = serializers.ChoiceField(choices=['re_entry', 'buy_hold'], required=False, allow_null=True)
     execution_mode = serializers.ChoiceField(choices=['signal_close', 'next_open'], default='signal_close')

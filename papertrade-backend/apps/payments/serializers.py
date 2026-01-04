@@ -7,3 +7,11 @@ class PaymentRecordSerializer(serializers.ModelSerializer):
         model = PaymentRecord
         fields = '__all__'
         read_only_fields = ['user']
+
+
+class WalletTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        from .models import WalletTransaction
+        model = WalletTransaction
+        fields = '__all__'
+        read_only_fields = ['user']

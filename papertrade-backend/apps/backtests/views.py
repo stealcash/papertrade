@@ -175,6 +175,12 @@ class BacktestRunViewSet(viewsets.ModelViewSet):
 def run_backtest(request):
     """Run a backtest."""
     from .tasks import execute_backtest_task
+    from apps.subscriptions.services import SubscriptionService
+    
+    # Subscription Check
+    allowed, msg = SubscriptionService.check_limit(request.user, 'BACKTEST_RUN')
+    if not allowed:
+        return get_error_response('SUBSCRIPTION_LIMIT_REACHED', msg, status_code=403)
     
     serializer = BacktestRunRequestSerializer(data=request.data)
     
@@ -243,8 +249,12 @@ def run_backtest(request):
         start_date=serializer.validated_data['start_date'],
         end_date=serializer.validated_data['end_date'],
         initial_wallet_amount=serializer.validated_data.get('initial_wallet', 100000),
+        trade_strategy=serializer.validated_data.get('trade_strategy'),
         status='pending',
     )
+
+    # Increment Usage Here (Successfully created run)
+    SubscriptionService.increment_usage(request.user, 'BACKTEST_RUN')
     
     # Determine Execution Mode
     from apps.adminpanel.models import SystemConfig

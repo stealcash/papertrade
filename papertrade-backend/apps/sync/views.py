@@ -89,16 +89,20 @@ def trigger_normal_sync(request):
     # Trigger appropriate sync task
     run_sync = request.data.get('run_sync', False)
 
+    # Determine user_id to log (SyncLog requires regular User or None)
+    from apps.users.models import User
+    user_id_log = request.user.id if isinstance(request.user, User) else None
+
     if sync_type == 'stock':
         if run_sync:
-             task = sync_stocks_task.apply(kwargs={'is_auto': False, 'user_id': request.user.id, 'sync_indices': False})
+             task = sync_stocks_task.apply(kwargs={'is_auto': False, 'user_id': user_id_log, 'sync_indices': False})
         else:
-             task = sync_stocks_task.delay(is_auto=False, user_id=request.user.id, sync_indices=False)
+             task = sync_stocks_task.delay(is_auto=False, user_id=user_id_log, sync_indices=False)
     elif sync_type == 'sector':
         if run_sync:
-             task = sync_stocks_task.apply(kwargs={'is_auto': False, 'user_id': request.user.id, 'sync_indices': True})
+             task = sync_stocks_task.apply(kwargs={'is_auto': False, 'user_id': user_id_log, 'sync_indices': True})
         else:
-             task = sync_stocks_task.delay(is_auto=False, user_id=request.user.id, sync_indices=True)
+             task = sync_stocks_task.delay(is_auto=False, user_id=user_id_log, sync_indices=True)
     elif sync_type == 'option':
         # Option sync not implemented yet
         return get_error_response(
@@ -194,6 +198,11 @@ def trigger_hard_sync(request):
     # Run sync task
     run_sync = request.data.get('run_sync', False)
     
+    # Determine user_id to log
+    # If user is AdminUser, we can't link to SyncLog which expects User model
+    from apps.users.models import User
+    user_id_log = request.user.id if isinstance(request.user, User) else None
+    
     if run_sync:
         # Run synchronously (bypass Celery AND Dispatcher Queue)
         from .tasks import sync_stocks_task
@@ -201,7 +210,7 @@ def trigger_hard_sync(request):
         if sync_type == 'stock':
              task = sync_stocks_task.apply(kwargs={
                 'is_auto': False,
-                'user_id': request.user.id,
+                'user_id': user_id_log,
                 'from_date': start_date_str,
                 'to_date': end_date_str,
                 'instruments': instruments,
@@ -210,7 +219,7 @@ def trigger_hard_sync(request):
         elif sync_type == 'sector':
              task = sync_stocks_task.apply(kwargs={
                 'is_auto': False,
-                'user_id': request.user.id,
+                'user_id': user_id_log,
                 'from_date': start_date_str,
                 'to_date': end_date_str,
                 'instruments': None, # Sectors hard sync usually all
@@ -226,7 +235,7 @@ def trigger_hard_sync(request):
             start_date=start_date_str,
             end_date=end_date_str,
             instruments=instruments,
-            user_id=request.user.id
+            user_id=user_id_log
         )
     
     return get_success_response({

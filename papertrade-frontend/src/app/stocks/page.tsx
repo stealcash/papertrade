@@ -255,7 +255,7 @@ export default function StocksPage() {
                                                     </Link>
                                                 </td>
                                                 <td className="px-6 py-4 text-gray-600 dark:text-gray-300">
-                                                    {stock.last_sync_at ? new Date(stock.last_sync_at).toLocaleString() : '--'}
+                                                    {stock.last_synced_at ? new Date(stock.last_synced_at).toLocaleString() : '--'}
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <p className="font-semibold text-gray-900 dark:text-gray-100">

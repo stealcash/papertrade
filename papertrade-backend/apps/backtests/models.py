@@ -41,6 +41,13 @@ class BacktestRun(models.Model):
     ]
     criteria_type = models.CharField(max_length=20, choices=CRITERIA_TYPE_CHOICES, default='direction')
     magnitude_threshold = models.IntegerField(default=50, help_text='Percentage verification threshold (0-100)')
+
+    # PnL Configuration
+    TRADE_STRATEGY_CHOICES = [
+        ('re_entry', 'Active Trading (Re-Entry at Signal)'),
+        ('buy_hold', 'Buy & Hold (First Signal to End)'),
+    ]
+    trade_strategy = models.CharField(max_length=20, choices=TRADE_STRATEGY_CHOICES, null=True, blank=True)
     
     # Backtest parameters
     start_date = models.DateField()

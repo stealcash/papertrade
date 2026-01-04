@@ -62,6 +62,9 @@ export default function CreateStrategyPage() {
         setStrategyBlocks(newBlocks);
     };
 
+    const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
+    const [upgradeMessage, setUpgradeMessage] = useState('');
+
     const handleSubmit = async () => {
         if (!name) return alert("Please enter a strategy name");
         setLoading(true);
@@ -80,16 +83,28 @@ export default function CreateStrategyPage() {
             };
             await strategiesAPI.createRuleBased(payload);
             router.push('/backtest');
-        } catch (e) {
-            console.error(e);
-            alert("Failed to create strategy");
+        } catch (e: any) {
+            console.error("Strategy Creation Error:", e);
+            console.log("Error Response Data:", e.response?.data);
+
+            // Check for subscription limit error
+            const errData = e.response?.data;
+            const subError = errData?.subscription || errData?.details?.subscription;
+
+            if (subError) {
+                const msg = Array.isArray(subError) ? subError[0] : subError;
+                setUpgradeMessage(msg);
+                setUpgradeModalOpen(true);
+            } else {
+                alert(errData?.detail || errData?.message || "Failed to create strategy");
+            }
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="max-w-4xl mx-auto py-10 px-4">
+        <div className="max-w-4xl mx-auto py-10 px-4 relative">
             <Link href="/backtest" className="flex items-center text-gray-500 hover:text-black mb-6 gap-2">
                 <ArrowLeft size={16} /> Back to Backtests
             </Link>
@@ -209,6 +224,31 @@ export default function CreateStrategyPage() {
                     </div>
                 </div>
             </div>
+
+            {/* Upgrade Modal */}
+            {upgradeModalOpen && (
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-xl shadow-xl max-w-sm w-full p-6 text-center space-y-4 animate-in fade-in zoom-in duration-200">
+                        <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto">
+                            <span className="text-2xl">⚡</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900">Upgrade Required</h3>
+                        <p className="text-gray-600">{upgradeMessage || "Your current plan limits the number of strategies you can create."}</p>
+
+                        <div className="pt-4 flex flex-col gap-2">
+                            <Link href="/subscription" className="w-full py-2.5 bg-black text-white hover:bg-gray-800 rounded-lg font-medium transition">
+                                View Plans
+                            </Link>
+                            <button
+                                onClick={() => setUpgradeModalOpen(false)}
+                                className="w-full py-2.5 text-gray-500 hover:bg-gray-100 rounded-lg font-medium transition"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

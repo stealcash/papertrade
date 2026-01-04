@@ -26,6 +26,9 @@ urlpatterns = [
         path('sync/', include('apps.sync.urls')),
         path('notifications/', include('apps.notifications.urls')),
         path('watchlist/', include('apps.watchlist.urls')),
+        path('watchlist/', include('apps.watchlist.urls')),
         path('admin-panel/', include('apps.adminpanel.urls')),
+        path('portfolio/', include('apps.portfolio.urls')),
+        path('subscriptions/', include('apps.subscriptions.urls')),
     ])),
 ]

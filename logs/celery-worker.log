@@ -1,60 +1,60 @@
-DEBUG 2026-01-01 21:51:51,666 functional 
-def accumulate(self, *args, **kwargs):
-    return 1
-
-DEBUG 2026-01-01 21:51:51,666 functional 
-def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
-    return 1
-
-DEBUG 2026-01-01 21:51:51,667 functional 
-def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
-    return 1
-
-DEBUG 2026-01-01 21:51:51,667 functional 
-def chunks(task, it, n):
-    return 1
-
-DEBUG 2026-01-01 21:51:51,667 functional 
+DEBUG 2026-01-04 22:01:42,975 functional 
 def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
     return 1
 
-DEBUG 2026-01-01 21:51:51,667 functional 
+DEBUG 2026-01-04 22:01:42,976 functional 
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+
+DEBUG 2026-01-04 22:01:42,976 functional 
 def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
     return 1
 
-DEBUG 2026-01-01 21:51:51,667 functional 
+DEBUG 2026-01-04 22:01:42,977 functional 
 def xmap(task, it):
     return 1
 
-DEBUG 2026-01-01 21:51:51,667 functional 
-def debug_task(self):
-    return 1
-
-DEBUG 2026-01-01 21:51:51,668 functional 
+DEBUG 2026-01-04 22:01:42,977 functional 
 def backend_cleanup():
     return 1
 
-DEBUG 2026-01-01 21:51:51,668 functional 
-def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
-    return 1
-
-DEBUG 2026-01-01 21:51:51,668 functional 
-def auto_sync_daily():
-    return 1
-
-DEBUG 2026-01-01 21:51:51,668 functional 
-def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
-    return 1
-
-DEBUG 2026-01-01 21:51:51,668 functional 
+DEBUG 2026-01-04 22:01:42,977 functional 
 def chain(*args, **kwargs):
     return 1
 
-DEBUG 2026-01-01 21:51:51,668 functional 
+DEBUG 2026-01-04 22:01:42,977 functional 
+def debug_task(self):
+    return 1
+
+DEBUG 2026-01-04 22:01:42,977 functional 
 def xstarmap(task, it):
     return 1
 
-[2026-01-01 21:51:51,758: WARNING/MainProcess] 
+DEBUG 2026-01-04 22:01:42,977 functional 
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+
+DEBUG 2026-01-04 22:01:42,977 functional 
+def accumulate(self, *args, **kwargs):
+    return 1
+
+DEBUG 2026-01-04 22:01:42,978 functional 
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+
+DEBUG 2026-01-04 22:01:42,978 functional 
+def auto_sync_daily():
+    return 1
+
+DEBUG 2026-01-04 22:01:42,978 functional 
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+
+DEBUG 2026-01-04 22:01:42,978 functional 
+def chunks(task, it, n):
+    return 1
+
+[2026-01-04 22:01:43,065: WARNING/MainProcess] 
 Setting ssl_cert_reqs=CERT_NONE when connecting to redis means that celery will not validate the identity of the redis broker when connecting. This leaves you vulnerable to man in the middle attacks.
 
 SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
@@ -63,10 +63,10 @@ SETTINGS-DEBUG: Loaded .env successfully
  
  -------------- celery@Chat360s-Air.lan v5.3.4 (emerald-rush)
 --- ***** ----- 
--- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2026-01-01 21:51:51
+-- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2026-01-04 22:01:43
 - *** --- * --- 
 - ** ---------- [config]
-- ** ---------- .> app:         papertrade:0x1025082f0
+- ** ---------- .> app:         papertrade:0x107ae42f0
 - ** ---------- .> transport:   rediss://default:**@pumped-turkey-23712.upstash.io:6379//
 - ** ---------- .> results:     rediss://default:**@pumped-turkey-23712.upstash.io:6379/
 - *** --- * --- .> concurrency: 8 (prefork)
@@ -83,24 +83,63 @@ SETTINGS-DEBUG: Loaded .env successfully
   . apps.sync.tasks.sync_stocks_task
   . config.celery.debug_task
 
-[2026-01-01 21:51:52,266: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+[2026-01-04 22:01:43,480: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
 whether broker connection retries are made during startup in Celery 6.0 and above.
 If you wish to retain the existing behavior for retrying connections on startup,
 you should set broker_connection_retry_on_startup to True.
   warnings.warn(
 
-[2026-01-01 21:51:55,976: INFO/MainProcess] Connected to rediss://default:**@pumped-turkey-23712.upstash.io:6379//
-[2026-01-01 21:51:55,979: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
-whether broker connection retries are made during startup in Celery 6.0 and above.
-If you wish to retain the existing behavior for retrying connections on startup,
-you should set broker_connection_retry_on_startup to True.
-  warnings.warn(
+[2026-01-04 22:01:44,127: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 2.00 seconds... (1/100)
 
-[2026-01-01 21:51:57,292: INFO/MainProcess] mingle: searching for neighbors
-[2026-01-01 21:52:03,259: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/app/control.py:56: DuplicateNodenameWarning: Received multiple replies from node name: celery@Chat360s-Air.lan.
-Please make sure you give each node a unique nodename using
-the celery worker `-n` option.
-  warnings.warn(DuplicateNodenameWarning(
+[2026-01-04 22:01:46,702: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 4.00 seconds... (2/100)
 
-[2026-01-01 21:52:03,260: INFO/MainProcess] mingle: all alone
-[2026-01-01 21:52:11,780: INFO/MainProcess] celery@Chat360s-Air.lan ready.
+[2026-01-04 22:01:51,334: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 6.00 seconds... (3/100)
+
+[2026-01-04 22:01:59,020: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 8.00 seconds... (4/100)
+
+[2026-01-04 22:02:07,728: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 10.00 seconds... (5/100)
+
+[2026-01-04 22:02:18,373: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 12.00 seconds... (6/100)
+
+[2026-01-04 22:02:31,075: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 14.00 seconds... (7/100)
+
+[2026-01-04 22:02:45,699: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 16.00 seconds... (8/100)
+
+[2026-01-04 22:03:02,363: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 18.00 seconds... (9/100)
+
+[2026-01-04 22:03:21,778: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 20.00 seconds... (10/100)
+
+[2026-01-04 22:03:42,480: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 22.00 seconds... (11/100)
+
+[2026-01-04 22:04:05,171: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 24.00 seconds... (12/100)
+
+[2026-01-04 22:04:29,867: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 26.00 seconds... (13/100)
+
+[2026-01-04 22:04:56,690: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 28.00 seconds... (14/100)
+
+[2026-01-04 22:05:25,566: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 30.00 seconds... (15/100)
+
+[2026-01-04 22:05:56,666: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-04 22:06:30,107: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-04 22:07:03,025: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 32.00 seconds... (16/100)
+

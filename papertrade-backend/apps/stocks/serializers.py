@@ -16,15 +16,15 @@ class StockSerializer(serializers.ModelSerializer):
     
     categories_details = StockCategorySerializer(source='categories', many=True, read_only=True)
     last_price = serializers.SerializerMethodField()
+    price_change = serializers.SerializerMethodField()
     is_in_watchlist = serializers.SerializerMethodField()
-    last_sync_at = serializers.DateTimeField(source='last_synced_at', read_only=True)
     active_signals = serializers.SerializerMethodField()
     
     class Meta:
         model = Stock
         fields = ['id', 'symbol', 'name', 'exchange_suffix', 
                  'categories', 'categories_details', 'sectors', 'status', 'is_index',
-                 'last_synced_at', 'last_sync_at', 'last_price', 'is_in_watchlist',
+                 'last_synced_at', 'last_price', 'price_change', 'is_in_watchlist',
                  'active_signals',
                  'extra', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']
@@ -36,6 +36,21 @@ class StockSerializer(serializers.ModelSerializer):
         # For now, simplistic approach:
         latest_price = obj.daily_prices.order_by('-date').first()
         return latest_price.close_price if latest_price else None
+
+    def get_price_change(self, obj):
+        # Calculate % change from previous day close
+        prices = obj.daily_prices.order_by('-date')[:2]
+        if len(prices) < 2:
+            return None
+            
+        current = prices[0].close_price
+        previous = prices[1].close_price
+        
+        if not previous or previous == 0:
+            return 0.0
+            
+        change = ((current - previous) / previous) * 100
+        return round(float(change), 2)
 
     def get_is_in_watchlist(self, obj):
         request = self.context.get('request')
