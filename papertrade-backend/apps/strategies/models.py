@@ -15,7 +15,7 @@ class StrategyMaster(models.Model):
         ('AUTO', 'Auto'),
     ]
     
-    code = models.CharField(max_length=50, unique=True, help_text='Unique code for the strategy (e.g., ONE_DAY_TREND)')
+    code = models.CharField(max_length=50, unique=True, help_text='Unique code for the strategy (e.g., DAILY_CLOSE_MOMENTUM)')
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='created_strategies')
@@ -50,6 +50,21 @@ class StrategySignal(models.Model):
     
     signal_direction = models.CharField(max_length=10, choices=DIRECTION_CHOICES, null=True, blank=True)
     expected_value = models.DecimalField(max_digits=15, decimal_places=4, null=True, blank=True, help_text='Expected price or percentage')
+    stop_loss = models.DecimalField(max_digits=15, decimal_places=4, null=True, blank=True, help_text='Price at which to exit (Stop Loss)')
+    
+    # New fields for Result Tracking
+    entry_price = models.DecimalField(max_digits=15, decimal_places=4, null=True, blank=True, help_text='Reference price when signal was generated')
+    exit_price = models.DecimalField(max_digits=15, decimal_places=4, null=True, blank=True, help_text='Actual close price on signal date')
+    pnl = models.DecimalField(max_digits=15, decimal_places=4, null=True, blank=True, help_text='Absolute profit/loss')
+    pnl_percent = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, help_text='Percentage profit/loss')
+    
+    STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('WIN', 'Win'),
+        ('LOSS', 'Loss'),
+        ('NEUTRAL', 'Neutral'),
+    ]
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

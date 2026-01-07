@@ -11,7 +11,13 @@ export default function BacktestDetailPage() {
     const id = params.id as string;
 
     const [run, setRun] = useState<any>(null);
-    const [stats, setStats] = useState<any[]>([]); // For top performers logic if separate? actually top 5 logic needs all data. 
+    const [stats, setStats] = useState<any[]>([]);
+
+    useEffect(() => {
+        if (id === 'strategies') {
+            router.replace('/strategies');
+        }
+    }, [id, router]);
     // WAIT: Top 5 logic needs ALL trades. If we paginate server side, we can't calculate top 5 client side easily unless we fetch all summary or just keep fetching all for stats but paginate table?
     // User asked to paginate based on backend. 
     // Let's assume Top 5 can be calculated from the full list or maybe we should fetch full list for stats in background?
@@ -29,12 +35,14 @@ export default function BacktestDetailPage() {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
-        loadMetadata();
+        if (id && !isNaN(Number(id))) {
+            loadMetadata();
+        }
     }, [id]);
 
     // Re-fetch results when page or search changes
     useEffect(() => {
-        if (id) fetchResults();
+        if (id && !isNaN(Number(id))) fetchResults();
     }, [id, pagination.page, searchTerm]);
 
     async function loadMetadata() {

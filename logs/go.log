@@ -1,4 +1,4 @@
-2026/01/04 22:01:42 Configuration loaded: Port=8080
+2026/01/07 08:37:34 Configuration loaded: Port=8080
 Using Data Provider: UPSTOX
 Upstox Provider: Loaded 3241 instruments.
 [GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
@@ -12,7 +12,7 @@ Upstox Provider: Loaded 3241 instruments.
 [GIN-debug] GET    /api/v1/sector/data       --> github.com/papertrade/backend-go/internal/api.(*Handler).GetSectorData-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/contracts --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionContracts-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/candles/5min --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionCandles-fm (4 handlers)
-2026/01/04 22:01:42 Starting Go service on :8080
+2026/01/07 08:37:34 Starting Go service on :8080
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8080

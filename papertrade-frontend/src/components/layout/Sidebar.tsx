@@ -26,6 +26,7 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
+    { name: "Strategies", href: "/strategies", icon: Zap },
     { name: "Stocks", href: "/stocks", icon: TrendingUp },
     { name: "My Watchlist", href: "/watchlist", icon: BookOpen },
     { name: "History", href: "/stock-history", icon: BookOpen },
@@ -36,6 +37,8 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
     { name: "Notifications", href: "/notifications", icon: Bell },
     { name: "Profile", href: "/profile", icon: User },
   ];
+
+
 
   if (user?.role === 'admin' || user?.role === 'superadmin') {
     // Admin link could be added here if needed, or handled via separate admin panel redirection

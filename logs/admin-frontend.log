@@ -7,4 +7,14 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 1793ms
+ ✓ Ready in 3.5s
+ ○ Compiling / ...
+ ✓ Compiled / in 2s (1541 modules)
+ GET / 200 in 2571ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 577ms (1547 modules)
+ ✓ Compiled /tables in 366ms (1553 modules)
+ GET / 200 in 429ms
+ ○ Compiling /strategy-sync ...
+ ✓ Compiled /strategy-sync in 595ms (1559 modules)
+[?25h

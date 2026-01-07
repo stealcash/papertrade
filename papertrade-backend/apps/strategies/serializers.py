@@ -15,10 +15,11 @@ class StrategyMasterSerializer(serializers.ModelSerializer):
 
 class StrategySignalSerializer(serializers.ModelSerializer):
     strategy_name = serializers.CharField(source='strategy.name', read_only=True)
+    stock_symbol = serializers.CharField(source='stock.symbol', read_only=True)
 
     class Meta:
         model = StrategySignal
-        fields = ['id', 'stock', 'strategy', 'strategy_name', 'date', 'signal_direction', 'expected_value']
+        fields = ['id', 'stock', 'stock_symbol', 'strategy', 'strategy_name', 'date', 'signal_direction', 'expected_value', 'entry_price', 'exit_price', 'status', 'pnl', 'pnl_percent']
 
 class StrategyRuleBasedSerializer(serializers.ModelSerializer):
     code = serializers.CharField(write_only=True, required=False)

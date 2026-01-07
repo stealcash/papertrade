@@ -14,11 +14,34 @@ class StrategyMasterViewSet(viewsets.ModelViewSet):
     queryset = StrategyMaster.objects.all()
     serializer_class = StrategyMasterSerializer
     permission_classes = [IsAuthenticated]
-    lookup_field = 'code'
+    queryset = StrategyMaster.objects.all()
+    serializer_class = StrategyMasterSerializer
+    permission_classes = [IsAuthenticated]
+    # lookup_field = 'code'  <-- Removed to use default 'pk' (id)
     
     def list(self, request):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
+        return get_success_response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return get_success_response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return get_success_response(serializer.data, status_code=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
         return get_success_response(serializer.data)
 
     def perform_destroy(self, instance):
@@ -26,6 +49,7 @@ class StrategyMasterViewSet(viewsets.ModelViewSet):
         if instance.type == 'AUTO' and instance.rule_based_strategy:
             instance.rule_based_strategy.delete()
         instance.delete()
+        return get_success_response({'deleted': True})
 
 
 class StrategySignalViewSet(viewsets.ReadOnlyModelViewSet):
@@ -38,13 +62,114 @@ class StrategySignalViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = super().get_queryset()
         stock_id = self.request.query_params.get('stock')
         strategy_code = self.request.query_params.get('strategy')
+        strategy_id = self.request.query_params.get('strategy_id')
         
         if stock_id:
             queryset = queryset.filter(stock_id=stock_id)
         if strategy_code:
             queryset = queryset.filter(strategy__code=strategy_code)
+        if strategy_id:
+            queryset = queryset.filter(strategy_id=strategy_id)
+            
+        start_date = self.request.query_params.get('start_date')
+        if start_date:
+            queryset = queryset.filter(date__gte=start_date)
             
         return queryset.order_by('-date')
+
+    @action(detail=False, methods=['get'])
+    def performance(self, request):
+        """
+        Aggregate performance metrics by stock for a given strategy.
+        """
+        strategy_code = request.query_params.get('strategy')
+        strategy_id = request.query_params.get('strategy_id')
+        start_date = request.query_params.get('start_date')
+        
+        if not strategy_code and not strategy_id:
+            return Response({"error": "strategy or strategy_id param is required"}, status=400)
+            
+        # Base Query
+        queryset = StrategySignal.objects.all()
+        if strategy_id:
+            queryset = queryset.filter(strategy_id=strategy_id)
+        elif strategy_code:
+            queryset = queryset.filter(strategy__code=strategy_code)
+            
+        if start_date:
+            queryset = queryset.filter(date__gte=start_date)
+            
+        # Aggregation
+        from django.db.models import Count, Sum, Q, F, Case, When, Value, DecimalField
+        
+        stats = queryset.values('stock__symbol', 'stock__id').annotate(
+            total_signals=Count('id'),
+            wins=Count('id', filter=Q(status='WIN')),
+            losses=Count('id', filter=Q(status='LOSS')),
+            neutral=Count('id', filter=Q(status='NEUTRAL')),
+            pending=Count('id', filter=Q(status='PENDING')),
+            total_pnl=Sum('pnl'),
+            # Calculate Win Rate simple way to avoid complex DB math division by zero risks
+            # We can do final calc in python loop/serializer
+        ).order_by('-wins', 'stock__symbol')
+        
+        # Enrich with Sector/Category Data
+        stock_ids = [s['stock__id'] for s in stats]
+        from apps.stocks.models import Stock
+        stock_map = {}
+        
+        # Prefetch to avoid N+1
+        stocks = Stock.objects.filter(id__in=stock_ids).prefetch_related('sectors', 'categories')
+        
+        all_sectors = set()
+        all_categories = set()
+        
+        for stock in stocks:
+            s_sectors = [sec.name for sec in stock.sectors.all()]
+            s_cats = [cat.name for cat in stock.categories.all()]
+            stock_map[stock.id] = {
+                'sectors': s_sectors,
+                'categories': s_cats
+            }
+            all_sectors.update(s_sectors)
+            all_categories.update(s_cats)
+
+        results = []
+        for s in stats:
+            total = s['total_signals']
+            resolved = s['wins'] + s['losses']
+            win_rate = 0
+            if resolved > 0:
+                win_rate = round((s['wins'] / resolved) * 100, 1)
+            
+            enrichment = stock_map.get(s['stock__id'], {'sectors': [], 'categories': []})
+                
+            results.append({
+                'stock_symbol': s['stock__symbol'],
+                'stock_id': s['stock__id'],
+                'total_signals': total,
+                'wins': s['wins'],
+                'losses': s['losses'],
+                'pending': s['pending'],
+                'win_rate': win_rate,
+                'total_pnl': s['total_pnl'] or 0,
+                'sectors': enrichment['sectors'],
+                'categories': enrichment['categories']
+            })
+            
+        # Date Range
+        from django.db.models import Min, Max
+        date_stats = queryset.aggregate(min_date=Min('date'), max_date=Max('date'))
+            
+        return Response({
+            'data': results,
+            'metadata': {
+                'min_date': date_stats['min_date'],
+                'max_date': date_stats['max_date'],
+                'all_sectors': sorted(list(all_sectors)),
+                'all_categories': sorted(list(all_categories))
+            }
+        })
 
 class SyncStrategiesView(APIView):
     permission_classes = [IsAuthenticated]

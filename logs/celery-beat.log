@@ -1,60 +1,288 @@
-DEBUG 2026-01-04 22:01:42,946 functional 
+DEBUG 2026-01-07 08:37:35,799 functional 
 def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
     return 1
 
-DEBUG 2026-01-04 22:01:42,946 functional 
+DEBUG 2026-01-07 08:37:35,800 functional 
 def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
     return 1
 
-DEBUG 2026-01-04 22:01:42,946 functional 
-def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
-    return 1
-
-DEBUG 2026-01-04 22:01:42,947 functional 
+DEBUG 2026-01-07 08:37:35,800 functional 
 def xmap(task, it):
     return 1
 
-DEBUG 2026-01-04 22:01:42,947 functional 
-def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
-    return 1
-
-DEBUG 2026-01-04 22:01:42,948 functional 
+DEBUG 2026-01-07 08:37:35,800 functional 
 def backend_cleanup():
     return 1
 
-DEBUG 2026-01-04 22:01:42,948 functional 
-def auto_sync_daily():
-    return 1
-
-DEBUG 2026-01-04 22:01:42,948 functional 
-def chain(*args, **kwargs):
-    return 1
-
-DEBUG 2026-01-04 22:01:42,949 functional 
-def debug_task(self):
-    return 1
-
-DEBUG 2026-01-04 22:01:42,949 functional 
-def xstarmap(task, it):
-    return 1
-
-DEBUG 2026-01-04 22:01:42,950 functional 
+DEBUG 2026-01-07 08:37:35,800 functional 
 def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
     return 1
 
-DEBUG 2026-01-04 22:01:42,950 functional 
+DEBUG 2026-01-07 08:37:35,801 functional 
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+
+DEBUG 2026-01-07 08:37:35,801 functional 
+def chain(*args, **kwargs):
+    return 1
+
+DEBUG 2026-01-07 08:37:35,801 functional 
+def debug_task(self):
+    return 1
+
+DEBUG 2026-01-07 08:37:35,801 functional 
+def xstarmap(task, it):
+    return 1
+
+DEBUG 2026-01-07 08:37:35,801 functional 
+def auto_sync_daily():
+    return 1
+
+DEBUG 2026-01-07 08:37:35,802 functional 
 def accumulate(self, *args, **kwargs):
     return 1
 
-DEBUG 2026-01-04 22:01:42,950 functional 
+DEBUG 2026-01-07 08:37:35,802 functional 
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+
+DEBUG 2026-01-07 08:37:35,802 functional 
 def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
     return 1
 
-DEBUG 2026-01-04 22:01:42,950 functional 
+DEBUG 2026-01-07 08:37:35,803 functional 
 def chunks(task, it, n):
     return 1
 
-[2026-01-04 22:01:43,028: INFO/MainProcess] beat: Starting...
-[2026-01-04 22:01:43,043: WARNING/MainProcess] 
+[2026-01-07 08:37:35,959: INFO/MainProcess] beat: Starting...
+[2026-01-07 08:37:36,149: WARNING/MainProcess] 
 Setting ssl_cert_reqs=CERT_NONE when connecting to redis means that celery will not validate the identity of the redis broker when connecting. This leaves you vulnerable to man in the middle attacks.
 
+[2026-01-07 08:37:37,201: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 2.0 seconds...
+[2026-01-07 08:37:39,753: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 4.0 seconds...
+[2026-01-07 08:37:44,323: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 6.0 seconds...
+[2026-01-07 08:37:50,912: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 8.0 seconds...
+[2026-01-07 08:37:59,666: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 10.0 seconds...
+[2026-01-07 08:38:10,298: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 12.0 seconds...
+[2026-01-07 08:38:23,179: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 14.0 seconds...
+[2026-01-07 08:38:37,817: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 16.0 seconds...
+[2026-01-07 08:38:54,528: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 18.0 seconds...
+[2026-01-07 08:39:13,186: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 20.0 seconds...
+[2026-01-07 08:39:33,830: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 22.0 seconds...
+[2026-01-07 08:39:56,530: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 24.0 seconds...
+[2026-01-07 08:40:21,208: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 26.0 seconds...
+[2026-01-07 08:40:47,980: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 28.0 seconds...
+[2026-01-07 08:41:16,736: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 30.0 seconds...
+[2026-01-07 08:41:47,475: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:42:20,215: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:42:52,971: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:43:25,735: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:43:58,575: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:44:31,338: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:45:04,109: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:45:36,833: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:46:09,633: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:46:42,385: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:47:15,132: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:47:47,865: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:48:20,541: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:48:53,307: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:49:26,201: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:49:58,928: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:50:31,645: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:51:04,607: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:51:37,375: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:52:10,155: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:52:42,849: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:53:15,649: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:53:48,536: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:54:21,294: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:54:54,141: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:55:26,898: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:55:59,656: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:56:32,566: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:57:05,315: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:57:38,194: ERROR/MainProcess] beat: Connection error: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details. Trying again in 32.0 seconds...
+[2026-01-07 08:58:11,795: INFO/MainProcess] Scheduler: Sending due task auto-sync-daily (apps.sync.tasks.auto_sync_daily)
+[2026-01-07 08:58:16,554: ERROR/MainProcess] Message Error: Couldn't apply scheduled task auto-sync-daily: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details
+['  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/bin/celery", line 7, in <module>\n    sys.exit(main())\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/__main__.py", line 15, in main\n    sys.exit(_main())\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bin/celery.py", line 236, in main\n    return celery(auto_envvar_prefix="CELERY")\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/click/core.py", line 1485, in __call__\n    return self.main(*args, **kwargs)\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/click/core.py", line 1406, in main\n    rv = self.invoke(ctx)\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/click/core.py", line 1873, in invoke\n    return _process_result(sub_ctx.command.invoke(sub_ctx))\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/click/core.py", line 1269, in invoke\n    return ctx.invoke(self.callback, **ctx.params)\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/click/core.py", line 824, in invoke\n    return callback(*args, **kwargs)\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/click/decorators.py", line 34, in new_func\n    return f(get_current_context(), *args, **kwargs)\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bin/base.py", line 134, in caller\n    return f(ctx, *args, **kwargs)\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bin/beat.py", line 72, in beat\n    return beat().run()\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/apps/beat.py", line 84, in run\n    self.start_scheduler()\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/apps/beat.py", line 113, in start_scheduler\n    service.start()\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/beat.py", line 643, in start\n    interval = self.scheduler.tick()\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/beat.py", line 353, in tick\n    self.apply_entry(entry, producer=self.producer)\n', '  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/beat.py", line 283, in apply_entry\n    exc, traceback.format_stack(), exc_info=True)\n']
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/connection.py", line 474, in _reraise_as_library_errors
+    yield
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/connection.py", line 558, in _ensured
+    return fun(*args, **kwargs)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/common.py", line 155, in _maybe_declare
+    entity.declare(channel=channel)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/entity.py", line 617, in declare
+    self._create_queue(nowait=nowait, channel=channel)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/entity.py", line 626, in _create_queue
+    self.queue_declare(nowait=nowait, passive=False, channel=channel)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/entity.py", line 655, in queue_declare
+    ret = channel.queue_declare(
+        queue=self.name,
+    ...<5 lines>...
+        nowait=nowait,
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/virtual/base.py", line 538, in queue_declare
+    return queue_declare_ok_t(queue, self._size(queue), 0)
+                                     ~~~~~~~~~~^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 1020, in _size
+    sizes = pipe.execute()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/client.py", line 1472, in execute
+    conn = self.connection_pool.get_connection("MULTI", self.shard_hint)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 1086, in get_connection
+    connection.connect()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 276, in connect
+    self.on_connect()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 342, in on_connect
+    auth_response = self.read_response()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 524, in read_response
+    raise response
+redis.exceptions.ResponseError: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/beat.py", line 402, in apply_async
+    return task.apply_async(entry_args, entry_kwargs,
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+                            producer=producer,
+                            ^^^^^^^^^^^^^^^^^^
+                            **entry.options)
+                            ^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/app/task.py", line 594, in apply_async
+    return app.send_task(
+           ~~~~~~~~~~~~~^
+        self.name, args, kwargs, task_id=task_id, producer=producer,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        **options
+        ^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/app/base.py", line 798, in send_task
+    amqp.send_task_message(P, name, message, **options)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/app/amqp.py", line 517, in send_task_message
+    ret = producer.publish(
+        body,
+    ...<7 lines>...
+        **properties
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/messaging.py", line 190, in publish
+    return _publish(
+        body, priority, content_type, content_encoding,
+        headers, properties, routing_key, mandatory, immediate,
+        exchange_name, declare, timeout, confirm_timeout, retry, retry_policy
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/connection.py", line 558, in _ensured
+    return fun(*args, **kwargs)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/messaging.py", line 208, in _publish
+    maybe_declare(entity, retry=retry, **retry_policy)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/messaging.py", line 107, in maybe_declare
+    return maybe_declare(entity, self.channel, retry, **retry_policy)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/common.py", line 112, in maybe_declare
+    return _imaybe_declare(entity, channel, **retry_policy)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/common.py", line 169, in _imaybe_declare
+    return entity.channel.connection.client.ensure(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        entity, _maybe_declare, **retry_policy)(entity, channel)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/connection.py", line 555, in _ensured
+    with self._reraise_as_library_errors():
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/connection.py", line 478, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/beat.py", line 280, in apply_entry
+    result = self.apply_async(entry, producer=producer, advance=False)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/beat.py", line 410, in apply_async
+    reraise(SchedulingError, SchedulingError(
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "Couldn't apply scheduled task {0.name}: {exc}".format(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            entry, exc=exc)), sys.exc_info()[2])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/exceptions.py", line 109, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/beat.py", line 402, in apply_async
+    return task.apply_async(entry_args, entry_kwargs,
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+                            producer=producer,
+                            ^^^^^^^^^^^^^^^^^^
+                            **entry.options)
+                            ^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/app/task.py", line 594, in apply_async
+    return app.send_task(
+           ~~~~~~~~~~~~~^
+        self.name, args, kwargs, task_id=task_id, producer=producer,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        **options
+        ^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/app/base.py", line 798, in send_task
+    amqp.send_task_message(P, name, message, **options)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/app/amqp.py", line 517, in send_task_message
+    ret = producer.publish(
+        body,
+    ...<7 lines>...
+        **properties
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/messaging.py", line 190, in publish
+    return _publish(
+        body, priority, content_type, content_encoding,
+        headers, properties, routing_key, mandatory, immediate,
+        exchange_name, declare, timeout, confirm_timeout, retry, retry_policy
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/connection.py", line 558, in _ensured
+    return fun(*args, **kwargs)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/messaging.py", line 208, in _publish
+    maybe_declare(entity, retry=retry, **retry_policy)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/messaging.py", line 107, in maybe_declare
+    return maybe_declare(entity, self.channel, retry, **retry_policy)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/common.py", line 112, in maybe_declare
+    return _imaybe_declare(entity, channel, **retry_policy)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/common.py", line 169, in _imaybe_declare
+    return entity.channel.connection.client.ensure(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        entity, _maybe_declare, **retry_policy)(entity, channel)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/connection.py", line 555, in _ensured
+    with self._reraise_as_library_errors():
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/connection.py", line 478, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+celery.beat.SchedulingError: Couldn't apply scheduled task auto-sync-daily: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+celery beat v5.3.4 (emerald-rush) is starting.
+__    -    ... __   -        _
+LocalTime -> 2026-01-07 08:37:35
+Configuration ->
+    . broker -> rediss://default:**@pumped-turkey-23712.upstash.io:6379//
+    . loader -> celery.loaders.app.AppLoader
+    . scheduler -> celery.beat.PersistentScheduler
+    . db -> celerybeat-schedule
+    . logfile -> [stderr]@%INFO
+    . maxinterval -> 5.00 minutes (300s)

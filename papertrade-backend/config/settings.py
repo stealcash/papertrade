@@ -153,7 +153,7 @@ SPECTACULAR_SETTINGS = {
 
 # CORS Configuration
 # "Fix it all at once": Enabling ALL origins to prevent intermittent local dev issues.
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True # User requested "Allow All"
 CORS_ALLOW_CREDENTIALS = True
 
 # We keep this list for CSRF_TRUSTED_ORIGINS, which validates the Referer/Origin for unsafe requests (POST/PUT).

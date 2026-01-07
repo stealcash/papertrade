@@ -82,7 +82,7 @@ export default function CreateStrategyPage() {
                 }
             };
             await strategiesAPI.createRuleBased(payload);
-            router.push('/backtest');
+            router.push('/strategies');
         } catch (e: any) {
             console.error("Strategy Creation Error:", e);
             console.log("Error Response Data:", e.response?.data);
@@ -105,8 +105,8 @@ export default function CreateStrategyPage() {
 
     return (
         <div className="max-w-4xl mx-auto py-10 px-4 relative">
-            <Link href="/backtest" className="flex items-center text-gray-500 hover:text-black mb-6 gap-2">
-                <ArrowLeft size={16} /> Back to Backtests
+            <Link href="/strategies" className="flex items-center text-gray-500 hover:text-black mb-6 gap-2">
+                <ArrowLeft size={16} /> Back to Strategies
             </Link>
 
             <div className="flex justify-between items-center mb-8">

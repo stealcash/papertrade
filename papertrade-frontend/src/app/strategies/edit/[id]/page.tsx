@@ -57,7 +57,7 @@ export default function EditStrategyPage() {
         } catch (e) {
             console.error("Failed to load strategy", e);
             alert("Failed to load strategy details");
-            router.push('/backtest/strategies');
+            router.push('/strategies');
         } finally {
             setLoading(false);
         }
@@ -114,7 +114,7 @@ export default function EditStrategyPage() {
                 }
             };
             await strategiesAPI.updateRuleBased(Number(params.id), payload);
-            router.push('/backtest/strategies');
+            router.push('/strategies');
         } catch (e) {
             console.error(e);
             alert("Failed to update strategy");
@@ -133,8 +133,8 @@ export default function EditStrategyPage() {
 
     return (
         <div className="max-w-4xl mx-auto py-10 px-4">
-            <Link href="/backtest/strategies" className="flex items-center text-gray-500 hover:text-black mb-6 gap-2">
-                <ArrowLeft size={16} /> Back to My Strategies
+            <Link href="/strategies" className="flex items-center text-gray-500 hover:text-black mb-6 gap-2">
+                <ArrowLeft size={16} /> Back to Strategies
             </Link>
 
             <div className="flex justify-between items-center mb-8">

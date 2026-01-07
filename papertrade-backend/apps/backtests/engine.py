@@ -115,10 +115,12 @@ class BacktestEngine:
                     prices, 
                     strategy.rule_based_strategy.rules_json
                 )
-        elif strategy.code == 'ONE_DAY_TREND':
+        elif strategy.code == 'DAILY_CLOSE_MOMENTUM':
             generated_signals = StrategyEngine.calculate_one_day_trend(prices)
-        elif strategy.code == 'THREE_DAY_TREND':
+        elif strategy.code == 'TWO_DAY_CLOSE_MOMENTUM':
             generated_signals = StrategyEngine.calculate_three_day_trend(prices)
+        elif strategy.code == 'OVERSOLD_REVERSAL':
+             generated_signals = StrategyEngine.calculate_oversold_reversal(prices)
             
         # 3. Verify Signals
         # Map prices by date for quick lookup
@@ -243,10 +245,12 @@ class BacktestEngine:
                  generated_signals = StrategyEngine.calculate_rule_based_strategy(prices, strategy_rule.rules_json)
             elif strategy.type == 'AUTO' and strategy.rule_based_strategy:
                  generated_signals = StrategyEngine.calculate_rule_based_strategy(prices, strategy.rule_based_strategy.rules_json)
-            elif strategy.code == 'ONE_DAY_TREND':
+            elif strategy.code == 'DAILY_CLOSE_MOMENTUM':
                  generated_signals = StrategyEngine.calculate_one_day_trend(prices)
-            elif strategy.code == 'THREE_DAY_TREND':
+            elif strategy.code == 'TWO_DAY_CLOSE_MOMENTUM':
                  generated_signals = StrategyEngine.calculate_three_day_trend(prices)
+            elif strategy.code == 'OVERSOLD_REVERSAL':
+                 generated_signals = StrategyEngine.calculate_oversold_reversal(prices)
             
             # Sort signals by date
             generated_signals.sort(key=lambda x: x['date'])

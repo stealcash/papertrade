@@ -123,6 +123,10 @@ export const strategiesAPI = {
     createRuleBased: (data: any) => apiClient.post('/strategies/rule-based/', data),
     updateRuleBased: (id: number, data: any) => apiClient.put(`/strategies/rule-based/${id}/`, data),
     deleteRuleBased: (id: number) => apiClient.delete(`/strategies/rule-based/${id}/`),
+
+    // Signals
+    getSignals: (params: any) => apiClient.get('/strategies/signals/', { params }),
+    getPerformance: (params: any) => apiClient.get('/strategies/signals/performance/', { params }),
 };
 
 export const portfolioAPI = {
