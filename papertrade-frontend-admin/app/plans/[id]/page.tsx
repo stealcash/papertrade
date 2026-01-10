@@ -156,7 +156,8 @@ export default function PlanEditorPage({ params }: { params: { id: string } }) {
                         {[
                             { code: 'STRATEGY_CREATE', label: 'Strategy Creation' },
                             { code: 'BACKTEST_RUN', label: 'Run Backtests' },
-                            { code: 'TRADE_EXECUTE', label: 'Execute Trades' }
+                            { code: 'TRADE_EXECUTE', label: 'Execute Trades' },
+                            { code: 'PREDICTION_ADD', label: 'Add Predictions' }
                         ].map((feature) => {
                             const config = form.features[feature.code] || { enabled: false, limit: 0, period_days: 30 };
 

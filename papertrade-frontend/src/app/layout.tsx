@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { store } from '@/store';
 import { loadFromStorage } from '@/store/slices/authSlice';
 import AppLayout from '@/components/layout/AppLayout';
-import { Toaster } from '@/components/ui/Toast';
+import { ToastProvider } from '@/context/ToastContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { ConfirmProvider } from '@/context/ConfirmContext';
 import './globals.css';
@@ -26,10 +26,11 @@ export default function RootLayout({
         <ThemeProvider>
           <Provider store={store}>
             <ConfirmProvider>
-              <AppLayout>
-                {children}
-              </AppLayout>
-              <Toaster position="bottom-center" />
+              <ToastProvider>
+                <AppLayout>
+                  {children}
+                </AppLayout>
+              </ToastProvider>
             </ConfirmProvider>
           </Provider>
         </ThemeProvider>

@@ -7,975 +7,126 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 3.7s
- ○ Compiling / ...
- ✓ Compiled / in 2.3s (1523 modules)
- GET / 200 in 3070ms
- ○ Compiling /login ...
- ✓ Compiled /login in 1869ms (1545 modules)
- GET /login 200 in 1776ms
- ○ Compiling /strategies ...
- ✓ Compiled /strategies in 552ms (1563 modules)
- ✓ Compiled /_not-found in 398ms (1566 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 594ms
- ○ Compiling /strategies/[code] ...
- ✓ Compiled /strategies/[code] in 695ms (1582 modules)
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 349ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 83ms
- ✓ Compiled /favicon.ico in 430ms (874 modules)
- GET /favicon.ico 200 in 504ms
- ✓ Compiled in 4.5s (1588 modules)
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 214ms
- ✓ Compiled /_not-found in 252ms (842 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 448ms
- ✓ Compiled /favicon.ico in 183ms (874 modules)
- GET /favicon.ico 200 in 239ms
- ○ Compiling / ...
- ✓ Compiled / in 580ms (846 modules)
- GET / 200 in 740ms
- ✓ Compiled /_not-found in 463ms (842 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 544ms
- ✓ Compiled in 2.2s (1588 modules)
- ✓ Compiled / in 362ms (846 modules)
- GET / 200 in 531ms
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 86ms
- ✓ Compiled /_not-found in 499ms (842 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 682ms
- ○ Compiling /favicon.ico ...
- ✓ Compiled /favicon.ico in 795ms (874 modules)
- GET /favicon.ico 200 in 893ms
- GET /dashboard 200 in 78ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 48ms
- GET /favicon.ico 200 in 36ms
- ✓ Compiled in 1003ms (1588 modules)
- ✓ Compiled in 548ms (748 modules)
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- ✓ Compiled in 1341ms (1588 modules)
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 891ms
- ✓ Compiled /_not-found in 428ms (842 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 610ms
- ✓ Compiled /favicon.ico in 443ms (874 modules)
- GET /favicon.ico 200 in 519ms
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- ✓ Compiled in 1187ms (1628 modules)
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 437ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 23ms
- GET /favicon.ico 200 in 213ms
- ✓ Compiled in 799ms (1628 modules)
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 211ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 29ms
- GET /favicon.ico 200 in 112ms
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- ✓ Compiled in 460ms (1628 modules)
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 341ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 31ms
- GET /favicon.ico 200 in 11ms
- ○ Compiling /backtest ...
- ✓ Compiled /backtest in 671ms (1634 modules)
- ✓ Compiled in 778ms (1614 modules)
- ✓ Compiled in 560ms (1614 modules)
- ✓ Compiled in 1010ms (1612 modules)
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 325ms
- ✓ Compiled /_not-found in 250ms (855 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 449ms
- ○ Compiling /favicon.ico ...
- ✓ Compiled /favicon.ico in 506ms (887 modules)
- GET /favicon.ico 200 in 569ms
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- ✓ Compiled in 697ms (1646 modules)
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 647ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 36ms
- GET /favicon.ico 200 in 112ms
- ○ Compiling /strategies/[id] ...
- ✓ Compiled /strategies/[id] in 2s (1598 modules)
- ✓ Compiled in 1505ms (1604 modules)
- ⨯ ./src/app/strategies/[id]/page.tsx
+ ✓ Ready in 1826ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 1891ms (1523 modules)
+ GET /dashboard 200 in 2051ms
+ ✓ Compiled /strategies in 493ms (1541 modules)
+ ⨯ ./src/components/layout/Sidebar.tsx
 Error: 
-  [31mx[0m Expected ';', '}' or <eof>
-     ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend/src/app/strategies/[id]/page.tsx[0m:1:1]
- [2m  1[0m | [31;1m,[0m[31;1m-[0m[31;1m>[0m ```
- [2m  2[0m | [31;1m|[0m   'use client';
- [2m  3[0m | [31;1m|[0m   
- [2m  4[0m | [31;1m|[0m   import { useState, useEffect, useMemo } from 'react';
- [2m  5[0m | [31;1m|[0m   import { useParams, useRouter } from 'next/navigation';
- [2m  6[0m | [31;1m|[0m   import { strategiesAPI, backtestAPI } from '@/lib/api';
- [2m  7[0m | [31;1m|[0m   import { ArrowLeft, Calendar, Search, TrendingUp, TrendingDown, Target, Clock, RefreshCw, Info } from 'lucide-react';
- [2m  8[0m | [31;1m|[0m   import Link from 'next/link';
- [2m  9[0m | [31;1m|[0m   import SignalHistoryModal from '@/components/strategies/SignalHistoryModal';
- [2m 10[0m | [31;1m|[0m   
- [2m 11[0m | [31;1m|[0m   // Components for Tooltips can be from a library, but let's make a simple one or just use title attribute for now if simple, 
- [2m 12[0m | [31;1m|[0m   // or a custom simple tooltip state. 
- [2m 13[0m | [31;1m|[0m   // For better UX, let's use a simple state-based tooltip or just standard title for beta.
- [2m 14[0m | [31;1m|[0m   // Actually, let's make a nice hover card if possible. 
- [2m 15[0m | [31;1m|[0m   
- [2m 16[0m | [31;1m|[0m   export default function StrategyDetailPage() {
- [2m 17[0m | [31;1m|[0m       const params = useParams();
- [2m 18[0m | [31;1m|[0m       const router = useRouter();
- [2m 19[0m | [31;1m|[0m       const id = params.id as string; // Now ID
- [2m 20[0m | [31;1m|[0m   
- [2m 21[0m | [31;1m|[0m       const [strategy, setStrategy] = useState<any>(null);
- [2m 22[0m | [31;1m|[0m       const [performanceData, setPerformanceData] = useState<any[]>([]);
- [2m 23[0m | [31;1m|[0m       const [latestBacktest, setLatestBacktest] = useState<any>(null);
- [2m 24[0m | [31;1m|[0m       const [loading, setLoading] = useState(true);
- [2m 25[0m | [31;1m|[0m   
- [2m 26[0m | [31;1m|[0m       const [selectedSector, setSelectedSector] = useState('');
- [2m 27[0m | [31;1m|[0m       const [selectedCategory, setSelectedCategory] = useState('');
- [2m 28[0m | [31;1m|[0m       const [allSectors, setAllSectors] = useState<string[]>([]);
- [2m 29[0m | [31;1m|[0m       const [allCategories, setAllCategories] = useState<string[]>([]);
- [2m 30[0m | [31;1m|[0m   
- [2m 31[0m | [31;1m|[0m       const [dateRange, setDateRange] = useState<{ min: string | null, max: string | null }>({ min: null, max: null });
- [2m 32[0m | [31;1m|[0m   
- [2m 33[0m | [31;1m|[0m       const [searchTerm, setSearchTerm] = useState('');
- [2m 34[0m | [31;1m|[0m       const [selectedStock, setSelectedStock] = useState<{ id: number, symbol: string } | null>(null);
- [2m 35[0m | [31;1m|[0m       const [showDescription, setShowDescription] = useState(false);
- [2m 36[0m | [31;1m|[0m   
- [2m 37[0m | [31;1m|[0m       useEffect(() => {
- [2m 38[0m | [31;1m|[0m           if (id) {
- [2m 39[0m | [31;1m|[0m               loadData();
- [2m 40[0m | [31;1m|[0m           }
- [2m 41[0m | [31;1m|[0m       }, [id]);
- [2m 42[0m | [31;1m|[0m   
- [2m 43[0m | [31;1m|[0m       async function loadData() {
- [2m 44[0m | [31;1m|[0m           setLoading(true);
- [2m 45[0m | [31;1m|[0m           try {
- [2m 46[0m | [31;1m|[0m               // 1. Fetch Strategy Details by ID
- [2m 47[0m | [31;1m|[0m               let stratData = null;
- [2m 48[0m | [31;1m|[0m               try {
- [2m 49[0m | [31;1m|[0m                   const res = await strategiesAPI.get(id); 
- [2m 50[0m | [31;1m|[0m                   stratData = res.data.data || res.data;
- [2m 51[0m | [31;1m|[0m               } catch (e) {
- [2m 52[0m | [31;1m|[0m                   console.error("Failed to fetch strategy by ID", e);
- [2m 53[0m | [31;1m|[0m               }
- [2m 54[0m | [31;1m|[0m               setStrategy(stratData);
- [2m 55[0m | [31;1m|[0m               
- [2m 56[0m | [31;1m|[0m               // If we have strategy code from data, we can use it for backtest lookup if needed, 
- [2m 57[0m | [31;1m|[0m               // but for performance signal API we can use ID.
- [2m 58[0m | [31;1m|[0m               const strategyCode = stratData?.code;
- [2m 59[0m | [31;1m|[0m   
- [2m 60[0m | [31;1m|[0m               // 2. Fetch Performance Stats (Last 60 Days)
- [2m 61[0m | [31;1m|[0m               const endDate = new Date();
- [2m 62[0m | [31;1m|[0m               const startDate = new Date();
- [2m 63[0m | [31;1m|[0m               startDate.setDate(startDate.getDate() - 60);
- [2m 64[0m | [31;1m|[0m               const startDateStr = startDate.toISOString().split('T')[0];
- [2m 65[0m | [31;1m|[0m   
- [2m 66[0m | [31;1m|[0m               // Use strategy_id param
- [2m 67[0m | [31;1m|[0m               const perfRes = await strategiesAPI.getPerformance({ 
- [2m 68[0m | [31;1m|[0m                   strategy_id: id,
- [2m 69[0m | [31;1m|[0m                   start_date: startDateStr
- [2m 70[0m | [31;1m|[0m               });
- [2m 71[0m | [31;1m|[0m               
- [2m 72[0m | [31;1m|[0m               const perfData = perfRes.data.data || perfRes.data?.data || [];
- [2m 73[0m | [31;1m|[0m               const meta = perfRes.data.metadata || perfRes.data?.metadata || {};
- [2m 74[0m | [31;1m|[0m               
- [2m 75[0m | [31;1m|[0m               setDateRange({
- [2m 76[0m | [31;1m|[0m                   min: meta.min_date || startDateStr,
- [2m 77[0m | [31;1m|[0m                   max: meta.max_date || new Date().toISOString().split('T')[0]
- [2m 78[0m | [31;1m|[0m               });
- [2m 79[0m | [31;1m|[0m   
- [2m 80[0m | [31;1m|[0m               if(meta.all_sectors) setAllSectors(meta.all_sectors);
- [2m 81[0m | [31;1m|[0m               if(meta.all_categories) setAllCategories(meta.all_categories);
- [2m 82[0m | [31;1m|[0m   
- [2m 83[0m | [31;1m|[0m               if (Array.isArray(perfData)) {
- [2m 84[0m | [31;1m|[0m                   setPerformanceData(perfData);
- [2m 85[0m | [31;1m|[0m               } else {
- [2m 86[0m | [31;1m|[0m                   setPerformanceData([]);
- [2m 87[0m | [31;1m|[0m               }
- [2m 88[0m | [31;1m|[0m   
- [2m 89[0m | [31;1m|[0m               // 3. Fetch Latest Backtest (for Stats)
- [2m 90[0m | [31;1m|[0m               // Backtest runs are usually linked by strategy code in this system currently?
- [2m 91[0m | [31;1m|[0m               // Or can we filter by strategy_id?
- [2m 92[0m | [31;1m|[0m               // The backtestAPI.getRuns likely takes code or id. Let's check logic. 
- [2m 93[0m | [31;1m|[0m               // Previous code used code. Let's try to use code if valid, else use ID.
- [2m 94[0m | [31;1m|[0m               if (strategyCode) {
- [2m 95[0m | [31;1m|[0m                   try {
- [2m 96[0m | [31;1m|[0m                        const runsRes = await backtestAPI.getRuns({ strategy_code: strategyCode }); 
- [2m 97[0m | [31;1m|[0m                        const runs = runsRes.data.data?.results || runsRes.data?.data || [];
- [2m 98[0m | [31;1m|[0m                        const latest = runs.find((r: any) => r.strategy_predefined === strategyCode && r.status === 'COMPLETED');
- [2m 99[0m | [31;1m|[0m                        if (latest) {
- [2m100[0m | [31;1m|[0m                            setLatestBacktest(latest);
- [2m101[0m | [31;1m|[0m                        }
- [2m102[0m | [31;1m|[0m                   } catch (e) { console.error(e) }
- [2m103[0m | [31;1m|[0m               }
- [2m104[0m | [31;1m|[0m   
- [2m105[0m | [31;1m|[0m           } catch (e) {
- [2m106[0m | [31;1m|[0m               console.error("Failed to load strategy details", e);
- [2m107[0m | [31;1m|[0m           } finally {
- [2m108[0m | [31;1m|[0m               setLoading(false);
- [2m109[0m | [31;1m|[0m           }
- [2m110[0m | [31;1m|[0m       }
- [2m111[0m | [31;1m|[0m       
- [2m112[0m | [31;1m|[0m       // Top 5 Performers from Backtest Data
- [2m113[0m | [31;1m|[0m       const topStocks = useMemo(() => {
- [2m114[0m | [31;1m|[0m           if (!latestBacktest || !latestBacktest.list_of_trades_json) return [];
- [2m115[0m | [31;1m|[0m   
- [2m116[0m | [31;1m|[0m           const stats: Record<string, { wins: number, total: number }> = {};
- [2m117[0m | [31;1m|[0m           latestBacktest.list_of_trades_json.forEach((trade: any) => {
- [2m118[0m | [31;1m|[0m               const sym = trade.stock_symbol;
- [2m119[0m | [31;1m|[0m               if (!stats[sym]) stats[sym] = { wins: 0, total: 0 };
- [2m120[0m | [31;1m|[0m               stats[sym].total += 1;
- [2m121[0m | [31;1m|[0m               if (trade.result === 'WIN') stats[sym].wins += 1;
- [2m122[0m | [31;1m|[0m           });
- [2m123[0m | [31;1m|[0m   
- [2m124[0m | [31;1m|[0m           return Object.entries(stats)
- [2m125[0m | [31;1m|[0m               .map(([symbol, data]) => ({
- [2m126[0m | [31;1m|[0m                   symbol,
- [2m127[0m | [31;1m|[0m                   wins: data.wins,
- [2m128[0m | [31;1m|[0m                   total: data.total,
- [2m129[0m | [31;1m|[0m                   rate: (data.wins / data.total) * 100
- [2m130[0m | [31;1m|[0m               }))
- [2m131[0m | [31;1m|[0m               .sort((a, b) => b.rate - a.rate || b.wins - a.wins)
- [2m132[0m | [31;1m|[0m               .slice(0, 5);
- [2m133[0m | [31;1m|[0m       }, [latestBacktest]);
- [2m134[0m | [31;1m|[0m   
- [2m135[0m | [31;1m|[0m       // Top 5 Live Performers (Global, Unfiltered or Filtered?)
- [2m136[0m | [31;1m|[0m       // User asked "Top 5 performance stock" above "This page shows live...".
- [2m137[0m | [31;1m|[0m       // Let's make it based on live data, perhaps global best.
- [2m138[0m | [31;1m|[0m       const topLivePerformers = useMemo(() => {
- [2m139[0m | [31;1m|[0m           return [...performanceData]
- [2m140[0m | [31;1m|[0m               .sort((a, b) => b.win_rate - a.win_rate || b.wins - a.wins)
- [2m141[0m | [31;1m|[0m               .slice(0, 5);
- [2m142[0m | [31;1m|[0m       }, [performanceData]);
- [2m143[0m | [31;1m|[0m   
- [2m144[0m | [31;1m|[0m       const filteredSignals = performanceData.filter(s => {
- [2m145[0m | [31;1m|[0m           const matchesSearch = s.stock_symbol?.toLowerCase().includes(searchTerm.toLowerCase());
- [2m146[0m | [31;1m|[0m           const matchesSector = selectedSector ? s.sectors?.includes(selectedSector) : true;
- [2m147[0m | [31;1m|[0m           const matchesCategory = selectedCategory ? s.categories?.includes(selectedCategory) : true;
- [2m148[0m | [31;1m|[0m           return matchesSearch && matchesSector && matchesCategory;
- [2m149[0m | [31;1m|[0m       });
- [2m150[0m | [31;1m|[0m       
- [2m151[0m | [31;1m|[0m       // Last Sync Stats (Loose)
- [2m152[0m | [31;1m|[0m       const lastSyncFromData = dateRange.max || 'N/A';
- [2m153[0m | [31;1m|[0m   
- [2m154[0m | [31;1m|[0m       if (loading) return <div className="flex h-screen items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div></div>;
- [2m155[0m | [31;1m|[0m       if (!strategy) return <div className="p-10 text-center">Strategy Not Found</div>;
- [2m156[0m | [31;1m|[0m   
- [2m157[0m | [31;1m|[0m       return (
- [2m158[0m | [31;1m|[0m           <div className="max-w-7xl mx-auto py-10 px-4 pb-20">
- [2m159[0m | [31;1m|[0m               {/* Header with Title and Info Tooltip */}
- [2m160[0m | [31;1m|[0m               <div className="flex justify-between items-start mb-10">
- [2m161[0m | [31;1m|[0m                   <div>
- [2m162[0m | [31;1m|[0m                        <div className="flex items-center gap-2">
- [2m163[0m | [31;1m|[0m                           <h1 className="text-3xl font-bold text-gray-900">{strategy.name}</h1>
- [2m164[0m | [31;1m|[0m                           <div className="relative">
- [2m165[0m | [31;1m|[0m                               <button 
- [2m166[0m | [31;1m|[0m                                   onMouseEnter={() => setShowDescription(true)}
- [2m167[0m | [31;1m|[0m                                   onMouseLeave={() => setShowDescription(false)}
- [2m168[0m | [31;1m|[0m                                   className="text-gray-400 hover:text-blue-600 transition p-1"
- [2m169[0m | [31;1m|[0m                               >
- [2m170[0m | [31;1m|[0m                                   <Info size={20} />
- [2m171[0m | [31;1m|[0m                               </button>
- [2m172[0m | [31;1m|[0m                               {/* Simple Tooltip */}
- [2m173[0m | [31;1m|[0m                               {showDescription && (
- [2m174[0m | [31;1m|[0m                                   <div className="absolute left-full top-0 ml-2 w-72 bg-gray-900 text-white text-sm p-3 rounded-lg shadow-xl z-50">
- [2m175[0m | [31;1m|[0m                                       <p>{strategy.description}</p>
- [2m176[0m | [31;1m|[0m                                       <div className="mt-2 text-xs text-gray-400 border-t border-gray-700 pt-2">
- [2m177[0m | [31;1m|[0m                                           Logic: Signal = Direction, Momentum = Close - Prev Close.
- [2m178[0m | [31;1m|[0m                                       </div>
- [2m179[0m | [31;1m|[0m                                   </div>
- [2m180[0m | [31;1m|[0m                               )}
- [2m181[0m | [31;1m|[0m                           </div>
- [2m182[0m | [31;1m|[0m                        </div>
- [2m183[0m | [31;1m|[0m                        <div className="flex items-center gap-3 mt-2 text-sm text-gray-500">
- [2m184[0m | [31;1m|[0m                            <span className="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-md font-medium">System Strategy</span>
- [2m185[0m | [31;1m|[0m                            <span className="flex items-center gap-1"><Clock size={14}/> Last Data: {lastSyncFromData}</span>
- [2m186[0m | [31;1m|[0m                        </div>
- [2m187[0m | [31;1m|[0m                   </div>
- [2m188[0m | [31;1m|[0m                   
- [2m189[0m | [31;1m|[0m                   {latestBacktest && (
- [2m190[0m | [31;1m|[0m                       <div className="text-right bg-gray-50 p-4 rounded-xl border border-gray-100 min-w-[200px]">
- [2m191[0m | [31;1m|[0m                           <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Win Rate</p>
- [2m192[0m | [31;1m|[0m[31;1m-[0m[31;1m>[0m                         <div className={`text - 4xl font - bold ${ Number(latestBacktest.win_rate) >= 50 ? 'text-green-600' : 'text-red-500' } `}>
-     : [31;1m`[0m[31;1m---[0m[33;1m                                         ^^^^[0m
-     : [31;1m`[0m[31;1m---[0m[31;1m-[0m [31;1mThis is the expression part of an expression statement[0m
- [2m193[0m |                                 {latestBacktest.win_rate}%
- [2m194[0m |                             </div>
- [2m195[0m |                             <p className="text-xs text-gray-400 mt-1">Based on last backtest</p>
+  [31mx[0m Return statement is not allowed here
+     ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend/src/components/layout/Sidebar.tsx[0m:27:1]
+ [2m 27[0m |       // Admin link could be added here if needed, or handled via separate admin panel redirection
+ [2m 28[0m |     }
+ [2m 29[0m |     
+ [2m 30[0m | [31;1m,[0m[31;1m-[0m[31;1m>[0m return (
+ [2m 31[0m | [31;1m|[0m     <>
+ [2m 32[0m | [31;1m|[0m       {/* Mobile Overlay */}
+ [2m 33[0m | [31;1m|[0m       {isMobileOpen && (
+ [2m 34[0m | [31;1m|[0m         <div
+ [2m 35[0m | [31;1m|[0m           className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm transition-opacity"
+ [2m 36[0m | [31;1m|[0m           onClick={() => setIsMobileOpen(false)}
+ [2m 37[0m | [31;1m|[0m         />
+ [2m 38[0m | [31;1m|[0m       )}
+ [2m 39[0m | [31;1m|[0m   
+ [2m 40[0m | [31;1m|[0m       {/* Sidebar Container */}
+ [2m 41[0m | [31;1m|[0m       <aside
+ [2m 42[0m | [31;1m|[0m         className={`fixed lg:static top-16 left-0 h-[calc(100vh-4rem)] bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-40 transition-all duration-300 ease-in-out flex flex-col
+ [2m 43[0m | [31;1m|[0m             ${isMobileOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0'}
+ [2m 44[0m | [31;1m|[0m             ${isCollapsed ? 'lg:w-20' : 'lg:w-64'}
+ [2m 45[0m | [31;1m|[0m   `}
+ [2m 46[0m | [31;1m|[0m       >
+ [2m 47[0m | [31;1m|[0m         <div className="flex-1 overflow-y-auto py-4 scrollbar-thin scrollbar-thumb-gray-200">
+ [2m 48[0m | [31;1m|[0m           <nav className="px-3 space-y-1">
+ [2m 49[0m | [31;1m|[0m             {navItems.map(({ name, href, icon: Icon }) => {
+ [2m 50[0m | [31;1m|[0m               const isActive = pathname === href || pathname.startsWith(`${href}/`);
+ [2m 51[0m | [31;1m|[0m   
+ [2m 52[0m | [31;1m|[0m               return (
+ [2m 53[0m | [31;1m|[0m                 <Link
+ [2m 54[0m | [31;1m|[0m                   key={name}
+ [2m 55[0m | [31;1m|[0m                   href={href}
+ [2m 56[0m | [31;1m|[0m                   onClick={() => setIsMobileOpen(false)}
+ [2m 57[0m | [31;1m|[0m                   className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group relative
+ [2m 58[0m | [31;1m|[0m                       ${isActive
+ [2m 59[0m | [31;1m|[0m                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+ [2m 60[0m | [31;1m|[0m                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200"
+ [2m 61[0m | [31;1m|[0m                     }
+ [2m 62[0m | [31;1m|[0m                       ${isCollapsed ? "justify-center" : ""}
+ [2m 63[0m | [31;1m|[0m                     `}
+ [2m 64[0m | [31;1m|[0m                   title={isCollapsed ? name : undefined}
+ [2m 65[0m | [31;1m|[0m                 >
+ [2m 66[0m | [31;1m|[0m                   <Icon
+ [2m 67[0m | [31;1m|[0m                     size={20}
+ [2m 68[0m | [31;1m|[0m                     className={`shrink-0 transition-colors ${isActive ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300"}`}
+ [2m 69[0m | [31;1m|[0m                   />
+ [2m 70[0m | [31;1m|[0m   
+ [2m 71[0m | [31;1m|[0m                   {!isCollapsed && (
+ [2m 72[0m | [31;1m|[0m                     <span className="truncate">{name}</span>
+ [2m 73[0m | [31;1m|[0m                   )}
+ [2m 74[0m | [31;1m|[0m   
+ [2m 75[0m | [31;1m|[0m                   {/* Active Indicator Strip */}
+ [2m 76[0m | [31;1m|[0m                   {isActive && (
+ [2m 77[0m | [31;1m|[0m                     <div className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-blue-600 rounded-r-full" />
+ [2m 78[0m | [31;1m|[0m                   )}
+ [2m 79[0m | [31;1m|[0m                 </Link>
+ [2m 80[0m | [31;1m|[0m               );
+ [2m 81[0m | [31;1m|[0m             })}
+ [2m 82[0m | [31;1m|[0m           </nav >
+ [2m 83[0m | [31;1m|[0m         </div >
+ [2m 84[0m | [31;1m|[0m   
+ [2m 85[0m | [31;1m|[0m         {/* Subscription / Upgrade Promo (Optional - hide on collapse) */}
+ [2m 86[0m | [31;1m|[0m         {
+ [2m 87[0m | [31;1m|[0m           !isCollapsed && (
+ [2m 88[0m | [31;1m|[0m             <div className="flex-none p-4 w-full border-t border-gray-100">
+ [2m 89[0m | [31;1m|[0m               {/* Promo Card */}
+ [2m 90[0m | [31;1m|[0m               <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-800 mb-4">
+ [2m 91[0m | [31;1m|[0m                 <div className="flex items-center gap-2 mb-2">
+ [2m 92[0m | [31;1m|[0m                   <div className="p-1.5 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+ [2m 93[0m | [31;1m|[0m                     <Crown size={16} className="text-amber-500" fill="currentColor" />
+ [2m 94[0m | [31;1m|[0m                   </div>
+ [2m 95[0m | [31;1m|[0m                   <span className="font-semibold text-xs text-indigo-900 dark:text-indigo-200 border-b-2 border-indigo-200 dark:border-indigo-700">PRO PLAN</span>
+ [2m 96[0m | [31;1m|[0m                 </div>
+ [2m 97[0m | [31;1m|[0m                 <p className="text-xs text-indigo-700 dark:text-indigo-300 mb-3">Unlock advanced strategies & unlimited backtests.</p>
+ [2m 98[0m | [31;1m|[0m                 <button
+ [2m 99[0m | [31;1m|[0m                   onClick={() => router.push('/subscription')}
+ [2m100[0m | [31;1m|[0m                   className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm"
+ [2m101[0m | [31;1m|[0m                 >
+ [2m102[0m | [31;1m|[0m                   Upgrade Now
+ [2m103[0m | [31;1m|[0m                 </button>
+ [2m104[0m | [31;1m|[0m               </div>
+ [2m105[0m | [31;1m|[0m   
+ [2m106[0m | [31;1m|[0m               {/* Logout Button */}
+ [2m107[0m | [31;1m|[0m               <button
+ [2m108[0m | [31;1m|[0m                 onClick={handleLogout}
+ [2m109[0m | [31;1m|[0m                 className="flex items-center gap-3 px-4 py-2.5 rounded-lg w-full text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition"
+ [2m110[0m | [31;1m|[0m               >
+ [2m111[0m | [31;1m|[0m                 <LogOut size={18} />
+ [2m112[0m | [31;1m|[0m                 <span className="font-medium">Sign Out</span>
+ [2m113[0m | [31;1m|[0m               </button>
+ [2m114[0m | [31;1m|[0m             </div>
+ [2m115[0m | [31;1m|[0m           )
+ [2m116[0m | [31;1m|[0m         }
+ [2m117[0m | [31;1m|[0m       </aside >
+ [2m118[0m | [31;1m|[0m     </>
+ [2m119[0m | [31;1m`[0m[31;1m-[0m[31;1m>[0m );
+ [2m120[0m |     }
+     `----
+
+  [31mx[0m Expression expected
+     ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend/src/components/layout/Sidebar.tsx[0m:117:1]
+ [2m117[0m |     </aside >
+ [2m118[0m |   </>
+ [2m119[0m | );
+ [2m120[0m | }
+     : [31;1m^[0m
      `----
 
 Caused by:
     Syntax Error
 
 Import trace for requested module:
-./src/app/strategies/[id]/page.tsx
- ○ Compiling /_error ...
- ⨯ ./src/app/strategies/[id]/page.tsx
-Error: 
-  [31mx[0m Expected ';', '}' or <eof>
-     ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend/src/app/strategies/[id]/page.tsx[0m:1:1]
- [2m  1[0m | [31;1m,[0m[31;1m-[0m[31;1m>[0m ```
- [2m  2[0m | [31;1m|[0m   'use client';
- [2m  3[0m | [31;1m|[0m   
- [2m  4[0m | [31;1m|[0m   import { useState, useEffect, useMemo } from 'react';
- [2m  5[0m | [31;1m|[0m   import { useParams, useRouter } from 'next/navigation';
- [2m  6[0m | [31;1m|[0m   import { strategiesAPI, backtestAPI } from '@/lib/api';
- [2m  7[0m | [31;1m|[0m   import { ArrowLeft, Calendar, Search, TrendingUp, TrendingDown, Target, Clock, RefreshCw, Info } from 'lucide-react';
- [2m  8[0m | [31;1m|[0m   import Link from 'next/link';
- [2m  9[0m | [31;1m|[0m   import SignalHistoryModal from '@/components/strategies/SignalHistoryModal';
- [2m 10[0m | [31;1m|[0m   
- [2m 11[0m | [31;1m|[0m   // Components for Tooltips can be from a library, but let's make a simple one or just use title attribute for now if simple, 
- [2m 12[0m | [31;1m|[0m   // or a custom simple tooltip state. 
- [2m 13[0m | [31;1m|[0m   // For better UX, let's use a simple state-based tooltip or just standard title for beta.
- [2m 14[0m | [31;1m|[0m   // Actually, let's make a nice hover card if possible. 
- [2m 15[0m | [31;1m|[0m   
- [2m 16[0m | [31;1m|[0m   export default function StrategyDetailPage() {
- [2m 17[0m | [31;1m|[0m       const params = useParams();
- [2m 18[0m | [31;1m|[0m       const router = useRouter();
- [2m 19[0m | [31;1m|[0m       const id = params.id as string; // Now ID
- [2m 20[0m | [31;1m|[0m   
- [2m 21[0m | [31;1m|[0m       const [strategy, setStrategy] = useState<any>(null);
- [2m 22[0m | [31;1m|[0m       const [performanceData, setPerformanceData] = useState<any[]>([]);
- [2m 23[0m | [31;1m|[0m       const [latestBacktest, setLatestBacktest] = useState<any>(null);
- [2m 24[0m | [31;1m|[0m       const [loading, setLoading] = useState(true);
- [2m 25[0m | [31;1m|[0m   
- [2m 26[0m | [31;1m|[0m       const [selectedSector, setSelectedSector] = useState('');
- [2m 27[0m | [31;1m|[0m       const [selectedCategory, setSelectedCategory] = useState('');
- [2m 28[0m | [31;1m|[0m       const [allSectors, setAllSectors] = useState<string[]>([]);
- [2m 29[0m | [31;1m|[0m       const [allCategories, setAllCategories] = useState<string[]>([]);
- [2m 30[0m | [31;1m|[0m   
- [2m 31[0m | [31;1m|[0m       const [dateRange, setDateRange] = useState<{ min: string | null, max: string | null }>({ min: null, max: null });
- [2m 32[0m | [31;1m|[0m   
- [2m 33[0m | [31;1m|[0m       const [searchTerm, setSearchTerm] = useState('');
- [2m 34[0m | [31;1m|[0m       const [selectedStock, setSelectedStock] = useState<{ id: number, symbol: string } | null>(null);
- [2m 35[0m | [31;1m|[0m       const [showDescription, setShowDescription] = useState(false);
- [2m 36[0m | [31;1m|[0m   
- [2m 37[0m | [31;1m|[0m       useEffect(() => {
- [2m 38[0m | [31;1m|[0m           if (id) {
- [2m 39[0m | [31;1m|[0m               loadData();
- [2m 40[0m | [31;1m|[0m           }
- [2m 41[0m | [31;1m|[0m       }, [id]);
- [2m 42[0m | [31;1m|[0m   
- [2m 43[0m | [31;1m|[0m       async function loadData() {
- [2m 44[0m | [31;1m|[0m           setLoading(true);
- [2m 45[0m | [31;1m|[0m           try {
- [2m 46[0m | [31;1m|[0m               // 1. Fetch Strategy Details by ID
- [2m 47[0m | [31;1m|[0m               let stratData = null;
- [2m 48[0m | [31;1m|[0m               try {
- [2m 49[0m | [31;1m|[0m                   const res = await strategiesAPI.get(id); 
- [2m 50[0m | [31;1m|[0m                   stratData = res.data.data || res.data;
- [2m 51[0m | [31;1m|[0m               } catch (e) {
- [2m 52[0m | [31;1m|[0m                   console.error("Failed to fetch strategy by ID", e);
- [2m 53[0m | [31;1m|[0m               }
- [2m 54[0m | [31;1m|[0m               setStrategy(stratData);
- [2m 55[0m | [31;1m|[0m               
- [2m 56[0m | [31;1m|[0m               // If we have strategy code from data, we can use it for backtest lookup if needed, 
- [2m 57[0m | [31;1m|[0m               // but for performance signal API we can use ID.
- [2m 58[0m | [31;1m|[0m               const strategyCode = stratData?.code;
- [2m 59[0m | [31;1m|[0m   
- [2m 60[0m | [31;1m|[0m               // 2. Fetch Performance Stats (Last 60 Days)
- [2m 61[0m | [31;1m|[0m               const endDate = new Date();
- [2m 62[0m | [31;1m|[0m               const startDate = new Date();
- [2m 63[0m | [31;1m|[0m               startDate.setDate(startDate.getDate() - 60);
- [2m 64[0m | [31;1m|[0m               const startDateStr = startDate.toISOString().split('T')[0];
- [2m 65[0m | [31;1m|[0m   
- [2m 66[0m | [31;1m|[0m               // Use strategy_id param
- [2m 67[0m | [31;1m|[0m               const perfRes = await strategiesAPI.getPerformance({ 
- [2m 68[0m | [31;1m|[0m                   strategy_id: id,
- [2m 69[0m | [31;1m|[0m                   start_date: startDateStr
- [2m 70[0m | [31;1m|[0m               });
- [2m 71[0m | [31;1m|[0m               
- [2m 72[0m | [31;1m|[0m               const perfData = perfRes.data.data || perfRes.data?.data || [];
- [2m 73[0m | [31;1m|[0m               const meta = perfRes.data.metadata || perfRes.data?.metadata || {};
- [2m 74[0m | [31;1m|[0m               
- [2m 75[0m | [31;1m|[0m               setDateRange({
- [2m 76[0m | [31;1m|[0m                   min: meta.min_date || startDateStr,
- [2m 77[0m | [31;1m|[0m                   max: meta.max_date || new Date().toISOString().split('T')[0]
- [2m 78[0m | [31;1m|[0m               });
- [2m 79[0m | [31;1m|[0m   
- [2m 80[0m | [31;1m|[0m               if(meta.all_sectors) setAllSectors(meta.all_sectors);
- [2m 81[0m | [31;1m|[0m               if(meta.all_categories) setAllCategories(meta.all_categories);
- [2m 82[0m | [31;1m|[0m   
- [2m 83[0m | [31;1m|[0m               if (Array.isArray(perfData)) {
- [2m 84[0m | [31;1m|[0m                   setPerformanceData(perfData);
- [2m 85[0m | [31;1m|[0m               } else {
- [2m 86[0m | [31;1m|[0m                   setPerformanceData([]);
- [2m 87[0m | [31;1m|[0m               }
- [2m 88[0m | [31;1m|[0m   
- [2m 89[0m | [31;1m|[0m               // 3. Fetch Latest Backtest (for Stats)
- [2m 90[0m | [31;1m|[0m               // Backtest runs are usually linked by strategy code in this system currently?
- [2m 91[0m | [31;1m|[0m               // Or can we filter by strategy_id?
- [2m 92[0m | [31;1m|[0m               // The backtestAPI.getRuns likely takes code or id. Let's check logic. 
- [2m 93[0m | [31;1m|[0m               // Previous code used code. Let's try to use code if valid, else use ID.
- [2m 94[0m | [31;1m|[0m               if (strategyCode) {
- [2m 95[0m | [31;1m|[0m                   try {
- [2m 96[0m | [31;1m|[0m                        const runsRes = await backtestAPI.getRuns({ strategy_code: strategyCode }); 
- [2m 97[0m | [31;1m|[0m                        const runs = runsRes.data.data?.results || runsRes.data?.data || [];
- [2m 98[0m | [31;1m|[0m                        const latest = runs.find((r: any) => r.strategy_predefined === strategyCode && r.status === 'COMPLETED');
- [2m 99[0m | [31;1m|[0m                        if (latest) {
- [2m100[0m | [31;1m|[0m                            setLatestBacktest(latest);
- [2m101[0m | [31;1m|[0m                        }
- [2m102[0m | [31;1m|[0m                   } catch (e) { console.error(e) }
- [2m103[0m | [31;1m|[0m               }
- [2m104[0m | [31;1m|[0m   
- [2m105[0m | [31;1m|[0m           } catch (e) {
- [2m106[0m | [31;1m|[0m               console.error("Failed to load strategy details", e);
- [2m107[0m | [31;1m|[0m           } finally {
- [2m108[0m | [31;1m|[0m               setLoading(false);
- [2m109[0m | [31;1m|[0m           }
- [2m110[0m | [31;1m|[0m       }
- [2m111[0m | [31;1m|[0m       
- [2m112[0m | [31;1m|[0m       // Top 5 Performers from Backtest Data
- [2m113[0m | [31;1m|[0m       const topStocks = useMemo(() => {
- [2m114[0m | [31;1m|[0m           if (!latestBacktest || !latestBacktest.list_of_trades_json) return [];
- [2m115[0m | [31;1m|[0m   
- [2m116[0m | [31;1m|[0m           const stats: Record<string, { wins: number, total: number }> = {};
- [2m117[0m | [31;1m|[0m           latestBacktest.list_of_trades_json.forEach((trade: any) => {
- [2m118[0m | [31;1m|[0m               const sym = trade.stock_symbol;
- [2m119[0m | [31;1m|[0m               if (!stats[sym]) stats[sym] = { wins: 0, total: 0 };
- [2m120[0m | [31;1m|[0m               stats[sym].total += 1;
- [2m121[0m | [31;1m|[0m               if (trade.result === 'WIN') stats[sym].wins += 1;
- [2m122[0m | [31;1m|[0m           });
- [2m123[0m | [31;1m|[0m   
- [2m124[0m | [31;1m|[0m           return Object.entries(stats)
- [2m125[0m | [31;1m|[0m               .map(([symbol, data]) => ({
- [2m126[0m | [31;1m|[0m                   symbol,
- [2m127[0m | [31;1m|[0m                   wins: data.wins,
- [2m128[0m | [31;1m|[0m                   total: data.total,
- [2m129[0m | [31;1m|[0m                   rate: (data.wins / data.total) * 100
- [2m130[0m | [31;1m|[0m               }))
- [2m131[0m | [31;1m|[0m               .sort((a, b) => b.rate - a.rate || b.wins - a.wins)
- [2m132[0m | [31;1m|[0m               .slice(0, 5);
- [2m133[0m | [31;1m|[0m       }, [latestBacktest]);
- [2m134[0m | [31;1m|[0m   
- [2m135[0m | [31;1m|[0m       // Top 5 Live Performers (Global, Unfiltered or Filtered?)
- [2m136[0m | [31;1m|[0m       // User asked "Top 5 performance stock" above "This page shows live...".
- [2m137[0m | [31;1m|[0m       // Let's make it based on live data, perhaps global best.
- [2m138[0m | [31;1m|[0m       const topLivePerformers = useMemo(() => {
- [2m139[0m | [31;1m|[0m           return [...performanceData]
- [2m140[0m | [31;1m|[0m               .sort((a, b) => b.win_rate - a.win_rate || b.wins - a.wins)
- [2m141[0m | [31;1m|[0m               .slice(0, 5);
- [2m142[0m | [31;1m|[0m       }, [performanceData]);
- [2m143[0m | [31;1m|[0m   
- [2m144[0m | [31;1m|[0m       const filteredSignals = performanceData.filter(s => {
- [2m145[0m | [31;1m|[0m           const matchesSearch = s.stock_symbol?.toLowerCase().includes(searchTerm.toLowerCase());
- [2m146[0m | [31;1m|[0m           const matchesSector = selectedSector ? s.sectors?.includes(selectedSector) : true;
- [2m147[0m | [31;1m|[0m           const matchesCategory = selectedCategory ? s.categories?.includes(selectedCategory) : true;
- [2m148[0m | [31;1m|[0m           return matchesSearch && matchesSector && matchesCategory;
- [2m149[0m | [31;1m|[0m       });
- [2m150[0m | [31;1m|[0m       
- [2m151[0m | [31;1m|[0m       // Last Sync Stats (Loose)
- [2m152[0m | [31;1m|[0m       const lastSyncFromData = dateRange.max || 'N/A';
- [2m153[0m | [31;1m|[0m   
- [2m154[0m | [31;1m|[0m       if (loading) return <div className="flex h-screen items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div></div>;
- [2m155[0m | [31;1m|[0m       if (!strategy) return <div className="p-10 text-center">Strategy Not Found</div>;
- [2m156[0m | [31;1m|[0m   
- [2m157[0m | [31;1m|[0m       return (
- [2m158[0m | [31;1m|[0m           <div className="max-w-7xl mx-auto py-10 px-4 pb-20">
- [2m159[0m | [31;1m|[0m               {/* Header with Title and Info Tooltip */}
- [2m160[0m | [31;1m|[0m               <div className="flex justify-between items-start mb-10">
- [2m161[0m | [31;1m|[0m                   <div>
- [2m162[0m | [31;1m|[0m                        <div className="flex items-center gap-2">
- [2m163[0m | [31;1m|[0m                           <h1 className="text-3xl font-bold text-gray-900">{strategy.name}</h1>
- [2m164[0m | [31;1m|[0m                           <div className="relative">
- [2m165[0m | [31;1m|[0m                               <button 
- [2m166[0m | [31;1m|[0m                                   onMouseEnter={() => setShowDescription(true)}
- [2m167[0m | [31;1m|[0m                                   onMouseLeave={() => setShowDescription(false)}
- [2m168[0m | [31;1m|[0m                                   className="text-gray-400 hover:text-blue-600 transition p-1"
- [2m169[0m | [31;1m|[0m                               >
- [2m170[0m | [31;1m|[0m                                   <Info size={20} />
- [2m171[0m | [31;1m|[0m                               </button>
- [2m172[0m | [31;1m|[0m                               {/* Simple Tooltip */}
- [2m173[0m | [31;1m|[0m                               {showDescription && (
- [2m174[0m | [31;1m|[0m                                   <div className="absolute left-full top-0 ml-2 w-72 bg-gray-900 text-white text-sm p-3 rounded-lg shadow-xl z-50">
- [2m175[0m | [31;1m|[0m                                       <p>{strategy.description}</p>
- [2m176[0m | [31;1m|[0m                                       <div className="mt-2 text-xs text-gray-400 border-t border-gray-700 pt-2">
- [2m177[0m | [31;1m|[0m                                           Logic: Signal = Direction, Momentum = Close - Prev Close.
- [2m178[0m | [31;1m|[0m                                       </div>
- [2m179[0m | [31;1m|[0m                                   </div>
- [2m180[0m | [31;1m|[0m                               )}
- [2m181[0m | [31;1m|[0m                           </div>
- [2m182[0m | [31;1m|[0m                        </div>
- [2m183[0m | [31;1m|[0m                        <div className="flex items-center gap-3 mt-2 text-sm text-gray-500">
- [2m184[0m | [31;1m|[0m                            <span className="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-md font-medium">System Strategy</span>
- [2m185[0m | [31;1m|[0m                            <span className="flex items-center gap-1"><Clock size={14}/> Last Data: {lastSyncFromData}</span>
- [2m186[0m | [31;1m|[0m                        </div>
- [2m187[0m | [31;1m|[0m                   </div>
- [2m188[0m | [31;1m|[0m                   
- [2m189[0m | [31;1m|[0m                   {latestBacktest && (
- [2m190[0m | [31;1m|[0m                       <div className="text-right bg-gray-50 p-4 rounded-xl border border-gray-100 min-w-[200px]">
- [2m191[0m | [31;1m|[0m                           <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Win Rate</p>
- [2m192[0m | [31;1m|[0m[31;1m-[0m[31;1m>[0m                         <div className={`text - 4xl font - bold ${ Number(latestBacktest.win_rate) >= 50 ? 'text-green-600' : 'text-red-500' } `}>
-     : [31;1m`[0m[31;1m---[0m[33;1m                                         ^^^^[0m
-     : [31;1m`[0m[31;1m---[0m[31;1m-[0m [31;1mThis is the expression part of an expression statement[0m
- [2m193[0m |                                 {latestBacktest.win_rate}%
- [2m194[0m |                             </div>
- [2m195[0m |                             <p className="text-xs text-gray-400 mt-1">Based on last backtest</p>
-     `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./src/app/strategies/[id]/page.tsx
- GET /strategies/DAILY_CLOSE_MOMENTUM 500 in 13ms
- GET /strategies/DAILY_CLOSE_MOMENTUM 500 in 29ms
- ⨯ ./src/app/strategies/[id]/page.tsx
-Error: 
-  [31mx[0m Expected ';', '}' or <eof>
-     ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend/src/app/strategies/[id]/page.tsx[0m:1:1]
- [2m  1[0m | [31;1m,[0m[31;1m-[0m[31;1m>[0m ```
- [2m  2[0m | [31;1m|[0m   'use client';
- [2m  3[0m | [31;1m|[0m   
- [2m  4[0m | [31;1m|[0m   import { useState, useEffect, useMemo } from 'react';
- [2m  5[0m | [31;1m|[0m   import { useParams, useRouter } from 'next/navigation';
- [2m  6[0m | [31;1m|[0m   import { strategiesAPI, backtestAPI } from '@/lib/api';
- [2m  7[0m | [31;1m|[0m   import { ArrowLeft, Calendar, Search, TrendingUp, TrendingDown, Target, Clock, RefreshCw, Info } from 'lucide-react';
- [2m  8[0m | [31;1m|[0m   import Link from 'next/link';
- [2m  9[0m | [31;1m|[0m   import SignalHistoryModal from '@/components/strategies/SignalHistoryModal';
- [2m 10[0m | [31;1m|[0m   
- [2m 11[0m | [31;1m|[0m   // Components for Tooltips can be from a library, but let's make a simple one or just use title attribute for now if simple, 
- [2m 12[0m | [31;1m|[0m   // or a custom simple tooltip state. 
- [2m 13[0m | [31;1m|[0m   // For better UX, let's use a simple state-based tooltip or just standard title for beta.
- [2m 14[0m | [31;1m|[0m   // Actually, let's make a nice hover card if possible. 
- [2m 15[0m | [31;1m|[0m   
- [2m 16[0m | [31;1m|[0m   export default function StrategyDetailPage() {
- [2m 17[0m | [31;1m|[0m       const params = useParams();
- [2m 18[0m | [31;1m|[0m       const router = useRouter();
- [2m 19[0m | [31;1m|[0m       const id = params.id as string; // Now ID
- [2m 20[0m | [31;1m|[0m   
- [2m 21[0m | [31;1m|[0m       const [strategy, setStrategy] = useState<any>(null);
- [2m 22[0m | [31;1m|[0m       const [performanceData, setPerformanceData] = useState<any[]>([]);
- [2m 23[0m | [31;1m|[0m       const [latestBacktest, setLatestBacktest] = useState<any>(null);
- [2m 24[0m | [31;1m|[0m       const [loading, setLoading] = useState(true);
- [2m 25[0m | [31;1m|[0m   
- [2m 26[0m | [31;1m|[0m       const [selectedSector, setSelectedSector] = useState('');
- [2m 27[0m | [31;1m|[0m       const [selectedCategory, setSelectedCategory] = useState('');
- [2m 28[0m | [31;1m|[0m       const [allSectors, setAllSectors] = useState<string[]>([]);
- [2m 29[0m | [31;1m|[0m       const [allCategories, setAllCategories] = useState<string[]>([]);
- [2m 30[0m | [31;1m|[0m   
- [2m 31[0m | [31;1m|[0m       const [dateRange, setDateRange] = useState<{ min: string | null, max: string | null }>({ min: null, max: null });
- [2m 32[0m | [31;1m|[0m   
- [2m 33[0m | [31;1m|[0m       const [searchTerm, setSearchTerm] = useState('');
- [2m 34[0m | [31;1m|[0m       const [selectedStock, setSelectedStock] = useState<{ id: number, symbol: string } | null>(null);
- [2m 35[0m | [31;1m|[0m       const [showDescription, setShowDescription] = useState(false);
- [2m 36[0m | [31;1m|[0m   
- [2m 37[0m | [31;1m|[0m       useEffect(() => {
- [2m 38[0m | [31;1m|[0m           if (id) {
- [2m 39[0m | [31;1m|[0m               loadData();
- [2m 40[0m | [31;1m|[0m           }
- [2m 41[0m | [31;1m|[0m       }, [id]);
- [2m 42[0m | [31;1m|[0m   
- [2m 43[0m | [31;1m|[0m       async function loadData() {
- [2m 44[0m | [31;1m|[0m           setLoading(true);
- [2m 45[0m | [31;1m|[0m           try {
- [2m 46[0m | [31;1m|[0m               // 1. Fetch Strategy Details by ID
- [2m 47[0m | [31;1m|[0m               let stratData = null;
- [2m 48[0m | [31;1m|[0m               try {
- [2m 49[0m | [31;1m|[0m                   const res = await strategiesAPI.get(id); 
- [2m 50[0m | [31;1m|[0m                   stratData = res.data.data || res.data;
- [2m 51[0m | [31;1m|[0m               } catch (e) {
- [2m 52[0m | [31;1m|[0m                   console.error("Failed to fetch strategy by ID", e);
- [2m 53[0m | [31;1m|[0m               }
- [2m 54[0m | [31;1m|[0m               setStrategy(stratData);
- [2m 55[0m | [31;1m|[0m               
- [2m 56[0m | [31;1m|[0m               // If we have strategy code from data, we can use it for backtest lookup if needed, 
- [2m 57[0m | [31;1m|[0m               // but for performance signal API we can use ID.
- [2m 58[0m | [31;1m|[0m               const strategyCode = stratData?.code;
- [2m 59[0m | [31;1m|[0m   
- [2m 60[0m | [31;1m|[0m               // 2. Fetch Performance Stats (Last 60 Days)
- [2m 61[0m | [31;1m|[0m               const endDate = new Date();
- [2m 62[0m | [31;1m|[0m               const startDate = new Date();
- [2m 63[0m | [31;1m|[0m               startDate.setDate(startDate.getDate() - 60);
- [2m 64[0m | [31;1m|[0m               const startDateStr = startDate.toISOString().split('T')[0];
- [2m 65[0m | [31;1m|[0m   
- [2m 66[0m | [31;1m|[0m               // Use strategy_id param
- [2m 67[0m | [31;1m|[0m               const perfRes = await strategiesAPI.getPerformance({ 
- [2m 68[0m | [31;1m|[0m                   strategy_id: id,
- [2m 69[0m | [31;1m|[0m                   start_date: startDateStr
- [2m 70[0m | [31;1m|[0m               });
- [2m 71[0m | [31;1m|[0m               
- [2m 72[0m | [31;1m|[0m               const perfData = perfRes.data.data || perfRes.data?.data || [];
- [2m 73[0m | [31;1m|[0m               const meta = perfRes.data.metadata || perfRes.data?.metadata || {};
- [2m 74[0m | [31;1m|[0m               
- [2m 75[0m | [31;1m|[0m               setDateRange({
- [2m 76[0m | [31;1m|[0m                   min: meta.min_date || startDateStr,
- [2m 77[0m | [31;1m|[0m                   max: meta.max_date || new Date().toISOString().split('T')[0]
- [2m 78[0m | [31;1m|[0m               });
- [2m 79[0m | [31;1m|[0m   
- [2m 80[0m | [31;1m|[0m               if(meta.all_sectors) setAllSectors(meta.all_sectors);
- [2m 81[0m | [31;1m|[0m               if(meta.all_categories) setAllCategories(meta.all_categories);
- [2m 82[0m | [31;1m|[0m   
- [2m 83[0m | [31;1m|[0m               if (Array.isArray(perfData)) {
- [2m 84[0m | [31;1m|[0m                   setPerformanceData(perfData);
- [2m 85[0m | [31;1m|[0m               } else {
- [2m 86[0m | [31;1m|[0m                   setPerformanceData([]);
- [2m 87[0m | [31;1m|[0m               }
- [2m 88[0m | [31;1m|[0m   
- [2m 89[0m | [31;1m|[0m               // 3. Fetch Latest Backtest (for Stats)
- [2m 90[0m | [31;1m|[0m               // Backtest runs are usually linked by strategy code in this system currently?
- [2m 91[0m | [31;1m|[0m               // Or can we filter by strategy_id?
- [2m 92[0m | [31;1m|[0m               // The backtestAPI.getRuns likely takes code or id. Let's check logic. 
- [2m 93[0m | [31;1m|[0m               // Previous code used code. Let's try to use code if valid, else use ID.
- [2m 94[0m | [31;1m|[0m               if (strategyCode) {
- [2m 95[0m | [31;1m|[0m                   try {
- [2m 96[0m | [31;1m|[0m                        const runsRes = await backtestAPI.getRuns({ strategy_code: strategyCode }); 
- [2m 97[0m | [31;1m|[0m                        const runs = runsRes.data.data?.results || runsRes.data?.data || [];
- [2m 98[0m | [31;1m|[0m                        const latest = runs.find((r: any) => r.strategy_predefined === strategyCode && r.status === 'COMPLETED');
- [2m 99[0m | [31;1m|[0m                        if (latest) {
- [2m100[0m | [31;1m|[0m                            setLatestBacktest(latest);
- [2m101[0m | [31;1m|[0m                        }
- [2m102[0m | [31;1m|[0m                   } catch (e) { console.error(e) }
- [2m103[0m | [31;1m|[0m               }
- [2m104[0m | [31;1m|[0m   
- [2m105[0m | [31;1m|[0m           } catch (e) {
- [2m106[0m | [31;1m|[0m               console.error("Failed to load strategy details", e);
- [2m107[0m | [31;1m|[0m           } finally {
- [2m108[0m | [31;1m|[0m               setLoading(false);
- [2m109[0m | [31;1m|[0m           }
- [2m110[0m | [31;1m|[0m       }
- [2m111[0m | [31;1m|[0m       
- [2m112[0m | [31;1m|[0m       // Top 5 Performers from Backtest Data
- [2m113[0m | [31;1m|[0m       const topStocks = useMemo(() => {
- [2m114[0m | [31;1m|[0m           if (!latestBacktest || !latestBacktest.list_of_trades_json) return [];
- [2m115[0m | [31;1m|[0m   
- [2m116[0m | [31;1m|[0m           const stats: Record<string, { wins: number, total: number }> = {};
- [2m117[0m | [31;1m|[0m           latestBacktest.list_of_trades_json.forEach((trade: any) => {
- [2m118[0m | [31;1m|[0m               const sym = trade.stock_symbol;
- [2m119[0m | [31;1m|[0m               if (!stats[sym]) stats[sym] = { wins: 0, total: 0 };
- [2m120[0m | [31;1m|[0m               stats[sym].total += 1;
- [2m121[0m | [31;1m|[0m               if (trade.result === 'WIN') stats[sym].wins += 1;
- [2m122[0m | [31;1m|[0m           });
- [2m123[0m | [31;1m|[0m   
- [2m124[0m | [31;1m|[0m           return Object.entries(stats)
- [2m125[0m | [31;1m|[0m               .map(([symbol, data]) => ({
- [2m126[0m | [31;1m|[0m                   symbol,
- [2m127[0m | [31;1m|[0m                   wins: data.wins,
- [2m128[0m | [31;1m|[0m                   total: data.total,
- [2m129[0m | [31;1m|[0m                   rate: (data.wins / data.total) * 100
- [2m130[0m | [31;1m|[0m               }))
- [2m131[0m | [31;1m|[0m               .sort((a, b) => b.rate - a.rate || b.wins - a.wins)
- [2m132[0m | [31;1m|[0m               .slice(0, 5);
- [2m133[0m | [31;1m|[0m       }, [latestBacktest]);
- [2m134[0m | [31;1m|[0m   
- [2m135[0m | [31;1m|[0m       // Top 5 Live Performers (Global, Unfiltered or Filtered?)
- [2m136[0m | [31;1m|[0m       // User asked "Top 5 performance stock" above "This page shows live...".
- [2m137[0m | [31;1m|[0m       // Let's make it based on live data, perhaps global best.
- [2m138[0m | [31;1m|[0m       const topLivePerformers = useMemo(() => {
- [2m139[0m | [31;1m|[0m           return [...performanceData]
- [2m140[0m | [31;1m|[0m               .sort((a, b) => b.win_rate - a.win_rate || b.wins - a.wins)
- [2m141[0m | [31;1m|[0m               .slice(0, 5);
- [2m142[0m | [31;1m|[0m       }, [performanceData]);
- [2m143[0m | [31;1m|[0m   
- [2m144[0m | [31;1m|[0m       const filteredSignals = performanceData.filter(s => {
- [2m145[0m | [31;1m|[0m           const matchesSearch = s.stock_symbol?.toLowerCase().includes(searchTerm.toLowerCase());
- [2m146[0m | [31;1m|[0m           const matchesSector = selectedSector ? s.sectors?.includes(selectedSector) : true;
- [2m147[0m | [31;1m|[0m           const matchesCategory = selectedCategory ? s.categories?.includes(selectedCategory) : true;
- [2m148[0m | [31;1m|[0m           return matchesSearch && matchesSector && matchesCategory;
- [2m149[0m | [31;1m|[0m       });
- [2m150[0m | [31;1m|[0m       
- [2m151[0m | [31;1m|[0m       // Last Sync Stats (Loose)
- [2m152[0m | [31;1m|[0m       const lastSyncFromData = dateRange.max || 'N/A';
- [2m153[0m | [31;1m|[0m   
- [2m154[0m | [31;1m|[0m       if (loading) return <div className="flex h-screen items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div></div>;
- [2m155[0m | [31;1m|[0m       if (!strategy) return <div className="p-10 text-center">Strategy Not Found</div>;
- [2m156[0m | [31;1m|[0m   
- [2m157[0m | [31;1m|[0m       return (
- [2m158[0m | [31;1m|[0m           <div className="max-w-7xl mx-auto py-10 px-4 pb-20">
- [2m159[0m | [31;1m|[0m               {/* Header with Title and Info Tooltip */}
- [2m160[0m | [31;1m|[0m               <div className="flex justify-between items-start mb-10">
- [2m161[0m | [31;1m|[0m                   <div>
- [2m162[0m | [31;1m|[0m                        <div className="flex items-center gap-2">
- [2m163[0m | [31;1m|[0m                           <h1 className="text-3xl font-bold text-gray-900">{strategy.name}</h1>
- [2m164[0m | [31;1m|[0m                           <div className="relative">
- [2m165[0m | [31;1m|[0m                               <button 
- [2m166[0m | [31;1m|[0m                                   onMouseEnter={() => setShowDescription(true)}
- [2m167[0m | [31;1m|[0m                                   onMouseLeave={() => setShowDescription(false)}
- [2m168[0m | [31;1m|[0m                                   className="text-gray-400 hover:text-blue-600 transition p-1"
- [2m169[0m | [31;1m|[0m                               >
- [2m170[0m | [31;1m|[0m                                   <Info size={20} />
- [2m171[0m | [31;1m|[0m                               </button>
- [2m172[0m | [31;1m|[0m                               {/* Simple Tooltip */}
- [2m173[0m | [31;1m|[0m                               {showDescription && (
- [2m174[0m | [31;1m|[0m                                   <div className="absolute left-full top-0 ml-2 w-72 bg-gray-900 text-white text-sm p-3 rounded-lg shadow-xl z-50">
- [2m175[0m | [31;1m|[0m                                       <p>{strategy.description}</p>
- [2m176[0m | [31;1m|[0m                                       <div className="mt-2 text-xs text-gray-400 border-t border-gray-700 pt-2">
- [2m177[0m | [31;1m|[0m                                           Logic: Signal = Direction, Momentum = Close - Prev Close.
- [2m178[0m | [31;1m|[0m                                       </div>
- [2m179[0m | [31;1m|[0m                                   </div>
- [2m180[0m | [31;1m|[0m                               )}
- [2m181[0m | [31;1m|[0m                           </div>
- [2m182[0m | [31;1m|[0m                        </div>
- [2m183[0m | [31;1m|[0m                        <div className="flex items-center gap-3 mt-2 text-sm text-gray-500">
- [2m184[0m | [31;1m|[0m                            <span className="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-md font-medium">System Strategy</span>
- [2m185[0m | [31;1m|[0m                            <span className="flex items-center gap-1"><Clock size={14}/> Last Data: {lastSyncFromData}</span>
- [2m186[0m | [31;1m|[0m                        </div>
- [2m187[0m | [31;1m|[0m                   </div>
- [2m188[0m | [31;1m|[0m                   
- [2m189[0m | [31;1m|[0m                   {latestBacktest && (
- [2m190[0m | [31;1m|[0m                       <div className="text-right bg-gray-50 p-4 rounded-xl border border-gray-100 min-w-[200px]">
- [2m191[0m | [31;1m|[0m                           <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Win Rate</p>
- [2m192[0m | [31;1m|[0m[31;1m-[0m[31;1m>[0m                         <div className={`text - 4xl font - bold ${ Number(latestBacktest.win_rate) >= 50 ? 'text-green-600' : 'text-red-500' } `}>
-     : [31;1m`[0m[31;1m---[0m[33;1m                                         ^^^^[0m
-     : [31;1m`[0m[31;1m---[0m[31;1m-[0m [31;1mThis is the expression part of an expression statement[0m
- [2m193[0m |                                 {latestBacktest.win_rate}%
- [2m194[0m |                             </div>
- [2m195[0m |                             <p className="text-xs text-gray-400 mt-1">Based on last backtest</p>
-     `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./src/app/strategies/[id]/page.tsx
- ⨯ ./src/app/strategies/[id]/page.tsx
-Error: 
-  [31mx[0m Expected ';', '}' or <eof>
-     ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend/src/app/strategies/[id]/page.tsx[0m:1:1]
- [2m  1[0m | [31;1m,[0m[31;1m-[0m[31;1m>[0m ```
- [2m  2[0m | [31;1m|[0m   'use client';
- [2m  3[0m | [31;1m|[0m   
- [2m  4[0m | [31;1m|[0m   import { useState, useEffect, useMemo } from 'react';
- [2m  5[0m | [31;1m|[0m   import { useParams, useRouter } from 'next/navigation';
- [2m  6[0m | [31;1m|[0m   import { strategiesAPI, backtestAPI } from '@/lib/api';
- [2m  7[0m | [31;1m|[0m   import { ArrowLeft, Calendar, Search, TrendingUp, TrendingDown, Target, Clock, RefreshCw, Info } from 'lucide-react';
- [2m  8[0m | [31;1m|[0m   import Link from 'next/link';
- [2m  9[0m | [31;1m|[0m   import SignalHistoryModal from '@/components/strategies/SignalHistoryModal';
- [2m 10[0m | [31;1m|[0m   
- [2m 11[0m | [31;1m|[0m   // Components for Tooltips can be from a library, but let's make a simple one or just use title attribute for now if simple, 
- [2m 12[0m | [31;1m|[0m   // or a custom simple tooltip state. 
- [2m 13[0m | [31;1m|[0m   // For better UX, let's use a simple state-based tooltip or just standard title for beta.
- [2m 14[0m | [31;1m|[0m   // Actually, let's make a nice hover card if possible. 
- [2m 15[0m | [31;1m|[0m   
- [2m 16[0m | [31;1m|[0m   export default function StrategyDetailPage() {
- [2m 17[0m | [31;1m|[0m       const params = useParams();
- [2m 18[0m | [31;1m|[0m       const router = useRouter();
- [2m 19[0m | [31;1m|[0m       const id = params.id as string; // Now ID
- [2m 20[0m | [31;1m|[0m   
- [2m 21[0m | [31;1m|[0m       const [strategy, setStrategy] = useState<any>(null);
- [2m 22[0m | [31;1m|[0m       const [performanceData, setPerformanceData] = useState<any[]>([]);
- [2m 23[0m | [31;1m|[0m       const [latestBacktest, setLatestBacktest] = useState<any>(null);
- [2m 24[0m | [31;1m|[0m       const [loading, setLoading] = useState(true);
- [2m 25[0m | [31;1m|[0m   
- [2m 26[0m | [31;1m|[0m       const [selectedSector, setSelectedSector] = useState('');
- [2m 27[0m | [31;1m|[0m       const [selectedCategory, setSelectedCategory] = useState('');
- [2m 28[0m | [31;1m|[0m       const [allSectors, setAllSectors] = useState<string[]>([]);
- [2m 29[0m | [31;1m|[0m       const [allCategories, setAllCategories] = useState<string[]>([]);
- [2m 30[0m | [31;1m|[0m   
- [2m 31[0m | [31;1m|[0m       const [dateRange, setDateRange] = useState<{ min: string | null, max: string | null }>({ min: null, max: null });
- [2m 32[0m | [31;1m|[0m   
- [2m 33[0m | [31;1m|[0m       const [searchTerm, setSearchTerm] = useState('');
- [2m 34[0m | [31;1m|[0m       const [selectedStock, setSelectedStock] = useState<{ id: number, symbol: string } | null>(null);
- [2m 35[0m | [31;1m|[0m       const [showDescription, setShowDescription] = useState(false);
- [2m 36[0m | [31;1m|[0m   
- [2m 37[0m | [31;1m|[0m       useEffect(() => {
- [2m 38[0m | [31;1m|[0m           if (id) {
- [2m 39[0m | [31;1m|[0m               loadData();
- [2m 40[0m | [31;1m|[0m           }
- [2m 41[0m | [31;1m|[0m       }, [id]);
- [2m 42[0m | [31;1m|[0m   
- [2m 43[0m | [31;1m|[0m       async function loadData() {
- [2m 44[0m | [31;1m|[0m           setLoading(true);
- [2m 45[0m | [31;1m|[0m           try {
- [2m 46[0m | [31;1m|[0m               // 1. Fetch Strategy Details by ID
- [2m 47[0m | [31;1m|[0m               let stratData = null;
- [2m 48[0m | [31;1m|[0m               try {
- [2m 49[0m | [31;1m|[0m                   const res = await strategiesAPI.get(id); 
- [2m 50[0m | [31;1m|[0m                   stratData = res.data.data || res.data;
- [2m 51[0m | [31;1m|[0m               } catch (e) {
- [2m 52[0m | [31;1m|[0m                   console.error("Failed to fetch strategy by ID", e);
- [2m 53[0m | [31;1m|[0m               }
- [2m 54[0m | [31;1m|[0m               setStrategy(stratData);
- [2m 55[0m | [31;1m|[0m               
- [2m 56[0m | [31;1m|[0m               // If we have strategy code from data, we can use it for backtest lookup if needed, 
- [2m 57[0m | [31;1m|[0m               // but for performance signal API we can use ID.
- [2m 58[0m | [31;1m|[0m               const strategyCode = stratData?.code;
- [2m 59[0m | [31;1m|[0m   
- [2m 60[0m | [31;1m|[0m               // 2. Fetch Performance Stats (Last 60 Days)
- [2m 61[0m | [31;1m|[0m               const endDate = new Date();
- [2m 62[0m | [31;1m|[0m               const startDate = new Date();
- [2m 63[0m | [31;1m|[0m               startDate.setDate(startDate.getDate() - 60);
- [2m 64[0m | [31;1m|[0m               const startDateStr = startDate.toISOString().split('T')[0];
- [2m 65[0m | [31;1m|[0m   
- [2m 66[0m | [31;1m|[0m               // Use strategy_id param
- [2m 67[0m | [31;1m|[0m               const perfRes = await strategiesAPI.getPerformance({ 
- [2m 68[0m | [31;1m|[0m                   strategy_id: id,
- [2m 69[0m | [31;1m|[0m                   start_date: startDateStr
- [2m 70[0m | [31;1m|[0m               });
- [2m 71[0m | [31;1m|[0m               
- [2m 72[0m | [31;1m|[0m               const perfData = perfRes.data.data || perfRes.data?.data || [];
- [2m 73[0m | [31;1m|[0m               const meta = perfRes.data.metadata || perfRes.data?.metadata || {};
- [2m 74[0m | [31;1m|[0m               
- [2m 75[0m | [31;1m|[0m               setDateRange({
- [2m 76[0m | [31;1m|[0m                   min: meta.min_date || startDateStr,
- [2m 77[0m | [31;1m|[0m                   max: meta.max_date || new Date().toISOString().split('T')[0]
- [2m 78[0m | [31;1m|[0m               });
- [2m 79[0m | [31;1m|[0m   
- [2m 80[0m | [31;1m|[0m               if(meta.all_sectors) setAllSectors(meta.all_sectors);
- [2m 81[0m | [31;1m|[0m               if(meta.all_categories) setAllCategories(meta.all_categories);
- [2m 82[0m | [31;1m|[0m   
- [2m 83[0m | [31;1m|[0m               if (Array.isArray(perfData)) {
- [2m 84[0m | [31;1m|[0m                   setPerformanceData(perfData);
- [2m 85[0m | [31;1m|[0m               } else {
- [2m 86[0m | [31;1m|[0m                   setPerformanceData([]);
- [2m 87[0m | [31;1m|[0m               }
- [2m 88[0m | [31;1m|[0m   
- [2m 89[0m | [31;1m|[0m               // 3. Fetch Latest Backtest (for Stats)
- [2m 90[0m | [31;1m|[0m               // Backtest runs are usually linked by strategy code in this system currently?
- [2m 91[0m | [31;1m|[0m               // Or can we filter by strategy_id?
- [2m 92[0m | [31;1m|[0m               // The backtestAPI.getRuns likely takes code or id. Let's check logic. 
- [2m 93[0m | [31;1m|[0m               // Previous code used code. Let's try to use code if valid, else use ID.
- [2m 94[0m | [31;1m|[0m               if (strategyCode) {
- [2m 95[0m | [31;1m|[0m                   try {
- [2m 96[0m | [31;1m|[0m                        const runsRes = await backtestAPI.getRuns({ strategy_code: strategyCode }); 
- [2m 97[0m | [31;1m|[0m                        const runs = runsRes.data.data?.results || runsRes.data?.data || [];
- [2m 98[0m | [31;1m|[0m                        const latest = runs.find((r: any) => r.strategy_predefined === strategyCode && r.status === 'COMPLETED');
- [2m 99[0m | [31;1m|[0m                        if (latest) {
- [2m100[0m | [31;1m|[0m                            setLatestBacktest(latest);
- [2m101[0m | [31;1m|[0m                        }
- [2m102[0m | [31;1m|[0m                   } catch (e) { console.error(e) }
- [2m103[0m | [31;1m|[0m               }
- [2m104[0m | [31;1m|[0m   
- [2m105[0m | [31;1m|[0m           } catch (e) {
- [2m106[0m | [31;1m|[0m               console.error("Failed to load strategy details", e);
- [2m107[0m | [31;1m|[0m           } finally {
- [2m108[0m | [31;1m|[0m               setLoading(false);
- [2m109[0m | [31;1m|[0m           }
- [2m110[0m | [31;1m|[0m       }
- [2m111[0m | [31;1m|[0m       
- [2m112[0m | [31;1m|[0m       // Top 5 Performers from Backtest Data
- [2m113[0m | [31;1m|[0m       const topStocks = useMemo(() => {
- [2m114[0m | [31;1m|[0m           if (!latestBacktest || !latestBacktest.list_of_trades_json) return [];
- [2m115[0m | [31;1m|[0m   
- [2m116[0m | [31;1m|[0m           const stats: Record<string, { wins: number, total: number }> = {};
- [2m117[0m | [31;1m|[0m           latestBacktest.list_of_trades_json.forEach((trade: any) => {
- [2m118[0m | [31;1m|[0m               const sym = trade.stock_symbol;
- [2m119[0m | [31;1m|[0m               if (!stats[sym]) stats[sym] = { wins: 0, total: 0 };
- [2m120[0m | [31;1m|[0m               stats[sym].total += 1;
- [2m121[0m | [31;1m|[0m               if (trade.result === 'WIN') stats[sym].wins += 1;
- [2m122[0m | [31;1m|[0m           });
- [2m123[0m | [31;1m|[0m   
- [2m124[0m | [31;1m|[0m           return Object.entries(stats)
- [2m125[0m | [31;1m|[0m               .map(([symbol, data]) => ({
- [2m126[0m | [31;1m|[0m                   symbol,
- [2m127[0m | [31;1m|[0m                   wins: data.wins,
- [2m128[0m | [31;1m|[0m                   total: data.total,
- [2m129[0m | [31;1m|[0m                   rate: (data.wins / data.total) * 100
- [2m130[0m | [31;1m|[0m               }))
- [2m131[0m | [31;1m|[0m               .sort((a, b) => b.rate - a.rate || b.wins - a.wins)
- [2m132[0m | [31;1m|[0m               .slice(0, 5);
- [2m133[0m | [31;1m|[0m       }, [latestBacktest]);
- [2m134[0m | [31;1m|[0m   
- [2m135[0m | [31;1m|[0m       // Top 5 Live Performers (Global, Unfiltered or Filtered?)
- [2m136[0m | [31;1m|[0m       // User asked "Top 5 performance stock" above "This page shows live...".
- [2m137[0m | [31;1m|[0m       // Let's make it based on live data, perhaps global best.
- [2m138[0m | [31;1m|[0m       const topLivePerformers = useMemo(() => {
- [2m139[0m | [31;1m|[0m           return [...performanceData]
- [2m140[0m | [31;1m|[0m               .sort((a, b) => b.win_rate - a.win_rate || b.wins - a.wins)
- [2m141[0m | [31;1m|[0m               .slice(0, 5);
- [2m142[0m | [31;1m|[0m       }, [performanceData]);
- [2m143[0m | [31;1m|[0m   
- [2m144[0m | [31;1m|[0m       const filteredSignals = performanceData.filter(s => {
- [2m145[0m | [31;1m|[0m           const matchesSearch = s.stock_symbol?.toLowerCase().includes(searchTerm.toLowerCase());
- [2m146[0m | [31;1m|[0m           const matchesSector = selectedSector ? s.sectors?.includes(selectedSector) : true;
- [2m147[0m | [31;1m|[0m           const matchesCategory = selectedCategory ? s.categories?.includes(selectedCategory) : true;
- [2m148[0m | [31;1m|[0m           return matchesSearch && matchesSector && matchesCategory;
- [2m149[0m | [31;1m|[0m       });
- [2m150[0m | [31;1m|[0m       
- [2m151[0m | [31;1m|[0m       // Last Sync Stats (Loose)
- [2m152[0m | [31;1m|[0m       const lastSyncFromData = dateRange.max || 'N/A';
- [2m153[0m | [31;1m|[0m   
- [2m154[0m | [31;1m|[0m       if (loading) return <div className="flex h-screen items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div></div>;
- [2m155[0m | [31;1m|[0m       if (!strategy) return <div className="p-10 text-center">Strategy Not Found</div>;
- [2m156[0m | [31;1m|[0m   
- [2m157[0m | [31;1m|[0m       return (
- [2m158[0m | [31;1m|[0m           <div className="max-w-7xl mx-auto py-10 px-4 pb-20">
- [2m159[0m | [31;1m|[0m               {/* Header with Title and Info Tooltip */}
- [2m160[0m | [31;1m|[0m               <div className="flex justify-between items-start mb-10">
- [2m161[0m | [31;1m|[0m                   <div>
- [2m162[0m | [31;1m|[0m                        <div className="flex items-center gap-2">
- [2m163[0m | [31;1m|[0m                           <h1 className="text-3xl font-bold text-gray-900">{strategy.name}</h1>
- [2m164[0m | [31;1m|[0m                           <div className="relative">
- [2m165[0m | [31;1m|[0m                               <button 
- [2m166[0m | [31;1m|[0m                                   onMouseEnter={() => setShowDescription(true)}
- [2m167[0m | [31;1m|[0m                                   onMouseLeave={() => setShowDescription(false)}
- [2m168[0m | [31;1m|[0m                                   className="text-gray-400 hover:text-blue-600 transition p-1"
- [2m169[0m | [31;1m|[0m                               >
- [2m170[0m | [31;1m|[0m                                   <Info size={20} />
- [2m171[0m | [31;1m|[0m                               </button>
- [2m172[0m | [31;1m|[0m                               {/* Simple Tooltip */}
- [2m173[0m | [31;1m|[0m                               {showDescription && (
- [2m174[0m | [31;1m|[0m                                   <div className="absolute left-full top-0 ml-2 w-72 bg-gray-900 text-white text-sm p-3 rounded-lg shadow-xl z-50">
- [2m175[0m | [31;1m|[0m                                       <p>{strategy.description}</p>
- [2m176[0m | [31;1m|[0m                                       <div className="mt-2 text-xs text-gray-400 border-t border-gray-700 pt-2">
- [2m177[0m | [31;1m|[0m                                           Logic: Signal = Direction, Momentum = Close - Prev Close.
- [2m178[0m | [31;1m|[0m                                       </div>
- [2m179[0m | [31;1m|[0m                                   </div>
- [2m180[0m | [31;1m|[0m                               )}
- [2m181[0m | [31;1m|[0m                           </div>
- [2m182[0m | [31;1m|[0m                        </div>
- [2m183[0m | [31;1m|[0m                        <div className="flex items-center gap-3 mt-2 text-sm text-gray-500">
- [2m184[0m | [31;1m|[0m                            <span className="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-md font-medium">System Strategy</span>
- [2m185[0m | [31;1m|[0m                            <span className="flex items-center gap-1"><Clock size={14}/> Last Data: {lastSyncFromData}</span>
- [2m186[0m | [31;1m|[0m                        </div>
- [2m187[0m | [31;1m|[0m                   </div>
- [2m188[0m | [31;1m|[0m                   
- [2m189[0m | [31;1m|[0m                   {latestBacktest && (
- [2m190[0m | [31;1m|[0m                       <div className="text-right bg-gray-50 p-4 rounded-xl border border-gray-100 min-w-[200px]">
- [2m191[0m | [31;1m|[0m                           <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Win Rate</p>
- [2m192[0m | [31;1m|[0m[31;1m-[0m[31;1m>[0m                         <div className={`text - 4xl font - bold ${ Number(latestBacktest.win_rate) >= 50 ? 'text-green-600' : 'text-red-500' } `}>
-     : [31;1m`[0m[31;1m---[0m[33;1m                                         ^^^^[0m
-     : [31;1m`[0m[31;1m---[0m[31;1m-[0m [31;1mThis is the expression part of an expression statement[0m
- [2m193[0m |                                 {latestBacktest.win_rate}%
- [2m194[0m |                             </div>
- [2m195[0m |                             <p className="text-xs text-gray-400 mt-1">Based on last backtest</p>
-     `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./src/app/strategies/[id]/page.tsx
- GET /_next/static/webpack/fa916415713b29a9.webpack.hot-update.json 500 in 765ms
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- GET /strategies/DAILY_CLOSE_MOMENTUM 500 in 16ms
- ✓ Compiled /_not-found in 3.2s (1832 modules)
- ✓ Compiled (1818 modules)
- GET /_next/static/webpack/fa916415713b29a9.webpack.hot-update.json 500 in 3112ms
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 111ms
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 16ms
- GET /strategies/DAILY_CLOSE_MOMENTUM 200 in 51ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 48ms
- ○ Compiling /strategies/create ...
- ✓ Compiled /strategies/create in 1313ms (1828 modules)
- ✓ Compiled in 1092ms (1842 modules)
- ✓ Compiled in 893ms (1835 modules)
- ✓ Compiled in 420ms (1835 modules)
- ✓ Compiled in 725ms (1835 modules)
- GET /strategies 200 in 152ms
- ✓ Compiled /dashboard in 301ms (891 modules)
- ○ Compiling /stocks ...
- ✓ Compiled /stocks in 1023ms (1842 modules)
- ○ Compiling /watchlist ...
- ✓ Compiled /watchlist in 1015ms (1849 modules)
- ○ Compiling /stock-history ...
- ✓ Compiled /stock-history in 649ms (1869 modules)
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 525ms (912 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 794ms
- ○ Compiling /options ...
- ✓ Compiled /options in 1754ms (2911 modules)
- ○ Compiling /market-analysis ...
- ✓ Compiled /market-analysis in 1149ms (2926 modules)
- ○ Compiling /backtest ...
- ✓ Compiled /backtest in 815ms (1442 modules)
- ○ Compiling /backtest/[id] ...
- ✓ Compiled /backtest/[id] in 680ms (2909 modules)
- ○ Compiling /strategies ...
- ✓ Compiled /strategies in 711ms (1429 modules)
- ○ Compiling /wallet ...
- ✓ Compiled /wallet in 1014ms (2930 modules)
- GET /wallet 200 in 129ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 41ms
- GET /backtest 200 in 159ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 83ms
- ✓ Compiled in 2.9s (2917 modules)
- GET /backtest 200 in 268ms
- ✓ Compiled /_not-found in 420ms (1412 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 598ms
- ○ Compiling /backtest/[id] ...
- ✓ Compiled /backtest/[id] in 786ms (1418 modules)
- ○ Compiling /strategies/[id] ...
- ✓ Compiled /strategies/[id] in 1089ms (1426 modules)
-[?25h
+./src/components/layout/Sidebar.tsx
+./src/components/layout/AppLayout.tsx
+./src/app/layout.tsx
+ ✓ Compiled in 345ms (1561 modules)
+ GET /strategies 200 in 129ms

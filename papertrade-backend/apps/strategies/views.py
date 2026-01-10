@@ -17,8 +17,61 @@ class StrategyMasterViewSet(viewsets.ModelViewSet):
     queryset = StrategyMaster.objects.all()
     serializer_class = StrategyMasterSerializer
     permission_classes = [IsAuthenticated]
-    # lookup_field = 'code'  <-- Removed to use default 'pk' (id)
     
+    def get_queryset(self):
+        queryset = StrategyMaster.objects.all()
+        scope = self.request.query_params.get('scope')
+        
+        if scope == 'system':
+            # System strategies: Type=MANUAL OR Created by Admin
+            # Assumption: Admins have is_staff=True or role='admin'/'superadmin'
+            # Or simplified: All MANUAL strategies + Any AUTO strategy created by an admin
+            from django.db.models import Q
+            queryset = queryset.filter(
+                Q(type='MANUAL') | 
+                Q(created_by__role__in=['admin', 'superadmin']) | 
+                Q(created_by__is_superuser=True) |
+                Q(rule_based_strategy__created_by_admin__isnull=False)
+            ).distinct()
+            
+        return queryset
+
+    @action(detail=True, methods=['get'])
+    def scan_results(self, request, pk=None):
+        """
+        Get the latest available signals for this strategy.
+        """
+        strategy = self.get_object()
+        
+        # Find latest date
+        from django.db.models import Max
+        latest_date = StrategySignal.objects.filter(strategy=strategy).aggregate(Max('date'))['date__max']
+        
+        if not latest_date:
+            return Response({
+                'date': None,
+                'signals': [],
+                'message': 'No signals found for this strategy.'
+            })
+            
+        # Fetch signals for that date
+        signals = StrategySignal.objects.filter(strategy=strategy, date=latest_date).select_related('stock')
+        
+        # Serialize simply (just what we need for the table)
+        data = [{
+            'stock_symbol': s.stock.symbol,
+            'stock_name': s.stock.name,
+            'direction': s.signal_direction,
+            'entry_price': s.entry_price,
+            'expected_value': s.expected_value
+        } for s in signals]
+        
+        return Response({
+            'date': latest_date,
+            'signals': data,
+            'count': len(data)
+        })
+
     def list(self, request):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)

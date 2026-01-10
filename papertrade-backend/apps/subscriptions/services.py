@@ -69,7 +69,7 @@ class SubscriptionService:
             from apps.strategies.models import StrategyRuleBased
             return StrategyRuleBased.objects.filter(user=user).count()
             
-        elif feature_code in ['BACKTEST_RUN', 'TRADE_EXECUTE']:
+        elif feature_code in ['BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD']:
             # ACTIONS: Count usage records (Rate Limit)
             # Deleting the result DOES NOT free up the limit.
             from .models import SubscriptionUsage
@@ -112,7 +112,7 @@ class SubscriptionService:
         now = timezone.now()
         
         # Only track for Rate-Limited features
-        if feature_code not in ['BACKTEST_RUN', 'TRADE_EXECUTE']:
+        if feature_code not in ['BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD']:
             return
 
         from .models import SubscriptionUsage

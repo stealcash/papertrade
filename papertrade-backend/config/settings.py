@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'apps.watchlist',
     'apps.portfolio',
     'apps.subscriptions',
+    'apps.predictions',
 ]
 
 MIDDLEWARE = [

@@ -6,6 +6,7 @@ import { stocksAPI } from '@/lib/api';
 import { Search, TrendingUp, TrendingDown, Plus, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addStockToWatchlist, fetchMyStocks, removeStockFromWatchlist, bulkUpdateWatchlist } from '@/store/slices/myStocksSlice';
+import PredictionModal from '@/components/predictions/PredictionModal';
 
 export default function StocksPage() {
     const dispatch = useDispatch<any>();
@@ -148,8 +149,19 @@ export default function StocksPage() {
             : <ArrowDown size={14} className="text-blue-500 ml-1 inline" />;
     };
 
+    const [selectedStockForPrediction, setSelectedStockForPrediction] = useState<any>(null);
+
+    const handlePredict = (stock: any) => {
+        setSelectedStockForPrediction(stock);
+    };
+
     return (
         <div className="space-y-6">
+            <PredictionModal
+                stock={selectedStockForPrediction}
+                isOpen={!!selectedStockForPrediction}
+                onClose={() => setSelectedStockForPrediction(null)}
+            />
 
             {/* Header: Title and Save Button */}
             <div className="flex items-center justify-between">
@@ -314,6 +326,15 @@ export default function StocksPage() {
 
                                                             return effectiveIsAdded ? <Plus size={20} className="rotate-45" /> : <Plus size={20} />;
                                                         })()}
+                                                    </button>
+
+                                                    {/* Prediction Button */}
+                                                    <button
+                                                        onClick={() => handlePredict(stock)}
+                                                        className="p-2 text-purple-600 hover:bg-purple-50 dark:text-purple-400 dark:hover:bg-purple-900/20 rounded-lg transition"
+                                                        title="Add Prediction"
+                                                    >
+                                                        <TrendingUp size={20} />
                                                     </button>
                                                 </td>
                                             </tr>

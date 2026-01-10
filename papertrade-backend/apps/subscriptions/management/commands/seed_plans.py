@@ -18,7 +18,8 @@ class Command(BaseCommand):
                 'features': {
                     'STRATEGY_CREATE': {'enabled': True, 'limit': 1, 'period_days': 30},
                     'BACKTEST_RUN': {'enabled': True, 'limit': 5, 'period_days': 30},
-                    'TRADE_EXECUTE': {'enabled': True, 'limit': 10, 'period_days': 30}
+                    'TRADE_EXECUTE': {'enabled': True, 'limit': 10, 'period_days': 30},
+                    'PREDICTION_ADD': {'enabled': True, 'limit': 5, 'period_days': 30}
                 }
             },
             {
@@ -30,7 +31,8 @@ class Command(BaseCommand):
                 'features': {
                     'STRATEGY_CREATE': {'enabled': True, 'limit': 5, 'period_days': 30},
                     'BACKTEST_RUN': {'enabled': True, 'limit': 20, 'period_days': 30},
-                    'TRADE_EXECUTE': {'enabled': True, 'limit': 50, 'period_days': 30}
+                    'TRADE_EXECUTE': {'enabled': True, 'limit': 50, 'period_days': 30},
+                    'PREDICTION_ADD': {'enabled': True, 'limit': 20, 'period_days': 30}
                 }
             },
             {
@@ -42,7 +44,8 @@ class Command(BaseCommand):
                 'features': {
                     'STRATEGY_CREATE': {'enabled': True, 'limit': 20, 'period_days': 30},
                     'BACKTEST_RUN': {'enabled': True, 'limit': 100, 'period_days': 30},
-                    'TRADE_EXECUTE': {'enabled': True, 'limit': 200, 'period_days': 30}
+                    'TRADE_EXECUTE': {'enabled': True, 'limit': 200, 'period_days': 30},
+                    'PREDICTION_ADD': {'enabled': True, 'limit': 50, 'period_days': 30}
                 }
             },
             {
@@ -54,7 +57,8 @@ class Command(BaseCommand):
                 'features': {
                     'STRATEGY_CREATE': {'enabled': True, 'limit': -1, 'period_days': 30},
                     'BACKTEST_RUN': {'enabled': True, 'limit': -1, 'period_days': 30},
-                    'TRADE_EXECUTE': {'enabled': True, 'limit': -1, 'period_days': 30}
+                    'TRADE_EXECUTE': {'enabled': True, 'limit': -1, 'period_days': 30},
+                    'PREDICTION_ADD': {'enabled': True, 'limit': -1, 'period_days': 30}
                 }
             }
         ]

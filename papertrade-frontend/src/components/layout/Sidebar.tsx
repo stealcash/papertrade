@@ -2,7 +2,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Home, TrendingUp, Zap, BarChart3, PieChart, Wallet,
-  Bell, User, BookOpen, Crown, LogOut
+  Bell, User, BookOpen, Crown, LogOut, Scan, LineChart, Target, FlaskConical, History
 } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '@/store/slices/authSlice';
@@ -27,12 +27,14 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
   const navItems = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
     { name: "Strategies", href: "/strategies", icon: Zap },
-    { name: "Stocks", href: "/stocks", icon: TrendingUp },
+    { name: "Stocks", href: "/stocks", icon: LineChart },
     { name: "My Watchlist", href: "/watchlist", icon: BookOpen },
-    { name: "History", href: "/stock-history", icon: BookOpen },
+    { name: "My Predictions", href: "/predictions", icon: Target },
+    { name: "Scanner", href: "/scanner", icon: Scan },
+    { name: "History", href: "/stock-history", icon: History },
     { name: "Options", href: "/options", icon: Zap },
     { name: "Analysis", href: "/market-analysis", icon: BarChart3 },
-    { name: "Backtest", href: "/backtest", icon: BarChart3 },
+    { name: "Backtest", href: "/backtest", icon: FlaskConical },
     { name: "Wallet", href: "/wallet", icon: Wallet },
     { name: "Notifications", href: "/notifications", icon: Bell },
     { name: "Profile", href: "/profile", icon: User },

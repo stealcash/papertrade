@@ -58,6 +58,15 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     // Exclude header/nav on Home, Login, Signup
     const showNav = !["/", "/login", "/signup"].includes(pathname);
 
+    // Special Layout for Scanner (Full screen, no global sidebar)
+    if (pathname.startsWith('/scanner')) {
+        return (
+            <div className="h-screen w-full bg-gray-50 dark:bg-gray-950 overflow-hidden text-gray-900 dark:text-gray-100">
+                {children}
+            </div>
+        );
+    }
+
     if (!showNav) {
         return <div className="min-h-screen bg-gray-50">{children}</div>;
     }

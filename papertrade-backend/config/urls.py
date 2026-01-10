@@ -30,5 +30,6 @@ urlpatterns = [
         path('admin-panel/', include('apps.adminpanel.urls')),
         path('portfolio/', include('apps.portfolio.urls')),
         path('subscriptions/', include('apps.subscriptions.urls')),
+        path('predictions/', include('apps.predictions.urls')),
     ])),
 ]
