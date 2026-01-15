@@ -1,60 +1,64 @@
-DEBUG 2026-01-10 10:44:25,865 functional 
+DEBUG 2026-01-15 19:05:17,431 functional 
 def accumulate(self, *args, **kwargs):
     return 1
 
-DEBUG 2026-01-10 10:44:25,866 functional 
-def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+DEBUG 2026-01-15 19:05:17,431 functional 
+def delete_old_notifications():
     return 1
 
-DEBUG 2026-01-10 10:44:25,866 functional 
+DEBUG 2026-01-15 19:05:17,431 functional 
 def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
     return 1
 
-DEBUG 2026-01-10 10:44:25,866 functional 
+DEBUG 2026-01-15 19:05:17,432 functional 
 def chunks(task, it, n):
     return 1
 
-DEBUG 2026-01-10 10:44:25,866 functional 
-def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
-    return 1
-
-DEBUG 2026-01-10 10:44:25,866 functional 
-def auto_sync_daily():
-    return 1
-
-DEBUG 2026-01-10 10:44:25,867 functional 
-def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
-    return 1
-
-DEBUG 2026-01-10 10:44:25,867 functional 
-def xmap(task, it):
-    return 1
-
-DEBUG 2026-01-10 10:44:25,867 functional 
-def debug_task(self):
-    return 1
-
-DEBUG 2026-01-10 10:44:25,867 functional 
-def backend_cleanup():
-    return 1
-
-DEBUG 2026-01-10 10:44:25,867 functional 
+DEBUG 2026-01-15 19:05:17,432 functional 
 def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
     return 1
 
-DEBUG 2026-01-10 10:44:25,867 functional 
+DEBUG 2026-01-15 19:05:17,432 functional 
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+
+DEBUG 2026-01-15 19:05:17,432 functional 
 def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
     return 1
 
-DEBUG 2026-01-10 10:44:25,867 functional 
+DEBUG 2026-01-15 19:05:17,432 functional 
+def auto_sync_daily():
+    return 1
+
+DEBUG 2026-01-15 19:05:17,432 functional 
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+
+DEBUG 2026-01-15 19:05:17,433 functional 
+def xmap(task, it):
+    return 1
+
+DEBUG 2026-01-15 19:05:17,433 functional 
+def debug_task(self):
+    return 1
+
+DEBUG 2026-01-15 19:05:17,433 functional 
+def backend_cleanup():
+    return 1
+
+DEBUG 2026-01-15 19:05:17,433 functional 
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+
+DEBUG 2026-01-15 19:05:17,433 functional 
 def chain(*args, **kwargs):
     return 1
 
-DEBUG 2026-01-10 10:44:25,868 functional 
+DEBUG 2026-01-15 19:05:17,433 functional 
 def xstarmap(task, it):
     return 1
 
-[2026-01-10 10:44:25,972: WARNING/MainProcess] 
+[2026-01-15 19:05:17,540: WARNING/MainProcess] 
 Setting ssl_cert_reqs=CERT_NONE when connecting to redis means that celery will not validate the identity of the redis broker when connecting. This leaves you vulnerable to man in the middle attacks.
 
 SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
@@ -63,10 +67,10 @@ SETTINGS-DEBUG: Loaded .env successfully
  
  -------------- celery@Chat360s-Air.lan v5.3.4 (emerald-rush)
 --- ***** ----- 
--- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2026-01-10 10:44:25
+-- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2026-01-15 19:05:17
 - *** --- * --- 
 - ** ---------- [config]
-- ** ---------- .> app:         papertrade:0x102d182f0
+- ** ---------- .> app:         papertrade:0x1065482f0
 - ** ---------- .> transport:   rediss://default:**@pumped-turkey-23712.upstash.io:6379//
 - ** ---------- .> results:     rediss://default:**@pumped-turkey-23712.upstash.io:6379/
 - *** --- * --- .> concurrency: 8 (prefork)
@@ -78,18 +82,22 @@ SETTINGS-DEBUG: Loaded .env successfully
 
 [tasks]
   . apps.backtests.tasks.execute_backtest_task
+  . apps.notifications.tasks.delete_old_notifications
   . apps.sync.tasks.auto_sync_daily
   . apps.sync.tasks.sync_hard_task
   . apps.sync.tasks.sync_stocks_task
   . config.celery.debug_task
 
-[2026-01-10 10:44:26,422: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+[2026-01-15 19:05:18,044: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
 whether broker connection retries are made during startup in Celery 6.0 and above.
 If you wish to retain the existing behavior for retrying connections on startup,
 you should set broker_connection_retry_on_startup to True.
   warnings.warn(
 
-[2026-01-10 10:44:29,195: CRITICAL/MainProcess] Unrecoverable error: ResponseError('max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details')
+[2026-01-15 19:05:19,014: ERROR/MainProcess] consumer: Cannot connect to rediss://default:**@pumped-turkey-23712.upstash.io:6379//: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details.
+Trying again in 2.00 seconds... (1/100)
+
+[2026-01-15 19:05:23,032: CRITICAL/MainProcess] Unrecoverable error: ResponseError('max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details')
 Traceback (most recent call last):
   File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/worker.py", line 202, in start
     self.blueprint.start(self)
@@ -140,30 +148,17 @@ Traceback (most recent call last):
   File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/commands/core.py", line 2341, in set
     return self.execute_command("SET", *pieces, **options)
            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/client.py", line 536, in execute_command
-    return conn.retry.call_with_retry(
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        lambda: self._send_command_parse_response(
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<2 lines>...
-        lambda error: self._disconnect_raise(conn, error),
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/retry.py", line 46, in call_with_retry
-    return do()
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/client.py", line 537, in <lambda>
-    lambda: self._send_command_parse_response(
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        conn, command_name, *args, **options
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ),
-    ^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/client.py", line 513, in _send_command_parse_response
-    return self.parse_response(conn, command_name, **options)
-           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/client.py", line 553, in parse_response
-    response = connection.read_response()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/client.py", line 533, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 1086, in get_connection
+    connection.connect()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 276, in connect
+    self.on_connect()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 342, in on_connect
+    auth_response = self.read_response()
   File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 524, in read_response
     raise response
 redis.exceptions.ResponseError: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details

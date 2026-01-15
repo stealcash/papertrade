@@ -328,13 +328,13 @@ export default function StocksPage() {
                                                         })()}
                                                     </button>
 
-                                                    {/* Prediction Button */}
                                                     <button
                                                         onClick={() => handlePredict(stock)}
-                                                        className="p-2 text-purple-600 hover:bg-purple-50 dark:text-purple-400 dark:hover:bg-purple-900/20 rounded-lg transition"
+                                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-semibold rounded-lg hover:bg-purple-100 transition ml-2"
                                                         title="Add Prediction"
                                                     >
-                                                        <TrendingUp size={20} />
+                                                        <TrendingUp size={16} />
+                                                        Add Prediction
                                                     </button>
                                                 </td>
                                             </tr>

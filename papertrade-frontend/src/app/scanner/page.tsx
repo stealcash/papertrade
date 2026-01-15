@@ -79,6 +79,8 @@ export default function ScannerPage() {
     };
 
     const handleSelectStrategy = async (strategy: Strategy) => {
+        if (selectedStrategy?.id === strategy.id) return;
+
         setSelectedStrategy(strategy);
         setScanResult(null); // Clear previous
         setIsLoadingScan(true);

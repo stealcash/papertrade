@@ -14,6 +14,18 @@ class StockPredictionViewSet(viewsets.ModelViewSet):
         start_date = self.request.query_params.get('start_date')
         end_date = self.request.query_params.get('end_date')
         
+        if start_date and end_date:
+             from datetime import datetime, timedelta
+             try:
+                 start = datetime.strptime(start_date, '%Y-%m-%d').date()
+                 end = datetime.strptime(end_date, '%Y-%m-%d').date()
+                 
+                 if (end - start).days > 7:
+                     from rest_framework.exceptions import ValidationError
+                     raise ValidationError({"date_range": "Date range cannot exceed 7 days."})
+             except ValueError:
+                 pass # Let generic filter logic handle invalid dates or ignore
+        
         if start_date:
             queryset = queryset.filter(created_at__date__gte=start_date)
         if end_date:

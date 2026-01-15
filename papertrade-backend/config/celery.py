@@ -31,6 +31,10 @@ app.conf.beat_schedule = {
         'task': 'apps.sync.tasks.auto_sync_daily',
         'schedule': crontab(hour=hour, minute=minute),
     },
+    'cleanup-notifications-daily': {
+        'task': 'apps.notifications.tasks.delete_old_notifications',
+        'schedule': crontab(hour=3, minute=30),  # Run at 3:30 AM
+    },
 }
 
 @app.task(bind=True)

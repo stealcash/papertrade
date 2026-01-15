@@ -19,7 +19,8 @@ import {
     ConfigIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
-    XIcon
+    XIcon,
+    BellIcon
 } from '@/components/icons';
 
 interface SidebarProps {
@@ -96,6 +97,12 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen, isCollapsed, to
             path: '/config',
             icon: ConfigIcon,
             show: isSuperadmin || user?.can_manage_config
+        },
+        {
+            name: 'Notifications',
+            path: '/notifications',
+            icon: BellIcon,
+            show: isSuperadmin || user?.role === 'admin'
         },
         {
             name: 'Plans',

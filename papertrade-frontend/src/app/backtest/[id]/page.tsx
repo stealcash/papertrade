@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, Fragment } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { backtestAPI } from '@/lib/api';
 import { ArrowLeft, Download, Calendar, TrendingUp, TrendingDown, Target, Search } from 'lucide-react';
@@ -230,33 +230,42 @@ export default function BacktestDetailPage() {
                                     </tr>
                                 ) : (
                                     predictions.map((row: any, i: number) => (
-                                        <tr key={i} className="hover:bg-gray-50 transition">
-                                            <td className="px-6 py-4 font-medium text-gray-900">{row.stock_symbol}</td>
-                                            <td className="px-6 py-4 text-gray-500">{row.signal_date}</td>
-                                            <td className="px-6 py-4 text-right font-mono">
-                                                <div className={`flex items-center justify-end gap-1 ${row.actual_close > row.prev_close ? 'text-green-600' : row.actual_close < row.prev_close ? 'text-red-600' : 'text-gray-700'}`}>
-                                                    <span>₹{row.actual_close}</span>
-                                                    {row.actual_close > row.prev_close ? <TrendingUp size={14} /> : row.actual_close < row.prev_close ? <TrendingDown size={14} /> : null}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-right">
-                                                <div className="flex items-center justify-end gap-1">
-                                                    <span className="font-mono">₹{row.expected_price.toFixed(2)}</span>
-                                                    {row.signal === 'UP'
-                                                        ? <TrendingUp size={14} className="text-green-500" />
-                                                        : <TrendingDown size={14} className="text-red-500" />
-                                                    }
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-center">
-                                                <span className={`px-2 py-1 rounded text-xs font-bold ${row.result === 'WIN'
-                                                    ? 'bg-green-100 text-green-700'
-                                                    : 'bg-red-100 text-red-700'
-                                                    }`}>
-                                                    {row.result === 'WIN' ? '+1' : '0'}
-                                                </span>
-                                            </td>
-                                        </tr>
+                                        <Fragment key={i}>
+                                            {(i === 0 || row.stock_symbol !== predictions[i - 1].stock_symbol) && (
+                                                <tr className="bg-gray-100 dark:bg-gray-800">
+                                                    <td colSpan={5} className="px-6 py-2 font-bold text-sm text-gray-800 dark:text-gray-200">
+                                                        {row.stock_symbol}
+                                                    </td>
+                                                </tr>
+                                            )}
+                                            <tr className="hover:bg-gray-50 transition">
+                                                <td className="px-6 py-4 font-medium text-gray-900">{row.stock_symbol}</td>
+                                                <td className="px-6 py-4 text-gray-500">{row.signal_date}</td>
+                                                <td className="px-6 py-4 text-right font-mono">
+                                                    <div className={`flex items-center justify-end gap-1 ${row.actual_close > row.prev_close ? 'text-green-600' : row.actual_close < row.prev_close ? 'text-red-600' : 'text-gray-700'}`}>
+                                                        <span>₹{row.actual_close}</span>
+                                                        {row.actual_close > row.prev_close ? <TrendingUp size={14} /> : row.actual_close < row.prev_close ? <TrendingDown size={14} /> : null}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4 text-right">
+                                                    <div className="flex items-center justify-end gap-1">
+                                                        <span className="font-mono">₹{row.expected_price.toFixed(2)}</span>
+                                                        {row.signal === 'UP'
+                                                            ? <TrendingUp size={14} className="text-green-500" />
+                                                            : <TrendingDown size={14} className="text-red-500" />
+                                                        }
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4 text-center">
+                                                    <span className={`px-2 py-1 rounded text-xs font-bold ${row.result === 'WIN'
+                                                        ? 'bg-green-100 text-green-700'
+                                                        : 'bg-red-100 text-red-700'
+                                                        }`}>
+                                                        {row.result === 'WIN' ? '+1' : '0'}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </Fragment>
                                     ))
                                 )}
                             </tbody>

@@ -283,7 +283,7 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                         <div className="space-y-8">
                             <div className="flex justify-between items-center">
                                 <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">Select Strategy</h3>
-                                <a href="/backtest/strategies/create" className="text-sm text-blue-600 hover:underline font-medium">+ Create New Strategy</a>
+                                <a href="/strategies/create" className="text-sm text-blue-600 hover:underline font-medium">+ Create New Strategy</a>
                             </div>
 
                             {/* My Strategies */}

@@ -21,6 +21,8 @@ class SubscriptionViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['get'])
     def current(self, request):
         """Get current user's subscription."""
+        from .services import SubscriptionService
+        
         now = timezone.now()
         sub = UserSubscription.objects.filter(
             user=request.user, 
@@ -34,7 +36,24 @@ class SubscriptionViewSet(viewsets.ViewSet):
             return get_success_response(None)
             
         serializer = UserSubscriptionSerializer(sub)
-        return get_success_response(serializer.data)
+        data = serializer.data
+        
+        # Enrich with usage (Frontend requests this)
+        # We fetch usage for all potential features or just ones in the plan
+        features = sub.plan.features if sub.plan else {}
+        usage_data = {}
+        for code in ['STRATEGY_CREATE', 'BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD']:
+            # We can check if it's in the plan features first to save queries, or just get 0
+            # Ideally we check enabled first
+            if code in features and features[code].get('enabled'):
+                 period_days = features[code].get('period_days', 30)
+                 usage_data[code] = SubscriptionService.get_usage_count(request.user, code, period_days)
+            else:
+                 usage_data[code] = 0
+                 
+        data['usage'] = usage_data
+        
+        return get_success_response(data)
 
     @action(detail=False, methods=['post'])
     def validate_coupon(self, request):

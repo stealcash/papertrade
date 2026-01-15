@@ -1,112 +1,118 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { notificationsAPI } from '@/lib/api';
-import { Bell, Check, CheckCheck } from 'lucide-react';
+import apiClient from '@/lib/api';
+import { Bell, CheckCircle, Info, AlertTriangle, XCircle, Clock, Calendar } from 'lucide-react';
 
 export default function NotificationsPage() {
     const [notifications, setNotifications] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        load();
+        fetchNotifications();
     }, []);
 
-    async function load() {
+    const fetchNotifications = async () => {
         try {
-            const res = await notificationsAPI.getAll();
+            const res = await apiClient.get('/notifications/');
             setNotifications(res.data.data || []);
-        } catch {
-            setNotifications([
-                { id: 1, title: 'Welcome 🎉', message: 'Start your PaperTrade journey', created_at: new Date().toISOString(), is_read: false },
-                { id: 2, title: 'Market Update 📈', message: 'NIFTY +1.3% today', created_at: new Date().toISOString(), is_read: false },
-                { id: 3, title: 'Trade Executed', message: 'Order for RELIANCE filled', created_at: new Date().toISOString(), is_read: true },
-                { id: 4, title: 'Strategy Alert 🔥', message: 'MA crossover hit BUY', created_at: new Date().toISOString(), is_read: true }
-            ]);
+        } catch (error) {
+            console.error('Failed to fetch notifications', error);
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
-    }
+    };
 
-    async function markRead(id: number) {
-        setNotifications(n => n.map(x => x.id === id ? { ...x, is_read: true } : x));
-        try { await notificationsAPI.markRead(id); } catch { }
-    }
+    const getIcon = (type: string) => {
+        switch (type) {
+            case 'success': return <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-full"><CheckCircle className="text-green-600 dark:text-green-400" size={20} /></div>;
+            case 'warning': return <div className="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-full"><AlertTriangle className="text-yellow-600 dark:text-yellow-400" size={20} /></div>;
+            case 'error': return <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-full"><XCircle className="text-red-600 dark:text-red-400" size={20} /></div>;
+            default: return <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full"><Info className="text-blue-600 dark:text-blue-400" size={20} /></div>;
+        }
+    };
 
-    async function markAll() {
-        setNotifications(n => n.map(x => ({ ...x, is_read: true })));
-        try { await notificationsAPI.markAllRead(); } catch { }
-    }
-
-    if (loading) return (
-        <div className="flex justify-center items-center h-60 text-gray-500 text-lg">
-            Loading notifications...
-        </div>
-    );
-
-    const unread = notifications.filter(n => !n.is_read).length;
+    const formatTime = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    };
 
     return (
-        <div className="max-w-6xl mx-auto space-y-8">
-
-            {/* ─ HEADER ─ */}
-            <div className="flex justify-between items-center">
+        <div className="max-w-3xl mx-auto py-10 px-6">
+            <div className="flex items-center gap-4 mb-10 pb-6 border-b border-gray-200 dark:border-gray-800">
+                <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg shadow-blue-500/20 text-white">
+                    <Bell size={28} />
+                </div>
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Notifications</h1>
-                    <p className="text-gray-500">{unread} unread</p>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Notifications</h1>
+                    <p className="text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-2">
+                        <Calendar size={14} />
+                        Last 30 days history
+                    </p>
                 </div>
-
-                {unread > 0 &&
-                    <button
-                        onClick={markAll}
-                        className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
-                    >
-                        Mark all as read
-                    </button>
-                }
             </div>
 
-            {/* ─ LIST ─ */}
-            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden">
-
-                {notifications.length === 0 && (
-                    <div className="p-16 text-gray-500 dark:text-gray-400 text-center space-y-3">
-                        <Bell size={40} className="mx-auto opacity-40" />
-                        <p>No new notifications</p>
+            {loading ? (
+                <div className="space-y-4">
+                    {[1, 2, 3].map(i => (
+                        <div key={i} className="animate-pulse h-24 bg-gray-100 dark:bg-gray-800 rounded-xl"></div>
+                    ))}
+                </div>
+            ) : notifications.length === 0 ? (
+                <div className="text-center py-24 bg-gray-50 dark:bg-gray-900/50 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-800">
+                    <div className="bg-white dark:bg-gray-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                        <Bell className="text-gray-300 dark:text-gray-600" size={24} />
                     </div>
-                )}
-
-                <div className="divide-y divide-gray-200 dark:divide-gray-800">
-                    {notifications.map(n =>
-                        <div key={n.id}
-                            className={`p-6 flex justify-between items-start 
-                                        ${n.is_read ? "bg-white dark:bg-gray-900" : "bg-gray-50 dark:bg-gray-800"} hover:bg-gray-100 dark:hover:bg-gray-700 transition`}>
-
-                            <div className="flex-1 pr-4">
-                                <div className="flex gap-2 items-center">
-                                    <Bell size={16} className={n.is_read ? "text-gray-500" : "text-black dark:text-white"} />
-                                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">{n.title}</h3>
-                                    {!n.is_read && <span className="h-2 w-2 bg-black dark:bg-blue-500 rounded-full"></span>}
-                                </div>
-
-                                <p className="text-gray-600 dark:text-gray-400 mt-1">{n.message}</p>
-                                <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
-                                    {new Date(n.created_at).toLocaleString()}
-                                </p>
-                            </div>
-
-                            {!n.is_read && (
-                                <button
-                                    onClick={() => markRead(n.id)}
-                                    className="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white flex gap-2 items-center text-sm"
-                                >
-                                    <Check size={16} />
-                                    Mark Read
-                                </button>
-                            )}
-                        </div>
-                    )}
+                    <p className="text-gray-900 dark:text-gray-300 font-semibold text-lg">All caught up!</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">No new notifications to display.</p>
                 </div>
-            </div>
+            ) : (
+                <div className="space-y-5">
+                    {notifications.map((note, index) => (
+                        <div
+                            key={index}
+                            className={`group relative overflow-hidden bg-white dark:bg-gray-900 rounded-2xl border transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 ${!note.is_read
+                                    ? 'border-blue-200 dark:border-blue-900/50 shadow-md shadow-blue-500/5'
+                                    : 'border-gray-200 dark:border-gray-800 hover:border-blue-300 dark:hover:border-blue-800'
+                                }`}
+                        >
+                            {/* Unread Indicator Bar */}
+                            {!note.is_read && (
+                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500"></div>
+                            )}
+
+                            <div className="p-6 flex gap-5">
+                                <div className="shrink-0 mt-1">
+                                    {getIcon(note.notification_type)}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex justify-between items-start gap-4 mb-2">
+                                        <h3 className={`text-lg font-semibold truncate pr-4 ${!note.is_read ? 'text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300'}`}>
+                                            {note.title}
+                                        </h3>
+                                        <span className="shrink-0 text-xs font-medium text-gray-400 flex items-center gap-1.5 bg-gray-50 dark:bg-gray-800 px-3 py-1 rounded-full border border-gray-100 dark:border-gray-700">
+                                            <Clock size={12} />
+                                            {formatTime(note.created_at)}
+                                        </span>
+                                    </div>
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed whitespace-pre-line">
+                                        {note.message}
+                                    </p>
+
+                                    {note.source === 'broadcast' && (
+                                        <div className="mt-4 flex items-center gap-2">
+                                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 text-[10px] font-bold uppercase tracking-wider border border-purple-100 dark:border-purple-800">
+                                                <Info size={10} strokeWidth={3} />
+                                                System
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

@@ -9,15 +9,17 @@ import { RootState } from '@/store';
 import { fetchMyStocks, removeStockFromWatchlist, reorderWatchlist, bulkUpdateWatchlist, MyStock } from '@/store/slices/myStocksSlice';
 import { TrendingUp, TrendingDown, Trash2, GripVertical } from 'lucide-react';
 import Link from 'next/link';
+import PredictionModal from '@/components/predictions/PredictionModal';
 
 interface SortableItemProps {
     stock: any;
     onRemove: (id: number) => void;
     isSelected: boolean;
     onToggle: (id: number) => void;
+    onPredict: (stock: any) => void;
 }
 
-function SortableItem({ stock, onRemove, isSelected, onToggle }: SortableItemProps) {
+function SortableItem({ stock, onRemove, isSelected, onToggle, onPredict }: SortableItemProps) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: stock.id });
 
     const style = {
@@ -57,9 +59,20 @@ function SortableItem({ stock, onRemove, isSelected, onToggle }: SortableItemPro
                         </div>
                     )}
                 </div>
+
+                {/* Prediction Button */}
+                <button
+                    onClick={() => onPredict(stock)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-semibold rounded-lg hover:bg-purple-100 transition"
+                    title="Add Prediction"
+                >
+                    <TrendingUp size={16} />
+                    Predict
+                </button>
+
                 <button
                     onClick={() => onRemove(stock.id)}
-                    className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition opacity-0 group-hover:opacity-100"
+                    className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition"
                     title="Remove from Watchlist"
                 >
                     <Trash2 size={18} />
@@ -84,6 +97,7 @@ export default function MyStocksPage() {
     const [localStocks, setLocalStocks] = useState<MyStock[]>([]);
     const [hasUnsavedOrder, setHasUnsavedOrder] = useState(false);
     const [isSavingOrder, setIsSavingOrder] = useState(false);
+    const [selectedStockForPrediction, setSelectedStockForPrediction] = useState<any>(null);
 
     const handleToggleSelection = (id: number) => {
         setSelectedIds(prev => {
@@ -165,6 +179,11 @@ export default function MyStocksPage() {
 
     return (
         <div className="max-w-4xl mx-auto space-y-6">
+            <PredictionModal
+                stock={selectedStockForPrediction}
+                isOpen={!!selectedStockForPrediction}
+                onClose={() => setSelectedStockForPrediction(null)}
+            />
             <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">My Watchlist</h1>
                 <div className="flex items-center gap-2">
@@ -215,6 +234,7 @@ export default function MyStocksPage() {
                                     onRemove={(id) => dispatch(removeStockFromWatchlist({ id }))}
                                     isSelected={selectedIds.includes(stock.id)}
                                     onToggle={handleToggleSelection}
+                                    onPredict={(s) => setSelectedStockForPrediction(s)}
                                 />
                             ))}
                         </SortableContext>

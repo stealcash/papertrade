@@ -148,7 +148,14 @@ export default function StockDetailPage() {
                         <ArrowLeft size={24} />
                     </button>
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 leading-tight">{stock.symbol}</h1>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 leading-tight">
+                            {stock.symbol}
+                            {stock.is_index && (
+                                <span className="ml-2 px-2 py-0.5 text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 rounded align-middle">
+                                    INDEX
+                                </span>
+                            )}
+                        </h1>
                         <p className="text-gray-500 dark:text-gray-400 text-sm">{stock.company_name}</p>
                     </div>
                 </div>
@@ -231,26 +238,28 @@ export default function StockDetailPage() {
             </div>
 
             {/* Trading */}
-            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm rounded-xl p-6">
-                <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Trade Stock</h2>
+            {!stock.is_index && (
+                <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm rounded-xl p-6">
+                    <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Trade Stock</h2>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <button
-                        onClick={() => openTradeModal('BUY')}
-                        disabled={!stock.last_price}
-                        className="py-3 bg-black dark:bg-gray-800 text-white dark:text-gray-100 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        Buy
-                    </button>
-                    <button
-                        onClick={() => openTradeModal('SELL')}
-                        disabled={!stock.last_price}
-                        className="py-3 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        Sell
-                    </button>
+                    <div className="grid grid-cols-2 gap-4">
+                        <button
+                            onClick={() => openTradeModal('BUY')}
+                            disabled={!stock.last_price}
+                            className="py-3 bg-black dark:bg-gray-800 text-white dark:text-gray-100 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Buy
+                        </button>
+                        <button
+                            onClick={() => openTradeModal('SELL')}
+                            disabled={!stock.last_price}
+                            className="py-3 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            Sell
+                        </button>
+                    </div>
                 </div>
-            </div>
+            )}
 
             {/* Trade Modal */}
             {tradeModal.isOpen && (

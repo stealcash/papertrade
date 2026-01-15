@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Stock, StockCategory, StockPriceDaily, Stock5MinByDay
+from apps.sectors.serializers import SectorSerializer
 
 
 class StockCategorySerializer(serializers.ModelSerializer):
@@ -15,6 +16,7 @@ class StockSerializer(serializers.ModelSerializer):
     """Serializer for Stock model."""
     
     categories_details = StockCategorySerializer(source='categories', many=True, read_only=True)
+    sectors_details = SectorSerializer(source='sectors', many=True, read_only=True)
     last_price = serializers.SerializerMethodField()
     price_change = serializers.SerializerMethodField()
     is_in_watchlist = serializers.SerializerMethodField()
@@ -23,7 +25,7 @@ class StockSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stock
         fields = ['id', 'symbol', 'name', 'exchange_suffix', 
-                 'categories', 'categories_details', 'sectors', 'status', 'is_index',
+                 'categories', 'categories_details', 'sectors', 'sectors_details', 'status', 'is_index',
                  'last_synced_at', 'last_price', 'price_change', 'is_in_watchlist',
                  'active_signals',
                  'extra', 'created_at', 'updated_at']

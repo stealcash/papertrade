@@ -158,6 +158,47 @@ export default function PredictionsPage() {
         );
     };
 
+    // Helper to add days
+    const addDays = (dateStr: string, days: number) => {
+        const date = new Date(dateStr);
+        date.setDate(date.getDate() + days);
+        return date.toISOString().split('T')[0];
+    };
+
+    const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newStart = e.target.value;
+        setStartDate(newStart);
+
+        // Enforce max 7 days
+        const start = new Date(newStart);
+        const end = new Date(endDate);
+        const diffTime = Math.abs(end.getTime() - start.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays > 7 && end > start) {
+            setEndDate(addDays(newStart, 7));
+        } else if (end < start) {
+            setEndDate(newStart);
+        }
+    };
+
+    const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newEnd = e.target.value;
+        setEndDate(newEnd);
+
+        // Enforce max 7 days
+        const start = new Date(startDate);
+        const end = new Date(newEnd);
+        const diffTime = Math.abs(end.getTime() - start.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays > 7 && end > start) {
+            setStartDate(addDays(newEnd, -7));
+        } else if (end < start) {
+            setStartDate(newEnd);
+        }
+    };
+
     if (isLoading) {
         return (
             <div className="flex justify-center p-12">
@@ -171,7 +212,7 @@ export default function PredictionsPage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                        My Predictions
+                        My Market Predictions
                     </h1>
                     <p className="text-gray-500 dark:text-gray-400">
                         Track performance of your paper trades over time.
@@ -188,21 +229,24 @@ export default function PredictionsPage() {
                     <input
                         type="date"
                         value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
+                        onChange={handleStartDateChange}
+                        max={endDate} // Can't go past end date logically
                         className="bg-gray-50 dark:bg-gray-700 border-0 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500"
                     />
                     <span className="text-gray-400">-</span>
                     <input
                         type="date"
                         value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
+                        min={startDate}
+                        max={addDays(startDate, 7)} // VISUAL TIP: Force max date in picker
+                        onChange={handleEndDateChange}
                         className="bg-gray-50 dark:bg-gray-700 border-0 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500"
                     />
 
                     {(predictions.length > 0) && (
                         <div className="ml-2 pl-2 border-l border-gray-200 dark:border-gray-700">
                             <Button variant="danger" size="sm" onClick={handleDeleteAll}>
-                                Clear Visible
+                                Delete Filtered
                             </Button>
                         </div>
                     )}
@@ -273,8 +317,8 @@ export default function PredictionsPage() {
                                                 {/* Direction */}
                                                 <td className="px-6 py-4">
                                                     <span className={`px-2 py-1 rounded text-xs font-bold ${pred.direction === 'BUY'
-                                                            ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                                                            : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                                                        ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                                                        : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
                                                         }`}>
                                                         {pred.direction}
                                                     </span>

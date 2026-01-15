@@ -237,42 +237,65 @@ class StockPriceDailyViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     
     def list(self, request):
-        """List stock prices with filtering."""
-        queryset = self.get_queryset()
+        """List stock prices with filtered stocks (Max 5)."""
         
+        # 1. Filter Stocks First
+        stock_queryset = Stock.objects.all().order_by('symbol')
+
         # Filter by stock_symbol
         stock_symbol = request.query_params.get('stock_symbol')
         if stock_symbol:
-            queryset = queryset.filter(stock__symbol=stock_symbol)
+            stock_queryset = stock_queryset.filter(symbol=stock_symbol)
 
         # Filter by stocks (comma-separated IDs)
         stock_ids = request.query_params.get('stock_ids')
         if stock_ids:
             ids = [id.strip() for id in stock_ids.split(',') if id.strip()]
             if ids:
-                queryset = queryset.filter(stock_id__in=ids)
-        
+                stock_queryset = stock_queryset.filter(id__in=ids)
         # Backward compatibility for single stock_id
         elif request.query_params.get('stock_id'):
-            queryset = queryset.filter(stock_id=request.query_params.get('stock_id'))
+            stock_queryset = stock_queryset.filter(id=request.query_params.get('stock_id'))
         
-        # Filter by sectors (comma-separated ids)
+        # Filter by sectors
         sector_ids = request.query_params.get('sector_ids')
         if sector_ids:
             ids = [id.strip() for id in sector_ids.split(',') if id.strip()]
             if ids:
-                queryset = queryset.filter(stock__sectors__id__in=ids)
-        
-        # Backward compatibility for single sector_id
+                stock_queryset = stock_queryset.filter(sectors__id__in=ids)
         elif request.query_params.get('sector_id'):
-            queryset = queryset.filter(stock__sectors__id=request.query_params.get('sector_id'))
+             stock_queryset = stock_queryset.filter(sectors__id=request.query_params.get('sector_id'))
             
-        # Filter by categories (comma-separated ids)
+        # Filter by categories
         category_ids = request.query_params.get('category_ids')
         if category_ids:
             ids = [id.strip() for id in category_ids.split(',') if id.strip()]
             if ids:
-                queryset = queryset.filter(stock__categories__id__in=ids)
+                stock_queryset = stock_queryset.filter(categories__id__in=ids)
+
+        # Filter by Type (is_index)
+        is_index = request.query_params.get('is_index')
+        if is_index is not None:
+            if is_index.lower() == 'true':
+                 stock_queryset = stock_queryset.filter(is_index=True)
+            elif is_index.lower() == 'false':
+                 stock_queryset = stock_queryset.filter(is_index=False)
+                
+        # Filter by Watchlist
+        watchlist_only = request.query_params.get('watchlist_only')
+        if watchlist_only and watchlist_only.lower() == 'true':
+            stock_queryset = stock_queryset.filter(watched_by__user=request.user)
+
+        # 2. Get Target Stocks (from filters)
+        # If no filters provided, this might return ALL stocks which is heavy. 
+        # But per new requirement, Frontend will ALWAYS provide IDs.
+        # We can keep a safety limit if needed, or just let it be.
+        # Let's return the filtered queryset IDs directly.
+        
+        target_stock_ids = stock_queryset.values_list('id', flat=True)
+        
+        # 3. Filter Prices for these stocks
+        queryset = self.get_queryset().filter(stock_id__in=target_stock_ids)
 
         # Filter by date range
         start_date = request.query_params.get('start_date')
@@ -283,40 +306,17 @@ class StockPriceDailyViewSet(viewsets.ReadOnlyModelViewSet):
         if end_date:
             queryset = queryset.filter(date__lte=end_date)
             
-        # Filter by Type (is_index)
-        is_index = request.query_params.get('is_index')
-        if is_index is not None:
-            if is_index.lower() == 'true':
-                queryset = queryset.filter(stock__is_index=True)
-            elif is_index.lower() == 'false':
-                queryset = queryset.filter(stock__is_index=False)
-                
-        # Filter by Watchlist
-        watchlist_only = request.query_params.get('watchlist_only')
-        if watchlist_only and watchlist_only.lower() == 'true':
-            queryset = queryset.filter(stock__watched_by__user=request.user)
-            
         # Strategy Signal Merging
         strategy_code = request.query_params.get('strategy')
         signal_map = {}
         if strategy_code:
             from apps.strategies.models import StrategySignal
-            # Optimize: Filter signals for the relevant stocks and dates
-            # We can use the current filtered queryset to get stock IDs and date range
-            # Note: Trying to be efficient without over-complicating query
-            # Just filtering by strategy code and the selected stock(s) is simpler
             
-            signal_query = StrategySignal.objects.filter(strategy__code=strategy_code)
+            signal_query = StrategySignal.objects.filter(
+                strategy__code=strategy_code,
+                stock_id__in=target_stock_ids
+            )
             
-            # Apply same stock filters to signals if possible
-            if stock_symbol:
-                signal_query = signal_query.filter(stock__symbol=stock_symbol)
-            elif stock_ids:
-                ids = [id.strip() for id in stock_ids.split(',') if id.strip()]
-                signal_query = signal_query.filter(stock_id__in=ids)
-            elif request.query_params.get('stock_id'):
-                 signal_query = signal_query.filter(stock_id=request.query_params.get('stock_id'))
-                 
             if start_date:
                 signal_query = signal_query.filter(date__gte=start_date)
             if end_date:

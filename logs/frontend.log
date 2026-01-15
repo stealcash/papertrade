@@ -7,126 +7,36 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 1826ms
- ○ Compiling /dashboard ...
- ✓ Compiled /dashboard in 1891ms (1523 modules)
- GET /dashboard 200 in 2051ms
- ✓ Compiled /strategies in 493ms (1541 modules)
- ⨯ ./src/components/layout/Sidebar.tsx
-Error: 
-  [31mx[0m Return statement is not allowed here
-     ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend/src/components/layout/Sidebar.tsx[0m:27:1]
- [2m 27[0m |       // Admin link could be added here if needed, or handled via separate admin panel redirection
- [2m 28[0m |     }
- [2m 29[0m |     
- [2m 30[0m | [31;1m,[0m[31;1m-[0m[31;1m>[0m return (
- [2m 31[0m | [31;1m|[0m     <>
- [2m 32[0m | [31;1m|[0m       {/* Mobile Overlay */}
- [2m 33[0m | [31;1m|[0m       {isMobileOpen && (
- [2m 34[0m | [31;1m|[0m         <div
- [2m 35[0m | [31;1m|[0m           className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm transition-opacity"
- [2m 36[0m | [31;1m|[0m           onClick={() => setIsMobileOpen(false)}
- [2m 37[0m | [31;1m|[0m         />
- [2m 38[0m | [31;1m|[0m       )}
- [2m 39[0m | [31;1m|[0m   
- [2m 40[0m | [31;1m|[0m       {/* Sidebar Container */}
- [2m 41[0m | [31;1m|[0m       <aside
- [2m 42[0m | [31;1m|[0m         className={`fixed lg:static top-16 left-0 h-[calc(100vh-4rem)] bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-40 transition-all duration-300 ease-in-out flex flex-col
- [2m 43[0m | [31;1m|[0m             ${isMobileOpen ? 'translate-x-0 w-64' : '-translate-x-full lg:translate-x-0'}
- [2m 44[0m | [31;1m|[0m             ${isCollapsed ? 'lg:w-20' : 'lg:w-64'}
- [2m 45[0m | [31;1m|[0m   `}
- [2m 46[0m | [31;1m|[0m       >
- [2m 47[0m | [31;1m|[0m         <div className="flex-1 overflow-y-auto py-4 scrollbar-thin scrollbar-thumb-gray-200">
- [2m 48[0m | [31;1m|[0m           <nav className="px-3 space-y-1">
- [2m 49[0m | [31;1m|[0m             {navItems.map(({ name, href, icon: Icon }) => {
- [2m 50[0m | [31;1m|[0m               const isActive = pathname === href || pathname.startsWith(`${href}/`);
- [2m 51[0m | [31;1m|[0m   
- [2m 52[0m | [31;1m|[0m               return (
- [2m 53[0m | [31;1m|[0m                 <Link
- [2m 54[0m | [31;1m|[0m                   key={name}
- [2m 55[0m | [31;1m|[0m                   href={href}
- [2m 56[0m | [31;1m|[0m                   onClick={() => setIsMobileOpen(false)}
- [2m 57[0m | [31;1m|[0m                   className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group relative
- [2m 58[0m | [31;1m|[0m                       ${isActive
- [2m 59[0m | [31;1m|[0m                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
- [2m 60[0m | [31;1m|[0m                       : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200"
- [2m 61[0m | [31;1m|[0m                     }
- [2m 62[0m | [31;1m|[0m                       ${isCollapsed ? "justify-center" : ""}
- [2m 63[0m | [31;1m|[0m                     `}
- [2m 64[0m | [31;1m|[0m                   title={isCollapsed ? name : undefined}
- [2m 65[0m | [31;1m|[0m                 >
- [2m 66[0m | [31;1m|[0m                   <Icon
- [2m 67[0m | [31;1m|[0m                     size={20}
- [2m 68[0m | [31;1m|[0m                     className={`shrink-0 transition-colors ${isActive ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300"}`}
- [2m 69[0m | [31;1m|[0m                   />
- [2m 70[0m | [31;1m|[0m   
- [2m 71[0m | [31;1m|[0m                   {!isCollapsed && (
- [2m 72[0m | [31;1m|[0m                     <span className="truncate">{name}</span>
- [2m 73[0m | [31;1m|[0m                   )}
- [2m 74[0m | [31;1m|[0m   
- [2m 75[0m | [31;1m|[0m                   {/* Active Indicator Strip */}
- [2m 76[0m | [31;1m|[0m                   {isActive && (
- [2m 77[0m | [31;1m|[0m                     <div className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-blue-600 rounded-r-full" />
- [2m 78[0m | [31;1m|[0m                   )}
- [2m 79[0m | [31;1m|[0m                 </Link>
- [2m 80[0m | [31;1m|[0m               );
- [2m 81[0m | [31;1m|[0m             })}
- [2m 82[0m | [31;1m|[0m           </nav >
- [2m 83[0m | [31;1m|[0m         </div >
- [2m 84[0m | [31;1m|[0m   
- [2m 85[0m | [31;1m|[0m         {/* Subscription / Upgrade Promo (Optional - hide on collapse) */}
- [2m 86[0m | [31;1m|[0m         {
- [2m 87[0m | [31;1m|[0m           !isCollapsed && (
- [2m 88[0m | [31;1m|[0m             <div className="flex-none p-4 w-full border-t border-gray-100">
- [2m 89[0m | [31;1m|[0m               {/* Promo Card */}
- [2m 90[0m | [31;1m|[0m               <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-800 mb-4">
- [2m 91[0m | [31;1m|[0m                 <div className="flex items-center gap-2 mb-2">
- [2m 92[0m | [31;1m|[0m                   <div className="p-1.5 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
- [2m 93[0m | [31;1m|[0m                     <Crown size={16} className="text-amber-500" fill="currentColor" />
- [2m 94[0m | [31;1m|[0m                   </div>
- [2m 95[0m | [31;1m|[0m                   <span className="font-semibold text-xs text-indigo-900 dark:text-indigo-200 border-b-2 border-indigo-200 dark:border-indigo-700">PRO PLAN</span>
- [2m 96[0m | [31;1m|[0m                 </div>
- [2m 97[0m | [31;1m|[0m                 <p className="text-xs text-indigo-700 dark:text-indigo-300 mb-3">Unlock advanced strategies & unlimited backtests.</p>
- [2m 98[0m | [31;1m|[0m                 <button
- [2m 99[0m | [31;1m|[0m                   onClick={() => router.push('/subscription')}
- [2m100[0m | [31;1m|[0m                   className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm"
- [2m101[0m | [31;1m|[0m                 >
- [2m102[0m | [31;1m|[0m                   Upgrade Now
- [2m103[0m | [31;1m|[0m                 </button>
- [2m104[0m | [31;1m|[0m               </div>
- [2m105[0m | [31;1m|[0m   
- [2m106[0m | [31;1m|[0m               {/* Logout Button */}
- [2m107[0m | [31;1m|[0m               <button
- [2m108[0m | [31;1m|[0m                 onClick={handleLogout}
- [2m109[0m | [31;1m|[0m                 className="flex items-center gap-3 px-4 py-2.5 rounded-lg w-full text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition"
- [2m110[0m | [31;1m|[0m               >
- [2m111[0m | [31;1m|[0m                 <LogOut size={18} />
- [2m112[0m | [31;1m|[0m                 <span className="font-medium">Sign Out</span>
- [2m113[0m | [31;1m|[0m               </button>
- [2m114[0m | [31;1m|[0m             </div>
- [2m115[0m | [31;1m|[0m           )
- [2m116[0m | [31;1m|[0m         }
- [2m117[0m | [31;1m|[0m       </aside >
- [2m118[0m | [31;1m|[0m     </>
- [2m119[0m | [31;1m`[0m[31;1m-[0m[31;1m>[0m );
- [2m120[0m |     }
-     `----
-
-  [31mx[0m Expression expected
-     ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend/src/components/layout/Sidebar.tsx[0m:117:1]
- [2m117[0m |     </aside >
- [2m118[0m |   </>
- [2m119[0m | );
- [2m120[0m | }
-     : [31;1m^[0m
-     `----
-
-Caused by:
-    Syntax Error
-
-Import trace for requested module:
-./src/components/layout/Sidebar.tsx
-./src/components/layout/AppLayout.tsx
-./src/app/layout.tsx
- ✓ Compiled in 345ms (1561 modules)
- GET /strategies 200 in 129ms
+ ✓ Ready in 2.1s
+ ○ Compiling / ...
+ ✓ Compiled / in 1415ms (1533 modules)
+ GET / 200 in 1577ms
+ ✓ Compiled /dashboard in 286ms (1541 modules)
+ ○ Compiling /stock-history ...
+ ✓ Compiled /stock-history in 645ms (1559 modules)
+ ✓ Compiled /_not-found in 336ms (1562 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 496ms
+ ✓ Compiled in 1454ms (1567 modules)
+ ✓ Compiled in 501ms (740 modules)
+ ✓ Compiled in 523ms (1567 modules)
+ ✓ Compiled in 1257ms (1587 modules)
+ ✓ Compiled in 707ms (1587 modules)
+ ✓ Compiled in 382ms (1587 modules)
+ GET /stock-history 200 in 179ms
+ ✓ Compiled /favicon.ico in 333ms (869 modules)
+ GET /favicon.ico 200 in 376ms
+ ✓ Compiled /_not-found in 465ms (871 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 903ms
+ ✓ Compiled in 710ms (1587 modules)
+ GET /stock-history 200 in 253ms
+ GET /stock-history 200 in 28ms
+ ✓ Compiled /favicon.ico in 352ms (869 modules)
+ GET /favicon.ico 200 in 429ms
+ ○ Compiling /strategies ...
+ ✓ Compiled /strategies in 1135ms (1591 modules)
+ ○ Compiling /stocks ...
+ ✓ Compiled /stocks in 597ms (1620 modules)
+ ○ Compiling /watchlist ...
+ ✓ Compiled /watchlist in 771ms (1638 modules)
+ ○ Compiling /predictions ...
+ ✓ Compiled /predictions in 536ms (1656 modules)

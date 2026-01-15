@@ -12,12 +12,14 @@ interface StockChartProps {
         areaTopColor?: string;
         areaBottomColor?: string;
     };
+    height?: number;
 }
 
 export const StockChart = (props: StockChartProps) => {
     const {
         data,
         markers = [],
+        height = 400,
         colors: {
             backgroundColor = 'transparent',
             textColor = '#D9D9D9',
@@ -47,7 +49,7 @@ export const StockChart = (props: StockChartProps) => {
                 attributionLogo: false,
             },
             width: chartContainerRef.current.clientWidth,
-            height: 400,
+            height: height,
             grid: {
                 vertLines: { color: 'rgba(197, 203, 206, 0.1)' },
                 horzLines: { color: 'rgba(197, 203, 206, 0.1)' },

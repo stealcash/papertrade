@@ -108,7 +108,7 @@ export default function BacktestPage() {
                         href="/backtest/strategies"
                         className="flex items-center gap-2 px-4 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition shadow-sm"
                     >
-                        <Settings size={20} /> My Strategies
+                        <Settings size={20} /> Strategies
                     </Link>
                     <button
                         onClick={() => setIsModalOpen(true)}

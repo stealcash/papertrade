@@ -319,7 +319,7 @@ export default function MarketAnalysisPage() {
                                         {selectedStock.symbol}
                                     </span>
                                 </h2>
-                                <p className="text-sm text-gray-500 mt-1">{selectedStock.sector?.name || 'Sector N/A'}</p>
+                                <p className="text-sm text-gray-500 mt-1">{selectedStock.sectors_details?.[0]?.name || 'Sector N/A'}</p>
                             </div>
 
                             {/* Date Controls */}
@@ -450,8 +450,78 @@ export default function MarketAnalysisPage() {
                         </div>
                         <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200">Start Analysis</h3>
                         <p className="text-sm mt-1 max-w-xs text-center">Search for a stock above to view detailed market data and price history.</p>
+
+                        {/* Auto-Trigger Modal if no stock selected */}
+                        <StockSelectionModal
+                            isOpen={!selectedStock && !loadingStocks}
+                            stocks={stocks}
+                            onSelect={handleSelectStock}
+                        />
                     </div>
                 )}
+            </div>
+        </div>
+    );
+}
+
+
+/* ░░░ Components ░░░ */
+
+function StockSelectionModal({ isOpen, stocks, onSelect }: { isOpen: boolean, stocks: any[], onSelect: (s: any) => void }) {
+    const [search, setSearch] = useState('');
+
+    if (!isOpen) return null;
+
+    const filtered = stocks.filter(s =>
+        s.symbol.toLowerCase().includes(search.toLowerCase()) ||
+        s.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    return (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+            <div className="bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden animate-in fade-in zoom-in duration-200">
+                <div className="p-6 border-b border-gray-100 dark:border-gray-800">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Select a Stock</h2>
+                    <p className="text-sm text-gray-500 mt-1">Choose a stock to analyze its market performance.</p>
+                </div>
+
+                <div className="p-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
+                    <div className="relative">
+                        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <input
+                            type="text"
+                            autoFocus
+                            placeholder="Search by symbol or name..."
+                            className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                <div className="max-h-[60vh] overflow-y-auto divide-y divide-gray-100 dark:divide-gray-800">
+                    {filtered.length === 0 ? (
+                        <div className="p-8 text-center text-gray-500">
+                            No stocks found matching "{search}"
+                        </div>
+                    ) : (
+                        filtered.map(stock => (
+                            <button
+                                key={stock.id}
+                                onClick={() => onSelect(stock)}
+                                className="w-full flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition text-left group"
+                            >
+                                <div>
+                                    <div className="font-bold text-gray-900 dark:text-gray-100">{stock.symbol}</div>
+                                    <div className="text-sm text-gray-500">{stock.name}</div>
+                                </div>
+                                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <span className="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 text-xs px-2 py-1 rounded font-medium">Select</span>
+                                </div>
+                            </button>
+                        ))
+                    )}
+                </div>
             </div>
         </div>
     );

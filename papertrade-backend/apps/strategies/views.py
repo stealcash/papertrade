@@ -331,6 +331,7 @@ class StrategyRuleBasedViewSet(viewsets.ModelViewSet):
                  raise ValidationError({"subscription": msg})
 
             serializer.save(user=user)
+            SubscriptionService.increment_usage(user, 'STRATEGY_CREATE')
     
     def list(self, request):
         queryset = self.get_queryset()

@@ -63,35 +63,9 @@ class SubscriptionService:
     def get_usage_count(user, feature_code, period_days):
         now = timezone.now()
         
-        if feature_code == 'STRATEGY_CREATE':
-            # STRATEGIES: Count active items (Storage Limit)
-            # Deleting a strategy FREES up the limit.
-            from apps.strategies.models import StrategyRuleBased
-            return StrategyRuleBased.objects.filter(user=user).count()
-            
-        elif feature_code in ['BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD']:
-            # ACTIONS: Count usage records (Rate Limit)
-            # Deleting the result DOES NOT free up the limit.
+        # All rate-limited features including STRATEGY_CREATE (Creation Limit, not Storage Limit)
+        if feature_code in ['BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD', 'STRATEGY_CREATE']:
             from .models import SubscriptionUsage
-            
-            # Find current active window
-            # Logic: We check for a Usage Record that covers TODAY.
-            # If period_days=30, we look for a record where end_date > now > start_date?
-            # actually we simply define a new period if one doesn't exist, but here we just READ.
-            # To simplify "Rolling Window" simulation with discrete records:
-            # We look for records that are still 'valid' (period_end > now).
-            # But usually for Rate Limits people use "Monthly Reset". 
-            
-            # Simplified Approach:
-            # check_limit checks the SUM of usage in the last X days?
-            # OR we just use fixed windows (e.g. this month).
-            # The USER asked for "Period Days" so let's try to honor rolling window if possible OR fixed blocks.
-            
-            # HYBRID ACCURATE APPROACH:
-            # We count the actual SubscriptionUsage entry for the "Current Period".
-            # We'll assume the usage entry is created/updated by increment_usage().
-            # If we want a strict "Rolling 30 Days", we can't easily use a simple counter model without many rows.
-            # Compromise: We use Fixed Windows of `period_days` length, starting from the first action.
             
             usage_record = SubscriptionUsage.objects.filter(
                 user=user,
@@ -112,7 +86,7 @@ class SubscriptionService:
         now = timezone.now()
         
         # Only track for Rate-Limited features
-        if feature_code not in ['BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD']:
+        if feature_code not in ['BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD', 'STRATEGY_CREATE']:
             return
 
         from .models import SubscriptionUsage

@@ -242,7 +242,7 @@ export default function StrategyDetailPage() {
                         </div>
                     </div>
 
-                    <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mt-2">
+                    <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-x-auto mt-2">
                         <table className="w-full text-sm text-left">
                             <thead className="bg-gray-50 text-gray-500 font-semibold border-b border-gray-200">
                                 <tr>
@@ -252,6 +252,7 @@ export default function StrategyDetailPage() {
                                     <th className="px-6 py-3 text-center">Losses</th>
                                     <th className="px-6 py-3 text-center">Win Rate</th>
                                     <th className="px-6 py-3 text-right">Total PnL</th>
+                                    <th className="px-6 py-3 text-right whitespace-nowrap min-w-[140px] pr-8">Action</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
@@ -289,6 +290,17 @@ export default function StrategyDetailPage() {
                                             </td>
                                             <td className={`px-6 py-4 text-right font-mono font-medium ${item.total_pnl > 0 ? 'text-green-600' : 'text-red-500'}`}>
                                                 {item.total_pnl ? Number(item.total_pnl).toFixed(2) : '-'}
+                                            </td>
+                                            <td className="px-6 py-4 text-right pr-8 whitespace-nowrap">
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setSelectedStock({ id: item.stock_id, symbol: item.stock_symbol });
+                                                    }}
+                                                    className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-semibold rounded-lg hover:bg-blue-100 transition"
+                                                >
+                                                    View Trades
+                                                </button>
                                             </td>
                                         </tr>
                                     ))

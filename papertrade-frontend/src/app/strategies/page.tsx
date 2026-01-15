@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { strategiesAPI } from '@/lib/api';
+import { strategiesAPI, subscriptionsAPI } from '@/lib/api';
 import Link from 'next/link';
-import { Plus, Trash2, Edit2, ArrowLeft, Loader2 } from 'lucide-react';
+import { Plus, Trash2, Edit2, ArrowLeft, Loader2, Info } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useConfirm } from '@/context/ConfirmContext';
 import { toast } from 'react-hot-toast';
@@ -13,16 +13,40 @@ export default function MyStrategiesPage() {
     const [userStrategies, setUserStrategies] = useState<any[]>([]);
     const [systemStrategies, setSystemStrategies] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [subscription, setSubscription] = useState<any>(null);
 
     const { confirm } = useConfirm();
 
     useEffect(() => {
-        fetchStrategies();
+        fetchData();
     }, []);
+
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+            await Promise.all([fetchStrategies(), fetchSubscription()]);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchSubscription = async () => {
+        try {
+            const res = await subscriptionsAPI.getCurrent();
+            if (res.data) {
+                // The API returns { data: { plan: ... }, ... }
+                // We need to extract the inner data object
+                setSubscription(res.data.data || res.data);
+            }
+        } catch (err) {
+            console.error("Failed to fetch subscription", err);
+        }
+    };
 
     const fetchStrategies = async () => {
         try {
-            setLoading(true);
             console.log("Fetching strategies...");
 
             // 1. User Strategies (Rule Based)
@@ -59,8 +83,6 @@ export default function MyStrategiesPage() {
         } catch (e) {
             console.error("Critical error in fetchStrategies", e);
             toast.error("Failed to load strategies");
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -83,6 +105,23 @@ export default function MyStrategiesPage() {
         }
     };
 
+    const getPlanLimits = () => {
+        if (!subscription?.plan?.features?.STRATEGY_CREATE) return { limit: 0, used: 0, canCreate: false, unlimited: false };
+
+        const limit = subscription.plan.features.STRATEGY_CREATE.limit;
+
+        // Use server-side usage count (Usage per period, includes deleted)
+        // Fallback to 0 if not present
+        const used = subscription.usage?.STRATEGY_CREATE || 0;
+
+        const unlimited = limit === -1;
+        const canCreate = unlimited || used < limit;
+
+        return { limit, used, canCreate, unlimited };
+    };
+
+    const { limit, used, canCreate, unlimited } = getPlanLimits();
+
     return (
         <div className="max-w-7xl mx-auto py-10 px-4">
             {/* Back Link Removed */}
@@ -92,12 +131,41 @@ export default function MyStrategiesPage() {
                     <h1 className="text-3xl font-bold">Strategies</h1>
                     <p className="text-gray-500 mt-1">Manage and view trading strategies.</p>
                 </div>
-                <Link
-                    href="/strategies/create"
-                    className="flex items-center gap-2 bg-black text-white px-6 py-2.5 rounded-lg hover:bg-gray-800 transition"
-                >
-                    <Plus size={18} /> Create New
-                </Link>
+
+                <div className="flex items-center gap-4">
+                    {/* Usage Indicator */}
+                    {!loading && subscription && (
+                        <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-100 px-3 py-1.5 rounded-md border border-gray-200 cursor-default">
+                            <span>Strategies: <span className="font-semibold text-gray-900">{used}</span> / {unlimited ? '∞' : limit}</span>
+                            <div className="group relative">
+                                <Info size={14} className="text-gray-400 hover:text-gray-600" />
+                                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-56 p-2.5 bg-gray-900 text-white text-xs rounded shadow-lg hidden group-hover:block z-50">
+                                    <div className="text-center">
+                                        Limit applies to <b>created</b> strategies per billing cycle. Deleting a strategy does not reset this count.
+                                    </div>
+                                    <div className="w-2 h-2 bg-gray-900 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {canCreate ? (
+                        <Link
+                            href="/strategies/create"
+                            className="flex items-center gap-2 bg-black text-white px-6 py-2.5 rounded-lg hover:bg-gray-800 transition"
+                        >
+                            <Plus size={18} /> Create New
+                        </Link>
+                    ) : (
+                        <button
+                            disabled
+                            className="flex items-center gap-2 bg-gray-300 text-gray-500 px-6 py-2.5 rounded-lg cursor-not-allowed"
+                            title="Plan limit reached. Upgrade your plan to create more strategies."
+                        >
+                            <Plus size={18} /> Create New
+                        </button>
+                    )}
+                </div>
             </div>
 
             {loading ? (
@@ -113,12 +181,18 @@ export default function MyStrategiesPage() {
                         {userStrategies.length === 0 ? (
                             <div className="text-center py-10 bg-gray-50 rounded-xl border border-dashed border-gray-300">
                                 <p className="text-gray-500 mb-4">You haven't created any strategies yet.</p>
-                                <Link
-                                    href="/strategies/create"
-                                    className="text-blue-600 hover:underline font-medium"
-                                >
-                                    Create your first strategy
-                                </Link>
+                                {canCreate ? (
+                                    <Link
+                                        href="/strategies/create"
+                                        className="text-blue-600 hover:underline font-medium"
+                                    >
+                                        Create your first strategy
+                                    </Link>
+                                ) : (
+                                    <span className="text-gray-400 font-medium cursor-not-allowed">
+                                        Create your first strategy (Limit Reached)
+                                    </span>
+                                )}
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
