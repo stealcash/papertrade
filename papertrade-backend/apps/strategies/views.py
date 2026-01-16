@@ -17,6 +17,29 @@ class StrategyMasterViewSet(viewsets.ModelViewSet):
     queryset = StrategyMaster.objects.all()
     serializer_class = StrategyMasterSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        """
+        Support lookup by ID or Code.
+        """
+        queryset = self.filter_queryset(self.get_queryset())
+        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+        lookup_value = self.kwargs.get(lookup_url_kwarg)
+
+        if lookup_value and lookup_value.isdigit():
+            try:
+                obj = queryset.get(pk=lookup_value)
+                self.check_object_permissions(self.request, obj)
+                return obj
+            except (ValueError, StrategyMaster.DoesNotExist):
+                # Fallthrough to try code
+                pass
+
+        # Try matching by code
+        from django.shortcuts import get_object_or_404
+        obj = get_object_or_404(queryset, code=lookup_value)
+        self.check_object_permissions(self.request, obj)
+        return obj
     
     def get_queryset(self):
         queryset = StrategyMaster.objects.all()
@@ -70,6 +93,60 @@ class StrategyMasterViewSet(viewsets.ModelViewSet):
             'date': latest_date,
             'signals': data,
             'count': len(data)
+        })
+
+    @action(detail=False, methods=['post'])
+    def import_manual(self, request):
+        """
+        Import/Sync manual strategies defined in code to the database.
+        """
+        # Define known manual strategies here (mirroring logic.py handling)
+        MANUAL_STRATEGIES = [
+            {
+                "code": "DAILY_CLOSE_MOMENTUM",
+                "name": "Daily Close Momentum",
+                "description": "Basic Trend Follower: Predicts UP if Close > Previous Close.",
+                "type": "MANUAL",
+                "status": "active"
+            },
+            {
+                "code": "TWO_DAY_CLOSE_MOMENTUM", 
+                "name": "Two Day Momentum",
+                "description": "Stronger Trend: Predicts UP if 2 consecutive days of gains.",
+                "type": "MANUAL",
+                "status": "active"
+            },
+            {
+                 "code": "OVERSOLD_REVERSAL",
+                 "name": "RSI Oversold Reversal",
+                 "description": "Mean Reversion: Predicts UP if RSI drops below 30.",
+                 "type": "MANUAL",
+                 "status": "active"
+            }
+        ]
+        
+        created_count = 0
+        updated_count = 0
+        
+        for strat_def in MANUAL_STRATEGIES:
+            obj, created = StrategyMaster.objects.update_or_create(
+                code=strat_def['code'],
+                defaults={
+                    'name': strat_def['name'],
+                    'description': strat_def['description'],
+                    'type': strat_def['type'],
+                    'status': strat_def['status']
+                }
+            )
+            if created:
+                created_count += 1
+            else:
+                updated_count += 1
+                
+        return get_success_response({
+            'message': f"Imported {created_count} new strategies, updated {updated_count}.",
+            'created': created_count,
+            'updated': updated_count
         })
 
     def list(self, request):

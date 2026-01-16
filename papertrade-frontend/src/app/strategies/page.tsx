@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { strategiesAPI, subscriptionsAPI } from '@/lib/api';
 import Link from 'next/link';
-import { Plus, Trash2, Edit2, ArrowLeft, Loader2, Info } from 'lucide-react';
+import { Plus, Trash2, Edit2, ArrowLeft, Loader2, Info, DownloadCloud } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useConfirm } from '@/context/ConfirmContext';
 import { toast } from 'react-hot-toast';
@@ -105,6 +105,8 @@ export default function MyStrategiesPage() {
         }
     };
 
+
+
     const getPlanLimits = () => {
         if (!subscription?.plan?.features?.STRATEGY_CREATE) return { limit: 0, used: 0, canCreate: false, unlimited: false };
 
@@ -148,6 +150,8 @@ export default function MyStrategiesPage() {
                             </div>
                         </div>
                     )}
+
+
 
                     {canCreate ? (
                         <Link

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/store';
 import { logout } from '@/store/slices/authSlice';
 import { PlusIcon, PencilIcon, TrashIcon, XIcon, CheckCircleIcon, InformationCircleIcon } from '@/components/icons';
+import { DownloadCloud } from 'lucide-react';
 
 // Simple Alert Component
 const Alert = ({ type, message, onClose }: { type: 'success' | 'error', message: string, onClose: () => void }) => (
@@ -143,6 +144,20 @@ export default function StrategiesPage() {
             console.error(err);
             setError('Failed to fetch strategies');
         } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleImportManual = async () => {
+        setLoading(true);
+        try {
+            const { strategiesAPI } = await import('@/lib/api');
+            const res = await strategiesAPI.importManual();
+            setSuccessMessage(res.data?.data?.message || res.data?.message || "Imported successfully");
+            fetchStrategies();
+        } catch (err: any) {
+            console.error(err);
+            setError(err.response?.data?.message || 'Failed to import manual strategies');
             setLoading(false);
         }
     };
@@ -311,13 +326,22 @@ export default function StrategiesPage() {
                             Create and manage trading strategies (Manual/Auto).
                         </p>
                     </div>
-                    <button
-                        onClick={handleOpenCreate}
-                        className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    >
-                        <PlusIcon className="h-5 w-5 mr-2" />
-                        Create Strategy
-                    </button>
+                    <div className="flex">
+                        <button
+                            onClick={handleImportManual}
+                            className="inline-flex items-center px-4 py-2 border border-blue-600 rounded-md shadow-sm text-sm font-medium text-blue-600 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mr-3 transition-colors"
+                        >
+                            <DownloadCloud className="h-5 w-5 mr-2" />
+                            Import Manual
+                        </button>
+                        <button
+                            onClick={handleOpenCreate}
+                            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            <PlusIcon className="h-5 w-5 mr-2" />
+                            Create Strategy
+                        </button>
+                    </div>
                 </div>
 
                 {successMessage && <Alert type="success" message={successMessage} onClose={() => setSuccessMessage('')} />}

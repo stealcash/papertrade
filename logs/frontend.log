@@ -7,36 +7,11 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2.1s
- ○ Compiling / ...
- ✓ Compiled / in 1415ms (1533 modules)
- GET / 200 in 1577ms
- ✓ Compiled /dashboard in 286ms (1541 modules)
- ○ Compiling /stock-history ...
- ✓ Compiled /stock-history in 645ms (1559 modules)
- ✓ Compiled /_not-found in 336ms (1562 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 496ms
- ✓ Compiled in 1454ms (1567 modules)
- ✓ Compiled in 501ms (740 modules)
- ✓ Compiled in 523ms (1567 modules)
- ✓ Compiled in 1257ms (1587 modules)
- ✓ Compiled in 707ms (1587 modules)
- ✓ Compiled in 382ms (1587 modules)
- GET /stock-history 200 in 179ms
- ✓ Compiled /favicon.ico in 333ms (869 modules)
- GET /favicon.ico 200 in 376ms
- ✓ Compiled /_not-found in 465ms (871 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 903ms
- ✓ Compiled in 710ms (1587 modules)
- GET /stock-history 200 in 253ms
- GET /stock-history 200 in 28ms
- ✓ Compiled /favicon.ico in 352ms (869 modules)
- GET /favicon.ico 200 in 429ms
- ○ Compiling /strategies ...
- ✓ Compiled /strategies in 1135ms (1591 modules)
- ○ Compiling /stocks ...
- ✓ Compiled /stocks in 597ms (1620 modules)
- ○ Compiling /watchlist ...
- ✓ Compiled /watchlist in 771ms (1638 modules)
- ○ Compiling /predictions ...
- ✓ Compiled /predictions in 536ms (1656 modules)
+ ✓ Ready in 2.2s
+ ○ Compiling /notifications ...
+ ✓ Compiled /notifications in 1329ms (1537 modules)
+ GET /notifications 200 in 1501ms
+ ✓ Compiled /_not-found in 235ms (1540 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 329ms
+ ✓ Compiled /favicon.ico in 150ms (855 modules)
+ GET /favicon.ico 200 in 197ms

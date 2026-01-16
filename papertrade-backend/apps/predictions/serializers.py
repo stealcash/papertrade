@@ -54,20 +54,29 @@ class StockPredictionSerializer(serializers.ModelSerializer):
         return res if res is not None else 0.0
 
     def get_return_1d(self, obj):
-        """Return after 1 day from creation"""
-        target_date = obj.created_at.date() + timedelta(days=1)
-        price_obj = StockPriceDaily.objects.filter(stock=obj.stock, date=target_date).first()
-        if price_obj:
-            return self._calculate_return_pct(obj.entry_price, price_obj.close_price, obj.direction)
-        return None  # Pending or No Data
+        """Return of the next available trading day (T+1)"""
+        # Find first trading day strictly AFTER creation date
+        next_trading_day = StockPriceDaily.objects.filter(
+            stock=obj.stock, 
+            date__gt=obj.created_at.date()
+        ).order_by('date').first()
+        
+        if next_trading_day:
+            return self._calculate_return_pct(obj.entry_price, next_trading_day.close_price, obj.direction)
+        return None  # Pending (Next trading day has not closed yet)
 
     def get_return_7d(self, obj):
-        """Return after 7 days from creation"""
+        """Return after ~7 days (First trading day >= T+7)"""
         target_date = obj.created_at.date() + timedelta(days=7)
-        price_obj = StockPriceDaily.objects.filter(stock=obj.stock, date=target_date).first()
+        # Find first trading day on or after T+7
+        price_obj = StockPriceDaily.objects.filter(
+            stock=obj.stock, 
+            date__gte=target_date
+        ).order_by('date').first()
+        
         if price_obj:
             return self._calculate_return_pct(obj.entry_price, price_obj.close_price, obj.direction)
-        return None # Pending or No Data
+        return None # Pending
 
     def get_return_value(self, obj):
         current = self.get_current_price(obj)

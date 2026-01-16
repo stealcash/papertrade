@@ -286,7 +286,7 @@ export default function PredictionsPage() {
                                             <th className="px-6 py-4 font-medium">Direction</th>
                                             <th className="px-6 py-4 font-medium">Entry Price</th>
                                             <th className="px-6 py-4 font-medium">Current Price</th>
-                                            <th className="px-6 py-4 font-medium">Next Day Return</th>
+                                            <th className="px-6 py-4 font-medium">Next Trading Day Return</th>
                                             <th className="px-6 py-4 font-medium">Next 7 Day Return</th>
                                             <th className="px-6 py-4 font-medium">All-Time Return</th>
                                             <th className="px-6 py-4 font-medium text-right">Actions</th>

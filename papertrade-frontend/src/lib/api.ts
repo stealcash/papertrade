@@ -115,6 +115,7 @@ export const paymentsAPI = {
 
 export const strategiesAPI = {
     getAll: () => apiClient.get('/strategies/master/'),
+
     get: (idOrCode: string | number) => apiClient.get(`/strategies/master/${idOrCode}/`),
 
     // Rule Based (User)

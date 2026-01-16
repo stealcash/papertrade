@@ -46,6 +46,7 @@ export const authAPI = {
 
 export const strategiesAPI = {
     getAllMasters: () => apiClient.get('/strategies/master/'),
+    importManual: () => apiClient.post('/strategies/master/import_manual/'),
     createMaster: (data: any) => apiClient.post('/strategies/master/', data),
     updateMaster: (code: string, data: any) => apiClient.patch(`/strategies/master/${code}/`, data),
     deleteMaster: (code: string) => apiClient.delete(`/strategies/master/${code}/`),
