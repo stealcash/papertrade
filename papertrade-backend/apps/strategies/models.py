@@ -103,3 +103,28 @@ class StrategyRuleBased(models.Model):
     def __str__(self):
         owner = self.user.email if self.user else (self.created_by_admin.email if self.created_by_admin else "Unknown")
         return f"{self.name} by {owner}"
+
+class StockFinderHistory(models.Model):
+    """History of Stock Finder scans."""
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='scan_history')
+    
+    # Store strategy metadata at the time of scan
+    strategies = models.JSONField(help_text="List of strategy details used")
+    
+    # Store filters used
+    filters = models.JSONField(help_text="Filters applied (Sector, Category, Date, Direction)")
+    
+    # Store results (Snapshot)
+    results = models.JSONField(help_text="List of stocks found")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = 'stock_finder_history'
+        ordering = ['-created_at']
+        verbose_name = 'Stock Finder History'
+        verbose_name_plural = 'Stock Finder Histories'
+    
+    def __str__(self):
+        return f"Scan by {self.user} at {self.created_at}"

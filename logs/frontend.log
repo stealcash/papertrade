@@ -7,11 +7,70 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2.2s
+ ✓ Ready in 1731ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 2s (1539 modules)
+ GET /login 200 in 2212ms
+ ✓ Compiled /_not-found in 248ms (1542 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 354ms
+ ✓ Compiled /favicon.ico in 152ms (856 modules)
+ GET /favicon.ico 200 in 191ms
+ ✓ Compiled /dashboard in 492ms (1582 modules)
+ ○ Compiling /strategies ...
+ ✓ Compiled /strategies in 511ms (1600 modules)
+ ○ Compiling /stocks ...
+ ✓ Compiled /stocks in 719ms (1628 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 139ms
+ GET /stocks 200 in 64ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 30ms
+ GET /favicon.ico 200 in 29ms
+ ○ Compiling /watchlist ...
+ ✓ Compiled /watchlist in 740ms (1646 modules)
+ ○ Compiling /predictions ...
+ ✓ Compiled /predictions in 527ms (1630 modules)
+ ✓ Compiled /scanner in 390ms (1632 modules)
+ ○ Compiling /stock-finder ...
+ ✓ Compiled /stock-finder in 553ms (1638 modules)
+ ○ Compiling /stock-history ...
+ ✓ Compiled /stock-history in 803ms (1664 modules)
+ ○ Compiling /options ...
+ ✓ Compiled /options in 1561ms (2693 modules)
+ ○ Compiling /market-analysis ...
+ ✓ Compiled /market-analysis in 970ms (2704 modules)
+ ○ Compiling /backtest ...
+ ✓ Compiled /backtest in 898ms (2707 modules)
+ ○ Compiling /wallet ...
+ ✓ Compiled /wallet in 725ms (2713 modules)
  ○ Compiling /notifications ...
- ✓ Compiled /notifications in 1329ms (1537 modules)
- GET /notifications 200 in 1501ms
- ✓ Compiled /_not-found in 235ms (1540 modules)
+ ✓ Compiled /notifications in 552ms (2723 modules)
+ ○ Compiling /profile ...
+ ✓ Compiled /profile in 647ms (2723 modules)
+ ✓ Compiled /dashboard in 125ms (864 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 534ms (2191 modules)
+ GET / 200 in 681ms
+ ✓ Compiled /_not-found in 201ms (864 modules)
  GET /.well-known/appspecific/com.chrome.devtools.json 404 in 329ms
- ✓ Compiled /favicon.ico in 150ms (855 modules)
- GET /favicon.ico 200 in 197ms
+ ✓ Compiled /login in 245ms (871 modules)
+ GET / 200 in 89ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 31ms
+ ✓ Compiled in 2.2s (2191 modules)
+ ✓ Compiled in 856ms (2191 modules)
+ ✓ Compiled in 316ms (1343 modules)
+ ✓ Compiled in 373ms (2191 modules)
+ ✓ Compiled in 1478ms (2191 modules)
+ GET / 200 in 167ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 625ms (850 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 787ms
+ ✓ Compiled /favicon.ico in 136ms (882 modules)
+ GET /favicon.ico 200 in 178ms
+ ○ Compiling /privacy ...
+ ✓ Compiled /privacy in 1112ms (2221 modules)
+ ✓ Compiled /terms in 410ms (2224 modules)
+ GET /terms 200 in 141ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 43ms
+ GET / 200 in 75ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 25ms
+ GET / 200 in 65ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 28ms

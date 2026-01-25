@@ -122,7 +122,7 @@ export default function CreateStrategyPage() {
 
             <div className="grid gap-8">
                 {/* Basic Info */}
-                <div className="bg-white p-6 rounded-xl border shadow-sm space-y-4">
+                <div className="bg-white dark:bg-gray-900 p-6 rounded-xl border shadow-sm space-y-4">
                     <h2 className="text-lg font-semibold">Basic Info</h2>
                     <div>
                         <label className="block text-sm font-medium mb-1">Strategy Name</label>
@@ -228,7 +228,7 @@ export default function CreateStrategyPage() {
             {/* Upgrade Modal */}
             {upgradeModalOpen && (
                 <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-xl shadow-xl max-w-sm w-full p-6 text-center space-y-4 animate-in fade-in zoom-in duration-200">
+                    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-xl max-w-sm w-full p-6 text-center space-y-4 animate-in fade-in zoom-in duration-200">
                         <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto">
                             <span className="text-2xl">⚡</span>
                         </div>
@@ -271,7 +271,7 @@ const RuleRow = ({ rule, onChange, onDelete }: {
     onChange: (field: keyof Rule, val: string) => void,
     onDelete: () => void
 }) => (
-    <div className="flex flex-col gap-2 bg-white p-3 rounded-lg shadow-sm">
+    <div className="flex flex-col gap-2 bg-white dark:bg-gray-900 p-3 rounded-lg shadow-sm">
         <div className="flex gap-2 items-center">
             <span className="text-xs font-bold text-gray-500 w-6">IF</span>
             <select

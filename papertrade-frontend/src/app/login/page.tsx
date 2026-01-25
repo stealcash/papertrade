@@ -21,7 +21,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated) router.push("/dashboard");
-  }, [isAuthenticated]);
+  }, [isAuthenticated, router]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault(); setError(""); setLoading(true);
@@ -31,7 +31,6 @@ export default function LoginPage() {
       const { token, user } = res.data.data;
 
       localStorage.setItem("access_token", token);
-      // localStorage.setItem("refresh_token",refresh); // Backend doesn't return refresh token currently
       dispatch(setCredentials({ user, token }));
       router.push("/dashboard");
 
@@ -43,28 +42,28 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 p-6 transition-colors duration-300">
 
       {/* ------------ Login Card ------------- */}
-      <div className="w-full max-w-lg bg-white shadow-xl shadow-gray-200/50 border border-gray-200 rounded-2xl p-10 space-y-10">
+      <div className="w-full max-w-lg bg-white dark:bg-gray-900 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-200 dark:border-gray-800 rounded-2xl p-10 space-y-10">
 
         {/* Logo */}
         <div className="flex items-center gap-3 justify-center mb-6">
-          <div className="p-2 bg-black rounded-lg">
+          <div className="p-2 bg-black dark:bg-blue-600 rounded-lg">
             <TrendingUp size={28} className="text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">PaperTrade</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">PaperTrade</h1>
         </div>
 
         {/* Title */}
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
-          <p className="text-gray-500 mt-2 text-sm">Sign in to continue to your dashboard</p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Welcome Back</h2>
+          <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm">Sign in to continue to your dashboard</p>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm text-center">
+          <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm text-center">
             {error}
           </div>
         )}
@@ -73,30 +72,30 @@ export default function LoginPage() {
         <form onSubmit={submit} className="space-y-6">
 
           <div className="space-y-2">
-            <label className="text-gray-700 text-sm font-semibold ml-1">Email</label>
+            <label className="text-gray-700 dark:text-gray-300 text-sm font-semibold ml-1">Email</label>
             <div className="relative group">
-              <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black transition-colors" />
+              <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black dark:group-focus-within:text-white transition-colors" />
               <input
                 type="email"
                 required
                 value={data.email}
                 onChange={(e) => setData({ ...data, email: e.target.value })}
-                className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-black/5 focus:border-black outline-none transition-all placeholder-gray-400 bg-white text-gray-900"
+                className="w-full pl-12 pr-4 py-3.5 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-black/5 dark:focus:ring-blue-500/20 focus:border-black dark:focus:border-blue-500 outline-none transition-all placeholder-gray-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 placeholder="you@example.com"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-gray-700 text-sm font-semibold ml-1">Password</label>
+            <label className="text-gray-700 dark:text-gray-300 text-sm font-semibold ml-1">Password</label>
             <div className="relative group">
-              <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black transition-colors" />
+              <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black dark:group-focus-within:text-white transition-colors" />
               <input
                 type="password"
                 required
                 value={data.password}
                 onChange={(e) => setData({ ...data, password: e.target.value })}
-                className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-black/5 focus:border-black outline-none transition-all placeholder-gray-400 bg-white text-gray-900"
+                className="w-full pl-12 pr-4 py-3.5 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-black/5 dark:focus:ring-blue-500/20 focus:border-black dark:focus:border-blue-500 outline-none transition-all placeholder-gray-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 placeholder="••••••••"
               />
             </div>
@@ -106,7 +105,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-black hover:bg-gray-800 text-white py-3.5 rounded-xl font-semibold flex items-center justify-center gap-2 mt-2 transition-transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-black/20"
+            className="w-full bg-black dark:bg-blue-600 hover:bg-gray-800 dark:hover:bg-blue-700 text-white py-3.5 rounded-xl font-semibold flex items-center justify-center gap-2 mt-2 transition-transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-black/20 dark:shadow-blue-500/20"
           >
             {loading ? (
               <span className="flex items-center gap-2">
@@ -123,9 +122,9 @@ export default function LoginPage() {
         </form>
 
         {/* Signup Link */}
-        <div className="text-center text-sm text-gray-500">
+        <div className="text-center text-sm text-gray-500 dark:text-gray-400">
           Don't have an account?{" "}
-          <Link href="/signup" className="text-black font-semibold hover:underline underline-offset-4">
+          <Link href="/signup" className="text-black dark:text-blue-400 font-semibold hover:underline underline-offset-4">
             Sign Up
           </Link>
         </div>

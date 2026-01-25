@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import StrategyMaster, StrategyRuleBased, StrategySignal
+from .models import StrategyMaster, StrategyRuleBased, StrategySignal, StockFinderHistory
 
 class StrategyMasterSerializer(serializers.ModelSerializer):
     rules_json = serializers.SerializerMethodField()
@@ -28,3 +28,9 @@ class StrategyRuleBasedSerializer(serializers.ModelSerializer):
         model = StrategyRuleBased
         fields = '__all__'
         read_only_fields = ['user']
+
+class StockFinderHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StockFinderHistory
+        fields = ['id', 'user', 'strategies', 'filters', 'results', 'created_at']
+        read_only_fields = ['user', 'created_at']

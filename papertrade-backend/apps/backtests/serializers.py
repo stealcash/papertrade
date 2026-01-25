@@ -18,6 +18,12 @@ class BacktestRunSerializer(serializers.ModelSerializer):
                 'name': obj.strategy_predefined.name,
                 'code': obj.strategy_predefined.code
             }
+        elif obj.strategy_rule_based:
+            return {
+                'id': obj.strategy_rule_based.id,
+                'name': obj.strategy_rule_based.name,
+                'code': f"RULE_{obj.strategy_rule_based.id}"
+            }
         return None
 
 

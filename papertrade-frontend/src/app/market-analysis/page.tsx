@@ -177,7 +177,7 @@ export default function MarketAnalysisPage() {
     };
 
     return (
-        <div className="flex flex-col h-[calc(100vh-theme(spacing.24))] gap-6">
+        <div className="flex flex-col gap-6 min-h-screen">
 
             {/* Top Bar: Title, Search & Strategy */}
             <div className="flex flex-col gap-4 shrink-0">
@@ -342,7 +342,7 @@ export default function MarketAnalysisPage() {
                         </div>
 
                         {/* Table Content */}
-                        <div className="flex-1 overflow-auto">
+                        <div className="flex-1">
                             {loadingHistory ? (
                                 <div className="flex items-center justify-center h-full text-gray-500">
                                     <div className="flex flex-col items-center gap-3">
@@ -434,8 +434,8 @@ export default function MarketAnalysisPage() {
                                     </table>
                                 </div>
                             ) : (
-                                <div className="flex flex-col items-center justify-center h-full text-gray-400">
-                                    <div className="p-4 bg-gray-50 rounded-full mb-3">
+                                <div className="flex flex-col items-center justify-center p-20 text-gray-400">
+                                    <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-full mb-3">
                                         <Search size={24} className="opacity-50" />
                                     </div>
                                     <p>No price history found for this period.</p>

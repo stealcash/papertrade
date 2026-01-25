@@ -123,13 +123,13 @@ export default function SubscriptionPage() {
           <div className="bg-gray-100 dark:bg-gray-800 p-1 rounded-lg inline-flex">
             <button
               onClick={() => setBillingPeriod('monthly')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition ${billingPeriod === 'monthly' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-900 dark:text-gray-400'}`}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition ${billingPeriod === 'monthly' ? 'bg-white dark:bg-gray-700 shadow dark:text-white' : 'text-gray-500 hover:text-gray-900 dark:text-gray-400'}`}
             >
               Monthly
             </button>
             <button
               onClick={() => setBillingPeriod('yearly')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition ${billingPeriod === 'yearly' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-900 dark:text-gray-400'}`}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition ${billingPeriod === 'yearly' ? 'bg-white dark:bg-gray-700 shadow dark:text-white' : 'text-gray-500 hover:text-gray-900 dark:text-gray-400'}`}
             >
               Yearly
             </button>

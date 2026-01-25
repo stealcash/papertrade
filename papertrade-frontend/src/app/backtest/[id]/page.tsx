@@ -204,7 +204,7 @@ export default function BacktestDetailPage() {
                         </div>
                     </div>
 
-                    <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden">
                         <table className="w-full text-sm text-left">
                             <thead className="bg-gray-50 text-gray-500 font-semibold border-b border-gray-200">
                                 <tr>
@@ -305,7 +305,7 @@ export default function BacktestDetailPage() {
                         <Target size={20} className="text-orange-500" /> Top Performers
                     </h2>
 
-                    <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-2 space-y-1">
+                    <div className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 rounded-xl shadow-sm p-2 space-y-1">
                         {topStocks.length === 0 ? (
                             <div className="p-8 text-center text-gray-400 text-sm">No data available</div>
                         ) : (
@@ -346,7 +346,7 @@ export default function BacktestDetailPage() {
 
 function Card({ label, value, color = "text-gray-900", size = "text-3xl" }: { label: string, value: any, color?: string, size?: string }) {
     return (
-        <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+        <div className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-sm">
             <p className="text-sm text-gray-500">{label}</p>
             <p className={`${size} font-bold mt-1 ${color}`}>{value}</p>
         </div>

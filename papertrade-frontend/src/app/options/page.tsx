@@ -35,7 +35,7 @@ export default function OptionsPage() {
     };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 min-h-screen">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Options Chain & Analysis</h1>
 
             {/* Controls */}
@@ -57,12 +57,12 @@ export default function OptionsPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Option Chain List */}
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-4 h-[600px] overflow-y-auto border border-gray-200 dark:border-gray-800 shadow-sm">
+                <div className="bg-white dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col">
                     <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Available Contracts</h2>
                     {loading && <p className="text-gray-400">Loading...</p>}
                     {contracts.length === 0 && !loading && <p className="text-gray-500 dark:text-gray-400">No contracts found.</p>}
 
-                    <div className="space-y-2">
+                    <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1">
                         {contracts.map((contract: any, idx: number) => (
                             <div
                                 key={idx}
@@ -86,7 +86,7 @@ export default function OptionsPage() {
                 </div>
 
                 {/* Charts Area */}
-                <div className="lg:col-span-2 bg-white dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800 shadow-sm">
+                <div className="lg:col-span-2 bg-white dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col">
                     <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
                         {selectedContract
                             ? `${selectedContract.underlying} ${selectedContract.strike} ${selectedContract.option_type} (${selectedContract.expiry_date})`
@@ -94,12 +94,12 @@ export default function OptionsPage() {
                     </h2>
 
                     {selectedContract && candles.length > 0 ? (
-                        <div className="h-[500px] w-full">
+                        <div className="flex-1 min-h-[500px] w-full">
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart data={candles}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" strokeOpacity={0.2} />
-                                    <XAxis dataKey="time" stroke="#94a3b8" />
-                                    <YAxis stroke="#94a3b8" domain={['auto', 'auto']} />
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" strokeOpacity={0.1} />
+                                    <XAxis dataKey="time" stroke="#94a3b8" fontSize={12} />
+                                    <YAxis stroke="#94a3b8" domain={['auto', 'auto']} fontSize={12} />
                                     <Tooltip
                                         contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
                                         itemStyle={{ color: '#fff' }}
@@ -115,7 +115,7 @@ export default function OptionsPage() {
                             </ResponsiveContainer>
                         </div>
                     ) : (
-                        <div className="h-[500px] flex items-center justify-center text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-dashed border-gray-200 dark:border-gray-700">
+                        <div className="flex-1 min-h-[500px] flex items-center justify-center text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-dashed border-gray-200 dark:border-gray-700">
                             {loading ? 'Loading chart...' : 'No data available'}
                         </div>
                     )}
@@ -123,4 +123,5 @@ export default function OptionsPage() {
             </div>
         </div>
     );
+
 }

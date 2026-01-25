@@ -36,7 +36,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         if (!isInitialized) return;
 
-        const publicRoutes = ["/", "/login", "/signup"];
+        const publicRoutes = ["/", "/login", "/signup", "/privacy", "/terms"];
         const isPublic = publicRoutes.includes(pathname);
 
         if (!isAuthenticated && !isPublic) {
@@ -55,17 +55,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         );
     }
 
-    // Exclude header/nav on Home, Login, Signup
-    const showNav = !["/", "/login", "/signup"].includes(pathname);
-
-    // Special Layout for Scanner (Full screen, no global sidebar)
-    if (pathname.startsWith('/scanner')) {
-        return (
-            <div className="h-screen w-full bg-gray-50 dark:bg-gray-950 overflow-hidden text-gray-900 dark:text-gray-100">
-                {children}
-            </div>
-        );
-    }
+    // Exclude header/nav on Home, Login, Signup, Privacy, Terms
+    const showNav = !["/", "/login", "/signup", "/privacy", "/terms"].includes(pathname);
 
     if (!showNav) {
         return <div className="min-h-screen bg-gray-50">{children}</div>;

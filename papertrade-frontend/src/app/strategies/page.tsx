@@ -201,7 +201,7 @@ export default function MyStrategiesPage() {
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {userStrategies.map(strat => (
-                                    <div key={strat.id} className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition relative group overflow-hidden flex flex-col justify-between">
+                                    <div key={strat.id} className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition relative group overflow-hidden flex flex-col justify-between">
                                         <div className="absolute top-0 right-0 w-12 h-12 bg-blue-50 rounded-bl-full -mr-3 -mt-3" />
 
                                         <div>
@@ -250,7 +250,7 @@ export default function MyStrategiesPage() {
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {systemStrategies.map(strat => (
-                                    <div key={strat.id} className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition relative group overflow-hidden">
+                                    <div key={strat.id} className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition relative group overflow-hidden">
                                         <div className="absolute top-0 right-0 w-12 h-12 bg-amber-50 rounded-bl-full -mr-3 -mt-3" />
 
                                         <h3 className="text-lg font-bold text-gray-900 relative z-10">

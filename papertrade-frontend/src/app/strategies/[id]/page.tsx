@@ -242,7 +242,7 @@ export default function StrategyDetailPage() {
                         </div>
                     </div>
 
-                    <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-x-auto mt-2">
+                    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-x-auto mt-2">
                         <table className="w-full text-sm text-left">
                             <thead className="bg-gray-50 text-gray-500 font-semibold border-b border-gray-200">
                                 <tr>
@@ -318,7 +318,7 @@ export default function StrategyDetailPage() {
                 {/* ───────── RIGHT: Sidebar ───────── */}
                 <div className="space-y-6">
                     {/* Top 5 Performers Card (Live Data) */}
-                    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                    <div className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-sm">
                         <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                             <Target size={18} className="text-purple-600" /> Top Performers (Live)
                         </h2>
@@ -348,7 +348,7 @@ export default function StrategyDetailPage() {
                     </div>
 
                     {latestBacktest && (
-                        <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                        <div className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 rounded-xl p-5 shadow-sm">
                             <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                                 <Clock size={18} className="text-orange-500" /> Backtest History
                             </h2>

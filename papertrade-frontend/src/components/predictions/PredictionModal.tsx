@@ -10,9 +10,10 @@ interface PredictionModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSuccess?: () => void;
+    initialDescription?: string;
 }
 
-export default function PredictionModal({ stock, isOpen, onClose, onSuccess }: PredictionModalProps) {
+export default function PredictionModal({ stock, isOpen, onClose, onSuccess, initialDescription }: PredictionModalProps) {
     const { showToast } = useToast();
     const [direction, setDirection] = useState<'BUY' | 'SELL'>('BUY');
     const [description, setDescription] = useState("");
@@ -22,9 +23,9 @@ export default function PredictionModal({ stock, isOpen, onClose, onSuccess }: P
     useEffect(() => {
         if (isOpen) {
             setDirection('BUY');
-            setDescription("");
+            setDescription(initialDescription || "");
         }
-    }, [isOpen, stock]);
+    }, [isOpen, stock, initialDescription]);
 
     if (!isOpen || !stock) return null;
 
@@ -85,8 +86,8 @@ export default function PredictionModal({ stock, isOpen, onClose, onSuccess }: P
                                 type="button"
                                 onClick={() => setDirection('BUY')}
                                 className={`py-3 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2 border-2 ${direction === 'BUY'
-                                        ? "bg-green-50 dark:bg-green-900/20 border-green-500 text-green-600 dark:text-green-400"
-                                        : "bg-white dark:bg-gray-800 border-transparent hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-400"
+                                    ? "bg-green-50 dark:bg-green-900/20 border-green-500 text-green-600 dark:text-green-400"
+                                    : "bg-white dark:bg-gray-800 border-transparent hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-400"
                                     }`}
                             >
                                 <TrendingUp size={18} /> BUY
@@ -95,8 +96,8 @@ export default function PredictionModal({ stock, isOpen, onClose, onSuccess }: P
                                 type="button"
                                 onClick={() => setDirection('SELL')}
                                 className={`py-3 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2 border-2 ${direction === 'SELL'
-                                        ? "bg-red-50 dark:bg-red-900/20 border-red-500 text-red-600 dark:text-red-400"
-                                        : "bg-white dark:bg-gray-800 border-transparent hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-400"
+                                    ? "bg-red-50 dark:bg-red-900/20 border-red-500 text-red-600 dark:text-red-400"
+                                    : "bg-white dark:bg-gray-800 border-transparent hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-400"
                                     }`}
                             >
                                 <TrendingDown size={18} /> SELL

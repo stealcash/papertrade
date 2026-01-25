@@ -6,6 +6,7 @@ router = DefaultRouter()
 router.register(r'master', views.StrategyMasterViewSet, basename='strategy-master')
 router.register(r'signals', views.StrategySignalViewSet, basename='strategy-signal')
 router.register(r'rule-based', views.StrategyRuleBasedViewSet, basename='strategy-rule-based')
+router.register(r'stock-finder', views.StockFinderViewSet, basename='stock-finder')
 
 urlpatterns = [
     path('', include(router.urls)),

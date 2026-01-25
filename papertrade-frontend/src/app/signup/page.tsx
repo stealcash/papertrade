@@ -4,211 +4,185 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCredentials } from '@/store/slices/authSlice';
+import { RootState } from '@/store';
 import { authAPI } from '@/lib/api';
-import { Mail, Lock, User, ArrowRight, TrendingUp } from 'lucide-react';
+import { setCredentials } from '@/store/slices/authSlice';
+import { Mail, Lock, User, ArrowRight, TrendingUp, Phone, ShieldCheck } from 'lucide-react';
 
 export default function SignupPage() {
-
   const router = useRouter();
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state: any) => state.auth);
+  const { isAuthenticated } = useSelector((s: RootState) => s.auth);
 
-  const [f, setF] = useState({ first_name: '', last_name: '', email: '', password: '', confirm_password: '' });
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    phone: ""
+  });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [strength, setStrength] = useState(0);
-
-  useEffect(() => { calcStrength(f.password); }, [f.password]);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/dashboard");
-    }
+    if (isAuthenticated) router.push("/dashboard");
   }, [isAuthenticated, router]);
 
-  function calcStrength(p: string) {
-    let s = 0;
-    if (p.length >= 8) s += 25;
-    if (/[a-z]/.test(p)) s += 25;
-    if (/[A-Z]/.test(p)) s += 25;
-    if (/[0-9]/.test(p)) s += 25;
-    setStrength(s);
-  }
-
-  function strengthColor() {
-    if (strength === 100) return "bg-green-500";
-    if (strength >= 75) return "bg-yellow-500";
-    if (strength >= 50) return "bg-orange-500";
-    return "bg-red-500";
-  }
-
   async function submit(e: React.FormEvent) {
-    e.preventDefault(); setError("");
+    e.preventDefault();
+    setError("");
 
-    if (f.password !== f.confirm_password) {
+    if (data.password !== data.confirm_password) {
       setError("Passwords do not match");
       return;
     }
 
     setLoading(true);
-
     try {
-      const res = await authAPI.signup(f);
+      const res = await authAPI.signup(data);
       const { token, user } = res.data.data;
 
       localStorage.setItem("access_token", token);
-      // localStorage.setItem("refresh_token", refresh);
       dispatch(setCredentials({ user, token }));
-
       router.push("/dashboard");
-
     } catch (err: any) {
-      setError(err.response?.data?.message || "Signup failed");
+      setError(err.response?.data?.message || "Error creating account");
     } finally {
       setLoading(false);
     }
   }
 
-
   return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center p-6 transition-colors duration-300">
 
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+      {/* Container */}
+      <div className="w-full max-w-lg bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xl shadow-gray-200/50 dark:shadow-none p-10 space-y-8">
 
-      {/* -------- SIGN UP CARD ---------- */}
-      <div className="w-full max-w-lg bg-white rounded-2xl border border-gray-200 shadow-sm p-10 space-y-8">
-
-        {/* Logo */}
-        <div className="flex items-center gap-3 justify-center">
-          <TrendingUp size={36} className="text-black" />
-          <h1 className="text-3xl font-bold text-gray-900">PaperTrade</h1>
+        {/* Logo & Header */}
+        <div className="text-center space-y-2">
+          <div className="flex items-center gap-3 justify-center mb-4">
+            <div className="p-2 bg-black dark:bg-blue-600 rounded-lg">
+              <TrendingUp size={24} className="text-white" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">PaperTrade</h1>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Create Account</h2>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">Join thousands of traders today</p>
         </div>
 
-        <div>
-          <h2 className="text-3xl font-semibold text-gray-900">Create Account</h2>
-          <p className="text-gray-500 mt-1">Start with a free virtual ₹1,00,000</p>
-        </div>
-
+        {/* Error */}
         {error && (
-          <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
+          <div className="p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm text-center">
             {error}
           </div>
         )}
 
+        <form onSubmit={submit} className="space-y-4">
+          <div className="grid grid-cols-1 gap-4">
 
-        {/* ------- FORM ------- */}
-        <form onSubmit={submit} className="space-y-6">
-
-          <div className="flex gap-4">
-            <div className="flex-1">
-              <label className="text-sm font-medium text-gray-700 mb-1 block">First Name <span className="text-gray-400 font-normal">(Optional)</span></label>
-              <div className="relative">
-                <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-gray-500 dark:text-gray-400 ml-1 uppercase">Full Name</label>
+              <div className="relative group">
+                <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black dark:group-focus-within:text-white transition-colors" />
                 <input
+                  required
                   type="text"
-                  value={f.first_name}
-                  onChange={(e) => setF({ ...f, first_name: e.target.value })}
-                  placeholder="John"
-                  className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
+                  placeholder="John Doe"
+                  value={data.name}
+                  onChange={(e) => setData({ ...data, name: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-black/5 dark:focus:ring-blue-500/20 focus:border-black dark:focus:border-blue-500 outline-none transition-all placeholder-gray-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 />
               </div>
             </div>
-            <div className="flex-1">
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Last Name <span className="text-gray-400 font-normal">(Optional)</span></label>
-              <div className="relative">
-                <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-gray-500 dark:text-gray-400 ml-1 uppercase">Email Address</label>
+              <div className="relative group">
+                <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black dark:group-focus-within:text-white transition-colors" />
                 <input
-                  type="text"
-                  value={f.last_name}
-                  onChange={(e) => setF({ ...f, last_name: e.target.value })}
-                  placeholder="Doe"
-                  className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
+                  required
+                  type="email"
+                  placeholder="john@example.com"
+                  value={data.email}
+                  onChange={(e) => setData({ ...data, email: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-black/5 dark:focus:ring-blue-500/20 focus:border-black dark:focus:border-blue-500 outline-none transition-all placeholder-gray-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 />
               </div>
             </div>
-          </div>
 
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 block">Email</label>
-            <div className="relative">
-              <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="email"
-                required
-                value={f.email}
-                onChange={(e) => setF({ ...f, email: e.target.value })}
-                placeholder="you@email.com"
-                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 block">Password</label>
-            <div className="relative">
-              <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="password"
-                required
-                value={f.password}
-                onChange={(e) => setF({ ...f, password: e.target.value })}
-                placeholder="••••••••"
-                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
-              />
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-gray-500 dark:text-gray-400 ml-1 uppercase">Phone Number</label>
+              <div className="relative group">
+                <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black dark:group-focus-within:text-white transition-colors" />
+                <input
+                  required
+                  type="tel"
+                  placeholder="9876543210"
+                  value={data.phone}
+                  onChange={(e) => setData({ ...data, phone: e.target.value })}
+                  className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-black/5 dark:focus:ring-blue-500/20 focus:border-black dark:focus:border-blue-500 outline-none transition-all placeholder-gray-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                />
+              </div>
             </div>
 
-            {f.password && (
-              <>
-                <div className="flex gap-1 h-1 mt-2">
-                  {[25, 50, 75, 100].map(l => (
-                    <div key={l}
-                      className={`flex-1 rounded-full transition-all ${strength >= l ? strengthColor() : "bg-gray-300"}`}
-                    />
-                  ))}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-gray-500 dark:text-gray-400 ml-1 uppercase">Password</label>
+                <div className="relative group">
+                  <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black dark:group-focus-within:text-white transition-colors" />
+                  <input
+                    required
+                    type="password"
+                    placeholder="••••••••"
+                    value={data.password}
+                    onChange={(e) => setData({ ...data, password: e.target.value })}
+                    className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-black/5 dark:focus:ring-blue-500/20 focus:border-black dark:focus:border-blue-500 outline-none transition-all placeholder-gray-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  {strength === 100 ? "Strong" : strength >= 50 ? "Medium" : "Weak"} password
-                </p>
-              </>
-            )}
-
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1 block">Confirm Password</label>
-            <div className="relative">
-              <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="password"
-                required
-                value={f.confirm_password}
-                onChange={(e) => setF({ ...f, confirm_password: e.target.value })}
-                placeholder="••••••••"
-                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black outline-none bg-white text-gray-900"
-              />
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-gray-500 dark:text-gray-400 ml-1 uppercase">Confirm</label>
+                <div className="relative group">
+                  <ShieldCheck size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black dark:group-focus-within:text-white transition-colors" />
+                  <input
+                    required
+                    type="password"
+                    placeholder="••••••••"
+                    value={data.confirm_password}
+                    onChange={(e) => setData({ ...data, confirm_password: e.target.value })}
+                    className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-black/5 dark:focus:ring-blue-500/20 focus:border-black dark:focus:border-blue-500 outline-none transition-all placeholder-gray-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
-
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-black hover:bg-gray-900 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full bg-black dark:bg-blue-600 hover:bg-gray-800 dark:hover:bg-blue-700 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-70 shadow-lg shadow-black/10 mt-6"
           >
-            {loading ? "Creating..." : "Create Account"}
-            <ArrowRight size={18} />
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                Creating Account...
+              </span>
+            ) : (
+              <>
+                Create Free Account
+                <ArrowRight size={20} />
+              </>
+            )}
           </button>
-
         </form>
 
-        <div className="text-center text-sm text-gray-600">
+        <div className="text-center text-sm text-gray-500 dark:text-gray-400">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-black hover:underline">Sign In</Link>
+          <Link href="/login" className="text-black dark:text-blue-400 font-bold hover:underline underline-offset-4">
+            Sign In
+          </Link>
         </div>
-
       </div>
-
     </div>
   );
 }

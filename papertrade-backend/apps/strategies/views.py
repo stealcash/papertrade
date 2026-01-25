@@ -62,35 +62,108 @@ class StrategyMasterViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def scan_results(self, request, pk=None):
         """
-        Get the latest available signals for this strategy.
+        Get signals for this strategy. 
+        If 'date' param is provided, returns signals for that specific date.
+        Otherwise returns signals for the latest available date.
+        Also specifically fetches the *current* (latest) price for comparison.
         """
+        # Subscription Enforce
+        from apps.subscriptions.services import SubscriptionService
+        from rest_framework.exceptions import PermissionDenied
+
+        # Check Limits ONLY if this request comes from Stock Finder feature
+        # (Market Scanner uses same endpoint but might be unlimited/different plan)
+        source = request.query_params.get('source')
+        if source == 'stock_finder':
+            is_allowed, message = SubscriptionService.check_limit(request.user, 'STOCK_FINDER_SCAN')
+            if not is_allowed:
+                raise PermissionDenied(detail={"message": message, "code": "PLAN_LIMIT_REACHED"})
+
         strategy = self.get_object()
         
-        # Find latest date
-        from django.db.models import Max
-        latest_date = StrategySignal.objects.filter(strategy=strategy).aggregate(Max('date'))['date__max']
+        target_date_str = request.query_params.get('date')
         
-        if not latest_date:
+        # Determine the effective date (Exact or Previous Working Day)
+        # We find the latest date available that is <= target_date (or just latest if no target provided)
+        
+        filter_kwargs = {'strategy': strategy}
+        if target_date_str:
+            filter_kwargs['date__lte'] = target_date_str
+            
+        from django.db.models import Max
+        # This one query handles both "Latest available" (if no date param) 
+        # AND "Previous working day" (if date param is a holiday/weekend)
+        effective_date = StrategySignal.objects.filter(**filter_kwargs).aggregate(Max('date'))['date__max']
+        
+        if not effective_date:
             return Response({
-                'date': None,
+                'date': target_date_str, # Return requested date so client knows
                 'signals': [],
-                'message': 'No signals found for this strategy.'
+                'message': 'No signals found on or before this date.'
             })
             
-        # Fetch signals for that date
-        signals = StrategySignal.objects.filter(strategy=strategy, date=latest_date).select_related('stock')
+        # Fetch signals for that effective date
+        signals = StrategySignal.objects.filter(strategy=strategy, date=effective_date)
+
+        # Apply Filters (Sector / Category)
+        sector_id = request.query_params.get('sector')
+        if sector_id:
+            signals = signals.filter(stock__sectors__id=sector_id)
+            
+        category_id = request.query_params.get('category')
+        if category_id:
+            signals = signals.filter(stock__categories__id=category_id)
+
+        signals = signals.select_related('stock')
         
-        # Serialize simply (just what we need for the table)
-        data = [{
-            'stock_symbol': s.stock.symbol,
-            'stock_name': s.stock.name,
-            'direction': s.signal_direction,
-            'entry_price': s.entry_price,
-            'expected_value': s.expected_value
-        } for s in signals]
+        # Fetch LATEST prices for these stocks to compare (Current Market Price)
+        # We need the price from the 'latest' available date in DB, not just target_date
+        stock_ids = [s.stock_id for s in signals]
+        latest_prices_map = {}
         
+        if stock_ids:
+            from apps.stocks.models import StockPriceDaily
+            # Fetch latest price for each stock
+            # Using distinct('stock') is Postgres specific but efficient
+            try:
+                latest_qs = StockPriceDaily.objects.filter(stock_id__in=stock_ids)\
+                                .order_by('stock', '-date')\
+                                .distinct('stock')\
+                                .values('stock_id', 'close_price', 'date')
+                
+                for item in latest_qs:
+                    latest_prices_map[item['stock_id']] = {
+                        'price': item['close_price'],
+                        'date': item['date']
+                    }
+            except Exception as e:
+                # Fallback if DB doesn't support distinct on fields (e.g. SQLite)
+                # Naive approach
+                for sid in stock_ids:
+                     lp = StockPriceDaily.objects.filter(stock_id=sid).order_by('-date').values('close_price', 'date').first()
+                     if lp:
+                         latest_prices_map[sid] = {'price': lp['close_price'], 'date': lp['date']}
+        
+        # Serialize
+        data = []
+        for s in signals:
+            current_info = latest_prices_map.get(s.stock_id, {})
+            data.append({
+                'stock_symbol': s.stock.symbol,
+                'stock_name': s.stock.name,
+                'direction': s.signal_direction,
+                'entry_price': s.entry_price,
+                'expected_value': s.expected_value,
+                'latest_price': current_info.get('price'),
+                'latest_date': current_info.get('date') 
+            })
+        
+        # Increment Usage (Only for Stock Finder)
+        if source == 'stock_finder':
+            SubscriptionService.increment_usage(request.user, 'STOCK_FINDER_SCAN')
+
         return Response({
-            'date': latest_date,
+            'date': effective_date,
             'signals': data,
             'count': len(data)
         })
@@ -419,5 +492,215 @@ class StrategyRuleBasedViewSet(viewsets.ModelViewSet):
     def community(self, request):
         """Get public community strategies."""
         queryset = self.queryset.filter(is_public=True)
+        serializer = self.get_serializer(queryset, many=True)
+        return get_success_response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def community(self, request):
+        """Get public community strategies."""
+        queryset = self.queryset.filter(is_public=True)
+        serializer = self.get_serializer(queryset, many=True)
+        return get_success_response(serializer.data)
+
+
+from .models import StockFinderHistory
+from .serializers import StockFinderHistorySerializer
+
+class StockFinderViewSet(viewsets.ModelViewSet):
+    """ViewSet for Stock Finder history and scanning logic."""
+    permission_classes = [IsAuthenticated]
+    serializer_class = StockFinderHistorySerializer
+    pagination_class = None # Or implement if history gets large
+
+    def get_queryset(self):
+        return StockFinderHistory.objects.filter(user=self.request.user).order_by('-created_at')
+
+    @action(detail=False, methods=['post'])
+    def scan(self, request):
+        """
+        Primary endpoint for multi-strategy scanning.
+        Supports both SYSTEM (pre-calculated) and USER (live-calculated) strategies.
+        """
+        from apps.subscriptions.services import SubscriptionService
+        from apps.stocks.models import StockPriceDaily, Stock
+        from .models import StrategyRuleBased, StrategySignal
+        from .logic import StrategyEngine
+        from datetime import timedelta, datetime
+
+        # 1. Subscription Check
+        is_allowed, message = SubscriptionService.check_limit(request.user, 'STOCK_FINDER_SCAN')
+        if not is_allowed:
+            return get_error_response('PLAN_LIMIT_REACHED', message, status_code=403)
+
+        # 2. Extract Params
+        strategies_meta = request.data.get('strategies', [])
+        direction = request.data.get('direction', 'UP')
+        target_date_str = request.data.get('date')
+        sector_id = request.data.get('sector')
+        category_id = request.data.get('category')
+
+        if not strategies_meta:
+            return get_error_response('VALIDATION_ERROR', 'At least one strategy must be selected.')
+
+        # 3. Resolve Effective Date
+        # If target_date is not provided, use the latest price date from DB
+        from django.db.models import Max
+        if target_date_str:
+            effective_date = datetime.strptime(target_date_str, '%Y-%m-%d').date()
+        else:
+            effective_date = StockPriceDaily.objects.aggregate(Max('date'))['date__max']
+
+        if not effective_date:
+            return get_success_response({
+                'date': str(target_date_str),
+                'signals': [],
+                'message': 'No price data found in system.'
+            })
+
+        # 4. Perform Intersection
+        final_stock_ids = None
+        
+        # We need to track actual strategy names for history
+        strategy_history_summary = []
+        
+        # Track signal metadata (entry_price, expected_value) for results
+        primary_signals_map = {} # stock_id -> {entry, expected}
+
+        for strat in strategies_meta:
+            strat_id = strat.get('id')
+            strat_type = strat.get('type')
+            current_stock_ids = set()
+
+            if strat_type == 'USER':
+                # LIVE EVALUATION
+                try:
+                    user_strat = StrategyRuleBased.objects.get(id=strat_id)
+                    strategy_history_summary.append({'id': user_strat.id, 'name': user_strat.name})
+                    
+                    # Fetch candidate stocks
+                    stocks_to_scan = Stock.objects.filter(status='active')
+                    if sector_id:
+                        stocks_to_scan = stocks_to_scan.filter(sectors__id=sector_id)
+                    if category_id:
+                        stocks_to_scan = stocks_to_scan.filter(categories__id=category_id)
+                    
+                    # Optimization: Only scan stocks that are still in the intersection
+                    if final_stock_ids is not None:
+                        stocks_to_scan = stocks_to_scan.filter(id__in=final_stock_ids)
+
+                    # Scan each stock
+                    for s in stocks_to_scan:
+                        # Fetch prices with enough buffer for indicators (50 days)
+                        # We need prices up to effective_date
+                        prices = StockPriceDaily.objects.filter(
+                            stock=s, 
+                            date__lte=effective_date
+                        ).order_by('-date')[:60] # Fetch last 60 for safe buffer
+                        prices = list(reversed(list(prices))) # Back to chronological
+                        
+                        if not prices: continue
+                        
+                        # Rules evaluation
+                        signals = StrategyEngine.calculate_rule_based_strategy(prices, user_strat.rules_json)
+                        
+                        # Filter for target date and direction
+                        # Note: signals are for the NEXT trading day relative to evaluation day
+                        # So if we want to find stocks for 'effective_date', we check signals matching that date
+                        match = next((sig for sig in signals if sig['date'] == effective_date and sig['signal_direction'] == direction), None)
+                        if match:
+                            current_stock_ids.add(s.id)
+                            # Record metadata if not already recorded (preference to first strategy)
+                            if s.id not in primary_signals_map:
+                                primary_signals_map[s.id] = {
+                                    'entry_price': match.get('entry_price'),
+                                    'expected_value': match.get('expected_value')
+                                }
+                except StrategyRuleBased.DoesNotExist:
+                    continue
+
+            else:
+                # PRE-CALCULATED EVALUATION (System Strategy)
+                try:
+                    system_strat = StrategyMaster.objects.get(id=strat_id)
+                    strategy_history_summary.append({'id': system_strat.id, 'name': system_strat.name})
+                    
+                    signals_qs = StrategySignal.objects.filter(
+                        strategy_id=strat_id,
+                        date=effective_date,
+                        signal_direction=direction
+                    ).select_related('stock')
+                    
+                    if sector_id:
+                        signals_qs = signals_qs.filter(stock__sectors__id=sector_id)
+                    if category_id:
+                        signals_qs = signals_qs.filter(stock__categories__id=category_id)
+                    
+                    for sig in signals_qs:
+                        current_stock_ids.add(sig.stock_id)
+                        if sig.stock_id not in primary_signals_map:
+                            primary_signals_map[sig.stock_id] = {
+                                'entry_price': float(sig.entry_price) if sig.entry_price else None,
+                                'expected_value': float(sig.expected_value) if sig.expected_value else None
+                            }
+                except StrategyMaster.DoesNotExist:
+                    continue
+
+            # Intersect
+            if final_stock_ids is None:
+                final_stock_ids = current_stock_ids
+            else:
+                final_stock_ids = final_stock_ids.intersection(current_stock_ids)
+            
+            if not final_stock_ids:
+                break
+
+        # 5. Build Result Payload
+        results = []
+        if final_stock_ids:
+            # Fetch latest price info for display
+            latest_prices = StockPriceDaily.objects.filter(stock_id__in=final_stock_ids)\
+                                .order_by('stock_id', '-date')\
+                                .distinct('stock_id')\
+                                .select_related('stock')
+            
+            for lp in latest_prices:
+                meta = primary_signals_map.get(lp.stock_id, {})
+                results.append({
+                    'stock_id': lp.stock_id,
+                    'stock_symbol': lp.stock.symbol,
+                    'stock_name': lp.stock.name,
+                    'direction': direction,
+                    'entry_price': meta.get('entry_price'),
+                    'expected_value': meta.get('expected_value'),
+                    'latest_price': float(lp.close_price),
+                    'latest_date': str(lp.date)
+                })
+
+        # 6. Save to History
+        history = StockFinderHistory.objects.create(
+            user=request.user,
+            strategies=strategy_history_summary,
+            filters={
+                'date': str(effective_date),
+                'requested_date': target_date_str,
+                'direction': direction,
+                'sector_id': sector_id,
+                'category_id': category_id
+            },
+            results=results
+        )
+
+        # 7. Increment Usage
+        SubscriptionService.increment_usage(request.user, 'STOCK_FINDER_SCAN')
+
+        return get_success_response({
+            'history_id': history.id,
+            'date': str(effective_date),
+            'results': results,
+            'count': len(results)
+        })
+
+    def list(self, request):
+        queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return get_success_response(serializer.data)

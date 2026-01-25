@@ -106,7 +106,7 @@ export default function BacktestPage() {
                     )}
                     <Link
                         href="/backtest/strategies"
-                        className="flex items-center gap-2 px-4 py-3 bg-white border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition shadow-sm"
+                        className="flex items-center gap-2 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition shadow-sm"
                     >
                         <Settings size={20} /> Strategies
                     </Link>

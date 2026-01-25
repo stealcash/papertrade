@@ -150,7 +150,7 @@ export default function EditStrategyPage() {
 
             <div className="grid gap-8">
                 {/* Basic Info */}
-                <div className="bg-white p-6 rounded-xl border shadow-sm space-y-4">
+                <div className="bg-white dark:bg-gray-900 p-6 rounded-xl border shadow-sm space-y-4">
                     <h2 className="text-lg font-semibold">Basic Info</h2>
                     <div>
                         <label className="block text-sm font-medium mb-1">Strategy Name</label>
@@ -261,7 +261,7 @@ const RuleRow = ({ rule, onChange, onDelete }: {
     onChange: (field: keyof Rule, val: string) => void,
     onDelete: () => void
 }) => (
-    <div className="flex gap-2 items-center bg-white p-3 rounded-lg shadow-sm">
+    <div className="flex gap-2 items-center bg-white dark:bg-gray-900 p-3 rounded-lg shadow-sm">
         <span className="text-xs font-bold text-gray-500 w-6">IF</span>
         <select
             value={rule.field}

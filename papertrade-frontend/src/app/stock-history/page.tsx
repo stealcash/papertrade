@@ -224,10 +224,10 @@ export default function StockHistoryPage() {
                 </div>
             </div>
 
-            <main className="flex-1 overflow-hidden pb-6 transition-all duration-300 flex flex-col w-full pt-6">
+            <main className="flex-1 pb-6 transition-all duration-300 flex flex-col w-full pt-6">
 
-                <div className="h-full w-full">
-                    <div className="bg-white dark:bg-gray-900 shadow-sm border dark:border-gray-800 flex flex-col h-full overflow-hidden">
+                <div className="w-full">
+                    <div className="bg-white dark:bg-gray-900 shadow-sm border dark:border-gray-800 flex flex-col overflow-hidden">
                         {loading ? (
                             <div className="flex items-center justify-center h-full text-gray-600">Loading comparison data...</div>
                         ) : pivotData.rows.length === 0 ? (

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Home, TrendingUp, Zap, BarChart3, PieChart, Wallet,
-  Bell, User, BookOpen, Crown, LogOut, Scan, LineChart, Target, FlaskConical, History
+  Bell, User, BookOpen, Crown, LogOut, Scan, LineChart, Target, FlaskConical, History, Search
 } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '@/store/slices/authSlice';
@@ -31,6 +31,7 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
     { name: "My Watchlist", href: "/watchlist", icon: BookOpen },
     { name: "My Predictions", href: "/predictions", icon: Target },
     { name: "Scanner", href: "/scanner", icon: Scan },
+    { name: "Stock Finder", href: "/stock-finder", icon: Search },
     { name: "History", href: "/stock-history", icon: History },
     { name: "Options", href: "/options", icon: Zap },
     { name: "Analysis", href: "/market-analysis", icon: BarChart3 },

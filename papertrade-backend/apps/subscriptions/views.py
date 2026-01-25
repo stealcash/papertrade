@@ -42,7 +42,7 @@ class SubscriptionViewSet(viewsets.ViewSet):
         # We fetch usage for all potential features or just ones in the plan
         features = sub.plan.features if sub.plan else {}
         usage_data = {}
-        for code in ['STRATEGY_CREATE', 'BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD']:
+        for code in ['STRATEGY_CREATE', 'BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD', 'STOCK_FINDER_SCAN']:
             # We can check if it's in the plan features first to save queries, or just get 0
             # Ideally we check enabled first
             if code in features and features[code].get('enabled'):

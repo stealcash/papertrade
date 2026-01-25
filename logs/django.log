@@ -1,9 +1,195 @@
-INFO 2026-01-16 21:31:37,620 autoreload Watching for file changes with StatReloader
-INFO 2026-01-16 21:31:56,759 basehttp "OPTIONS /api/v1/notifications/ HTTP/1.1" 200 0
-INFO 2026-01-16 21:31:56,759 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-01-16 21:31:56,761 basehttp "OPTIONS /api/v1/notifications/ HTTP/1.1" 200 0
-INFO 2026-01-16 21:31:56,762 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-01-16 21:31:59,464 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
-INFO 2026-01-16 21:32:00,077 basehttp "GET /api/v1/notifications/ HTTP/1.1" 200 834
-INFO 2026-01-16 21:32:01,276 basehttp "GET /api/v1/notifications/ HTTP/1.1" 200 834
-INFO 2026-01-16 21:32:02,212 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:48:06,088 autoreload Watching for file changes with StatReloader
+WARNING 2026-01-25 13:48:13,992 log Method Not Allowed: /api/v1/auth/login
+WARNING 2026-01-25 13:48:13,992 basehttp "HEAD /api/v1/auth/login HTTP/1.1" 405 0
+INFO 2026-01-25 13:48:30,315 basehttp "OPTIONS /api/v1/auth/login HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:33,309 basehttp "POST /api/v1/auth/login HTTP/1.1" 200 601
+INFO 2026-01-25 13:48:33,322 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:33,872 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:48:34,431 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:48:34,438 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:35,030 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:48:37,916 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 834
+INFO 2026-01-25 13:48:37,922 basehttp "OPTIONS /api/v1/portfolio/holdings/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:38,838 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 834
+INFO 2026-01-25 13:48:49,312 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 3524
+INFO 2026-01-25 13:48:53,234 basehttp "OPTIONS /api/v1/strategies/rule-based/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:53,237 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:53,241 basehttp "OPTIONS /api/v1/strategies/rule-based/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:53,241 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:53,945 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 551
+INFO 2026-01-25 13:48:53,951 basehttp "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:55,143 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 902
+INFO 2026-01-25 13:48:56,354 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 551
+INFO 2026-01-25 13:48:56,581 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 943
+INFO 2026-01-25 13:48:57,087 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 902
+INFO 2026-01-25 13:48:58,953 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 943
+INFO 2026-01-25 13:48:59,202 basehttp "OPTIONS /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc&search= HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:59,203 basehttp "OPTIONS /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc&search= HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:59,204 basehttp "OPTIONS /api/v1/watchlist/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:59,204 basehttp "OPTIONS /api/v1/watchlist/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:48:59,497 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 3524
+INFO 2026-01-25 13:49:18,816 basehttp "GET /api/v1/watchlist/ HTTP/1.1" 200 2823
+INFO 2026-01-25 13:49:29,222 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:49:31,279 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:49:31,816 basehttp "GET /api/v1/watchlist/ HTTP/1.1" 200 2823
+INFO 2026-01-25 13:49:31,816 basehttp - Broken pipe from ('127.0.0.1', 65134)
+INFO 2026-01-25 13:49:34,481 basehttp "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc&search= HTTP/1.1" 200 4818
+INFO 2026-01-25 13:49:34,482 basehttp - Broken pipe from ('127.0.0.1', 65237)
+INFO 2026-01-25 13:49:35,015 basehttp "GET /api/v1/watchlist/ HTTP/1.1" 200 2823
+INFO 2026-01-25 13:49:37,375 basehttp "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc&search= HTTP/1.1" 200 4818
+INFO 2026-01-25 13:49:37,376 basehttp - Broken pipe from ('127.0.0.1', 65239)
+INFO 2026-01-25 13:49:43,191 basehttp "GET /api/v1/watchlist/ HTTP/1.1" 200 2823
+INFO 2026-01-25 13:49:43,351 basehttp "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc&search= HTTP/1.1" 200 4818
+INFO 2026-01-25 13:50:02,190 basehttp "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc&search= HTTP/1.1" 200 4818
+INFO 2026-01-25 13:50:05,812 basehttp "OPTIONS /api/v1/watchlist/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:05,812 basehttp "OPTIONS /api/v1/watchlist/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:17,793 basehttp "GET /api/v1/watchlist/?page=1&page_size=10 HTTP/1.1" 200 2823
+INFO 2026-01-25 13:50:25,957 basehttp "GET /api/v1/watchlist/?page=1&page_size=10 HTTP/1.1" 200 2823
+INFO 2026-01-25 13:50:28,927 basehttp "OPTIONS /api/v1/predictions/?start_date=2026-01-18&end_date=2026-01-25 HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:28,927 basehttp "OPTIONS /api/v1/predictions/?start_date=2026-01-18&end_date=2026-01-25 HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:31,886 basehttp "GET /api/v1/predictions/?start_date=2026-01-18&end_date=2026-01-25 HTTP/1.1" 200 357
+INFO 2026-01-25 13:50:34,759 basehttp "GET /api/v1/predictions/?start_date=2026-01-18&end_date=2026-01-25 HTTP/1.1" 200 357
+INFO 2026-01-25 13:50:45,419 basehttp "OPTIONS /api/v1/strategies/master/?scope=system HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:45,422 basehttp "OPTIONS /api/v1/strategies/master/?scope=system HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:48,247 basehttp "GET /api/v1/strategies/master/?scope=system HTTP/1.1" 200 902
+INFO 2026-01-25 13:50:48,255 basehttp "OPTIONS /api/v1/strategies/master/2/scan_results/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:50,657 basehttp "GET /api/v1/strategies/master/2/scan_results/ HTTP/1.1" 200 209
+INFO 2026-01-25 13:50:51,545 basehttp "GET /api/v1/strategies/master/?scope=system HTTP/1.1" 200 902
+INFO 2026-01-25 13:50:53,798 basehttp "GET /api/v1/strategies/master/2/scan_results/ HTTP/1.1" 200 209
+INFO 2026-01-25 13:50:54,698 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:54,710 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:54,712 basehttp "OPTIONS /api/v1/strategies/stock-finder/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:54,724 basehttp "OPTIONS /api/v1/strategies/stock-finder/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:54,724 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:54,727 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:50:55,376 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
+INFO 2026-01-25 13:50:56,428 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 943
+INFO 2026-01-25 13:50:57,194 basehttp "GET /api/v1/strategies/master/?scope=system HTTP/1.1" 200 902
+INFO 2026-01-25 13:50:57,222 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 514
+INFO 2026-01-25 13:50:57,453 basehttp "GET /api/v1/strategies/stock-finder/ HTTP/1.1" 200 3299
+INFO 2026-01-25 13:50:57,695 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
+INFO 2026-01-25 13:50:57,850 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 551
+INFO 2026-01-25 13:50:58,283 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 943
+INFO 2026-01-25 13:50:58,415 basehttp "GET /api/v1/strategies/stock-finder/ HTTP/1.1" 200 3299
+INFO 2026-01-25 13:50:58,949 basehttp "GET /api/v1/strategies/master/?scope=system HTTP/1.1" 200 902
+INFO 2026-01-25 13:50:59,551 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 514
+INFO 2026-01-25 13:50:59,666 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 551
+INFO 2026-01-25 13:51:12,894 basehttp "OPTIONS /api/v1/strategies/stock-finder/scan/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:51:18,708 basehttp "POST /api/v1/strategies/stock-finder/scan/ HTTP/1.1" 200 515
+INFO 2026-01-25 13:51:19,712 basehttp "GET /api/v1/strategies/stock-finder/ HTTP/1.1" 200 3930
+INFO 2026-01-25 13:51:24,443 basehttp "OPTIONS /api/v1/predictions/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:51:29,025 basehttp "POST /api/v1/predictions/ HTTP/1.1" 201 331
+INFO 2026-01-25 13:51:32,961 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:51:32,994 basehttp "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:51:51,961 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 4818
+INFO 2026-01-25 13:51:55,328 basehttp "OPTIONS /api/v1/stocks/prices/daily/?start_date=2025-12-26&end_date=2026-01-25&stock_ids=33 HTTP/1.1" 200 0
+INFO 2026-01-25 13:52:03,369 basehttp "GET /api/v1/stocks/prices/daily/?start_date=2025-12-26&end_date=2026-01-25&stock_ids=33 HTTP/1.1" 200 5920
+INFO 2026-01-25 13:52:09,609 basehttp "OPTIONS /api/v1/options/contracts/?underlying_type=stock&underlying=RELIANCE HTTP/1.1" 200 0
+INFO 2026-01-25 13:52:09,611 basehttp "OPTIONS /api/v1/options/contracts/?underlying_type=stock&underlying=RELIANCE HTTP/1.1" 200 0
+ERROR 2026-01-25 13:52:10,308 log Internal Server Error: /api/v1/options/contracts/
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/rest_framework/renderers.py", line 99, in render
+    ret = json.dumps(
+        data, cls=self.encoder_class,
+        indent=indent, ensure_ascii=self.ensure_ascii,
+        allow_nan=not self.strict, separators=separators
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/rest_framework/utils/json.py", line 25, in dumps
+    return json.dumps(*args, **kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/rest_framework/utils/encoders.py", line 67, in default
+    return super().default(obj)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type Response is not JSON serializable
+ERROR 2026-01-25 13:52:10,311 basehttp "GET /api/v1/options/contracts/?underlying_type=stock&underlying=RELIANCE HTTP/1.1" 500 109892
+INFO 2026-01-25 13:52:10,568 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 4818
+ERROR 2026-01-25 13:52:13,246 log Internal Server Error: /api/v1/options/contracts/
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/rest_framework/response.py", line 70, in rendered_content
+    ret = renderer.render(self.data, accepted_media_type, context)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/rest_framework/renderers.py", line 99, in render
+    ret = json.dumps(
+        data, cls=self.encoder_class,
+        indent=indent, ensure_ascii=self.ensure_ascii,
+        allow_nan=not self.strict, separators=separators
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/rest_framework/utils/json.py", line 25, in dumps
+    return json.dumps(*args, **kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/rest_framework/utils/encoders.py", line 67, in default
+    return super().default(obj)
+           ~~~~~~~~~~~~~~~^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type Response is not JSON serializable
+ERROR 2026-01-25 13:52:13,247 basehttp "GET /api/v1/options/contracts/?underlying_type=stock&underlying=RELIANCE HTTP/1.1" 500 109892
+INFO 2026-01-25 13:52:14,802 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 902
+INFO 2026-01-25 13:52:15,458 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 902
+INFO 2026-01-25 13:52:30,936 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 4818
+INFO 2026-01-25 13:52:32,775 basehttp "OPTIONS /api/v1/stocks/prices/daily?stock_symbol=NIFTY50&start_date=2025-12-26&end_date=2026-01-25 HTTP/1.1" 200 0
+INFO 2026-01-25 13:52:34,943 basehttp "GET /api/v1/stocks/prices/daily?stock_symbol=NIFTY50&start_date=2025-12-26&end_date=2026-01-25 HTTP/1.1" 301 0
+INFO 2026-01-25 13:52:34,948 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_symbol=NIFTY50&start_date=2025-12-26&end_date=2026-01-25 HTTP/1.1" 200 0
+INFO 2026-01-25 13:52:43,514 basehttp "GET /api/v1/stocks/prices/daily/?stock_symbol=NIFTY50&start_date=2025-12-26&end_date=2026-01-25 HTTP/1.1" 200 5952
+INFO 2026-01-25 13:52:50,557 basehttp "OPTIONS /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-01-25 13:52:50,558 basehttp "OPTIONS /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-01-25 13:52:50,911 basehttp "GET /api/v1/stocks/ HTTP/1.1" 200 4818
+INFO 2026-01-25 13:52:57,413 basehttp "GET /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 20806
+INFO 2026-01-25 13:53:02,181 basehttp "GET /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 20806
+INFO 2026-01-25 13:53:12,687 basehttp "OPTIONS /api/v1/payments/records/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:53:12,692 basehttp "OPTIONS /api/v1/payments/records/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:53:15,258 basehttp "GET /api/v1/payments/records/ HTTP/1.1" 200 601
+INFO 2026-01-25 13:53:15,412 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:53:15,974 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:53:18,679 basehttp "OPTIONS /api/v1/notifications/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:53:18,679 basehttp "OPTIONS /api/v1/notifications/ HTTP/1.1" 200 0
+INFO 2026-01-25 13:53:19,641 basehttp "GET /api/v1/payments/records/ HTTP/1.1" 200 601
+INFO 2026-01-25 13:53:22,868 basehttp "GET /api/v1/notifications/ HTTP/1.1" 200 834
+INFO 2026-01-25 13:53:25,845 basehttp "GET /api/v1/notifications/ HTTP/1.1" 200 834
+INFO 2026-01-25 13:53:26,698 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:53:27,139 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:53:28,618 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 944
+INFO 2026-01-25 13:53:31,566 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 944
+INFO 2026-01-25 13:53:43,289 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:53:44,003 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:53:47,621 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 834
+INFO 2026-01-25 13:53:48,651 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 834
+INFO 2026-01-25 13:53:59,125 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:53:59,564 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:53:59,991 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 3524
+INFO 2026-01-25 13:53:59,992 basehttp - Broken pipe from ('127.0.0.1', 50186)
+INFO 2026-01-25 13:54:04,295 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 339
+INFO 2026-01-25 13:54:04,295 basehttp - Broken pipe from ('127.0.0.1', 50250)

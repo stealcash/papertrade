@@ -208,7 +208,8 @@ class StrategyEngine:
                 signals.append({
                     'date': signal_date,
                     'signal_direction': direction,
-                    'expected_value': expected_price
+                    'expected_value': expected_price,
+                    'entry_price': float(row['close_price'])
                 })
 
         

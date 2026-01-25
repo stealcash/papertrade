@@ -16,10 +16,10 @@ export default function HomePage() {
     }
   }, [isAuthenticated, router]);
   return (
-    <div className="min-h-screen bg-white flex flex-col text-gray-800">
+    <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col text-gray-800 dark:text-gray-200 transition-colors duration-300">
 
       {/* Header */}
-      <header className="border-b bg-white/90 backdrop-blur-sm shadow-sm">
+      <header className="border-b bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
           {/* Logo */}
@@ -98,9 +98,9 @@ export default function HomePage() {
           <p>© 2024 PaperTrade. All rights reserved.</p>
 
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-gray-900">Privacy</Link>
-            <Link href="#" className="hover:text-gray-900">Terms</Link>
-            <Link href="#" className="hover:text-gray-900">Contact</Link>
+            <Link href="/privacy" className="hover:text-gray-900">Privacy</Link>
+            <Link href="/terms" className="hover:text-gray-900">Terms</Link>
+            <Link href="mailto:support@papertrade.com" className="hover:text-gray-900">Contact</Link>
           </div>
         </div>
       </footer>
