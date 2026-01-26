@@ -1,4 +1,4 @@
-2026/01/25 13:48:00 Configuration loaded: Port=8080
+2026/01/26 10:22:37 Configuration loaded: Port=8080
 Using Data Provider: UPSTOX
 Upstox Provider: Loaded 3241 instruments.
 [GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
@@ -12,7 +12,35 @@ Upstox Provider: Loaded 3241 instruments.
 [GIN-debug] GET    /api/v1/sector/data       --> github.com/papertrade/backend-go/internal/api.(*Handler).GetSectorData-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/contracts --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionContracts-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/candles/5min --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionCandles-fm (4 handlers)
-2026/01/25 13:48:00 Starting Go service on :8080
+2026/01/26 10:22:37 Starting Go service on :8080
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2026/01/26 - 10:32:36 | 200 |     1.209091s |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-01-20&timewise=true"
+[GIN] 2026/01/26 - 10:32:37 | 200 |   78.112583ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-01-21&timewise=true"
+[GIN] 2026/01/26 - 10:32:39 | 200 |   75.547666ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-01-22&timewise=true"
+[GIN] 2026/01/26 - 10:32:40 | 200 |   61.141166ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-01-23&timewise=true"
+[GIN] 2026/01/26 - 10:32:42 | 200 |   72.121666ms |             ::1 | GET      "/api/v1/stock/data?symbol=RBLBANK&date=2026-01-20&timewise=true"
+[GIN] 2026/01/26 - 10:32:44 | 200 |  104.167542ms |             ::1 | GET      "/api/v1/stock/data?symbol=RBLBANK&date=2026-01-21&timewise=true"
+[GIN] 2026/01/26 - 10:32:46 | 200 |      73.038ms |             ::1 | GET      "/api/v1/stock/data?symbol=RBLBANK&date=2026-01-22&timewise=true"
+[GIN] 2026/01/26 - 10:32:47 | 200 |  101.477208ms |             ::1 | GET      "/api/v1/stock/data?symbol=RBLBANK&date=2026-01-23&timewise=true"
+[GIN] 2026/01/26 - 10:32:49 | 200 |   64.197833ms |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2026-01-20&timewise=true"
+[GIN] 2026/01/26 - 10:32:50 | 200 |   66.633375ms |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2026-01-21&timewise=true"
+[GIN] 2026/01/26 - 10:32:53 | 200 |   65.314125ms |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2026-01-22&timewise=true"
+[GIN] 2026/01/26 - 10:32:54 | 200 |   73.510833ms |             ::1 | GET      "/api/v1/stock/data?symbol=TCS&date=2026-01-23&timewise=true"
+[GIN] 2026/01/26 - 10:32:57 | 200 |   74.513791ms |             ::1 | GET      "/api/v1/stock/data?symbol=TECHM&date=2026-01-20&timewise=true"
+[GIN] 2026/01/26 - 10:32:59 | 200 |   82.070625ms |             ::1 | GET      "/api/v1/stock/data?symbol=TECHM&date=2026-01-21&timewise=true"
+[GIN] 2026/01/26 - 10:33:01 | 200 |   64.453708ms |             ::1 | GET      "/api/v1/stock/data?symbol=TECHM&date=2026-01-22&timewise=true"
+[GIN] 2026/01/26 - 10:33:02 | 200 |   77.730375ms |             ::1 | GET      "/api/v1/stock/data?symbol=TECHM&date=2026-01-23&timewise=true"
+[GIN] 2026/01/26 - 10:33:04 | 200 |   78.804667ms |             ::1 | GET      "/api/v1/stock/data?symbol=TORNTPOWER&date=2026-01-20&timewise=true"
+[GIN] 2026/01/26 - 10:33:06 | 200 |   80.840416ms |             ::1 | GET      "/api/v1/stock/data?symbol=TORNTPOWER&date=2026-01-21&timewise=true"
+[GIN] 2026/01/26 - 10:33:07 | 200 |   62.235167ms |             ::1 | GET      "/api/v1/stock/data?symbol=TORNTPOWER&date=2026-01-22&timewise=true"
+[GIN] 2026/01/26 - 10:33:09 | 200 |   62.574041ms |             ::1 | GET      "/api/v1/stock/data?symbol=TORNTPOWER&date=2026-01-23&timewise=true"
+[GIN] 2026/01/26 - 10:33:51 | 200 |   54.166375ms |             ::1 | GET      "/api/v1/sector/data?symbol=BANKNIFTY&date=2026-01-20&timewise=false"
+[GIN] 2026/01/26 - 10:33:53 | 200 |   37.053083ms |             ::1 | GET      "/api/v1/sector/data?symbol=BANKNIFTY&date=2026-01-21&timewise=false"
+[GIN] 2026/01/26 - 10:33:55 | 200 |   53.758417ms |             ::1 | GET      "/api/v1/sector/data?symbol=BANKNIFTY&date=2026-01-22&timewise=false"
+[GIN] 2026/01/26 - 10:33:57 | 200 |   52.709791ms |             ::1 | GET      "/api/v1/sector/data?symbol=BANKNIFTY&date=2026-01-23&timewise=false"
+[GIN] 2026/01/26 - 10:33:58 | 200 |   53.649042ms |             ::1 | GET      "/api/v1/sector/data?symbol=NIFTY50&date=2026-01-20&timewise=false"
+[GIN] 2026/01/26 - 10:34:00 | 200 |   39.400083ms |             ::1 | GET      "/api/v1/sector/data?symbol=NIFTY50&date=2026-01-21&timewise=false"
+[GIN] 2026/01/26 - 10:34:02 | 200 |   44.662792ms |             ::1 | GET      "/api/v1/sector/data?symbol=NIFTY50&date=2026-01-22&timewise=false"
+[GIN] 2026/01/26 - 10:34:03 | 200 |   38.760375ms |             ::1 | GET      "/api/v1/sector/data?symbol=NIFTY50&date=2026-01-23&timewise=false"

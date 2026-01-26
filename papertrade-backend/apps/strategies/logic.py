@@ -627,7 +627,10 @@ class StrategyEngine:
         generated_signals = []
         
         if strategy.type == 'AUTO':
-            generated_signals = cls.calculate_auto_strategy(prices, strategy.logic)
+            if not strategy.rule_based_strategy:
+                print(f"Strategy {strategy_code} is AUTO but has no linked rule_based_strategy")
+                return 0
+            generated_signals = cls.calculate_rule_based_strategy(prices, strategy.rule_based_strategy.rules_json)
         elif strategy_code == 'DAILY_CLOSE_MOMENTUM':
             generated_signals = cls.calculate_one_day_trend(prices)
         elif strategy_code == 'TWO_DAY_CLOSE_MOMENTUM':
