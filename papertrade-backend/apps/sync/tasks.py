@@ -8,7 +8,7 @@ from django.db import transaction
 import requests
 import logging
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from .models import SyncLog
 from .utils import ExternalAPILogger
 from apps.stocks.models import Stock, StockPriceDaily, Stock5MinByDay
@@ -281,6 +281,255 @@ def sync_stocks_task(is_auto=False, user_id=None, from_date=None, to_date=None, 
 
 
 @shared_task
+def sync_options_task(is_auto=False, user_id=None):
+    """
+    Sync option data from NSE for enabled indices.
+    """
+    from apps.adminpanel.models import SystemConfig
+    from apps.adminpanel.utils import ConfigManager
+    from apps.options.models import OptionDailyData
+    
+    start_time = timezone.now()
+    
+    # Create sync log
+    sync_log = SyncLog.objects.create(
+        sync_type='option',
+        is_auto_sync=is_auto,
+        triggered_by_user_id=user_id,
+        start_time=start_time,
+    )
+    
+    try:
+        # Get active indices/stocks with option sync enabled
+        stocks = Stock.objects.filter(is_option_enable=True)
+        total_items = stocks.count()
+        success_count = 0
+        failed_count = 0
+        errors = []
+        
+        # Global Configs
+        config_start_date = ConfigManager.get_option_price_sync_start_date()
+        range_pct = ConfigManager.get_option_strike_price_range_pct() / 100.0
+        lookback_days = ConfigManager.get_option_sync_lookback_days()
+        
+        logger.info(f"Starting Option Sync. Start Config: {config_start_date}, Range: {range_pct*100}%, Lookback: {lookback_days} days")
+        
+        headers = {
+            'accept': '*/*',
+            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'accept-language': 'en-US,en;q=0.9',
+            'referer': 'https://www.nseindia.com/report-detail/fo_eq_security'
+        }
+        
+        session = requests.Session()
+        session.headers.update(headers)
+        
+        # Initial visit to get cookies
+        try:
+            session.get("https://www.nseindia.com", timeout=10)
+        except Exception as e:
+            logger.warning(f"Failed to visit homepage for cookies: {e}")
+
+        for stock in stocks:
+            try:
+                symbol = stock.option_symbol if stock.option_symbol else stock.symbol
+                # Clean symbol just in case
+                symbol = symbol.replace(' ', '') 
+                
+                # Determine date range
+                if stock.last_option_sync:
+                    current_start_date = stock.last_option_sync + timedelta(days=1)
+                elif config_start_date:
+                    current_start_date = config_start_date
+                else:
+                    # Default fallback
+                    current_start_date = date(2024, 1, 1)
+                
+                today = timezone.now().date()
+                
+                if current_start_date > today:
+                    logger.info(f"Skipping {stock.symbol}: Up to date (Last sync: {stock.last_option_sync})")
+                    success_count += 1
+                    continue
+                
+                # Process year by year from start date to today
+                years_to_process = range(current_start_date.year, today.year + 1)
+                
+                max_processed_date = stock.last_option_sync # Keep track of max date we got data for
+                if not max_processed_date:
+                    max_processed_date = current_start_date - timedelta(days=1)
+
+                for year in years_to_process:
+                        # Determine instrument type
+                        instrument_type = 'OPTIDX' if getattr(stock, 'is_index', False) else 'OPTSTK'
+
+                        # 1. Fetch Expiry Dates
+                        expiry_url = "https://www.nseindia.com/api/historicalOR/meta/foCPV/expireDts"
+                        try:
+                            resp = session.get(expiry_url, params={'instrument': instrument_type, 'symbol': symbol, 'year': year}, timeout=10)
+                            if resp.status_code != 200:
+                                logger.error(f"Failed to fetch expiry dates for {symbol} {year}: {resp.status_code}")
+                                continue
+                            
+                            expiry_dates = resp.json().get('expiresDts', [])
+                        except Exception as e:
+                            logger.error(f"Error fetching expiries for {symbol} {year}: {e}")
+                            continue
+                            
+                        for expiry_date_str in expiry_dates:
+                            # Parse expiry date (02-Jan-2025)
+                            try:
+                                expiry_date = datetime.strptime(expiry_date_str, '%d-%b-%Y').date()
+                            except ValueError:
+                                # Try upper case just in case
+                                expiry_date = datetime.strptime(expiry_date_str.upper(), '%d-%b-%Y').date()
+                            
+                            # Optimization: Skip if expiry is way before our start date
+                            # Data API covers (expiry - lookback to expiry). 
+                            # We add a buffer of 5 days to ensure we don't miss data if lookback is small
+                            if expiry_date < (current_start_date - timedelta(days=5)):
+                                continue
+                                
+                            # Call API for CE and PE
+                            # Range: Expiry - lookback_days to Expiry
+                            start_q_date = (expiry_date - timedelta(days=lookback_days)).strftime('%d-%m-%Y')
+                            end_q_date = expiry_date.strftime('%d-%m-%Y')
+                            
+                            for opt_type in ['CE', 'PE']:
+                                data_url = "https://www.nseindia.com/api/historicalOR/foCPV"
+                                params = {
+                                    'from': start_q_date,
+                                    'to': end_q_date,
+                                    'instrumentType': instrument_type,
+                                    'symbol': symbol,
+                                    'year': year,
+                                    'expiryDate': expiry_date_str,
+                                    'optionType': opt_type,
+                                    'csv': 'true'
+                                }
+                                
+                                try:
+                                    # NSE is strict, might need delay
+                                    time.sleep(0.5) 
+                                    data_resp = session.get(data_url, params=params, timeout=15)
+                                    
+                                    if data_resp.status_code == 200:
+                                        raw_data = data_resp.json()
+                                        records = raw_data.get('data', [])
+                                        
+                                        bulk_data = []
+                                        for record in records:
+                                            try:
+                                                # Parse Record Date
+                                                rec_date_str = record.get('FH_TIMESTAMP')
+                                                rec_date = datetime.strptime(rec_date_str, '%d-%b-%Y').date()
+                                                
+                                                # Only process if within our needed range (start date -> today)
+                                                if rec_date < current_start_date or rec_date > today:
+                                                    continue
+                                                
+                                                strike_price = float(record.get('FH_STRIKE_PRICE', 0))
+                                                underlying_val = float(record.get('FH_UNDERLYING_VALUE', 0))
+                                                
+                                                # Filtering: Only store strikes within X% of underlying value
+                                                if underlying_val > 0:
+                                                    lower_bound = underlying_val * (1 - range_pct)
+                                                    upper_bound = underlying_val * (1 + range_pct)
+                                                    
+                                                    if strike_price < lower_bound or strike_price > upper_bound:
+                                                        continue
+
+                                                # Prepare fields for bulk create
+                                                open_price = float(record.get('FH_OPENING_PRICE', 0))
+                                                high_price = float(record.get('FH_TRADE_HIGH_PRICE', 0))
+                                                low_price = float(record.get('FH_TRADE_LOW_PRICE', 0))
+                                                close_price = float(record.get('FH_CLOSING_PRICE', 0))
+                                                ltp = float(record.get('FH_LAST_TRADED_PRICE', 0))
+                                                volume = int(float(record.get('FH_TOT_TRADED_QTY', 0)))
+                                                traded_value = float(record.get('FH_TOT_TRADED_VAL', 0))
+                                                open_interest = int(float(record.get('FH_OPEN_INT', 0)))
+                                                change_in_oi = int(float(record.get('FH_CHANGE_IN_OI', 0)))
+                                                
+                                                settle_price = None
+                                                if record.get('FH_SETTLE_PRICE'):
+                                                    sp = float(record.get('FH_SETTLE_PRICE', 0))
+                                                    if sp > 0 and abs(sp - underlying_val) > (underlying_val * 0.1):
+                                                         settle_price = sp
+
+                                                bulk_data.append(OptionDailyData(
+                                                    stock=stock,
+                                                    underlying_symbol=symbol,
+                                                    expiry_date=expiry_date,
+                                                    strike_price=strike_price,
+                                                    option_type=opt_type,
+                                                    date=rec_date,
+                                                    open_price=open_price,
+                                                    high_price=high_price,
+                                                    low_price=low_price,
+                                                    close_price=close_price,
+                                                    ltp=ltp,
+                                                    volume=volume,
+                                                    traded_value=traded_value,
+                                                    open_interest=open_interest,
+                                                    change_in_oi=change_in_oi,
+                                                    underlying_value=underlying_val,
+                                                    settle_price=settle_price
+                                                ))
+                                                
+                                                if rec_date > max_processed_date:
+                                                    max_processed_date = rec_date
+
+                                            except Exception as e:
+                                                logger.info(f"Failed to parse record for {symbol} {opt_type}: {e}")
+                                                continue
+
+                                        if bulk_data:
+                                            OptionDailyData.objects.bulk_create(
+                                                bulk_data,
+                                                update_conflicts=True,
+                                                unique_fields=['underlying_symbol', 'expiry_date', 'strike_price', 'option_type', 'date'],
+                                                update_fields=[
+                                                    'open_price', 'high_price', 'low_price', 'close_price', 'ltp', 
+                                                    'volume', 'traded_value', 'open_interest', 'change_in_oi', 
+                                                    'underlying_value', 'settle_price', 'stock'
+                                                ]
+                                            )
+                                                
+                                        logger.info(f"Synced {symbol} {expiry_date_str} {opt_type}: Fetched {len(records)} records")
+                                    else:
+                                        logger.debug(f"NSE API returned {data_resp.status_code} for {symbol} {opt_type} {expiry_date_str}")
+                                        
+                                except Exception as e:
+                                    logger.error(f"Error fetching data for {symbol} {opt_type} {expiry_date_str}: {e}")
+                                    continue
+                
+                # Update Stock Last Sync
+                if max_processed_date and (max_processed_date > (stock.last_option_sync or date(2000,1,1))):
+                    stock.last_option_sync = max_processed_date
+                    stock.save()
+                    
+                success_count += 1
+                
+            except Exception as e:
+                failed_count += 1
+                errors.append(f"{stock.symbol}: {str(e)}")
+                logger.error(f"Option sync failed for {stock.symbol}: {e}")
+
+        # Finalize Log
+        sync_log.end_time = timezone.now()
+        sync_log.total_items = total_items
+        sync_log.success_count = success_count
+        sync_log.failed_count = failed_count
+        sync_log.error_details = {'errors': errors}
+        sync_log.save()
+        
+    except Exception as e:
+        logger.error(f"Option sync task fatal error: {e}")
+        sync_log.error_details = {'fatal_error': str(e)}
+        sync_log.save()
+
+
+@shared_task
 def sync_hard_task(sync_type, start_date, end_date, instruments=None, user_id=None):
     """
     Dispatcher for Hard Sync tasks.
@@ -304,5 +553,6 @@ def sync_hard_task(sync_type, start_date, end_date, instruments=None, user_id=No
             sync_indices=True
         )
     elif sync_type == 'option':
-         # Option sync logic (if implemented)
-         pass
+         from .tasks import sync_options_task
+         # Note: Hard sync date range not yet supported in sync_options_task, uses smart sync logic
+         sync_options_task.delay(is_auto=False, user_id=user_id)

@@ -39,7 +39,9 @@ export default function StocksManagementPage() {
         status: 'active',
         sectors: [] as string[],
         categories: [] as string[],
-        is_index: false
+        is_index: false,
+        is_option_enable: false,
+        option_symbol: ''
     });
 
     useEffect(() => {
@@ -177,7 +179,7 @@ export default function StocksManagementPage() {
             }
             setShowModal(false);
             setEditingStock(null);
-            setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [], is_index: false });
+            setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [], is_index: false, is_option_enable: false, option_symbol: '' });
             fetchStocks(currentPage, sortBy, sortOrder);
         } catch (error: any) {
             toast.error(error.response?.data?.message || 'Operation failed');
@@ -193,7 +195,9 @@ export default function StocksManagementPage() {
             status: stock.status,
             sectors: stock.sectors || [],
             categories: stock.categories || [],
-            is_index: stock.is_index || false
+            is_index: stock.is_index || false,
+            is_option_enable: stock.is_option_enable || false,
+            option_symbol: stock.option_symbol || ''
         });
         setShowModal(true);
     };
@@ -240,7 +244,7 @@ export default function StocksManagementPage() {
                     </div>
                     <div className="flex space-x-3">
                         <button
-                            onClick={() => { setEditingStock(null); setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [], is_index: false }); setShowModal(true); }}
+                            onClick={() => { setEditingStock(null); setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [], is_index: false, is_option_enable: false, option_symbol: '' }); setShowModal(true); }}
                             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all font-medium"
                         >
                             + Create Stock
@@ -252,8 +256,8 @@ export default function StocksManagementPage() {
                     <button
                         onClick={() => { setFilterType('all'); setCurrentPage(1); }}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filterType === 'all'
-                                ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
-                                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
+                            ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
+                            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
                             }`}
                     >
                         All
@@ -261,8 +265,8 @@ export default function StocksManagementPage() {
                     <button
                         onClick={() => { setFilterType('equity'); setCurrentPage(1); }}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filterType === 'equity'
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
                             }`}
                     >
                         Equities
@@ -270,8 +274,8 @@ export default function StocksManagementPage() {
                     <button
                         onClick={() => { setFilterType('index'); setCurrentPage(1); }}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${filterType === 'index'
-                                ? 'bg-purple-600 text-white'
-                                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
+                            ? 'bg-purple-600 text-white'
+                            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
                             }`}
                     >
                         Indices
@@ -309,6 +313,8 @@ export default function StocksManagementPage() {
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => handleSort('status')}>
                                         Status {sortBy === 'status' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Option Sync</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Last Option Sync</th>
                                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
                                 </tr>
                             </thead>
@@ -359,6 +365,24 @@ export default function StocksManagementPage() {
                                             <span className={`px-2 py-1 rounded-full text-xs font-semibold ${stock.status === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'}`}>
                                                 {stock.status}
                                             </span>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <input
+                                                type="checkbox"
+                                                checked={stock.is_option_enable || false}
+                                                onChange={async (e) => {
+                                                    try {
+                                                        await apiClient.patch(`/stocks/${stock.id}/`, { is_option_enable: e.target.checked });
+                                                        fetchStocks(currentPage, sortBy, sortOrder);
+                                                    } catch (error: any) {
+                                                        toast.error('Failed to update option sync');
+                                                    }
+                                                }}
+                                                className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 bg-white dark:bg-gray-700"
+                                            />
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            {stock.last_option_sync || '-'}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <button onClick={() => handleEdit(stock)} className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-4">Edit</button>
@@ -497,11 +521,42 @@ export default function StocksManagementPage() {
                                 </p>
                             </div>
 
+                            <div className="md:col-span-2">
+                                <label className="flex items-center space-x-2 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={formData.is_option_enable}
+                                        onChange={(e) => setFormData({ ...formData, is_option_enable: e.target.checked })}
+                                        className="rounded text-green-600 focus:ring-green-500 h-4 w-4 bg-white dark:bg-gray-600 border-gray-300 dark:border-gray-500"
+                                    />
+                                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Enable Option Data Sync</span>
+                                </label>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 ml-6">
+                                    Enable to sync historical option chain data for this instrument.
+                                </p>
+                            </div>
+
+                            {formData.is_option_enable && (
+                                <div className="md:col-span-2">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Option Symbol (NSE API)</label>
+                                    <input
+                                        type="text"
+                                        value={formData.option_symbol}
+                                        onChange={(e) => setFormData({ ...formData, option_symbol: e.target.value })}
+                                        className="w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all outline-none"
+                                        placeholder="e.g. NIFTY, BANKNIFTY"
+                                    />
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                        Symbol used in NSE option API calls (usually same as symbol)
+                                    </p>
+                                </div>
+                            )}
+
                             <div className="md:col-span-2 flex space-x-3 pt-2">
                                 <button type="submit" className="flex-1 bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 font-medium transition-colors shadow-sm">
                                     {editingStock ? 'Update Stock' : 'Create Stock'}
                                 </button>
-                                <button type="button" onClick={() => { setShowModal(false); setEditingStock(null); }}
+                                <button type="button" onClick={() => { setShowModal(false); setEditingStock(null); setFormData({ symbol: '', name: '', exchange_suffix: 'NSE', status: 'active', sectors: [], categories: [], is_index: false, is_option_enable: false, option_symbol: '' }); }}
                                     className="flex-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 py-2.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 font-medium transition-colors">
                                     Cancel
                                 </button>

@@ -22,6 +22,9 @@ class ConfigManager:
     GO_SERVICE_URL = 'go_service_url'
     INTERNAL_API_SECRET = 'internal_api_secret'
     MAINTENANCE_MODE = 'maintenance_mode'
+    OPTION_PRICE_SYNC_START_DATE = 'option_price_sync_start_date'
+    OPTION_STRIKE_PRICE_RANGE_PCT = 'option_strike_price_range_pct'
+    OPTION_SYNC_LOOKBACK_DAYS = 'option_sync_lookback_days'
     
     @staticmethod
     def get_config(key, default=None, value_type=str):
@@ -131,6 +134,40 @@ class ConfigManager:
         )
     
     @classmethod
+    def get_option_price_sync_start_date(cls):
+        """Returns option price sync start date (YYYY-MM-DD format or None)"""
+        date_str = cls.get_config(
+            cls.OPTION_PRICE_SYNC_START_DATE,
+            default=None
+        )
+        if date_str and date_str != 'null':
+            from datetime import datetime
+            try:
+                return datetime.strptime(date_str, '%Y-%m-%d').date()
+            except ValueError:
+                logger.warning(f"Invalid date format for option_price_sync_start_date: {date_str}")
+                return None
+        return None
+    
+    @classmethod
+    def get_option_strike_price_range_pct(cls):
+        """Returns option strike price range percentage (default 5%)"""
+        return cls.get_config(
+            cls.OPTION_STRIKE_PRICE_RANGE_PCT,
+            default=5.0,
+            value_type=float
+        )
+    
+    @classmethod
+    def get_option_sync_lookback_days(cls):
+        """Returns option price sync lookback days (default 30)"""
+        return cls.get_config(
+            cls.OPTION_SYNC_LOOKBACK_DAYS,
+            default=30,
+            value_type=int
+        )
+    
+    @classmethod
     def get_all_configs(cls):
         """Returns all system configurations as a dictionary"""
         return {
@@ -142,4 +179,7 @@ class ConfigManager:
             'backtest_retention_days': cls.get_backtest_retention_days(),
             'go_service_url': cls.get_go_service_url(),
             'maintenance_mode': cls.is_maintenance_mode(),
+            'option_price_sync_start_date': cls.get_option_price_sync_start_date(),
+            'option_strike_price_range_pct': cls.get_option_strike_price_range_pct(),
+            'option_sync_lookback_days': cls.get_option_sync_lookback_days(),
         }

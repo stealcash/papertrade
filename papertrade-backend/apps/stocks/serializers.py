@@ -26,7 +26,8 @@ class StockSerializer(serializers.ModelSerializer):
         model = Stock
         fields = ['id', 'symbol', 'name', 'exchange_suffix', 
                  'categories', 'categories_details', 'sectors', 'sectors_details', 'status', 'is_index',
-                 'last_synced_at', 'last_price', 'price_change', 'is_in_watchlist',
+                 'last_synced_at', 'is_option_enable', 'last_option_sync', 'option_symbol',
+                 'last_price', 'price_change', 'is_in_watchlist',
                  'active_signals',
                  'extra', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']

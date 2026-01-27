@@ -104,12 +104,11 @@ def trigger_normal_sync(request):
         else:
              task = sync_stocks_task.delay(is_auto=False, user_id=user_id_log, sync_indices=True)
     elif sync_type == 'option':
-        # Option sync not implemented yet
-        return get_error_response(
-            code='NOT_IMPLEMENTED',
-            message='Option sync is not implemented yet',
-            status_code=status.HTTP_501_NOT_IMPLEMENTED
-        )
+        from .tasks import sync_options_task
+        if run_sync:
+             task = sync_options_task.apply(kwargs={'is_auto': False, 'user_id': user_id_log})
+        else:
+             task = sync_options_task.delay(is_auto=False, user_id=user_id_log)
     else:
         return get_error_response(
             code='INVALID_SYNC_TYPE',
@@ -226,8 +225,9 @@ def trigger_hard_sync(request):
                 'sync_indices': True
              })
         else:
-             # Fallback/Option not supported yet in sync mode or handled above already
-             pass
+             # Option sync hard mode (run synchronously)
+             from .tasks import sync_options_task
+             task = sync_options_task.apply(kwargs={'is_auto': False, 'user_id': user_id_log})
     else:
         # Run asynchronously (Celery)
         task = sync_hard_task.delay(

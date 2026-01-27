@@ -40,6 +40,16 @@ class Stock(models.Model):
     extra = models.JSONField(default=dict, blank=True)
     is_index = models.BooleanField(default=False, help_text="True if this is an Index/Sector, False if Equity")
     
+    # Option sync fields
+    is_option_enable = models.BooleanField(default=False, help_text="Enable option data sync for this index")
+    last_option_sync = models.DateField(null=True, blank=True, help_text="Last date when option data was synced")
+    option_symbol = models.CharField(
+        max_length=50, 
+        blank=True, 
+        default='',
+        help_text="Symbol for NSE option API (e.g., NIFTY, BANKNIFTY)"
+    )
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

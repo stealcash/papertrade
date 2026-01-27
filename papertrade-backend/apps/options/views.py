@@ -1,153 +1,155 @@
-from rest_framework import generics, status
-from rest_framework.views import APIView
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from django.utils import timezone
-from datetime import date
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.db.models import Min, Max
+from django.db.models.functions import ExtractYear
 
-from .models import Option5Min
-from .serializers import (
-    Option5MinSerializer,
-    OptionContractSerializer,
-    OptionCandlesRequestSerializer,
-    OptionCandlesResponseSerializer
-)
-from apps.users.utils import get_success_response, get_error_response
+from .models import OptionDailyData
+from .serializers import OptionDailyDataSerializer
+from apps.stocks.models import Stock
 
-
-class OptionContractListView(generics.ListAPIView):
+class OptionViewSet(viewsets.GenericViewSet):
     """
-    List option contracts with filtering.
-    
-    Query params:
-    - underlying_type: stock or sector
-    - underlying: symbol (e.g. RELIANCE, NIFTY50)
-    - expiry_date: YYYY-MM-DD
-    - option_type: CE or PE
+    ViewSet for retrieving option chain data.
     """
+    queryset = OptionDailyData.objects.all()
+    serializer_class = OptionDailyDataSerializer
+    permission_classes = [AllowAny] 
     
-    permission_classes = [IsAuthenticated]
-    serializer_class = Option5MinSerializer
-    
-    def get_queryset(self):
-        queryset = Option5Min.objects.all()
+    @action(detail=False, methods=['get'])
+    def instruments(self, request):
+        """List all enabled instruments (indices and stocks) for options."""
+        instruments = Stock.objects.filter(is_option_enable=True).values(
+            'symbol', 'name', 'option_symbol', 'is_index'
+        ).order_by('is_index', 'symbol')
+        return Response({'data': list(instruments)})
         
-        # Apply filters
-        underlying_type = self.request.query_params.get('underlying_type')
-        underlying = self.request.query_params.get('underlying')
-        expiry_date = self.request.query_params.get('expiry_date')
-        option_type = self.request.query_params.get('option_type')
+    @action(detail=False, methods=['get'])
+    def indices(self, request):
+        """Deprecated: use /instruments/ instead."""
+        return self.instruments(request)
+
+    @action(detail=False, methods=['get'])
+    def years(self, request):
+        """List available years for a symbol."""
+        symbol = request.query_params.get('symbol')
+        if not symbol:
+            return Response({'error': 'Symbol required'}, status=400)
+            
+        # Get active years from data
+        # Mapping frontend symbol to option_symbol logic if needed, 
+        # but here we assume symbol passed matches underlying_symbol in OptionDailyData
+        # Or look up Stock first
         
-        if underlying_type:
-            queryset = queryset.filter(underlying_type=underlying_type)
-        if underlying:
-            queryset = queryset.filter(underlying_symbol=underlying)
-        if expiry_date:
-            queryset = queryset.filter(expiry_date=expiry_date)
-        if option_type:
+        # Try to find option_symbol from Stock if passed symbol
+        stock = Stock.objects.filter(symbol=symbol).first()
+        query_symbol = symbol
+        if stock and stock.option_symbol:
+            query_symbol = stock.option_symbol
+            
+        years = OptionDailyData.objects.filter(underlying_symbol=query_symbol) \
+            .annotate(year=ExtractYear('expiry_date')) \
+            .values_list('year', flat=True) \
+            .distinct() \
+            .order_by('year')
+            
+        return Response({'data': list(years)})
+
+    @action(detail=False, methods=['get'])
+    def expiries(self, request):
+        """List expiry dates for a symbol and year."""
+        symbol = request.query_params.get('symbol')
+        year = request.query_params.get('year')
+        
+        if not symbol or not year:
+            return Response({'error': 'Symbol and Year required'}, status=400)
+            
+        stock = Stock.objects.filter(symbol=symbol).first()
+        query_symbol = symbol
+        if stock and stock.option_symbol:
+            query_symbol = stock.option_symbol
+            
+        expiries = OptionDailyData.objects.filter(
+            underlying_symbol=query_symbol,
+            expiry_date__year=year
+        ).values_list('expiry_date', flat=True).distinct().order_by('expiry_date')
+        
+        return Response({'data': list(expiries)})
+        
+    @action(detail=False, methods=['get'])
+    def chain(self, request):
+        """Get option chain data."""
+        symbol = request.query_params.get('symbol')
+        expiry = request.query_params.get('expiry') # YYYY-MM-DD
+        option_type = request.query_params.get('type') # CE or PE
+        
+        if not all([symbol, expiry]):
+             return Response({'error': 'Symbol and Expiry required'}, status=400)
+
+        stock = Stock.objects.filter(symbol=symbol).first()
+        query_symbol = symbol
+        if stock and stock.option_symbol:
+            query_symbol = stock.option_symbol
+
+        # Query
+        queryset = OptionDailyData.objects.filter(
+            underlying_symbol=query_symbol,
+            expiry_date=expiry
+        )
+
+        if option_type and option_type.upper() != 'BOTH':
             queryset = queryset.filter(option_type=option_type)
         
-        return queryset
-    
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
+        # Optional: Filter by record date (latest available or specific date)
+        # For now, return all history for that expiry? Or just latest?
+        # User requirement: "then price range option" - maybe implied seeing strikes?
+        # Usually user wants to see data 'as of' a specific date. 
+        
+        from_date = request.query_params.get('from_date')
+        to_date = request.query_params.get('to_date')
+        date_param = request.query_params.get('date')
+        
+        if from_date and to_date:
+            queryset = queryset.filter(date__range=[from_date, to_date])
+        elif date_param:
+            queryset = queryset.filter(date=date_param)
+        else:
+            # If no date provided, return latest date available for this expiry
+            # But if user wants "history", they should provide range. 
+            # Default behavior: Latest snapshot
+            latest_date = queryset.aggregate(max_date=Max('date'))['max_date']
+            if latest_date:
+                queryset = queryset.filter(date=latest_date)
+            else:
+                return Response({'data': []})
+        
+        # Determine available dates for this specific expiry/symbol combination for frontend dropdown?
+        # Maybe handle that separately.
+        
         serializer = self.get_serializer(queryset, many=True)
-        
-        return Response(
-            get_success_response(
-                data=serializer.data,
-                message=f"Retrieved {len(serializer.data)} option contracts"
-            )
-        )
-
-
-class OptionCandlesView(APIView):
-    """
-    Get 5-minute candles for a specific option contract.
+        return Response({
+            'data': serializer.data,
+            'date': queryset.first().date if queryset.exists() else None
+        })
     
-    Query params:
-    - underlying_type: stock or sector
-    - underlying: symbol
-    - expiry_date: YYYY-MM-DD
-    - option_type: CE or PE
-    - strike: strike price
-    - date: (optional) specific date for candles, defaults to today
-    """
-    
-    permission_classes = [IsAuthenticated]
-    
-    def get(self, request):
-        # Validate request
-        request_serializer = OptionCandlesRequestSerializer(data=request.query_params)
-        if not request_serializer.is_valid():
-            return Response(
-                get_error_response(
-                    code='INVALID_PARAMETERS',
-                    message='Invalid request parameters',
-                    details=request_serializer.errors
-                ),
-                status=status.HTTP_400_BAD_REQUEST
-            )
+    @action(detail=False, methods=['get'])
+    def dates(self, request):
+        """Get available trading dates for a specific expiry to populate date dropdown."""
+        symbol = request.query_params.get('symbol')
+        expiry = request.query_params.get('expiry')
         
-        validated_data = request_serializer.validated_data
+        if not symbol or not expiry:
+             return Response({'error': 'Symbol and Expiry required'}, status=400)
+             
+        stock = Stock.objects.filter(symbol=symbol).first()
+        query_symbol = symbol
+        if stock and stock.option_symbol:
+            query_symbol = stock.option_symbol
+            
+        dates = OptionDailyData.objects.filter(
+            underlying_symbol=query_symbol,
+            expiry_date=expiry
+        ).values_list('date', flat=True).distinct().order_by('-date')
         
-        # Find the option contract
-        try:
-            option = Option5Min.objects.get(
-                underlying_type=validated_data['underlying_type'],
-                underlying_symbol=validated_data['underlying_symbol'],
-                expiry_date=validated_data['expiry_date'],
-                option_type=validated_data['option_type'],
-                option_strike=validated_data['strike']
-            )
-        except Option5Min.DoesNotExist:
-            return Response(
-                get_error_response(
-                    code='CONTRACT_NOT_FOUND',
-                    message='Option contract not found',
-                    details={'requested': validated_data}
-                ),
-                status=status.HTTP_404_NOT_FOUND
-            )
-        
-        # Prepare response
-        contract_data = {
-            'underlying_type': option.underlying_type,
-            'underlying_symbol': option.underlying_symbol,
-            'expiry_date': option.expiry_date,
-            'option_type': option.option_type,
-            'option_strike': option.option_strike,
-            'contract_identifier': option.contract_identifier
-        }
-        
-        response_data = {
-            'contract': contract_data,
-            'date': validated_data.get('date', date.today()),
-            'candles': option.candles_json
-        }
-        
-        return Response(
-            get_success_response(
-                data=response_data,
-                message='Option candles retrieved successfully'
-            )
-        )
-
-
-class OptionContractDetailView(generics.RetrieveAPIView):
-    """Get details of a specific option contract by ID."""
-    
-    permission_classes = [IsAuthenticated]
-    queryset = Option5Min.objects.all()
-    serializer_class = Option5MinSerializer
-    
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        
-        return Response(
-            get_success_response(
-                data=serializer.data,
-                message='Option contract details retrieved'
-            )
-        )
+        return Response({'data': list(dates)})

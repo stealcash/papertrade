@@ -144,6 +144,63 @@ export default function ConfigPage() {
                                         </button>
                                     </div>
                                 </div>
+
+                                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border dark:border-gray-700">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Option Price Sync Start Date
+                                    </label>
+                                    <div className="flex items-center space-x-2">
+                                        <input
+                                            type="date"
+                                            value={getConfig('option_price_sync_start_date')?.value || '2024-01-01'}
+                                            onChange={(e) => handleUpdate('option_price_sync_start_date', e.target.value)}
+                                            className="block w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        />
+                                        {saving === 'option_price_sync_start_date' && <span className="text-xs text-gray-500">Saving...</span>}
+                                    </div>
+                                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Start date for option data sync (indices only)</p>
+                                </div>
+
+                                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border dark:border-gray-700">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Option Strike Price Range (%)
+                                    </label>
+                                    <div className="flex items-center space-x-2">
+                                        <input
+                                            type="number"
+                                            step="0.5"
+                                            min="1"
+                                            max="20"
+                                            value={getConfig('option_strike_price_range_pct')?.value || '5'}
+                                            onChange={(e) => handleUpdate('option_strike_price_range_pct', e.target.value)}
+                                            className="block w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        />
+                                        {saving === 'option_strike_price_range_pct' && <span className="text-xs text-gray-500">Saving...</span>}
+                                    </div>
+                                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        Store strikes within ±% of spot price (e.g., 5% = spot ±5%)
+                                    </p>
+                                </div>
+
+                                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border dark:border-gray-700">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Option Price Lookback Days
+                                    </label>
+                                    <div className="flex items-center space-x-2">
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            max="90"
+                                            value={getConfig('option_sync_lookback_days')?.value || '30'}
+                                            onChange={(e) => handleUpdate('option_sync_lookback_days', e.target.value)}
+                                            className="block w-full px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                        />
+                                        {saving === 'option_sync_lookback_days' && <span className="text-xs text-gray-500">Saving...</span>}
+                                    </div>
+                                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        Number of days of historical data to fetch for each option expiry (default 30)
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
