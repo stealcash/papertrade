@@ -6,6 +6,7 @@ urlpatterns = [
     path('auth/profile/', views.admin_profile, name='admin-profile'),
     path('users/', views.list_users, name='admin-list-users'),
     path('config/', views.list_configs, name='admin-list-configs'),
+    path('config/batch-update/', views.batch_update_configs, name='admin-batch-update-configs'),
     path('config/create/', views.create_config, name='admin-create-config'),
     path('config/<str:key>/', views.update_config, name='admin-update-config'),
     path('config/<str:key>/delete/', views.delete_config, name='admin-delete-config'),
@@ -18,4 +19,5 @@ urlpatterns = [
     path('database/tables/', views.get_tables, name='database_tables'),
     path('database/tables/<str:table_name>/', views.get_table_schema, name='database_table_schema'),
     path('database/query/', views.execute_query, name='database_run_query'),
+    path('run-script/', views.execute_script, name='admin-run-script'),
 ]

@@ -1,0 +1,39 @@
+
+> papertrade-frontend@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1821ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1066ms (1535 modules)
+ GET / 200 in 1220ms
+ ✓ Compiled /favicon.ico in 320ms (1575 modules)
+ GET /favicon.ico 200 in 354ms
+ ✓ Compiled /options in 470ms (1587 modules)
+ ✓ Compiled /_not-found in 221ms (1590 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 319ms
+ GET /options 200 in 108ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 34ms
+ GET /favicon.ico 200 in 54ms
+ GET /dashboard 200 in 42ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 29ms
+ GET /favicon.ico 200 in 27ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 762ms (1598 modules)
+ GET /login 200 in 982ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 49ms
+ GET /options 200 in 71ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 49ms
+ GET /favicon.ico 200 in 66ms
+ GET /dashboard 200 in 19ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 21ms
+ GET /favicon.ico 200 in 29ms
+ ○ Compiling /stocks ...
+ ✓ Compiled /stocks in 750ms (1594 modules)
+ ○ Compiling /stock-finder ...
+ ✓ Compiled /stock-finder in 887ms (1606 modules)
+[?25h

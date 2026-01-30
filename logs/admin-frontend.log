@@ -1,0 +1,50 @@
+
+> frontend-admin@0.1.0 dev
+> next dev -p 4000
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:4000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1766ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1054ms (1541 modules)
+ GET / 200 in 1200ms
+ ✓ Compiled /login in 418ms (1585 modules)
+ GET /favicon.ico 200 in 478ms
+ GET /login 200 in 534ms
+ ✓ Compiled /config in 434ms (1591 modules)
+ ✓ Compiled /_not-found in 217ms (1558 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 329ms
+ GET /config 200 in 65ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 56ms
+ ✓ Compiled /favicon.ico in 211ms (863 modules)
+ GET /favicon.ico 200 in 256ms
+ ✓ Compiled in 2.7s (1569 modules)
+ GET /config 200 in 299ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1130ms (1558 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1411ms
+ ✓ Compiled /favicon.ico in 255ms (863 modules)
+ GET /favicon.ico 200 in 403ms
+ GET /config 200 in 139ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 62ms
+ GET /favicon.ico 200 in 38ms
+ GET /login 200 in 40ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 38ms
+ ○ Compiling /sync ...
+ ✓ Compiled /sync in 501ms (1596 modules)
+ ✓ Compiled in 1278ms (1575 modules)
+ ✓ Compiled in 1549ms (1575 modules)
+ ○ Compiling /scripts ...
+ ✓ Compiled /scripts in 562ms (1567 modules)
+ GET /scripts 200 in 175ms
+ ✓ Compiled /_not-found in 428ms (1570 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 622ms
+ ✓ Compiled /favicon.ico in 297ms (871 modules)
+ GET /favicon.ico 200 in 381ms
+ GET /login 200 in 79ms
+ GET /login 200 in 19ms
+ GET /scripts 200 in 214ms
+[?25h

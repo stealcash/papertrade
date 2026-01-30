@@ -63,6 +63,12 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen, isCollapsed, to
             icon: AdminsIcon
         },
         {
+            name: 'Script Runner',
+            path: '/scripts',
+            icon: LogsIcon,
+            show: isSuperadmin
+        },
+        {
             name: 'Tables',
             path: '/tables',
             icon: TablesIcon,

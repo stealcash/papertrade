@@ -309,10 +309,9 @@ def sync_options_task(is_auto=False, user_id=None):
         
         # Global Configs
         config_start_date = ConfigManager.get_option_price_sync_start_date()
-        range_pct = ConfigManager.get_option_strike_price_range_pct() / 100.0
         lookback_days = ConfigManager.get_option_sync_lookback_days()
         
-        logger.info(f"Starting Option Sync. Start Config: {config_start_date}, Range: {range_pct*100}%, Lookback: {lookback_days} days")
+        logger.info(f"Starting Option Sync. Start Config: {config_start_date}, Lookback: {lookback_days} days")
         
         headers = {
             'accept': '*/*',
@@ -361,7 +360,14 @@ def sync_options_task(is_auto=False, user_id=None):
 
                 for year in years_to_process:
                         # Determine instrument type
-                        instrument_type = 'OPTIDX' if getattr(stock, 'is_index', False) else 'OPTSTK'
+                        is_index = getattr(stock, 'is_index', False)
+                        instrument_type = 'OPTIDX' if is_index else 'OPTSTK'
+                        
+                        # Determine range % based on index or stock
+                        if is_index:
+                            range_pct = ConfigManager.get_option_strike_range_index() / 100.0
+                        else:
+                            range_pct = ConfigManager.get_option_strike_range_stock() / 100.0
 
                         # 1. Fetch Expiry Dates
                         expiry_url = "https://www.nseindia.com/api/historicalOR/meta/foCPV/expireDts"

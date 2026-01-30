@@ -23,7 +23,8 @@ class ConfigManager:
     INTERNAL_API_SECRET = 'internal_api_secret'
     MAINTENANCE_MODE = 'maintenance_mode'
     OPTION_PRICE_SYNC_START_DATE = 'option_price_sync_start_date'
-    OPTION_STRIKE_PRICE_RANGE_PCT = 'option_strike_price_range_pct'
+    OPTION_STRIKE_RANGE_INDEX = 'OPTION_STRIKE_RANGE_INDEX'
+    OPTION_STRIKE_RANGE_STOCK = 'OPTION_STRIKE_RANGE_STOCK'
     OPTION_SYNC_LOOKBACK_DAYS = 'option_sync_lookback_days'
     
     @staticmethod
@@ -150,10 +151,19 @@ class ConfigManager:
         return None
     
     @classmethod
-    def get_option_strike_price_range_pct(cls):
-        """Returns option strike price range percentage (default 5%)"""
+    def get_option_strike_range_index(cls):
+        """Returns option strike price range percentage for Indices (default 10%)"""
         return cls.get_config(
-            cls.OPTION_STRIKE_PRICE_RANGE_PCT,
+            cls.OPTION_STRIKE_RANGE_INDEX,
+            default=10.0,
+            value_type=float
+        )
+    
+    @classmethod
+    def get_option_strike_range_stock(cls):
+        """Returns option strike price range percentage for Stocks (default 5%)"""
+        return cls.get_config(
+            cls.OPTION_STRIKE_RANGE_STOCK,
             default=5.0,
             value_type=float
         )
@@ -180,6 +190,7 @@ class ConfigManager:
             'go_service_url': cls.get_go_service_url(),
             'maintenance_mode': cls.is_maintenance_mode(),
             'option_price_sync_start_date': cls.get_option_price_sync_start_date(),
-            'option_strike_price_range_pct': cls.get_option_strike_price_range_pct(),
+            'OPTION_STRIKE_RANGE_INDEX': cls.get_option_strike_range_index(),
+            'OPTION_STRIKE_RANGE_STOCK': cls.get_option_strike_range_stock(),
             'option_sync_lookback_days': cls.get_option_sync_lookback_days(),
         }

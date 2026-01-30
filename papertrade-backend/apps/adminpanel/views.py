@@ -104,8 +104,6 @@ def list_users(request):
     paginator = Paginator(users, page_size)
     
     try:
-        users_page = paginator.page(page)
-    except PageNotAnInteger:
         users_page = paginator.page(1)
     except EmptyPage:
         users_page = paginator.page(paginator.num_pages)
@@ -183,6 +181,45 @@ def update_config(request, key):
         return get_error_response('NOT_FOUND', 'Configuration not found', status_code=404)
     except Exception as e:
         return get_error_response('SERVER_ERROR', str(e), status_code=500)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def batch_update_configs(request):
+    """Update multiple system configurations at once."""
+    if not can_manage_config(request.user):
+        return get_error_response('FORBIDDEN', 'Admin access required', status_code=403)
+    
+    configs_data = request.data.get('configs')
+    if not configs_data or not isinstance(configs_data, list):
+        return get_error_response('VALIDATION_ERROR', 'A list of configuration objects is required', status_code=400)
+    
+    updated_configs = []
+    errors = []
+    
+    for item in configs_data:
+        key = item.get('key')
+        value = item.get('value')
+        
+        if not key:
+            errors.append({'error': 'Key is required', 'item': item})
+            continue
+            
+        try:
+            config, created = SystemConfig.objects.update_or_create(
+                key=key,
+                defaults={'value': str(value)}
+            )
+            updated_configs.append({'key': config.key, 'value': config.value})
+        except Exception as e:
+            errors.append({'key': key, 'error': str(e)})
+            
+    if errors and not updated_configs:
+        return get_error_response('BATCH_UPDATE_ERROR', 'Failed to update any configurations', errors, status_code=400)
+        
+    return get_success_response({
+        'updated': updated_configs,
+        'errors': errors
+    }, message=f'Successfully updated {len(updated_configs)} configurations')
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
@@ -464,6 +501,7 @@ def get_table_schema(request, table_name):
     except Exception as e:
         return get_error_response('SERVER_ERROR', str(e), status_code=500)
 
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def execute_query(request):
@@ -497,3 +535,59 @@ def execute_query(request):
                 
     except Exception as e:
         return get_error_response('DB_ERROR', str(e), status_code=400)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def execute_script(request):
+    """
+    Execute arbitrary Python script with model context (Superadmin only).
+    Acts like shell_plus.
+    """
+    if not isinstance(request.user, AdminUser) or request.user.role != 'superadmin':
+        return get_error_response('FORBIDDEN', 'Superadmin access required', status_code=403)
+
+    script = request.data.get('script')
+    if not script:
+        return get_error_response('VALIDATION_ERROR', 'Script is required', status_code=400)
+
+    # 1. Setup Context (Auto-imports)
+    import django.apps
+    from django.conf import settings
+    
+    context = {}
+    
+    # Import all models from all installed apps
+    for app_config in django.apps.apps.get_app_configs():
+        for model in app_config.get_models():
+            context[model.__name__] = model
+            
+    # Add common utilities
+    context['settings'] = settings
+    context['timezone'] = timezone
+    context['request'] = request
+    
+    # 2. Capture Output
+    import io
+    import sys
+    import contextlib
+    
+    stdout_capture = io.StringIO()
+    
+    try:
+        with contextlib.redirect_stdout(stdout_capture):
+            exec(script, context)
+            
+        output = stdout_capture.getvalue()
+        return get_success_response({
+            'output': output,
+            'status': 'success'
+        })
+        
+    except Exception as e:
+        # Capture stdout even if it failed midway
+        partial_output = stdout_capture.getvalue()
+        return get_success_response({
+            'output': partial_output,
+            'error': str(e),
+            'status': 'error'
+        })
