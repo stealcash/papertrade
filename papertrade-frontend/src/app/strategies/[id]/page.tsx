@@ -5,7 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { strategiesAPI, backtestAPI } from '@/lib/api';
 import { ArrowLeft, Calendar, Search, TrendingUp, TrendingDown, Target, Clock, RefreshCw, Info } from 'lucide-react';
 import Link from 'next/link';
-import SignalHistoryModal from '@/components/strategies/SignalHistoryModal';
 
 export default function StrategyDetailPage() {
     const params = useParams();
@@ -25,7 +24,6 @@ export default function StrategyDetailPage() {
     const [dateRange, setDateRange] = useState<{ min: string | null, max: string | null }>({ min: null, max: null });
 
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedStock, setSelectedStock] = useState<{ id: number, symbol: string } | null>(null);
     const [showDescription, setShowDescription] = useState(false);
 
     useEffect(() => {
@@ -266,8 +264,7 @@ export default function StrategyDetailPage() {
                                     filteredSignals.slice(0, 50).map((item: any, i: number) => (
                                         <tr
                                             key={i}
-                                            className="hover:bg-gray-50 transition cursor-pointer"
-                                            onClick={() => setSelectedStock({ id: item.stock_id, symbol: item.stock_symbol })}
+                                            className="hover:bg-gray-50 transition"
                                         >
                                             <td className="px-6 py-4">
                                                 <div className="font-bold text-gray-900">{item.stock_symbol}</div>
@@ -292,15 +289,13 @@ export default function StrategyDetailPage() {
                                                 {item.total_pnl ? Number(item.total_pnl).toFixed(2) : '-'}
                                             </td>
                                             <td className="px-6 py-4 text-right pr-8 whitespace-nowrap">
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        setSelectedStock({ id: item.stock_id, symbol: item.stock_symbol });
-                                                    }}
+                                                <Link
+                                                    href={`/strategies/${id}/trades/${item.stock_id}`}
+                                                    onClick={(e) => e.stopPropagation()}
                                                     className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-semibold rounded-lg hover:bg-blue-100 transition"
                                                 >
                                                     View Trades
-                                                </button>
+                                                </Link>
                                             </td>
                                         </tr>
                                     ))
@@ -369,14 +364,6 @@ export default function StrategyDetailPage() {
                 </div>
             </div>
 
-            {/* Modal */}
-            <SignalHistoryModal
-                isOpen={!!selectedStock}
-                onClose={() => setSelectedStock(null)}
-                stockSymbol={selectedStock?.symbol || ''}
-                stockId={selectedStock?.id || 0}
-                strategyCode={strategy?.code}
-            />
         </div>
     );
 }

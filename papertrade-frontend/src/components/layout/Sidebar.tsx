@@ -2,7 +2,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Home, TrendingUp, Zap, BarChart3, PieChart, Wallet,
-  Bell, User, BookOpen, Crown, LogOut, Scan, LineChart, Target, FlaskConical, History, Search
+  Bell, User, BookOpen, Crown, LogOut, Scan, LineChart, Target, FlaskConical, History, Search,
+  Compass, Layers, Microscope
 } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '@/store/slices/authSlice';
@@ -24,28 +25,67 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
     router.push('/login');
   };
 
-  const navItems = [
+  const generalItems = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
-    { name: "Strategies", href: "/strategies", icon: Zap },
     { name: "Stocks", href: "/stocks", icon: LineChart },
     { name: "My Watchlist", href: "/watchlist", icon: BookOpen },
     { name: "My Predictions", href: "/predictions", icon: Target },
     { name: "Scanner", href: "/scanner", icon: Scan },
+    { name: "Compare Stock History", href: "/stock-history", icon: History },
+  ];
+
+  const strategyItems = [
     { name: "Stock Finder", href: "/stock-finder", icon: Search },
-    { name: "History", href: "/stock-history", icon: History },
-    { name: "Options", href: "/options", icon: Zap },
-    { name: "Analysis", href: "/market-analysis", icon: BarChart3 },
+    { name: "Strategies", href: "/strategies", icon: Compass },
     { name: "Backtest", href: "/backtest", icon: FlaskConical },
+  ];
+
+  const optionItems = [
+    { name: "Options", href: "/options", icon: Zap },
+    { name: "Option Strategies", href: "/option-strategies", icon: Layers },
+    { name: "Option Backtest", href: "/option-backtest", icon: Microscope },
+  ];
+
+  const otherItems = [
+    { name: "Market Analysis", href: "/market-analysis", icon: BarChart3 },
     { name: "Wallet", href: "/wallet", icon: Wallet },
     { name: "Notifications", href: "/notifications", icon: Bell },
     { name: "Profile", href: "/profile", icon: User },
   ];
 
+  const renderNavItem = ({ name, href, icon: Icon }: any) => {
+    const isActive = pathname === href || pathname.startsWith(`${href}/`);
 
+    return (
+      <Link
+        key={name}
+        href={href}
+        onClick={() => setIsMobileOpen(false)}
+        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group relative
+          ${isActive
+            ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+            : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200"
+          }
+          ${isCollapsed ? "justify-center" : ""}
+        `}
+        title={isCollapsed ? name : undefined}
+      >
+        <Icon
+          size={20}
+          className={`shrink-0 transition-colors ${isActive ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300"}`}
+        />
 
-  if (user?.role === 'admin' || user?.role === 'superadmin') {
-    // Admin link could be added here if needed, or handled via separate admin panel redirection
-  }
+        {!isCollapsed && (
+          <span className="truncate">{name}</span>
+        )}
+
+        {/* Active Indicator Strip */}
+        {isActive && (
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-blue-600 rounded-r-full" />
+        )}
+      </Link>
+    );
+  };
 
   return (
     <>
@@ -65,40 +105,26 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
 `}
       >
         <div className="flex-1 overflow-y-auto py-4 scrollbar-thin scrollbar-thumb-gray-200">
-          <nav className="px-3 space-y-1">
-            {navItems.map(({ name, href, icon: Icon }) => {
-              const isActive = pathname === href || pathname.startsWith(`${href}/`);
+          <nav className="px-3 space-y-4">
+            {/* General Items */}
+            <div className="space-y-1">
+              {generalItems.map(renderNavItem)}
+            </div>
 
-              return (
-                <Link
-                  key={name}
-                  href={href}
-                  onClick={() => setIsMobileOpen(false)}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group relative
-                    ${isActive
-                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
-                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200"
-                    }
-                    ${isCollapsed ? "justify-center" : ""}
-                  `}
-                  title={isCollapsed ? name : undefined}
-                >
-                  <Icon
-                    size={20}
-                    className={`shrink-0 transition-colors ${isActive ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300"}`}
-                  />
+            {/* Strategy Group */}
+            <div className="space-y-1 p-1 bg-amber-50/50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-800/30">
+              {strategyItems.map(renderNavItem)}
+            </div>
 
-                  {!isCollapsed && (
-                    <span className="truncate">{name}</span>
-                  )}
+            {/* Options Group */}
+            <div className="space-y-1 p-1 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-800/30">
+              {optionItems.map(renderNavItem)}
+            </div>
 
-                  {/* Active Indicator Strip */}
-                  {isActive && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 h-8 w-1 bg-blue-600 rounded-r-full" />
-                  )}
-                </Link>
-              );
-            })}
+            {/* Other Items */}
+            <div className="space-y-1">
+              {otherItems.map(renderNavItem)}
+            </div>
           </nav >
         </div >
 

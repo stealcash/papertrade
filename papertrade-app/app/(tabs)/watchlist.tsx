@@ -1,12 +1,28 @@
-import React, { useState, useCallback } from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, TextInput, Modal, ActivityIndicator, Alert, RefreshControl } from 'react-native';
-import { useFocusEffect } from 'expo-router';
+import React, { useState, useCallback, useEffect } from 'react';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, TextInput, Modal, ActivityIndicator, Alert, RefreshControl, Platform } from 'react-native';
+import { useFocusEffect, Link, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
-import { watchlistApi, WatchlistItem } from '@/services/watchlist';
+import DraggableFlatList, { ScaleDecorator, RenderItemParams } from 'react-native-draggable-flatlist';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+import { watchlistAPI, WatchlistItem } from '@/services/watchlist';
+import { stocksAPI } from '@/services/stocks';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Colors } from '@/constants/Colors';
+import PredictionModal from '@/components/PredictionModal';
 
 export default function WatchlistScreen() {
+    const colorScheme = useColorScheme();
+    const colors = Colors[colorScheme ?? 'light'];
+    const router = useRouter();
+
     const [watchlist, setWatchlist] = useState<WatchlistItem[]>([]);
     const [loading, setLoading] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+
+    // Reorder State
+    const [hasUnsavedOrder, setHasUnsavedOrder] = useState(false);
+    const [isSavingOrder, setIsSavingOrder] = useState(false);
 
     // Search Modal
     const [searchVisible, setSearchVisible] = useState(false);
@@ -14,25 +30,57 @@ export default function WatchlistScreen() {
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [searching, setSearching] = useState(false);
 
-    const fetchWatchlist = async () => {
-        setLoading(true);
+    // Prediction Modal
+    const [selectedStock, setSelectedStock] = useState<any>(null);
+    const [predictionVisible, setPredictionVisible] = useState(false);
+
+    const fetchWatchlist = async (isRefresh = false) => {
+        if (!isRefresh) setLoading(true);
         try {
-            const response = await watchlistApi.getWatchlist();
-            // Response structure: { data: { stocks: [], pagination: {} } } usually, or unwrapped
-            const data = response.data || response;
-            setWatchlist(data.stocks || []);
+            const response = await watchlistAPI.getAll();
+            const data = response.data?.data || response.data || response;
+            const stocks = data.stocks || (Array.isArray(data) ? data : []);
+            // Sort by order initially
+            setWatchlist(stocks.sort((a: any, b: any) => (a.order || 0) - (b.order || 0)));
+            setHasUnsavedOrder(false);
         } catch (e) {
             console.error(e);
         } finally {
             setLoading(false);
+            setRefreshing(false);
         }
     };
 
     useFocusEffect(
         useCallback(() => {
-            fetchWatchlist();
-        }, [])
+            if (!hasUnsavedOrder) {
+                fetchWatchlist();
+            }
+        }, [hasUnsavedOrder])
     );
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        fetchWatchlist(true);
+    };
+
+    const handleSaveOrder = async () => {
+        setIsSavingOrder(true);
+        try {
+            const items = watchlist.map((item, index) => ({
+                id: item.id,
+                order: index
+            }));
+            await watchlistAPI.reorder(items);
+            setHasUnsavedOrder(false);
+            Alert.alert("Success", "Watchlist order saved.");
+        } catch (e) {
+            console.error(e);
+            Alert.alert("Error", "Failed to save order.");
+        } finally {
+            setIsSavingOrder(false);
+        }
+    };
 
     const handleSearch = async (text: string) => {
         setSearchQuery(text);
@@ -43,9 +91,10 @@ export default function WatchlistScreen() {
 
         setSearching(true);
         try {
-            const response = await watchlistApi.searchStocks(text);
-            const data = response.data || response;
-            setSearchResults(data.stocks || []);
+            const response = await stocksAPI.getAll({ search: text });
+            const data = response.data?.data || response.data || response;
+            const stocks = data.stocks || (Array.isArray(data) ? data : []);
+            setSearchResults(stocks);
         } catch (e) {
             console.error(e);
         } finally {
@@ -55,8 +104,7 @@ export default function WatchlistScreen() {
 
     const addToWatchlist = async (stock: any) => {
         try {
-            await watchlistApi.addToWatchlist(stock.id);
-            Alert.alert("Added", `${stock.symbol} added to watchlist.`);
+            await watchlistAPI.add(stock.id);
             setSearchVisible(false);
             setSearchQuery('');
             setSearchResults([]);
@@ -76,7 +124,7 @@ export default function WatchlistScreen() {
                     text: "Remove", style: 'destructive',
                     onPress: async () => {
                         try {
-                            await watchlistApi.removeFromWatchlist(item.stock_details.id);
+                            await watchlistAPI.remove(item.id);
                             fetchWatchlist();
                         } catch (e) {
                             Alert.alert("Error", "Failed to remove stock.");
@@ -87,122 +135,235 @@ export default function WatchlistScreen() {
         );
     };
 
-    const renderItem = ({ item }: { item: WatchlistItem }) => {
+    const handlePredict = (stock: any) => {
+        setSelectedStock({
+            id: stock.stock_details.id,
+            symbol: stock.stock_details.symbol,
+            name: stock.stock_details.name
+        });
+        setPredictionVisible(true);
+    };
+
+    const renderItem = ({ item, drag, isActive }: RenderItemParams<WatchlistItem>) => {
         const isPositive = (item.stock_details.change_percent || 0) >= 0;
+
         return (
-            <TouchableOpacity style={styles.card} onLongPress={() => removeFromWatchlist(item)}>
-                <View>
-                    <Text style={styles.symbol}>{item.stock_details.symbol}</Text>
-                    <Text style={styles.name}>{item.stock_details.name}</Text>
-                </View>
-                <View style={{ alignItems: 'flex-end' }}>
-                    <Text style={styles.price}>₹{item.stock_details.last_price || '0.00'}</Text>
-                    <Text style={[styles.change, isPositive ? styles.green : styles.red]}>
-                        {isPositive ? '+' : ''}{item.stock_details.change_percent?.toFixed(2)}%
-                    </Text>
-                </View>
-            </TouchableOpacity>
+            <ScaleDecorator>
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onLongPress={drag}
+                    disabled={isActive}
+                    style={[
+                        styles.card,
+                        {
+                            backgroundColor: colors.card,
+                            borderColor: isActive ? colors.tint : colors.border,
+                            opacity: isActive ? 0.9 : 1
+                        }
+                    ]}
+                >
+                    <TouchableOpacity
+                        style={styles.dragHandle}
+                        onPressIn={drag}
+                    >
+                        <FontAwesome name="navicon" size={16} color={colors.tabIconDefault} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.stockInfo}
+                        onPress={() => router.push(`/stocks/${item.stock_details.id}` as any)}
+                    >
+                        <Text style={[styles.symbol, { color: colors.text }]}>{item.stock_details.symbol}</Text>
+                        <Text style={[styles.name, { color: colors.tabIconDefault }]} numberOfLines={1}>{item.stock_details.name}</Text>
+                    </TouchableOpacity>
+
+                    <View style={styles.stockValues}>
+                        <Text style={[styles.price, { color: colors.text }]}>₹{parseFloat(item.stock_details.last_price as any || 0).toFixed(2)}</Text>
+                        <Text style={[styles.change, { color: isPositive ? '#10b981' : '#ef4444' }]}>
+                            {isPositive ? '+' : ''}{parseFloat(item.stock_details.change_percent as any || 0).toFixed(2)}%
+                        </Text>
+                    </View>
+
+                    <View style={styles.actionButtons}>
+                        <TouchableOpacity style={styles.actionBtn} onPress={() => handlePredict(item)}>
+                            <FontAwesome name="bullseye" size={18} color="#8b5cf6" />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.actionBtn} onPress={() => removeFromWatchlist(item)}>
+                            <FontAwesome name="trash-o" size={18} color="#ef4444" />
+                        </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
+            </ScaleDecorator>
         );
     };
 
-    const renderSearchItem = ({ item }: { item: any }) => (
-        <TouchableOpacity style={styles.searchItem} onPress={() => addToWatchlist(item)}>
-            <View>
-                <Text style={styles.searchSymbol}>{item.symbol}</Text>
-                <Text style={styles.searchName}>{item.name}</Text>
-            </View>
-            <FontAwesome name="plus-circle" size={24} color="#0a7ea4" />
-        </TouchableOpacity>
-    );
-
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerTitle}>Watchlist</Text>
-                <TouchableOpacity onPress={() => setSearchVisible(true)}>
-                    <FontAwesome name="plus" size={20} color="#0a7ea4" />
-                </TouchableOpacity>
-            </View>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <View style={[styles.container, { backgroundColor: colors.background }]}>
+                {/* Header */}
+                <View style={[styles.header, { borderBottomColor: colors.border, backgroundColor: colors.background }]}>
+                    <Text style={[styles.headerTitle, { color: colors.text }]}>Watchlist</Text>
 
-            <FlatList
-                data={watchlist}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={styles.list}
-                refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchWatchlist} />}
-                ListEmptyComponent={!loading ? (
-                    <View style={styles.emptyState}>
-                        <Text style={styles.emptyText}>Watchlist is empty</Text>
-                        <TouchableOpacity onPress={() => setSearchVisible(true)}>
-                            <Text style={styles.addLink}>Add Stocks</Text>
+                    <View style={styles.headerActions}>
+                        {hasUnsavedOrder && (
+                            <TouchableOpacity
+                                style={[styles.saveBtn, { backgroundColor: '#10b981' }]}
+                                onPress={handleSaveOrder}
+                                disabled={isSavingOrder}
+                            >
+                                {isSavingOrder ? (
+                                    <ActivityIndicator size="small" color="#fff" />
+                                ) : (
+                                    <Text style={styles.saveBtnText}>Save Order</Text>
+                                )}
+                            </TouchableOpacity>
+                        )}
+                        <TouchableOpacity style={styles.addBtn} onPress={() => setSearchVisible(true)}>
+                            <FontAwesome name="plus" size={18} color={colors.tint} />
                         </TouchableOpacity>
                     </View>
-                ) : null}
-            />
-
-            {/* Search Modal */}
-            <Modal visible={searchVisible} animationType="slide">
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalHeader}>
-                        <TouchableOpacity onPress={() => setSearchVisible(false)}>
-                            <FontAwesome name="arrow-left" size={20} color="#333" />
-                        </TouchableOpacity>
-                        <TextInput
-                            style={styles.searchInput}
-                            placeholder="Search stocks..."
-                            autoFocus
-                            value={searchQuery}
-                            onChangeText={handleSearch}
-                        />
-                        {searching && <ActivityIndicator size="small" color="#0a7ea4" />}
-                    </View>
-
-                    <FlatList
-                        data={searchResults}
-                        renderItem={renderSearchItem}
-                        keyExtractor={item => item.id.toString()}
-                        contentContainerStyle={styles.searchList}
-                    />
                 </View>
-            </Modal>
-        </View>
+
+                {loading && !refreshing ? (
+                    <View style={styles.center}>
+                        <ActivityIndicator size="large" color={colors.tint} />
+                    </View>
+                ) : (
+                    <DraggableFlatList
+                        data={watchlist}
+                        onDragEnd={({ data }) => {
+                            setWatchlist(data);
+                            setHasUnsavedOrder(true);
+                        }}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={renderItem}
+                        contentContainerStyle={styles.list}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={colors.tint} />
+                        }
+                        ListEmptyComponent={
+                            <View style={styles.emptyState}>
+                                <FontAwesome name="star-o" size={64} color={colors.tabIconDefault} />
+                                <Text style={[styles.emptyText, { color: colors.tabIconDefault }]}>Your watchlist is empty</Text>
+                                <TouchableOpacity style={[styles.emptyAddBtn, { borderColor: colors.tint }]} onPress={() => setSearchVisible(true)}>
+                                    <Text style={[styles.emptyAddBtnText, { color: colors.tint }]}>Add Stocks</Text>
+                                </TouchableOpacity>
+                            </View>
+                        }
+                    />
+                )}
+
+                {/* Prediction Modal */}
+                <PredictionModal
+                    stock={selectedStock}
+                    visible={predictionVisible}
+                    onClose={() => setPredictionVisible(false)}
+                />
+
+                {/* Search Modal */}
+                <Modal visible={searchVisible} animationType="slide">
+                    <View style={[styles.modalContainer, { backgroundColor: colors.background }]}>
+                        <View style={[styles.modalHeader, { borderBottomColor: colors.border }]}>
+                            <TouchableOpacity onPress={() => setSearchVisible(false)} style={styles.modalCloseBtn}>
+                                <FontAwesome name="arrow-left" size={20} color={colors.text} />
+                            </TouchableOpacity>
+                            <TextInput
+                                style={[styles.searchInput, { color: colors.text }]}
+                                placeholder="Search stocks..."
+                                placeholderTextColor={colors.tabIconDefault}
+                                autoFocus
+                                value={searchQuery}
+                                onChangeText={handleSearch}
+                            />
+                            {searching && <ActivityIndicator size="small" color={colors.tint} style={{ marginRight: 10 }} />}
+                        </View>
+
+                        <FlatList
+                            data={searchResults}
+                            renderItem={({ item }: { item: any }) => (
+                                <TouchableOpacity
+                                    style={[styles.searchItem, { borderBottomColor: colors.border }]}
+                                    onPress={() => addToWatchlist(item)}
+                                >
+                                    <View>
+                                        <Text style={[styles.searchSymbol, { color: colors.text }]}>{item.symbol}</Text>
+                                        <Text style={[styles.searchName, { color: colors.tabIconDefault }]}>{item.name}</Text>
+                                    </View>
+                                    <View style={styles.searchAddIcon}>
+                                        <FontAwesome name="plus" size={16} color="#fff" />
+                                    </View>
+                                </TouchableOpacity>
+                            )}
+                            keyExtractor={(item: any) => item.id.toString()}
+                            contentContainerStyle={styles.searchList}
+                            ListEmptyComponent={!searching && searchQuery.length >= 2 ? (
+                                <View style={styles.emptyState}>
+                                    <Text style={[styles.emptyText, { color: colors.tabIconDefault }]}>No stocks found matching "{searchQuery}"</Text>
+                                </View>
+                            ) : null}
+                        />
+                    </View>
+                </Modal>
+            </View>
+        </GestureHandlerRootView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#f5f5f5' },
+    container: { flex: 1 },
     header: {
         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-        padding: 15, paddingTop: 50, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#eee'
+        paddingHorizontal: 20, paddingTop: Platform.OS === 'ios' ? 60 : 40, paddingBottom: 15,
+        borderBottomWidth: 1,
     },
     headerTitle: { fontSize: 24, fontWeight: 'bold' },
-    list: { padding: 15 },
+    headerActions: { flexDirection: 'row', alignItems: 'center', gap: 15 },
+    addBtn: {
+        width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(59, 130, 246, 0.1)',
+        justifyContent: 'center', alignItems: 'center'
+    },
+    saveBtn: {
+        paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8,
+    },
+    saveBtnText: { color: '#fff', fontSize: 13, fontWeight: 'bold' },
+
+    list: { padding: 16 },
+    center: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 40 },
 
     card: {
-        backgroundColor: '#fff', padding: 15, borderRadius: 12, marginBottom: 10,
-        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-        shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 2, elevation: 2
+        padding: 12, borderRadius: 16, marginBottom: 12, borderWidth: 1,
+        flexDirection: 'row', alignItems: 'center',
+        shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05, shadowRadius: 4, elevation: 2
     },
+    dragHandle: { padding: 10, marginRight: 5 },
+    stockInfo: { flex: 1 },
     symbol: { fontSize: 16, fontWeight: 'bold' },
-    name: { fontSize: 12, color: '#888', marginTop: 2 },
+    name: { fontSize: 12, marginTop: 2 },
+    stockValues: { alignItems: 'flex-end', marginRight: 15 },
     price: { fontSize: 16, fontWeight: '600' },
     change: { fontSize: 12, fontWeight: 'bold', marginTop: 2 },
-    green: { color: '#28a745' },
-    red: { color: '#dc3545' },
 
-    emptyState: { alignItems: 'center', marginTop: 50 },
-    emptyText: { color: '#888', marginBottom: 10 },
-    addLink: { color: '#0a7ea4', fontWeight: 'bold' },
+    actionButtons: { flexDirection: 'row', gap: 5 },
+    actionBtn: { width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.03)' },
+
+    emptyState: { alignItems: 'center', marginTop: 100, paddingHorizontal: 40 },
+    emptyText: { fontSize: 16, marginTop: 16, marginBottom: 24, textAlign: 'center' },
+    emptyAddBtn: { paddingHorizontal: 32, paddingVertical: 12, borderRadius: 24, borderWidth: 1 },
+    emptyAddBtnText: { fontSize: 16, fontWeight: 'bold' },
 
     // Modal
-    modalContainer: { flex: 1, backgroundColor: '#fff', paddingTop: 50 },
-    modalHeader: { flexDirection: 'row', alignItems: 'center', padding: 15, borderBottomWidth: 1, borderBottomColor: '#eee' },
-    searchInput: { flex: 1, marginLeft: 15, fontSize: 16, padding: 5 },
+    modalContainer: { flex: 1 },
+    modalHeader: { flexDirection: 'row', alignItems: 'center', padding: 15, paddingTop: Platform.OS === 'ios' ? 60 : 40, borderBottomWidth: 1 },
+    modalCloseBtn: { padding: 10 },
+    searchInput: { flex: 1, marginLeft: 10, fontSize: 17, paddingVertical: 8 },
     searchList: { padding: 15 },
     searchItem: {
         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-        paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: '#f9f9f9'
+        paddingVertical: 15, borderBottomWidth: 1,
     },
     searchSymbol: { fontSize: 16, fontWeight: 'bold' },
-    searchName: { fontSize: 12, color: '#888' },
+    searchName: { fontSize: 12, marginTop: 2 },
+    searchAddIcon: { width: 28, height: 28, borderRadius: 14, backgroundColor: '#3b82f6', justifyContent: 'center', alignItems: 'center' },
 });
+

@@ -64,7 +64,7 @@ class SubscriptionService:
         now = timezone.now()
         
         # All rate-limited features including STRATEGY_CREATE (Creation Limit, not Storage Limit)
-        if feature_code in ['BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD', 'STRATEGY_CREATE', 'STOCK_FINDER_SCAN']:
+        if feature_code in ['BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD', 'STRATEGY_CREATE', 'STOCK_FINDER_SCAN', 'OPTION_STRATEGY_CREATE', 'OPTION_BACKTEST_RUN']:
             from .models import SubscriptionUsage
             
             usage_record = SubscriptionUsage.objects.filter(
@@ -86,7 +86,7 @@ class SubscriptionService:
         now = timezone.now()
         
         # Only track for Rate-Limited features
-        if feature_code not in ['BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD', 'STRATEGY_CREATE', 'STOCK_FINDER_SCAN']:
+        if feature_code not in ['BACKTEST_RUN', 'TRADE_EXECUTE', 'PREDICTION_ADD', 'STRATEGY_CREATE', 'STOCK_FINDER_SCAN', 'OPTION_STRATEGY_CREATE', 'OPTION_BACKTEST_RUN']:
             return
 
         from .models import SubscriptionUsage

@@ -227,7 +227,12 @@ def trigger_hard_sync(request):
         else:
              # Option sync hard mode (run synchronously)
              from .tasks import sync_options_task
-             task = sync_options_task.apply(kwargs={'is_auto': False, 'user_id': user_id_log})
+             task = sync_options_task.apply(kwargs={
+                'is_auto': False, 
+                'user_id': user_id_log,
+                'from_date': start_date_str,
+                'to_date': end_date_str
+             })
     else:
         # Run asynchronously (Celery)
         task = sync_hard_task.delay(

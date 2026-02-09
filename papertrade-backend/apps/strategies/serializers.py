@@ -29,8 +29,17 @@ class StrategyRuleBasedSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['user']
 
+
 class StockFinderHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = StockFinderHistory
         fields = ['id', 'user', 'strategies', 'filters', 'results', 'created_at']
         read_only_fields = ['user', 'created_at']
+
+from .models import OptionStrategy
+
+class OptionStrategySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OptionStrategy
+        fields = '__all__'
+        read_only_fields = ['user', 'is_system']

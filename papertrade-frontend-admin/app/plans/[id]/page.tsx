@@ -156,6 +156,8 @@ export default function PlanEditorPage({ params }: { params: { id: string } }) {
                         {[
                             { code: 'STRATEGY_CREATE', label: 'Strategy Creation' },
                             { code: 'BACKTEST_RUN', label: 'Run Backtests' },
+                            { code: 'OPTION_STRATEGY_CREATE', label: 'Option Strategy Creation' },
+                            { code: 'OPTION_BACKTEST_RUN', label: 'Option Run Backtests' },
                             { code: 'TRADE_EXECUTE', label: 'Execute Trades' },
                             { code: 'PREDICTION_ADD', label: 'Add Predictions' },
                             { code: 'STOCK_FINDER_SCAN', label: 'Stock Finder Scans' }

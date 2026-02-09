@@ -114,7 +114,7 @@ export default function MyStrategiesPage() {
 
         // Use server-side usage count (Usage per period, includes deleted)
         // Fallback to 0 if not present
-        const used = subscription.usage?.STRATEGY_CREATE || 0;
+        const used = subscription.usage?.STRATEGY_CREATE ?? 0;
 
         const unlimited = limit === -1;
         const canCreate = unlimited || used < limit;

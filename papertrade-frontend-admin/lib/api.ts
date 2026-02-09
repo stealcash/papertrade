@@ -55,6 +55,15 @@ export const strategiesAPI = {
     // User/Rule Based
     createRuleBased: (data: any) => apiClient.post('/strategies/rule-based/', data),
     updateRuleBased: (id: number, data: any) => apiClient.put(`/strategies/rule-based/${id}/`, data),
+
+    // Option Strategies
+    option: {
+        getAll: () => apiClient.get('/strategies/option-strategies/'),
+        getById: (id: number | string) => apiClient.get(`/strategies/option-strategies/${id}/`),
+        create: (data: any) => apiClient.post('/strategies/option-strategies/', data),
+        update: (id: number | string, data: any) => apiClient.put(`/strategies/option-strategies/${id}/`, data),
+        delete: (id: number) => apiClient.delete(`/strategies/option-strategies/${id}/`),
+    }
 };
 
 export const plansAPI = {

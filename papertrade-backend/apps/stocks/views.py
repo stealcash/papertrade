@@ -1,3 +1,4 @@
+from django.db import models
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -110,6 +111,14 @@ class StockViewSet(viewsets.ModelViewSet):
                 queryset = queryset.filter(is_index=True)
             elif is_index.lower() == 'false':
                 queryset = queryset.filter(is_index=False)
+        
+        # Filter by is_option_enable
+        is_option_enable = request.query_params.get('is_option_enable')
+        if is_option_enable is not None:
+            if is_option_enable.lower() == 'true':
+                queryset = queryset.filter(is_option_enable=True)
+            elif is_option_enable.lower() == 'false':
+                queryset = queryset.filter(is_option_enable=False)
         
         # Search by symbol
         search = request.query_params.get('search')
@@ -264,7 +273,7 @@ class StockPriceDailyViewSet(viewsets.ReadOnlyModelViewSet):
             if ids:
                 stock_queryset = stock_queryset.filter(sectors__id__in=ids)
         elif request.query_params.get('sector_id'):
-             stock_queryset = stock_queryset.filter(sectors__id=request.query_params.get('sector_id'))
+            stock_queryset = stock_queryset.filter(sectors__id=request.query_params.get('sector_id'))
             
         # Filter by categories
         category_ids = request.query_params.get('category_ids')
@@ -287,11 +296,18 @@ class StockPriceDailyViewSet(viewsets.ReadOnlyModelViewSet):
             stock_queryset = stock_queryset.filter(watched_by__user=request.user)
 
         # 2. Get Target Stocks (from filters)
-        # If no filters provided, this might return ALL stocks which is heavy. 
-        # But per new requirement, Frontend will ALWAYS provide IDs.
-        # We can keep a safety limit if needed, or just let it be.
-        # Let's return the filtered queryset IDs directly.
-        
+        # Check if any filter was actually applied to avoid fetching ALL stocks
+        has_filter = any([
+            stock_symbol, stock_ids, request.query_params.get('stock_id'),
+            sector_ids, request.query_params.get('sector_id'),
+            category_ids, is_index, 
+            watchlist_only and watchlist_only.lower() == 'true'
+        ])
+
+        if not has_filter:
+            # If no filters, return empty to avoid overwhelming the server
+            return get_success_response([])
+
         target_stock_ids = stock_queryset.values_list('id', flat=True)
         
         # 3. Filter Prices for these stocks

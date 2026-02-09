@@ -32,14 +32,11 @@ export interface PortfolioResponse {
     };
 }
 
-export const portfolioApi = {
-    getHoldings: async () => {
-        const response = await apiClient.get('portfolio/holdings');
-        return response.data;
-    },
-
-    trade: async (payload: { stock_id: number; quantity: number; action: 'BUY' | 'SELL' }) => {
-        const response = await apiClient.post('portfolio/holdings/trade', payload);
-        return response.data;
-    }
+export const portfolioAPI = {
+    getHoldings: () => apiClient.get('/portfolio/holdings/'),
+    getHistory: (params?: any) => apiClient.get('/portfolio/holdings/history/', { params }),
+    trade: (data: { stock_id: number, quantity: number, action: 'BUY' | 'SELL' }) => apiClient.post('/portfolio/holdings/trade/', data),
 };
+
+// Legacy alias
+export const portfolioApi = portfolioAPI;

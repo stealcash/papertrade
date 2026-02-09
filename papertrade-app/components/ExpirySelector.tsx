@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, FlatList, Modal } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { optionsApi } from '@/services/options';
+import { optionsAPI } from '@/services/options';
 
 interface ExpirySelectorProps {
     symbol: string;
@@ -36,10 +36,8 @@ export function ExpirySelector({ symbol, selectedExpiry, onSelectExpiry }: Expir
     const fetchYears = async () => {
         setLoadingYears(true);
         try {
-            // API currently requires symbol to fetch available years
-            // Using a fallback current year if API is empty/fails for now to allow progress
-            const data = await optionsApi.getYears(symbol);
-            const yearList = data?.data || [];
+            const response = await optionsAPI.getYears(symbol);
+            const yearList = response.data?.data || response.data || [];
             if (yearList.length > 0) {
                 setYears(yearList);
                 setSelectedYear(yearList[0]); // Default to first (usually current)
@@ -63,11 +61,10 @@ export function ExpirySelector({ symbol, selectedExpiry, onSelectExpiry }: Expir
     const fetchExpiries = async (year: number) => {
         setLoadingExpiries(true);
         try {
-            const data = await optionsApi.getExpiries(symbol, year.toString());
-            const expiryList = data?.data || [];
+            const response = await optionsAPI.getExpiries(symbol, year.toString());
+            const expiryList = response.data?.data || response.data || [];
             setExpiries(expiryList);
             if (expiryList.length > 0 && !selectedExpiry) {
-                // Auto-select nearest? Let parent handle or user select.
                 onSelectExpiry(expiryList[0]);
             }
         } catch (e) {
@@ -125,7 +122,7 @@ export function ExpirySelector({ symbol, selectedExpiry, onSelectExpiry }: Expir
                             </TouchableOpacity>
                         </View>
 
-                        <FlatList
+                        <FlatList<string | number>
                             data={modalType === 'YEAR' ? years : expiries}
                             keyExtractor={(item) => String(item)}
                             renderItem={({ item }) => (

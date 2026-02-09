@@ -1,11 +1,11 @@
 'use client';
 
+import './globals.css';
 import { useEffect, useState } from 'react';
 import { Provider, useSelector } from 'react-redux';
 import { usePathname } from 'next/navigation';
 import { store, RootState } from '@/store';
 import { loadFromStorage } from '@/store/slices/authSlice';
-import './globals.css';
 
 import AuthVerifier from '@/components/AuthVerifier';
 import Sidebar from '@/components/Sidebar';

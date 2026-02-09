@@ -281,7 +281,7 @@ def sync_stocks_task(is_auto=False, user_id=None, from_date=None, to_date=None, 
 
 
 @shared_task
-def sync_options_task(is_auto=False, user_id=None):
+def sync_options_task(is_auto=False, user_id=None, from_date=None, to_date=None):
     """
     Sync option data from NSE for enabled indices.
     """
@@ -336,18 +336,22 @@ def sync_options_task(is_auto=False, user_id=None):
                 symbol = symbol.replace(' ', '') 
                 
                 # Determine date range
-                if stock.last_option_sync:
-                    current_start_date = stock.last_option_sync + timedelta(days=1)
-                elif config_start_date:
-                    current_start_date = config_start_date
+                if from_date and to_date:
+                    current_start_date = datetime.strptime(from_date, '%Y-%m-%d').date()
+                    today = datetime.strptime(to_date, '%Y-%m-%d').date()
                 else:
-                    # Default fallback
-                    current_start_date = date(2024, 1, 1)
-                
-                today = timezone.now().date()
+                    if stock.last_option_sync:
+                        current_start_date = stock.last_option_sync + timedelta(days=1)
+                    elif config_start_date:
+                        current_start_date = config_start_date
+                    else:
+                        # Default fallback
+                        current_start_date = date(2024, 1, 1)
+                    
+                    today = timezone.now().date()
                 
                 if current_start_date > today:
-                    logger.info(f"Skipping {stock.symbol}: Up to date (Last sync: {stock.last_option_sync})")
+                    logger.info(f"Skipping {stock.symbol}: Up to date (Last sync: {stock.last_option_sync if not from_date else from_date})")
                     success_count += 1
                     continue
                 
@@ -398,7 +402,16 @@ def sync_options_task(is_auto=False, user_id=None):
                                 
                             # Call API for CE and PE
                             # Range: Expiry - lookback_days to Expiry
-                            start_q_date = (expiry_date - timedelta(days=lookback_days)).strftime('%d-%m-%Y')
+                            start_q_date_obj = expiry_date - timedelta(days=lookback_days)
+                            
+                            # Adjust for weekends: If start date is Sat/Sun, move forward to Monday
+                            # Try up to 3 days to ensure we get a weekday (per USER request)
+                            attempts = 0
+                            while start_q_date_obj.weekday() >= 5 and attempts < 3:
+                                start_q_date_obj += timedelta(days=1)
+                                attempts += 1
+                                
+                            start_q_date = start_q_date_obj.strftime('%d-%m-%Y')
                             end_q_date = expiry_date.strftime('%d-%m-%Y')
                             
                             for opt_type in ['CE', 'PE']:
@@ -560,5 +573,9 @@ def sync_hard_task(sync_type, start_date, end_date, instruments=None, user_id=No
         )
     elif sync_type == 'option':
          from .tasks import sync_options_task
-         # Note: Hard sync date range not yet supported in sync_options_task, uses smart sync logic
-         sync_options_task.delay(is_auto=False, user_id=user_id)
+         sync_options_task.delay(
+             is_auto=False, 
+             user_id=user_id,
+             from_date=start_date,
+             to_date=end_date
+         )

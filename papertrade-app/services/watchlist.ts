@@ -12,32 +12,18 @@ export interface WatchlistItem {
     order: number;
 }
 
+export const watchlistAPI = {
+    getAll: (params?: any) => apiClient.get('/watchlist/', { params }),
+    add: (stockId: number) => apiClient.post('/watchlist/', { stock: stockId }),
+    remove: (id: number) => apiClient.delete(`/watchlist/${id}/`),
+    reorder: (items: { id: number, order: number }[]) => apiClient.post('/watchlist/reorder/', { items }),
+    bulkUpdate: (add: number[], remove: number[]) => apiClient.post('/watchlist/bulk_update/', { add, remove }),
+};
+
+// Legacy alias for compatibility
 export const watchlistApi = {
-    getWatchlist: async () => {
-        // API returns paginated response
-        const response = await apiClient.get('watchlist');
-        return response.data;
-    },
-
-    searchStocks: async (query: string) => {
-        const response = await apiClient.get(`stocks?search=${query}`);
-        return response.data;
-    },
-
-    addToWatchlist: async (stockId: number) => {
-        // Bulk update API: { add: [id] }
-        const response = await apiClient.post('watchlist/bulk_update', {
-            add: [stockId]
-        });
-        return response.data;
-    },
-
-    removeFromWatchlist: async (stockId: number) => {
-        // Bulk update API: { remove: [id] }
-        // NOTE: Remove expects Stock ID based on view logic ("UserStock.objects.filter(..., stock_id__in=remove_ids)")
-        const response = await apiClient.post('watchlist/bulk_update', {
-            remove: [stockId]
-        });
-        return response.data;
-    }
+    getWatchlist: () => watchlistAPI.getAll(),
+    searchStocks: (query: string) => apiClient.get('/stocks/', { params: { search: query } }),
+    addToWatchlist: (stockId: number) => watchlistAPI.bulkUpdate([stockId], []),
+    removeFromWatchlist: (stockId: number) => watchlistAPI.bulkUpdate([], [stockId]),
 };

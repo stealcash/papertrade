@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useState, useMemo, useRef } from 'react';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import { Search, Calendar, ChevronDown, Filter, AlertCircle } from 'lucide-react';
 
 // --- CUSTOM SEARCHABLE SELECT COMPONENT ---
 function SearchableSelect({ label, value, options, onChange, placeholder = "Select..." }: any) {
@@ -27,14 +30,14 @@ function SearchableSelect({ label, value, options, onChange, placeholder = "Sele
     const selectedLabel = options.find((o: any) => o.value == value)?.label || value || placeholder;
 
     return (
-        <div className="relative min-w-[140px]" ref={containerRef}>
+        <div className={`relative ${label === 'Year' ? 'min-w-[90px]' : 'min-w-[140px]'}`} ref={containerRef}>
             <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{label}</label>
             <button
                 onClick={() => { setIsOpen(!isOpen); setQuery(''); }}
-                className="w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-left text-sm rounded-lg px-3 py-2.5 flex justify-between items-center focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm"
+                className="w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-left text-sm rounded-lg px-3 py-2 flex justify-between items-center focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm h-[42px]"
             >
                 <span className="truncate">{selectedLabel}</span>
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                <ChevronDown size={14} className="text-gray-400" />
             </button>
 
             {isOpen && (
@@ -92,8 +95,8 @@ export default function OptionsPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     // Secondary Filters
-    const [fromDate, setFromDate] = useState<string>('');
-    const [toDate, setToDate] = useState<string>('');
+    const [startDate, setStartDate] = useState<Date | null>(null);
+    const [endDate, setEndDate] = useState<Date | null>(null);
     const [minStrike, setMinStrike] = useState<string>('');
     const [maxStrike, setMaxStrike] = useState<string>('');
     const [visibleColumns, setVisibleColumns] = useState({
@@ -109,8 +112,6 @@ export default function OptionsPage() {
     });
 
     // Temp state for sidebar
-    const [tempFromDate, setTempFromDate] = useState<string>('');
-    const [tempToDate, setTempToDate] = useState<string>('');
     const [tempMinStrike, setTempMinStrike] = useState<string>('');
     const [tempMaxStrike, setTempMaxStrike] = useState<string>('');
     const [tempVisibleColumns, setTempVisibleColumns] = useState(visibleColumns);
@@ -172,29 +173,26 @@ export default function OptionsPage() {
             .finally(() => setLoadingFilters(false));
     }, [selectedSymbol, selectedYear, API_URL]);
 
-    useEffect(() => {
+    const fetchChain = async () => {
         if (!selectedSymbol || !selectedExpiry) return;
+        setLoading(true);
+        try {
+            let url = `${API_URL}/options/chain/?symbol=${selectedSymbol}&expiry=${selectedExpiry}&type=${viewMode}`;
 
-        const fetchChain = async () => {
-            setLoading(true);
-            try {
-                let url = `${API_URL}/options/chain/?symbol=${selectedSymbol}&expiry=${selectedExpiry}&type=${viewMode}`;
-
-                if (fromDate && toDate) {
-                    url += `&from_date=${fromDate}&to_date=${toDate}`;
-                }
-
-                const res = await fetch(url);
-                const data = await res.json();
-                setChainData(data.data || []);
-            } catch (err) {
-                console.error("Failed to fetch option chain", err);
-            } finally {
-                setLoading(false);
+            if (startDate && endDate) {
+                url += `&from_date=${startDate.toISOString().split('T')[0]}&to_date=${endDate.toISOString().split('T')[0]}`;
             }
-        };
-        fetchChain();
-    }, [selectedSymbol, selectedExpiry, viewMode, fromDate, toDate, API_URL]);
+
+            const res = await fetch(url);
+            const data = await res.json();
+            setChainData(data.data || []);
+        } catch (err) {
+            console.error("Failed to fetch option chain", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     // -------------------------------------------------------------------------
     // 3. HELPERS
@@ -281,6 +279,38 @@ export default function OptionsPage() {
                             onChange={setSelectedExpiry}
                         />
 
+                        {/* Date Range Picker - RELOCATED FROM SIDEBAR */}
+                        <div className="min-w-[240px]">
+                            <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Date Range</label>
+                            <DatePicker
+                                selectsRange={true}
+                                startDate={startDate}
+                                endDate={endDate}
+                                onChange={(update: [Date | null, Date | null]) => {
+                                    const [start, end] = update;
+                                    setStartDate(start);
+                                    setEndDate(end);
+                                }}
+                                isClearable={true}
+                                maxDate={new Date()}
+                                placeholderText="All History"
+                                dateFormat="dd MMM, yyyy"
+                                customInput={
+                                    <div className="w-full h-[42px] flex items-center justify-between bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-left text-sm rounded-lg px-3 py-2 cursor-pointer hover:border-indigo-500 transition-all shadow-sm group">
+                                        <div className="flex items-center gap-2 overflow-hidden">
+                                            <Calendar size={14} className="text-gray-400 group-hover:text-indigo-500 transition-colors shrink-0" />
+                                            <span className="text-[11px] font-bold text-gray-700 dark:text-gray-200 truncate">
+                                                {startDate && endDate
+                                                    ? `${startDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} - ${endDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}`
+                                                    : startDate ? `${startDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} - ...` : "All History"}
+                                            </span>
+                                        </div>
+                                        <ChevronDown size={14} className="text-gray-400 shrink-0" />
+                                    </div>
+                                }
+                            />
+                        </div>
+
                         {/* View Mode Toggle */}
                         <div className="min-w-[150px]">
                             <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">View Mode</label>
@@ -298,21 +328,29 @@ export default function OptionsPage() {
                         </div>
                     </div>
 
-                    {/* Right: Filter Trigger */}
-                    <button
-                        onClick={() => {
-                            setTempFromDate(fromDate);
-                            setTempToDate(toDate);
-                            setTempMinStrike(minStrike);
-                            setTempMaxStrike(maxStrike);
-                            setTempVisibleColumns(visibleColumns);
-                            setIsSidebarOpen(true);
-                        }}
-                        className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-all shadow-sm"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" /></svg>
-                        <span>More Filters</span>
-                    </button>
+                    {/* Right: Actions */}
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => {
+                                setTempMinStrike(minStrike);
+                                setTempMaxStrike(maxStrike);
+                                setTempVisibleColumns(visibleColumns);
+                                setIsSidebarOpen(true);
+                            }}
+                            className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2.5 rounded-lg text-sm font-medium transition-all"
+                        >
+                            <Filter size={16} />
+                            <span>More Filters</span>
+                        </button>
+
+                        <button
+                            onClick={fetchChain}
+                            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg text-sm font-bold transition-all shadow-md active:scale-95"
+                        >
+                            <AlertCircle size={16} />
+                            <span>Apply</span>
+                        </button>
+                    </div>
                 </div>
 
                 {/* DATA TABLE */}
@@ -440,7 +478,7 @@ export default function OptionsPage() {
 
             </div>
 
-            {/* SIDEBAR - Moved here for true full-screen coverage */}
+            {/* SIDEBAR - Restored */}
             <div className={`fixed inset-0 z-[100] ${isSidebarOpen ? 'visible' : 'invisible'}`}>
                 {/* Backdrop */}
                 <div
@@ -460,21 +498,6 @@ export default function OptionsPage() {
                     </div>
 
                     <div className="p-6 space-y-8 flex-1 overflow-y-auto">
-                        {/* Date Range */}
-                        <div className="space-y-4">
-                            <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-1 border-b dark:border-gray-700">Date Range</h3>
-                            <div className="space-y-4">
-                                <div className="space-y-2">
-                                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-tight">From Date</label>
-                                    <input type="date" value={tempFromDate} onChange={e => setTempFromDate(e.target.value)} className="input-field" />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="block text-xs font-bold text-gray-500 uppercase tracking-tight">To Date</label>
-                                    <input type="date" value={tempToDate} onChange={e => setTempToDate(e.target.value)} className="input-field" />
-                                </div>
-                            </div>
-                        </div>
-
                         {/* Strike Range */}
                         <div className="space-y-4">
                             <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-1 border-b dark:border-gray-700">Strike Price Range</h3>
@@ -485,7 +508,7 @@ export default function OptionsPage() {
                                 </div>
                                 <div className="space-y-2">
                                     <label className="block text-xs font-bold text-gray-500 uppercase tracking-tight">Max Strike</label>
-                                    <input type="number" value={tempMaxStrike} onChange={e => setTempMaxStrike(e.target.value)} className="input-field" placeholder="100000" />
+                                    <input type="number" value={tempMaxStrike} onChange={e => setTempMaxStrike(e.target.value)} className="input-field" placeholder="Max" />
                                 </div>
                             </div>
                         </div>
@@ -515,12 +538,11 @@ export default function OptionsPage() {
                         </button>
                         <button
                             onClick={() => {
-                                setFromDate(tempFromDate);
-                                setToDate(tempToDate);
                                 setMinStrike(tempMinStrike);
                                 setMaxStrike(tempMaxStrike);
                                 setVisibleColumns(tempVisibleColumns);
                                 setIsSidebarOpen(false);
+                                setTimeout(fetchChain, 0);
                             }}
                             className="flex-[2] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-lg transition-all shadow"
                         >
@@ -532,7 +554,7 @@ export default function OptionsPage() {
 
             <style jsx>{`
                 .input-field {
-                    @apply w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm;
+                    @apply w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm;
                 }
             `}</style>
         </div>

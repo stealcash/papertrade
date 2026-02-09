@@ -218,55 +218,104 @@ export default function BacktestDetailPage() {
                             <tbody className="divide-y divide-gray-100">
                                 {tableLoading ? (
                                     <tr>
-                                        <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
+                                        <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
                                             Loading Results...
                                         </td>
                                     </tr>
                                 ) : predictions.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5} className="px-6 py-12 text-center text-gray-400">
+                                        <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
                                             No predictions found.
                                         </td>
                                     </tr>
                                 ) : (
-                                    predictions.map((row: any, i: number) => (
-                                        <Fragment key={i}>
-                                            {(i === 0 || row.stock_symbol !== predictions[i - 1].stock_symbol) && (
-                                                <tr className="bg-gray-100 dark:bg-gray-800">
-                                                    <td colSpan={5} className="px-6 py-2 font-bold text-sm text-gray-800 dark:text-gray-200">
-                                                        {row.stock_symbol}
+                                    predictions.map((row: any, i: number) => {
+                                        // CHECK: Is this an Option Trade?
+                                        const isOption = !!row.legs;
+
+                                        if (isOption) {
+                                            // ─── OPTION TRADE ROW ───
+                                            return (
+                                                <tr key={i} className="hover:bg-gray-50 transition border-b border-gray-100">
+                                                    <td className="px-6 py-4">
+                                                        <div className="font-bold text-gray-900">{row.stock_symbol}</div>
+                                                        <div className="text-xs text-gray-400">{row.entry_date} → {row.exit_date}</div>
+                                                    </td>
+                                                    <td colSpan={3} className="px-6 py-4">
+                                                        <div className="space-y-1">
+                                                            {row.legs.map((leg: any, idx: number) => (
+                                                                <div key={idx} className="flex items-center gap-2 text-xs">
+                                                                    <span className={`font-bold px-1.5 rounded ${leg.action === 'BUY' ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}`}>
+                                                                        {leg.action}
+                                                                    </span>
+                                                                    <span className="font-mono">{leg.strike} {leg.type}</span>
+                                                                    <span className="text-gray-400">@</span>
+                                                                    <span className="font-mono">
+                                                                        {leg.entry ? `₹${leg.entry.toFixed(1)}` : '-'}
+                                                                    </span>
+                                                                    <span className="text-gray-400">→</span>
+                                                                    <span className="font-mono">
+                                                                        {leg.exit ? `₹${leg.exit.toFixed(1)}` : '-'}
+                                                                    </span>
+                                                                    <span className={`ml-auto font-mono ${leg.pnl >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                                                        {leg.pnl >= 0 ? '+' : ''}{leg.pnl ? parseInt(leg.pnl) : 0}
+                                                                    </span>
+                                                                    <span className="text-[10px] text-gray-400 capitalize bg-gray-50 px-1 rounded">
+                                                                        {(leg.reason || '').replace('_', ' ')}
+                                                                    </span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4 text-right">
+                                                        <div className={`font-bold text-sm ${row.pnl >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                                            {row.pnl >= 0 ? '+' : ''}₹{Math.round(row.pnl).toLocaleString()}
+                                                        </div>
                                                     </td>
                                                 </tr>
-                                            )}
-                                            <tr className="hover:bg-gray-50 transition">
-                                                <td className="px-6 py-4 font-medium text-gray-900">{row.stock_symbol}</td>
-                                                <td className="px-6 py-4 text-gray-500">{row.signal_date}</td>
-                                                <td className="px-6 py-4 text-right font-mono">
-                                                    <div className={`flex items-center justify-end gap-1 ${row.actual_close > row.prev_close ? 'text-green-600' : row.actual_close < row.prev_close ? 'text-red-600' : 'text-gray-700'}`}>
-                                                        <span>₹{row.actual_close}</span>
-                                                        {row.actual_close > row.prev_close ? <TrendingUp size={14} /> : row.actual_close < row.prev_close ? <TrendingDown size={14} /> : null}
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4 text-right">
-                                                    <div className="flex items-center justify-end gap-1">
-                                                        <span className="font-mono">₹{row.expected_price.toFixed(2)}</span>
-                                                        {row.signal === 'UP'
-                                                            ? <TrendingUp size={14} className="text-green-500" />
-                                                            : <TrendingDown size={14} className="text-red-500" />
-                                                        }
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4 text-center">
-                                                    <span className={`px-2 py-1 rounded text-xs font-bold ${row.result === 'WIN'
-                                                        ? 'bg-green-100 text-green-700'
-                                                        : 'bg-red-100 text-red-700'
-                                                        }`}>
-                                                        {row.result === 'WIN' ? '+1' : '0'}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </Fragment>
-                                    ))
+                                            );
+                                        } else {
+                                            // ─── STANDARD STOCK ROW ───
+                                            return (
+                                                <Fragment key={i}>
+                                                    {(i === 0 || row.stock_symbol !== predictions[i - 1].stock_symbol) && (
+                                                        <tr className="bg-gray-100 dark:bg-gray-800">
+                                                            <td colSpan={5} className="px-6 py-2 font-bold text-sm text-gray-800 dark:text-gray-200">
+                                                                {row.stock_symbol}
+                                                            </td>
+                                                        </tr>
+                                                    )}
+                                                    <tr className="hover:bg-gray-50 transition">
+                                                        <td className="px-6 py-4 font-medium text-gray-900">{row.stock_symbol}</td>
+                                                        <td className="px-6 py-4 text-gray-500">{row.signal_date}</td>
+                                                        <td className="px-6 py-4 text-right font-mono">
+                                                            <div className={`flex items-center justify-end gap-1 ${row.actual_close > row.prev_close ? 'text-green-600' : row.actual_close < row.prev_close ? 'text-red-600' : 'text-gray-700'}`}>
+                                                                <span>₹{row.actual_close}</span>
+                                                                {row.actual_close > row.prev_close ? <TrendingUp size={14} /> : row.actual_close < row.prev_close ? <TrendingDown size={14} /> : null}
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-6 py-4 text-right">
+                                                            <div className="flex items-center justify-end gap-1">
+                                                                <span className="font-mono">₹{row.expected_price.toFixed(2)}</span>
+                                                                {row.signal === 'UP'
+                                                                    ? <TrendingUp size={14} className="text-green-500" />
+                                                                    : <TrendingDown size={14} className="text-red-500" />
+                                                                }
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-6 py-4 text-center">
+                                                            <span className={`px-2 py-1 rounded text-xs font-bold ${row.result === 'WIN'
+                                                                ? 'bg-green-100 text-green-700'
+                                                                : 'bg-red-100 text-red-700'
+                                                                }`}>
+                                                                {row.result === 'WIN' ? '+1' : '0'}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </Fragment>
+                                            );
+                                        }
+                                    })
                                 )}
                             </tbody>
                         </table>

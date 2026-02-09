@@ -207,7 +207,9 @@ export default function SubscriptionPage() {
                       const LABELS: any = {
                         'STRATEGY_CREATE': 'Strategy Creation',
                         'BACKTEST_RUN': 'Backtest Runs',
-                        'TRADE_EXECUTE': 'Live Trades'
+                        'TRADE_EXECUTE': 'Live Trades',
+                        'OPTION_STRATEGY_CREATE': 'Option Strategy Creation',
+                        'OPTION_BACKTEST_RUN': 'Option Backtest Runs'
                       };
 
                       const label = LABELS[key] || key.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, (l: string) => l.toUpperCase());

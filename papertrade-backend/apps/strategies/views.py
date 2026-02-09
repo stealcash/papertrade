@@ -704,3 +704,45 @@ class StockFinderViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return get_success_response(serializer.data)
+
+
+from .models import OptionStrategy
+from .serializers import OptionStrategySerializer
+
+class OptionStrategyViewSet(viewsets.ModelViewSet):
+    serializer_class = OptionStrategySerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        from django.db.models import Q
+        
+        # If AdminUser, show all strategies
+        if hasattr(user, '_meta') and user._meta.object_name == 'AdminUser':
+             return OptionStrategy.objects.all().order_by('-created_at')
+             
+        # For regular Users, show system strategies OR strategies belonging to them
+        return OptionStrategy.objects.filter(Q(is_system=True) | Q(user=user)).order_by('-created_at')
+
+    def perform_create(self, serializer):
+        from rest_framework.exceptions import ValidationError
+        from apps.subscriptions.services import SubscriptionService
+        
+        user = self.request.user
+        # If AdminUser, don't assign to user field (set is_system=True instead if desired, 
+        # or just leave user=None)
+        if hasattr(user, '_meta') and user._meta.object_name == 'AdminUser':
+            serializer.save(user=None, is_system=True)
+        else:
+            # Subscription Enforcement
+            allowed, msg = SubscriptionService.check_limit(user, 'OPTION_STRATEGY_CREATE')
+            if not allowed:
+                raise ValidationError({'subscription': msg})
+
+            serializer.save(user=user)
+            SubscriptionService.increment_usage(user, 'OPTION_STRATEGY_CREATE')
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return get_success_response(serializer.data)

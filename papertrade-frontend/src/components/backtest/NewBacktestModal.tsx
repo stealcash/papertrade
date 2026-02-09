@@ -17,6 +17,7 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
 
     // Data Sources
     const [strategies, setStrategies] = useState<any[]>([]);
+
     const [stocks, setStocks] = useState<any[]>([]);
     const [sectors, setSectors] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
@@ -24,6 +25,7 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
     // UI Store
     const [searchQuery, setSearchQuery] = useState('');
     const [activeTab, setActiveTab] = useState<'search' | 'watchlist' | 'sector' | 'category'>('search');
+
     const [selectedSector, setSelectedSector] = useState<string>('');
     const [selectedCategory, setSelectedCategory] = useState<string>('');
 
@@ -31,7 +33,7 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
     const [formData, setFormData] = useState({
         strategy_id: '',
         is_system_strategy: false,
-        scope_type: 'stocks', // indices, stocks
+
 
         // This tracks the visual selection (Stock IDs)
         selection_ids: [] as number[],
@@ -67,7 +69,7 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                 backend_context_id: '',
                 pnl_enabled: false,
                 initial_wallet: 100000,
-                trade_strategy: 're_entry'
+                trade_strategy: 're_entry',
             }));
         }
     }, [isOpen]);
@@ -77,6 +79,7 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
         // Fetch strategies
         const fetchStrategies = async () => {
             try {
+                // Stock Strategies
                 const [resSys, resUser] = await Promise.all([
                     strategiesAPI.getAll(),
                     strategiesAPI.getRuleBased()
@@ -87,6 +90,12 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                     .filter((s: any) => !linkedRuleIds.includes(s.id))
                     .map((s: any) => ({ ...s, is_system: false }));
                 setStrategies([...sysStrats, ...userStrats]);
+
+                // Option Strategies
+                if (optionStrategiesAPI) { // Check if API exists
+                    const resOpt = await optionStrategiesAPI.getAll();
+                    setOptionStrategies(resOpt.data.data.results || resOpt.data.data || []);
+                }
             } catch (e) {
                 console.error("Strategies Error:", e);
             }
@@ -122,10 +131,17 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            const selectedStrat = strategies.find(s =>
-                s.id === Number(formData.strategy_id) &&
-                s.is_system === formData.is_system_strategy
-            );
+            let selectedStrat = null;
+
+            if (formData.is_option_strategy) {
+                selectedStrat = optionStrategies.find(s => s.id === Number(formData.strategy_id));
+            } else {
+                selectedStrat = strategies.find(s =>
+                    s.id === Number(formData.strategy_id) &&
+                    s.is_system === formData.is_system_strategy
+                );
+            }
+
             if (!selectedStrat) throw new Error("Strategy not found");
 
             // Construct payload based on mode
@@ -159,10 +175,14 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                 }
             }
 
-            if (selectedStrat.is_system) {
-                payload.strategy_id = selectedStrat.id;
+            if (formData.is_option_strategy) {
+                payload.strategy_options = selectedStrat.id;
             } else {
-                payload.strategy_rule_based = selectedStrat.id;
+                if (selectedStrat.is_system) {
+                    payload.strategy_id = selectedStrat.id;
+                } else {
+                    payload.strategy_rule_based = selectedStrat.id;
+                }
             }
 
             await backtestAPI.run(payload);
@@ -231,7 +251,7 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
     const toggleId = (id: number) => {
         setFormData(prev => {
             // If we touch individual items, we fallback to custom stock mode
-            // unless we are just toggling an index (which is always stock mode)
+            // unless we are just toggling an index (which is always index (stock) mode)
             const exists = prev.selection_ids.includes(id);
             let newIds = [];
             if (exists) newIds = prev.selection_ids.filter(x => x !== id);
@@ -280,40 +300,43 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                 <div className="p-8 overflow-y-auto flex-1">
                     {/* STEP 1: Strategy */}
                     {step === 1 && (
-                        <div className="space-y-8">
-                            <div className="flex justify-between items-center">
-                                <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">Select Strategy</h3>
-                                <a href="/strategies/create" className="text-sm text-blue-600 hover:underline font-medium">+ Create New Strategy</a>
+                        <div className="space-y-6">
+                            <div className="flex justify-between items-center mb-4">
+                                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Select Strategy</h3>
+                                <a href="/strategies/create" className="text-sm text-blue-600 hover:underline font-medium">+ Create New</a>
                             </div>
 
-                            {/* My Strategies */}
-                            {strategies.filter(s => !s.is_system && s.user).length > 0 && (
+                            {/* Stock Strategies List */}
+                            <div className="space-y-8">
+                                {/* My Strategies */}
+                                {strategies.filter(s => !s.is_system && s.user).length > 0 && (
+                                    <div className="space-y-3">
+                                        <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider">My Strategies</h4>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            {strategies.filter(s => !s.is_system && s.user).map((strat) => (
+                                                <div key={strat.id} onClick={() => setFormData({ ...formData, strategy_id: strat.id, is_system_strategy: false, is_option_strategy: false })}
+                                                    className={`p-4 border rounded-xl cursor-pointer transition relative group ${Number(formData.strategy_id) === strat.id && !formData.is_system_strategy && !formData.is_option_strategy ? 'border-black bg-gray-50 dark:border-white ring-1 ring-black' : 'border-gray-200 hover:border-black'}`}>
+                                                    <div className="font-semibold">{strat.name}</div>
+                                                    <div className="text-xs text-gray-500 mt-1">{strat.description || 'Custom'}</div>
+                                                    <span className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 bg-blue-100 text-blue-800 text-[10px] font-bold px-1.5 py-0.5 rounded">MINE</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* System */}
                                 <div className="space-y-3">
-                                    <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider">My Strategies</h4>
+                                    <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider">System Strategies</h4>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        {strategies.filter(s => !s.is_system && s.user).map((strat) => (
-                                            <div key={strat.id} onClick={() => setFormData({ ...formData, strategy_id: strat.id, is_system_strategy: false })}
-                                                className={`p-4 border rounded-xl cursor-pointer transition relative group ${Number(formData.strategy_id) === strat.id && !formData.is_system_strategy ? 'border-black bg-gray-50 dark:border-white ring-1 ring-black' : 'border-gray-200 hover:border-black'}`}>
+                                        {strategies.filter(s => s.is_system || !s.user).map((strat) => (
+                                            <div key={strat.id} onClick={() => setFormData({ ...formData, strategy_id: strat.id, is_system_strategy: true, is_option_strategy: false })}
+                                                className={`p-4 border rounded-xl cursor-pointer transition ${Number(formData.strategy_id) === strat.id && formData.is_system_strategy && !formData.is_option_strategy ? 'border-black bg-gray-50 dark:border-white ring-1 ring-black' : 'border-gray-200 hover:border-black'}`}>
                                                 <div className="font-semibold">{strat.name}</div>
-                                                <div className="text-xs text-gray-500 mt-1">{strat.description || 'Custom'}</div>
-                                                <span className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 bg-blue-100 text-blue-800 text-[10px] font-bold px-1.5 py-0.5 rounded">MINE</span>
+                                                <div className="text-xs text-gray-500 mt-1">{strat.type} • {strat.status}</div>
                                             </div>
                                         ))}
                                     </div>
-                                </div>
-                            )}
-
-                            {/* System */}
-                            <div className="space-y-3">
-                                <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wider">System Strategies</h4>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {strategies.filter(s => s.is_system || !s.user).map((strat) => (
-                                        <div key={strat.id} onClick={() => setFormData({ ...formData, strategy_id: strat.id, is_system_strategy: true })}
-                                            className={`p-4 border rounded-xl cursor-pointer transition ${Number(formData.strategy_id) === strat.id && formData.is_system_strategy ? 'border-black bg-gray-50 dark:border-white ring-1 ring-black' : 'border-gray-200 hover:border-black'}`}>
-                                            <div className="font-semibold">{strat.name}</div>
-                                            <div className="text-xs text-gray-500 mt-1">{strat.type} • {strat.status}</div>
-                                        </div>
-                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -322,7 +345,9 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                     {/* STEP 2: Stock Selection */}
                     {step === 2 && (
                         <div className="space-y-6">
-                            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Select Scope</h3>
+                            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                                {formData.is_option_strategy ? "Select Underlying Asset" : "Select Scope"}
+                            </h3>
 
                             {/* Scope Toggle */}
                             <div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
@@ -331,6 +356,12 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                                 <button onClick={() => setFormData({ ...formData, scope_type: 'stocks', selection_ids: [] })}
                                     className={`flex-1 py-2 text-sm font-semibold rounded-md transition ${formData.scope_type === 'stocks' ? 'bg-white shadow-sm text-black' : 'text-gray-500'}`}>Stocks</button>
                             </div>
+
+                            {formData.is_option_strategy && formData.scope_type === 'stocks' && (
+                                <div className="bg-blue-50 text-blue-800 text-xs p-3 rounded mb-2">
+                                    Tip: For Option Strategies, ensure you select stocks that have F&O liquidity (e.g. Nifty 50 constituents).
+                                </div>
+                            )}
 
                             {/* INDICES MODE */}
                             {formData.scope_type === 'indices' && (
@@ -368,7 +399,7 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                                         ))}
                                     </div>
 
-                                    {/* Controls Area */}
+                                    {/* Controls Area (Search, etc) - SAME AS BEFORE */}
                                     <div className="bg-gray-50 p-4 rounded-lg space-y-3">
                                         {activeTab === 'search' && (
                                             <div className="relative">
@@ -462,67 +493,81 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
                                 </div>
                             </div>
 
-                            <div>
-                                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Success Criteria</h3>
-                                <div className="grid grid-cols-1 gap-4">
-                                    <label className={`p-4 border rounded-xl cursor-pointer flex items-start gap-3 ${formData.criteria_type === 'direction' ? 'border-black ring-1 ring-black bg-gray-50' : 'border-gray-200'}`}>
-                                        <input type="radio" checked={formData.criteria_type === 'direction'} onChange={() => setFormData({ ...formData, criteria_type: 'direction' })} />
-                                        <div><div className="font-semibold">Direction Only</div><div className="text-xs text-gray-500">Success if price moves in predicted direction.</div></div>
-                                    </label>
-                                    <label className={`p-4 border rounded-xl cursor-pointer flex flex-col gap-4 ${formData.criteria_type === 'magnitude' ? 'border-black ring-1 ring-black bg-gray-50' : 'border-gray-200'}`}>
-                                        <div className="flex items-start gap-3">
-                                            <input type="radio" checked={formData.criteria_type === 'magnitude'} onChange={() => setFormData({ ...formData, criteria_type: 'magnitude' })} />
-                                            <div><div className="font-semibold">Direction + Magnitude</div><div className="text-xs text-gray-500">Success if price moves % of predicted change.</div></div>
-                                        </div>
-                                        {formData.criteria_type === 'magnitude' && (
-                                            <div className="pl-7 pr-2 w-full">
-                                                <input type="range" min="0" max="100" step="5" value={formData.magnitude_threshold} onChange={e => setFormData({ ...formData, magnitude_threshold: Number(e.target.value) })} className="w-full h-2 bg-gray-200 rounded-lg accent-black" />
-                                                <div className="text-center font-bold mt-2">{formData.magnitude_threshold}% Threshold</div>
+                            {/* Option Strategy Specific Info (Replaces Criteria) */}
+                            {formData.is_option_strategy ? (
+                                <div className="bg-purple-50 p-4 rounded-xl border border-purple-100 text-purple-900">
+                                    <h4 className="font-bold mb-2">Option Strategy Execution</h4>
+                                    <p className="text-sm">
+                                        Backtest will simulate <b>Trade Entry & Exit</b> logic defined in your strategy.
+                                        <br />
+                                        PnL is calculated based on Multi-Leg option premiums estimated from underlying price or historical data if available.
+                                    </p>
+                                </div>
+                            ) : (
+                                <div>
+                                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Success Criteria</h3>
+                                    <div className="grid grid-cols-1 gap-4">
+                                        <label className={`p-4 border rounded-xl cursor-pointer flex items-start gap-3 ${formData.criteria_type === 'direction' ? 'border-black ring-1 ring-black bg-gray-50' : 'border-gray-200'}`}>
+                                            <input type="radio" checked={formData.criteria_type === 'direction'} onChange={() => setFormData({ ...formData, criteria_type: 'direction' })} />
+                                            <div><div className="font-semibold">Direction Only</div><div className="text-xs text-gray-500">Success if price moves in predicted direction.</div></div>
+                                        </label>
+                                        <label className={`p-4 border rounded-xl cursor-pointer flex flex-col gap-4 ${formData.criteria_type === 'magnitude' ? 'border-black ring-1 ring-black bg-gray-50' : 'border-gray-200'}`}>
+                                            <div className="flex items-start gap-3">
+                                                <input type="radio" checked={formData.criteria_type === 'magnitude'} onChange={() => setFormData({ ...formData, criteria_type: 'magnitude' })} />
+                                                <div><div className="font-semibold">Direction + Magnitude</div><div className="text-xs text-gray-500">Success if price moves % of predicted change.</div></div>
                                             </div>
-                                        )}
-                                    </label>
+                                            {formData.criteria_type === 'magnitude' && (
+                                                <div className="pl-7 pr-2 w-full">
+                                                    <input type="range" min="0" max="100" step="5" value={formData.magnitude_threshold} onChange={e => setFormData({ ...formData, magnitude_threshold: Number(e.target.value) })} className="w-full h-2 bg-gray-200 rounded-lg accent-black" />
+                                                    <div className="text-center font-bold mt-2">{formData.magnitude_threshold}% Threshold</div>
+                                                </div>
+                                            )}
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
-                            {/* PnL Calculation Options */}
-                            <div className="pt-6 border-t border-dashed">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">PnL Calculation (Optional)</h3>
-                                    <label className="flex items-center cursor-pointer">
-                                        <input type="checkbox" checked={formData.pnl_enabled} onChange={e => setFormData({ ...formData, pnl_enabled: e.target.checked })} className="sr-only peer" />
-                                        <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
-                                    </label>
-                                </div>
+                            {/* PnL Calculation Options (Stock Only - Option is Auto PnL) */}
+                            {!formData.is_option_strategy && (
+                                <div className="pt-6 border-t border-dashed">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">PnL Calculation (Optional)</h3>
+                                        <label className="flex items-center cursor-pointer">
+                                            <input type="checkbox" checked={formData.pnl_enabled} onChange={e => setFormData({ ...formData, pnl_enabled: e.target.checked })} className="sr-only peer" />
+                                            <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
+                                        </label>
+                                    </div>
 
-                                {formData.pnl_enabled && (
-                                    <div className="bg-gray-50 p-4 rounded-xl space-y-4">
-                                        <div>
-                                            <label className="block text-sm font-medium mb-1">Initial Investment (₹)</label>
-                                            <input type="number" value={formData.initial_wallet} onChange={e => setFormData({ ...formData, initial_wallet: Number(e.target.value) })}
-                                                className="w-full p-2 border border-gray-200 rounded-lg" />
-                                            <p className="text-xs text-gray-500 mt-1">Amount is distributed equally among selected stocks.</p>
-                                        </div>
+                                    {formData.pnl_enabled && (
+                                        <div className="bg-gray-50 p-4 rounded-xl space-y-4">
+                                            <div>
+                                                <label className="block text-sm font-medium mb-1">Initial Investment (₹)</label>
+                                                <input type="number" value={formData.initial_wallet} onChange={e => setFormData({ ...formData, initial_wallet: Number(e.target.value) })}
+                                                    className="w-full p-2 border border-gray-200 rounded-lg" />
+                                                <p className="text-xs text-gray-500 mt-1">Amount is distributed equally among selected stocks.</p>
+                                            </div>
 
-                                        <div>
-                                            <label className="block text-sm font-medium mb-1">Execution Strategy</label>
-                                            <select value={formData.trade_strategy} onChange={e => setFormData({ ...formData, trade_strategy: e.target.value })}
-                                                className="w-full p-2 border border-gray-200 rounded-lg bg-white">
-                                                <option value="re_entry">Active Trading (Enter & Exit on Signals)</option>
-                                                <option value="buy_hold">Buy & Hold (First Signal -&gt; Last Day)</option>
-                                            </select>
-                                            {/* Info Box */}
-                                            <div className="mt-2 text-xs text-gray-500 bg-white p-2 rounded border border-gray-200 flex gap-2">
-                                                <div className="flex-shrink-0 w-4 h-4 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold text-[10px]">i</div>
-                                                <div>
-                                                    {formData.trade_strategy === 're_entry' ?
-                                                        "Exits stock on Sell signal, Re-enters on next Buy signal." :
-                                                        "Enters on first Buy signal and holds until the end date."}
+                                            <div>
+                                                <label className="block text-sm font-medium mb-1">Execution Strategy</label>
+                                                <select value={formData.trade_strategy} onChange={e => setFormData({ ...formData, trade_strategy: e.target.value })}
+                                                    className="w-full p-2 border border-gray-200 rounded-lg bg-white">
+                                                    <option value="re_entry">Active Trading (Enter & Exit on Signals)</option>
+                                                    <option value="buy_hold">Buy & Hold (First Signal -&gt; Last Day)</option>
+                                                </select>
+                                                {/* Info Box */}
+                                                <div className="mt-2 text-xs text-gray-500 bg-white p-2 rounded border border-gray-200 flex gap-2">
+                                                    <div className="flex-shrink-0 w-4 h-4 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold text-[10px]">i</div>
+                                                    <div>
+                                                        {formData.trade_strategy === 're_entry' ?
+                                                            "Exits stock on Sell signal, Re-enters on next Buy signal." :
+                                                            "Enters on first Buy signal and holds until the end date."}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )}
-                            </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

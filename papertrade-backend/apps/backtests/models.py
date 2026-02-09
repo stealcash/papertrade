@@ -23,6 +23,9 @@ class BacktestRun(models.Model):
                                            null=True, blank=True)
     strategy_rule_based = models.ForeignKey(StrategyRuleBased, on_delete=models.CASCADE, 
                                            null=True, blank=True)
+    strategy_options = models.ForeignKey('strategies.OptionStrategy', on_delete=models.CASCADE,
+                                        null=True, blank=True, help_text="Linked Option Strategy")
+    
     strategy_custom_script = models.TextField(blank=True, help_text='Custom script (not persisted)')
     
     # Selection Mode
@@ -155,3 +158,110 @@ class Trade(models.Model):
     
     def __str__(self):
         return f"{self.stock_enum} - {self.buy_date}"
+
+
+# ══════════════════════════════════════════════════════════════
+# OPTION BACKTESTING MODELS (Separate from Stock Backtesting)
+# ══════════════════════════════════════════════════════════════
+
+class OptionBacktestRun(models.Model):
+    """Option backtest run model - completely separate from stock backtesting."""
+    
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('running', 'Running'),
+        ('completed', 'Completed'),
+        ('failed', 'Failed'),
+    ]
+    
+    UNDERLYING_CHOICES = [
+        ('NIFTY', 'NIFTY 50'),
+        ('BANKNIFTY', 'BANK NIFTY'),
+        ('FINNIFTY', 'NIFTY FINANCIAL'),
+        ('MIDCPNIFTY', 'NIFTY MIDCAP SELECT'),
+    ]
+    
+    run_id = models.CharField(max_length=100, unique=True, db_index=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='option_backtest_runs')
+    
+    # Option Strategy
+    strategy = models.ForeignKey('strategies.OptionStrategy', on_delete=models.CASCADE,
+                                 help_text="Option Strategy to backtest")
+    
+    # Underlying Symbol (Index or Stock)
+    underlying_symbol = models.CharField(max_length=20, 
+                                        help_text="Symbol for option trading (Index or Stock)")
+    
+    # Backtest parameters
+    start_date = models.DateField()
+    end_date = models.DateField()
+    lot_size = models.IntegerField(default=50, help_text="Lot size/quantity per trade")
+    
+    # Results
+    total_trades = models.IntegerField(default=0)
+    win_count = models.IntegerField(default=0, help_text="Trades with positive PnL")
+    loss_count = models.IntegerField(default=0, help_text="Trades with negative PnL")
+    win_rate = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    
+    total_pnl = models.DecimalField(max_digits=15, decimal_places=2, default=0,
+                                   help_text="Total PnL in currency")
+    
+    # Summary data (for quick display without loading all trades)
+    results_summary_json = models.JSONField(default=dict, blank=True,
+                                           help_text="Summary stats like max drawdown, avg PnL per trade, etc.")
+    
+    # Execution metadata
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    time_taken = models.FloatField(null=True, blank=True, help_text='Execution time in seconds')
+    error_message = models.TextField(blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'option_backtest_runs'
+        verbose_name = 'Option Backtest Run'
+        verbose_name_plural = 'Option Backtest Runs'
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.run_id} - {self.underlying_symbol} - {self.strategy.name}"
+
+
+class OptionTrade(models.Model):
+    """Individual option trade record (multi-leg position)."""
+    
+    backtest_run = models.ForeignKey(OptionBacktestRun, on_delete=models.CASCADE,
+                                     related_name='trades')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='option_trades')
+    
+    underlying_symbol = models.CharField(max_length=20,
+                                        help_text="Index symbol (NIFTY, BANKNIFTY, etc.)")
+    
+    # Trade dates
+    entry_date = models.DateField()
+    exit_date = models.DateField()
+    expiry_date = models.DateField(help_text="Option expiry date")
+    
+    # Multi-leg structure stored as JSON
+    legs_json = models.JSONField(default=list,
+                                help_text="Array of legs with strike, type (CE/PE), action (BUY/SELL), entry/exit prices")
+    
+    # Total PnL for this position
+    total_pnl = models.DecimalField(max_digits=15, decimal_places=2, default=0)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'option_trades'
+        verbose_name = 'Option Trade'
+        verbose_name_plural = 'Option Trades'
+        ordering = ['-entry_date']
+        indexes = [
+            models.Index(fields=['backtest_run', 'entry_date']),
+            models.Index(fields=['underlying_symbol', 'entry_date']),
+        ]
+    
+    def __str__(self):
+        return f"{self.underlying_symbol} - {self.entry_date} to {self.exit_date} (PnL: {self.total_pnl})"

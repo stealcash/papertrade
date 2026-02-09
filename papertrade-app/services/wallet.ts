@@ -9,14 +9,13 @@ export interface WalletTransaction {
     created_at: string;
 }
 
-export const walletApi = {
-    getHistory: async () => {
-        const response = await apiClient.get('payments/records');
-        return response.data;
-    },
+export const paymentsAPI = {
+    refillWallet: (amount: number) => apiClient.post('/payments/wallet/refill/', { amount }),
+    getRecords: () => apiClient.get('/payments/records/'),
+};
 
-    refill: async (amount: number) => {
-        const response = await apiClient.post('payments/wallet/refill', { amount });
-        return response.data;
-    }
+// Legacy alias
+export const walletApi = {
+    getHistory: () => paymentsAPI.getRecords(),
+    refill: (amount: number) => paymentsAPI.refillWallet(amount),
 };

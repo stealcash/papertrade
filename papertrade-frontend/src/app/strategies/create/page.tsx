@@ -51,15 +51,26 @@ export default function CreateStrategyPage() {
     };
 
     const removeRuleFromBlock = (blockIndex: number, ruleIndex: number) => {
-        const newBlocks = [...strategyBlocks];
-        newBlocks[blockIndex].rules = newBlocks[blockIndex].rules.filter((_, i) => i !== ruleIndex);
-        setStrategyBlocks(newBlocks);
+        setStrategyBlocks(strategyBlocks.map((block, bIdx) => {
+            if (bIdx !== blockIndex) return block;
+            return {
+                ...block,
+                rules: block.rules.filter((_, rIdx) => rIdx !== ruleIndex)
+            };
+        }));
     };
 
     const updateRuleInBlock = (blockIndex: number, ruleIndex: number, field: keyof Rule, val: string) => {
-        const newBlocks = [...strategyBlocks];
-        newBlocks[blockIndex].rules[ruleIndex] = { ...newBlocks[blockIndex].rules[ruleIndex], [field]: val };
-        setStrategyBlocks(newBlocks);
+        setStrategyBlocks(strategyBlocks.map((block, bIdx) => {
+            if (bIdx !== blockIndex) return block;
+            return {
+                ...block,
+                rules: block.rules.map((rule, rIdx) => {
+                    if (rIdx !== ruleIndex) return rule;
+                    return { ...rule, [field]: val };
+                })
+            };
+        }));
     };
 
     const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);

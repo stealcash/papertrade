@@ -2,8 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { StyleSheet, View, Text, FlatList, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { Stack } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
-import { walletApi, WalletTransaction } from '@/services/wallet';
-import apiClient from '@/services/api';
+import { paymentsAPI, WalletTransaction } from '@/services/wallet';
+import { authAPI } from '@/services/auth';
 import { FontAwesome } from '@expo/vector-icons';
 
 export default function WalletScreen() {
@@ -17,14 +17,16 @@ export default function WalletScreen() {
         setLoading(true);
         try {
             // 1. Get Balance
-            const profile = await apiClient.get('auth/profile');
-            setBalance(Number(profile.data.data.wallet_balance));
+            const profileRes = await authAPI.profile();
+            const profileData = profileRes.data?.data || profileRes.data;
+            setBalance(Number(profileData.wallet_balance) || 0);
 
             // 2. Get History
-            const hist = await walletApi.getHistory();
-            setHistory(hist.data || []);
+            const histRes = await paymentsAPI.getRecords();
+            const historyData = histRes.data?.data || histRes.data || [];
+            setHistory(historyData);
         } catch (e) {
-            console.error(e);
+            console.error('Error fetching wallet data:', e);
         } finally {
             setLoading(false);
         }
@@ -45,12 +47,23 @@ export default function WalletScreen() {
 
         setRefilling(true);
         try {
-            await walletApi.refill(val);
-            Alert.alert("Success", "Wallet refilled!");
-            setAmount('');
-            fetchData();
-        } catch (e) {
-            Alert.alert("Error", "Refill failed");
+            const res = await paymentsAPI.refillWallet(val);
+            if (res.data?.status === 'success' || res.status === 200) {
+                Alert.alert("Success", "Wallet refilled!");
+                setAmount('');
+                fetchData();
+            } else {
+                Alert.alert("Error", res.data?.message || "Refill failed");
+            }
+        } catch (e: any) {
+            const status = e.response?.status;
+            const msg = e.response?.data?.message || e.message || "Refill failed";
+            Alert.alert(`Error (${status || 'N/A'})`, msg);
+            console.error('Refill error details:', {
+                status,
+                data: e.response?.data,
+                message: e.message
+            });
         } finally {
             setRefilling(false);
         }
@@ -70,7 +83,7 @@ export default function WalletScreen() {
                 <Text style={styles.date}>{new Date(item.created_at).toLocaleString()}</Text>
             </View>
             <Text style={[styles.amount, item.transaction_type === 'CREDIT' ? styles.green : styles.red]}>
-                {item.transaction_type === 'CREDIT' ? '+' : '-'}₹{Number(item.amount).toFixed(2)}
+                {item.transaction_type === 'CREDIT' ? '+' : '-'}₹{Number(item.amount || 0).toFixed(2)}
             </Text>
         </View>
     );

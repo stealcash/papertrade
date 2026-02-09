@@ -4,7 +4,71 @@ import { useFocusEffect } from 'expo-router';
 import { portfolioApi, PortfolioItem } from '@/services/portfolio';
 import { FontAwesome } from '@expo/vector-icons';
 
+// Component for History List
+const HistoryList = () => {
+    const [transactions, setTransactions] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    const fetchHistory = async () => {
+        setLoading(true);
+        try {
+            const res = await portfolioApi.getHistory();
+            const list = res.data?.results || res.data?.data || res.data || [];
+            setTransactions(Array.isArray(list) ? list : []);
+        } catch (error) {
+            console.error("Failed to fetch history", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchHistory();
+        }, [])
+    );
+
+    const renderItem = ({ item }: { item: any }) => {
+        const isBuy = item.type === 'BUY';
+        return (
+            <View style={styles.historyCard}>
+                <View style={styles.row}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                        <Text style={styles.symbol}>{item.stock_symbol}</Text>
+                        <View style={[styles.badge, { backgroundColor: isBuy ? '#dcfce7' : '#fee2e2' }]}>
+                            <Text style={[styles.badgeText, { color: isBuy ? '#16a34a' : '#dc2626' }]}>{item.type}</Text>
+                        </View>
+                    </View>
+                    <Text style={styles.date}>{new Date(item.created_at).toLocaleDateString()}</Text>
+                </View>
+                <View style={[styles.row, { marginTop: 8 }]}>
+                    <Text style={styles.historyDetail}>{item.quantity} @ ₹{Number(item.price).toFixed(2)}</Text>
+                    <Text style={styles.historyAmount}>₹{Number(item.amount).toLocaleString()}</Text>
+                </View>
+            </View>
+        );
+    };
+
+    if (loading) return <ActivityIndicator style={{ marginTop: 20 }} color="#0a7ea4" />;
+
+    return (
+        <FlatList
+            data={transactions}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+            contentContainerStyle={styles.list}
+            refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchHistory} />}
+            ListEmptyComponent={
+                <View style={styles.emptyState}>
+                    <Text style={styles.emptyText}>No trade history found</Text>
+                </View>
+            }
+        />
+    );
+};
+
 export default function PortfolioScreen() {
+    const [activeTab, setActiveTab] = useState<'holdings' | 'history'>('holdings');
     const [holdings, setHoldings] = useState<PortfolioItem[]>([]);
     const [summary, setSummary] = useState<any>({});
     const [loading, setLoading] = useState(false);
@@ -18,12 +82,23 @@ export default function PortfolioScreen() {
     const fetchPortfolio = async () => {
         setLoading(true);
         try {
+            console.log('Fetching Portfolio...');
             const response = await portfolioApi.getHoldings();
+            console.log('Portfolio response status:', response.status);
             const body = response.data || {};
-            setHoldings(body.holdings || []);
-            setSummary(body.summary || {});
-        } catch (e) {
-            console.error(e);
+
+            // Handle nested data structures if compatible with Dashboard logic changes
+            const holdingsData = body.data?.holdings || body.holdings || [];
+            const summaryData = body.data?.summary || body.summary || {};
+
+            setHoldings(holdingsData);
+            setSummary(summaryData);
+            console.log('Portfolio fetched successfully, count:', holdingsData.length);
+        } catch (e: any) {
+            console.error('Error fetching portfolio:', e.message);
+            // Graceful degradation: showing empty state is better than crashing or infinite loading
+            setHoldings([]);
+            setSummary({});
         } finally {
             setLoading(false);
         }
@@ -31,8 +106,10 @@ export default function PortfolioScreen() {
 
     useFocusEffect(
         useCallback(() => {
-            fetchPortfolio();
-        }, [])
+            if (activeTab === 'holdings') {
+                fetchPortfolio();
+            }
+        }, [activeTab])
     );
 
     const initiateSell = (item: PortfolioItem) => {
@@ -75,7 +152,7 @@ export default function PortfolioScreen() {
         }
     };
 
-    const renderItem = ({ item }: { item: PortfolioItem }) => {
+    const renderHoldingItem = ({ item }: { item: PortfolioItem }) => {
         const isProfit = item.pnl >= 0;
 
         return (
@@ -95,11 +172,11 @@ export default function PortfolioScreen() {
                 <View style={styles.row}>
                     <View>
                         <Text style={styles.label}>Invested</Text>
-                        <Text style={styles.value}>₹{item.invested_value.toFixed(2)}</Text>
+                        <Text style={styles.value}>₹{parseFloat(item.invested_value as any || 0).toFixed(2)}</Text>
                     </View>
                     <View>
                         <Text style={styles.label}>Avg Price</Text>
-                        <Text style={styles.value}>₹{Number(item.average_buy_price).toFixed(2)}</Text>
+                        <Text style={styles.value}>₹{parseFloat(item.average_buy_price as any || 0).toFixed(2)}</Text>
                     </View>
                 </View>
 
@@ -108,13 +185,13 @@ export default function PortfolioScreen() {
                 <View style={styles.row}>
                     <View>
                         <Text style={styles.label}>Current</Text>
-                        <Text style={styles.value}>₹{item.current_value.toFixed(2)}</Text>
+                        <Text style={styles.value}>₹{parseFloat(item.current_value as any || 0).toFixed(2)}</Text>
                     </View>
                     <View style={{ alignItems: 'flex-end' }}>
                         <Text style={styles.label}>P&L</Text>
                         <Text style={[styles.pnlValue, isProfit ? styles.green : styles.red]}>
-                            {isProfit ? '+' : ''}{item.pnl.toFixed(2)}
-                            ({item.pnl_percentage.toFixed(2)}%)
+                            {isProfit ? '+' : ''}{parseFloat(item.pnl as any || 0).toFixed(2)}
+                            ({parseFloat(item.pnl_percentage as any || 0).toFixed(2)}%)
                         </Text>
                     </View>
                 </View>
@@ -128,30 +205,52 @@ export default function PortfolioScreen() {
                 <Text style={styles.headerTitle}>Portfolio</Text>
             </View>
 
-            <View style={styles.summaryCard}>
-                <View style={styles.summaryRow}>
-                    <View>
-                        <Text style={styles.summaryLabel}>Total Invested</Text>
-                        <Text style={styles.summaryValue}>₹{summary.total_invested?.toFixed(2) || '0.00'}</Text>
-                    </View>
-                </View>
+            {/* Tabs */}
+            <View style={styles.tabContainer}>
+                <TouchableOpacity
+                    style={[styles.tab, activeTab === 'holdings' && styles.activeTab]}
+                    onPress={() => setActiveTab('holdings')}
+                >
+                    <Text style={[styles.tabText, activeTab === 'holdings' && styles.activeTabText]}>Holdings</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[styles.tab, activeTab === 'history' && styles.activeTab]}
+                    onPress={() => setActiveTab('history')}
+                >
+                    <Text style={[styles.tabText, activeTab === 'history' && styles.activeTabText]}>History</Text>
+                </TouchableOpacity>
             </View>
 
-            {loading && <ActivityIndicator style={{ marginTop: 20 }} color="#0a7ea4" />}
+            {activeTab === 'holdings' ? (
+                <>
+                    <View style={styles.summaryCard}>
+                        <View style={styles.summaryRow}>
+                            <View>
+                                <Text style={styles.summaryLabel}>Total Invested</Text>
+                                <Text style={styles.summaryValue}>₹{(Number(summary.total_invested) || 0).toFixed(2)}</Text>
+                            </View>
+                        </View>
+                    </View>
 
-            {!loading && holdings.length === 0 ? (
-                <View style={styles.emptyState}>
-                    <FontAwesome name="briefcase" size={48} color="#ddd" />
-                    <Text style={styles.emptyText}>No positions found</Text>
-                </View>
+                    {loading && <ActivityIndicator style={{ marginTop: 20 }} color="#0a7ea4" />}
+
+                    {!loading && holdings.length === 0 ? (
+                        <View style={styles.emptyState}>
+                            <FontAwesome name="briefcase" size={48} color="#ddd" />
+                            <Text style={styles.emptyText}>No positions found</Text>
+                        </View>
+                    ) : (
+                        <FlatList
+                            data={holdings}
+                            renderItem={renderHoldingItem}
+                            keyExtractor={item => item.id.toString()}
+                            contentContainerStyle={styles.list}
+                            refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchPortfolio} />}
+                        />
+                    )}
+                </>
             ) : (
-                <FlatList
-                    data={holdings}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id.toString()}
-                    contentContainerStyle={styles.list}
-                    refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchPortfolio} />}
-                />
+                <HistoryList />
             )}
 
             {/* Sell Modal */}
@@ -306,4 +405,19 @@ const styles = StyleSheet.create({
 
     cancelButtonText: { color: '#333', fontWeight: '600' },
     confirmButtonText: { color: '#fff', fontWeight: 'bold' },
+
+    // Tabs
+    tabContainer: { flexDirection: 'row', backgroundColor: '#fff', marginBottom: 10, borderBottomWidth: 1, borderBottomColor: '#eee' },
+    tab: { flex: 1, paddingVertical: 15, alignItems: 'center', borderBottomWidth: 2, borderBottomColor: 'transparent' },
+    activeTab: { borderBottomColor: '#0a7ea4' },
+    tabText: { fontSize: 16, fontWeight: '500', color: '#666' },
+    activeTabText: { color: '#0a7ea4', fontWeight: 'bold' },
+
+    // History Card
+    historyCard: { backgroundColor: '#fff', padding: 15, borderRadius: 12, marginBottom: 12, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 2, elevation: 1 },
+    badge: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 4 },
+    badgeText: { fontSize: 10, fontWeight: 'bold' },
+    date: { fontSize: 12, color: '#999' },
+    historyDetail: { color: '#444', fontSize: 14 },
+    historyAmount: { fontSize: 14, fontWeight: 'bold', color: '#1f2937' }
 });

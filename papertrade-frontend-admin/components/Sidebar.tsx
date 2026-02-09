@@ -81,6 +81,12 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen, isCollapsed, to
             show: isSuperadmin || user?.role === 'admin'
         },
         {
+            name: 'Option Strategies',
+            path: '/option-strategies',
+            icon: TablesIcon, // Using similar icon
+            show: isSuperadmin || user?.role === 'admin'
+        },
+        {
             name: 'Data Sync',
             path: '/sync',
             icon: SyncIcon,

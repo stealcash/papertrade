@@ -217,10 +217,11 @@ def run_backtest(request):
     run_id = f"BT-{uuid.uuid4().hex[:12].upper()}"
     
     # Get Strategy
-    from apps.strategies.models import StrategyMaster, StrategyRuleBased
+    from apps.strategies.models import StrategyMaster, StrategyRuleBased, OptionStrategy
     
     strategy_predefined = None
     strategy_rule_based = None
+    strategy_options = None
     
     if serializer.validated_data.get('strategy_id'):
         try:
@@ -231,17 +232,25 @@ def run_backtest(request):
     elif serializer.validated_data.get('strategy_rule_based'):
         try:
             strategy_rule_based = StrategyRuleBased.objects.get(id=serializer.validated_data['strategy_rule_based'])
-            # Optional: Check permission
             if strategy_rule_based.user and strategy_rule_based.user != request.user and not strategy_rule_based.is_public:
                  return get_error_response('PERMISSION_DENIED', 'You do not have access to this strategy', status_code=403)
         except StrategyRuleBased.DoesNotExist:
             return get_error_response('INVALID_STRATEGY', 'StrategyRuleBased not found', status_code=400)
+
+    elif serializer.validated_data.get('strategy_options'):
+        try:
+            strategy_options = OptionStrategy.objects.get(id=serializer.validated_data['strategy_options'])
+            if strategy_options.user and strategy_options.user != request.user and not strategy_options.is_system:
+                 return get_error_response('PERMISSION_DENIED', 'You do not have access to this strategy', status_code=403)
+        except OptionStrategy.DoesNotExist:
+            return get_error_response('INVALID_STRATEGY', 'OptionStrategy not found', status_code=400)
     
     backtest = BacktestRun.objects.create(
         run_id=run_id,
         user=request.user,
         strategy_predefined=strategy_predefined,
         strategy_rule_based=strategy_rule_based,
+        strategy_options=strategy_options,
         selection_mode=selection_mode,
         selection_config=selection_config,
         criteria_type=serializer.validated_data['criteria_type'],
@@ -264,9 +273,15 @@ def run_backtest(request):
     if mode == 'direct':
         # Synchronous Execution
         from .engine import BacktestEngine
+        from .option_engine import OptionBacktestEngine
         try:
-            engine = BacktestEngine(backtest)
-            engine.execute(stock_ids)
+            if backtest.strategy_options:
+                engine = OptionBacktestEngine(backtest)
+                engine.execute(stock_ids)
+            else:
+                engine = BacktestEngine(backtest)
+                engine.execute(stock_ids)
+            
             backtest.refresh_from_db()
             return get_success_response({
                 'run_id': run_id,

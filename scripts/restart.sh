@@ -5,6 +5,16 @@ set -e
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
+# Load NVM if present
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# Ensure node is available
+if command -v nvm &> /dev/null; then
+    nvm use default 1>/dev/null 2>&1 || nvm use node 1>/dev/null 2>&1
+fi
+
 # Create logs directory if it doesn't exist
 if [ ! -d "$PROJECT_ROOT/logs" ]; then
     mkdir -p "$PROJECT_ROOT/logs"

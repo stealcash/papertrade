@@ -128,3 +128,34 @@ class StockFinderHistory(models.Model):
     
     def __str__(self):
         return f"Scan by {self.user} at {self.created_at}"
+
+
+class OptionStrategy(models.Model):
+    """Standalone Option Strategy configuration."""
+    
+    STATUS_CHOICES = [
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+    ]
+
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+    
+    # Ownership
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='option_strategies', null=True, blank=True)
+    is_system = models.BooleanField(default=False, help_text="If True, visible to all users (Created by Admin)")
+    
+    # Stores the complex logic (Legs, Entry, Exit)
+    configuration = models.JSONField(help_text="Strategy logic (Legs, Entry, Exit)")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'strategies_option'
+        verbose_name = 'Option Strategy'
+        verbose_name_plural = 'Option Strategies'
+    
+    def __str__(self):
+        return self.name

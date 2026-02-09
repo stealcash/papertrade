@@ -7,6 +7,8 @@ router.register(r'master', views.StrategyMasterViewSet, basename='strategy-maste
 router.register(r'signals', views.StrategySignalViewSet, basename='strategy-signal')
 router.register(r'rule-based', views.StrategyRuleBasedViewSet, basename='strategy-rule-based')
 router.register(r'stock-finder', views.StockFinderViewSet, basename='stock-finder')
+router.register(r'options', views.OptionStrategyViewSet, basename='option-strategy-legacy')
+router.register(r'option-strategies', views.OptionStrategyViewSet, basename='option-strategy')
 
 urlpatterns = [
     path('', include(router.urls)),

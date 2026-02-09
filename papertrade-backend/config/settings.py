@@ -26,7 +26,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY', default='django-insecure-dev-key-change
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -140,6 +140,8 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 50,
+    'PAGE_SIZE_QUERY_PARAM': 'page_size',
+    'MAX_PAGE_SIZE': 1000,
     'EXCEPTION_HANDLER': 'apps.users.utils.custom_exception_handler',
 }
 
@@ -255,7 +257,7 @@ LOGGING = {
         },
     },
     'root': {
-        'handlers': ['console'],
+        'handlers': ['console', 'file'],
         'level': 'DEBUG' if DEBUG else 'INFO',
     },
     'loggers': {

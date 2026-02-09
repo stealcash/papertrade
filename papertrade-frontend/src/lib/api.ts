@@ -136,6 +136,22 @@ export const portfolioAPI = {
     trade: (data: { stock_id: number, quantity: number, action: 'BUY' | 'SELL' }) => apiClient.post('/portfolio/holdings/trade/', data),
 };
 
+export const optionStrategiesAPI = {
+    getAll: (params?: any) => apiClient.get('/strategies/option-strategies/', { params }),
+    get: (id: number | string) => apiClient.get(`/strategies/option-strategies/${id}/`),
+    create: (data: any) => apiClient.post('/strategies/option-strategies/', data),
+    update: (id: number | string, data: any) => apiClient.put(`/strategies/option-strategies/${id}/`, data),
+    delete: (id: number | string) => apiClient.delete(`/strategies/option-strategies/${id}/`),
+};
+
+export const optionBacktestAPI = {
+    run: (data: any) => apiClient.post('/backtest/option-backtest/run/', data),
+    getAll: (params?: any) => apiClient.get('/backtest/option-backtest/', { params }),
+    getById: (id: number | string) => apiClient.get(`/backtest/option-backtest/${id}/`),
+    delete: (id: number | string) => apiClient.delete(`/backtest/option-backtest/${id}/`),
+    deleteBulk: (ids: number[]) => apiClient.post('/backtest/option-backtest/bulk_delete/', { ids }),
+};
+
 export const subscriptionsAPI = {
     getPlans: () => apiClient.get('/subscriptions/plans/'),
     getCurrent: () => apiClient.get('/subscriptions/current/'),

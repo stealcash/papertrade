@@ -7,33 +7,31 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 1821ms
+ ✓ Ready in 5.7s
  ○ Compiling / ...
- ✓ Compiled / in 1066ms (1535 modules)
- GET / 200 in 1220ms
- ✓ Compiled /favicon.ico in 320ms (1575 modules)
- GET /favicon.ico 200 in 354ms
- ✓ Compiled /options in 470ms (1587 modules)
- ✓ Compiled /_not-found in 221ms (1590 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 319ms
- GET /options 200 in 108ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 34ms
- GET /favicon.ico 200 in 54ms
- GET /dashboard 200 in 42ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 29ms
- GET /favicon.ico 200 in 27ms
+ ✓ Compiled / in 8.4s (1555 modules)
+ GET / 200 in 9073ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 3.1s (1595 modules)
+ GET /favicon.ico 200 in 3227ms
+ ○ Compiling /options ...
+ ✓ Compiled /options in 2.4s (2195 modules)
+ GET /dashboard 200 in 363ms
+ ✓ Compiled /favicon.ico in 287ms (1179 modules)
+ GET /favicon.ico 200 in 410ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 828ms (2230 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1299ms
+ GET /dashboard 200 in 52ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 52ms
+ GET /favicon.ico 200 in 42ms
  ○ Compiling /login ...
- ✓ Compiled /login in 762ms (1598 modules)
- GET /login 200 in 982ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 49ms
- GET /options 200 in 71ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 49ms
- GET /favicon.ico 200 in 66ms
- GET /dashboard 200 in 19ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 21ms
- GET /favicon.ico 200 in 29ms
- ○ Compiling /stocks ...
- ✓ Compiled /stocks in 750ms (1594 modules)
- ○ Compiling /stock-finder ...
- ✓ Compiled /stock-finder in 887ms (1606 modules)
-[?25h
+ ✓ Compiled /login in 1509ms (2245 modules)
+ GET /login 200 in 1734ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 120ms
+ GET /options 200 in 195ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 114ms
+ GET /favicon.ico 200 in 124ms
+ GET /options 200 in 100ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 67ms
+ GET /favicon.ico 200 in 43ms

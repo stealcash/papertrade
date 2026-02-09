@@ -54,8 +54,13 @@ def execute_backtest_task(backtest_run_id: int, stock_ids: list, execution_mode:
                 raise Exception(f'Global concurrent backtest limit exceeded: {global_limit}')
         
         # Execute backtest
-        engine = BacktestEngine(backtest_run)
-        engine.execute(stock_ids, execution_mode)
+        if backtest_run.strategy_options:
+            from .option_engine import OptionBacktestEngine
+            engine = OptionBacktestEngine(backtest_run)
+            engine.execute(stock_ids)
+        else:
+            engine = BacktestEngine(backtest_run)
+            engine.execute(stock_ids, execution_mode)
         
         # Create notification
         Notification.objects.create(

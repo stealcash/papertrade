@@ -1,0 +1,279 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { Plus, Trash2, Calendar, Settings, Eye, Loader2, Info } from 'lucide-react';
+import Link from 'next/link';
+import NewOptionBacktestModal from '@/components/backtest/NewOptionBacktestModal';
+import { optionBacktestAPI, subscriptionsAPI } from '@/lib/api';
+import { useConfirm } from '@/context/ConfirmContext';
+import { toast } from 'react-hot-toast';
+
+export default function OptionBacktestPage() {
+    const [runs, setRuns] = useState<any[]>([]);
+    const [pagination, setPagination] = useState({ page: 1, total_pages: 1, total_count: 0 });
+    const [loading, setLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [subscription, setSubscription] = useState<any>(null);
+    const { confirm } = useConfirm();
+
+    useEffect(() => {
+        fetchData(pagination.page);
+    }, [pagination.page]);
+
+    async function fetchData(page = 1) {
+        setLoading(true);
+        try {
+            await Promise.all([fetchRuns(page), fetchSubscription()]);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function fetchSubscription() {
+        try {
+            const res = await subscriptionsAPI.getCurrent();
+            setSubscription(res.data.data);
+        } catch (err) {
+            console.error("Failed to fetch subscription", err);
+        }
+    }
+
+    async function fetchRuns(page = 1) {
+        try {
+            const res = await optionBacktestAPI.getAll({ page, page_size: 10 });
+            const data = res.data.data;
+            setRuns(data.results || []);
+            if (data.pagination) {
+                setPagination(prev => ({
+                    ...prev,
+                    total_pages: data.pagination.total_pages,
+                    total_count: data.pagination.total_count
+                }));
+            }
+        } catch (err) {
+            console.error('Failed to load option backtests', err);
+            toast.error("Failed to fetch backtests");
+        }
+    }
+
+    const handleDelete = async (id: number) => {
+        const isConfirmed = await confirm({
+            title: "Delete Report",
+            message: "Are you sure you want to delete this option backtest report?",
+            confirmText: "Delete",
+            type: 'danger'
+        });
+        if (!isConfirmed) return;
+
+        try {
+            await optionBacktestAPI.delete(id);
+            toast.success("Backtest deleted");
+            fetchRuns(pagination.page);
+        } catch (e) {
+            toast.error("Failed to delete backtest");
+        }
+    };
+
+    const handleClearAll = async () => {
+        const isConfirmed = await confirm({
+            title: "Delete All Reports",
+            message: "Are you sure you want to delete ALL option backtest reports? This action cannot be undone.",
+            confirmText: "Delete All",
+            type: 'danger'
+        });
+        if (!isConfirmed) return;
+
+        const ids = runs.map(r => r.id);
+        try {
+            await optionBacktestAPI.deleteBulk(ids);
+            toast.success("All backtests deleted");
+            fetchRuns(1);
+        } catch (e) {
+            toast.error("Bulk delete failed");
+        }
+    };
+
+    const getPlanLimits = () => {
+        const feature = subscription?.plan?.features?.OPTION_BACKTEST_RUN || subscription?.plan?.features?.BACKTEST_RUN;
+        if (!feature) return { limit: 0, used: 0, canRun: false, unlimited: false };
+
+        const limit = feature.limit;
+        const used = subscription.usage?.OPTION_BACKTEST_RUN ?? subscription.usage?.BACKTEST_RUN ?? 0;
+
+        const unlimited = limit === -1;
+        const canRun = unlimited || used < limit;
+
+        return { limit, used, canRun, unlimited };
+    };
+
+    const { limit, used, canRun, unlimited } = getPlanLimits();
+
+    return (
+        <div className="space-y-10 max-w-7xl mx-auto">
+            <NewOptionBacktestModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSuccess={() => fetchData(1)}
+            />
+
+            {/* Header */}
+            <div className="flex justify-between items-center">
+                <div>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Option Backtest</h1>
+                    <p className="text-gray-500 mt-1">Test your option strategies against historical data.</p>
+                </div>
+
+                <div className="flex items-center gap-3">
+                    {!loading && subscription && (
+                        <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-100 px-3 py-1.5 rounded-md border border-gray-200 cursor-default mr-4">
+                            <span>Runs: <span className="font-semibold text-gray-900">{used}</span> / {unlimited ? '∞' : limit}</span>
+                            <div className="group relative">
+                                <Info size={14} className="text-gray-400 hover:text-gray-600" />
+                                <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-56 p-2.5 bg-gray-900 text-white text-xs rounded shadow-lg hidden group-hover:block z-50">
+                                    <div className="text-center">
+                                        This limit tracks the total number of <b>Option Backtests</b> run.
+                                    </div>
+                                    <div className="w-2 h-2 bg-gray-900 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {runs.length > 0 && (
+                        <button
+                            onClick={handleClearAll}
+                            className="flex items-center gap-2 px-4 py-2.5 bg-red-50 text-red-600 rounded-lg font-semibold hover:bg-red-100 transition text-sm"
+                        >
+                            <Trash2 size={18} /> Clear All
+                        </button>
+                    )}
+                    <Link
+                        href="/option-strategies"
+                        className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition shadow-sm text-sm"
+                    >
+                        <Settings size={18} /> Strategies
+                    </Link>
+                    {canRun ? (
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="flex items-center gap-2 px-6 py-2.5 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition shadow-lg hover:shadow-xl text-sm"
+                        >
+                            <Plus size={18} /> New Backtest
+                        </button>
+                    ) : (
+                        <button
+                            disabled
+                            className="flex items-center gap-2 bg-gray-300 text-gray-500 px-6 py-2.5 rounded-lg cursor-not-allowed text-sm"
+                            title="Plan limit reached. Upgrade to run more backtests."
+                        >
+                            <Plus size={18} /> New Backtest
+                        </button>
+                    )}
+                </div>
+            </div>
+
+            {/* List Section */}
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden min-h-[400px]">
+                <div className="grid grid-cols-12 bg-gray-50 dark:bg-gray-800 p-4 font-semibold text-gray-500 dark:text-gray-400 text-sm border-b border-gray-100 dark:border-gray-700">
+                    <div className="col-span-1 text-center">ID</div>
+                    <div className="col-span-3">Strategy Name</div>
+                    <div className="col-span-2">Date Range</div>
+                    <div className="col-span-1 text-center">Index</div>
+                    <div className="col-span-1 text-center">Win Rate</div>
+                    <div className="col-span-2 text-center">Status</div>
+                    <div className="col-span-2 text-right">Actions</div>
+                </div>
+
+                {loading ? (
+                    <div className="flex justify-center items-center py-20">
+                        <Loader2 className="animate-spin text-gray-400" size={32} />
+                    </div>
+                ) : runs.length === 0 ? (
+                    <div className="text-center py-20 text-gray-500">
+                        <p className="text-lg font-medium">No option backtests run yet.</p>
+                        <p className="text-sm">Click "New Backtest" to start testing your strategy.</p>
+                    </div>
+                ) : (
+                    <div className="divide-y divide-gray-100 dark:divide-gray-800">
+                        {runs.map(run => (
+                            <div key={run.id} className="grid grid-cols-12 p-4 items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition text-sm text-gray-900 dark:text-gray-100">
+                                <div className="col-span-1 text-center font-mono text-gray-400 text-xs">#{run.id}</div>
+                                <div className="col-span-3 font-bold">
+                                    {run.strategy_name}
+                                    <div className="text-[10px] text-gray-400 font-normal">{run.run_id}</div>
+                                </div>
+                                <div className="col-span-2 text-gray-500 text-xs">
+                                    <div className="flex items-center gap-1">
+                                        <Calendar size={12} />
+                                        {run.start_date} <br /> to {run.end_date}
+                                    </div>
+                                </div>
+                                <div className="col-span-1 text-center">
+                                    <span className="px-2 py-0.5 bg-purple-50 text-purple-600 rounded text-[10px] font-bold">
+                                        {run.underlying_symbol}
+                                    </span>
+                                </div>
+                                <div className="col-span-1 text-center">
+                                    <span className={`font-bold ${Number(run.win_rate) >= 50 ? 'text-green-600' : 'text-red-500'}`}>
+                                        {run.win_rate}%
+                                    </span>
+                                </div>
+                                <div className="col-span-2 text-center">
+                                    <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase
+                                        ${run.status === 'completed' ? 'bg-green-100 text-green-700' : ''}
+                                        ${run.status === 'failed' ? 'bg-red-100 text-red-700' : ''}
+                                        ${run.status === 'running' ? 'bg-blue-100 text-blue-700' : ''}
+                                        ${run.status === 'pending' ? 'bg-gray-100 text-gray-700' : ''}
+                                    `}>
+                                        {run.status}
+                                    </span>
+                                </div>
+                                <div className="col-span-2 flex justify-end gap-2">
+                                    <Link
+                                        href={`/option-backtest/${run.id}`}
+                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-xs font-medium transition"
+                                    >
+                                        <Eye size={14} /> View
+                                    </Link>
+                                    <button
+                                        onClick={() => handleDelete(run.id)}
+                                        className="p-2 hover:bg-red-50 hover:text-red-600 rounded text-gray-400 transition"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Pagination */}
+                {!loading && runs.length > 0 && (
+                    <div className="flex justify-between items-center p-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/50">
+                        <div className="text-xs text-gray-500">
+                            Page {pagination.page} of {pagination.total_pages} ({pagination.total_count} items)
+                        </div>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setPagination(prev => ({ ...prev, page: Math.max(1, prev.page - 1) }))}
+                                disabled={pagination.page === 1}
+                                className="px-3 py-1 border border-gray-300 rounded bg-white hover:bg-gray-50 disabled:opacity-50 text-xs font-medium transition"
+                            >
+                                Prev
+                            </button>
+                            <button
+                                onClick={() => setPagination(prev => ({ ...prev, page: Math.min(pagination.total_pages, prev.page + 1) }))}
+                                disabled={pagination.page === pagination.total_pages}
+                                className="px-3 py-1 border border-gray-300 rounded bg-white hover:bg-gray-50 disabled:opacity-50 text-xs font-medium transition"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
