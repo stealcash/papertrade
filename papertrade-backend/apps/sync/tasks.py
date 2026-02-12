@@ -325,7 +325,7 @@ def sync_options_task(is_auto=False, user_id=None, from_date=None, to_date=None)
         
         # Initial visit to get cookies
         try:
-            session.get("https://www.nseindia.com", timeout=10)
+            session.get(settings.NSE_API_BASE_URL, timeout=10)
         except Exception as e:
             logger.warning(f"Failed to visit homepage for cookies: {e}")
 
@@ -374,7 +374,7 @@ def sync_options_task(is_auto=False, user_id=None, from_date=None, to_date=None)
                             range_pct = ConfigManager.get_option_strike_range_stock() / 100.0
 
                         # 1. Fetch Expiry Dates
-                        expiry_url = "https://www.nseindia.com/api/historicalOR/meta/foCPV/expireDts"
+                        expiry_url = f"{settings.NSE_API_BASE_URL}/api/historicalOR/meta/foCPV/expireDts"
                         try:
                             resp = session.get(expiry_url, params={'instrument': instrument_type, 'symbol': symbol, 'year': year}, timeout=10)
                             if resp.status_code != 200:
@@ -415,7 +415,7 @@ def sync_options_task(is_auto=False, user_id=None, from_date=None, to_date=None)
                             end_q_date = expiry_date.strftime('%d-%m-%Y')
                             
                             for opt_type in ['CE', 'PE']:
-                                data_url = "https://www.nseindia.com/api/historicalOR/foCPV"
+                                data_url = f"{settings.NSE_API_BASE_URL}/api/historicalOR/foCPV"
                                 params = {
                                     'from': start_q_date,
                                     'to': end_q_date,

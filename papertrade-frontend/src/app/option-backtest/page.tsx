@@ -181,8 +181,9 @@ export default function OptionBacktestPage() {
                     <div className="col-span-3">Strategy Name</div>
                     <div className="col-span-2">Date Range</div>
                     <div className="col-span-1 text-center">Index</div>
+                    <div className="col-span-1 text-center">Trades</div>
                     <div className="col-span-1 text-center">Win Rate</div>
-                    <div className="col-span-2 text-center">Status</div>
+                    <div className="col-span-1 text-center">Status</div>
                     <div className="col-span-2 text-right">Actions</div>
                 </div>
 
@@ -201,7 +202,7 @@ export default function OptionBacktestPage() {
                             <div key={run.id} className="grid grid-cols-12 p-4 items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition text-sm text-gray-900 dark:text-gray-100">
                                 <div className="col-span-1 text-center font-mono text-gray-400 text-xs">#{run.id}</div>
                                 <div className="col-span-3 font-bold">
-                                    {run.strategy_name}
+                                    {run.snapshot_name || run.strategy_name}
                                     <div className="text-[10px] text-gray-400 font-normal">{run.run_id}</div>
                                 </div>
                                 <div className="col-span-2 text-gray-500 text-xs">
@@ -216,18 +217,21 @@ export default function OptionBacktestPage() {
                                     </span>
                                 </div>
                                 <div className="col-span-1 text-center">
+                                    <span className="font-mono text-xs">{run.total_trades}</span>
+                                </div>
+                                <div className="col-span-1 text-center">
                                     <span className={`font-bold ${Number(run.win_rate) >= 50 ? 'text-green-600' : 'text-red-500'}`}>
                                         {run.win_rate}%
                                     </span>
                                 </div>
-                                <div className="col-span-2 text-center">
+                                <div className="col-span-1 text-center">
                                     <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase
                                         ${run.status === 'completed' ? 'bg-green-100 text-green-700' : ''}
                                         ${run.status === 'failed' ? 'bg-red-100 text-red-700' : ''}
                                         ${run.status === 'running' ? 'bg-blue-100 text-blue-700' : ''}
                                         ${run.status === 'pending' ? 'bg-gray-100 text-gray-700' : ''}
                                     `}>
-                                        {run.status}
+                                        {run.status === 'completed' ? 'Done' : run.status}
                                     </span>
                                 </div>
                                 <div className="col-span-2 flex justify-end gap-2">

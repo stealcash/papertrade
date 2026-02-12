@@ -23,8 +23,6 @@ class BacktestRun(models.Model):
                                            null=True, blank=True)
     strategy_rule_based = models.ForeignKey(StrategyRuleBased, on_delete=models.CASCADE, 
                                            null=True, blank=True)
-    strategy_options = models.ForeignKey('strategies.OptionStrategy', on_delete=models.CASCADE,
-                                        null=True, blank=True, help_text="Linked Option Strategy")
     
     strategy_custom_script = models.TextField(blank=True, help_text='Custom script (not persisted)')
     
@@ -196,6 +194,11 @@ class OptionBacktestRun(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     lot_size = models.IntegerField(default=50, help_text="Lot size/quantity per trade")
+    
+    # Strategy Snapshot (to preserve data even if strategy is edited/deleted)
+    snapshot_name = models.CharField(max_length=200, null=True, blank=True)
+    snapshot_description = models.TextField(null=True, blank=True)
+    snapshot_config = models.JSONField(null=True, blank=True, help_text="Strategy logic snapshot at the time of run")
     
     # Results
     total_trades = models.IntegerField(default=0)

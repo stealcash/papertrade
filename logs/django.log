@@ -1,84 +1,632 @@
-INFO 2026-02-08 22:27:55,996 autoreload Watching for file changes with StatReloader
-INFO 2026-02-08 22:34:30,098 basehttp "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
-INFO 2026-02-08 22:34:30,101 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
-INFO 2026-02-08 22:34:34,230 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-08 22:34:36,152 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-08 23:20:56,261 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
-INFO 2026-02-08 23:20:59,080 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 5096
-INFO 2026-02-08 23:37:33,682 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-08 23:37:36,070 basehttp - Broken pipe from ('127.0.0.1', 51484)
-INFO 2026-02-08 23:37:38,750 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-08 23:37:38,753 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-08 23:37:42,402 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-08 23:37:42,403 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-08 23:38:49,247 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-08 23:38:49,256 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-08 23:38:49,260 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-08 23:38:49,264 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-08 23:38:57,875 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-WARNING 2026-02-08 23:38:57,882 log Unauthorized: /api/v1/auth/profile
-INFO 2026-02-08 23:38:57,883 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-08 23:38:57,885 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-WARNING 2026-02-08 23:38:57,885 basehttp "GET /api/v1/auth/profile HTTP/1.1" 401 133
-INFO 2026-02-08 23:38:57,886 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-WARNING 2026-02-08 23:38:57,891 log Unauthorized: /api/v1/auth/profile
-WARNING 2026-02-08 23:38:57,892 basehttp "GET /api/v1/auth/profile HTTP/1.1" 401 133
-WARNING 2026-02-08 23:38:57,906 log Unauthorized: /api/v1/auth/profile
-WARNING 2026-02-08 23:38:57,907 basehttp "GET /api/v1/auth/profile HTTP/1.1" 401 133
-WARNING 2026-02-08 23:38:57,921 log Unauthorized: /api/v1/auth/profile
-WARNING 2026-02-08 23:38:57,926 basehttp "GET /api/v1/auth/profile HTTP/1.1" 401 133
-INFO 2026-02-08 23:39:02,269 basehttp "OPTIONS /api/v1/auth/login HTTP/1.1" 200 0
-INFO 2026-02-08 23:39:04,901 basehttp "POST /api/v1/auth/login HTTP/1.1" 200 604
-INFO 2026-02-08 23:39:05,368 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-08 23:39:05,830 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-08 23:39:05,836 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
-INFO 2026-02-08 23:39:06,972 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 834
-INFO 2026-02-08 23:39:06,976 basehttp "OPTIONS /api/v1/portfolio/holdings/ HTTP/1.1" 200 0
-INFO 2026-02-08 23:39:08,131 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-08 23:39:09,040 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 834
-INFO 2026-02-08 23:39:15,775 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2454
-INFO 2026-02-08 23:39:24,271 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2454
-INFO 2026-02-08 23:39:59,528 basehttp "GET /api/v1/options/instruments/ HTTP/1.1" 200 260
-INFO 2026-02-08 23:39:59,810 basehttp "GET /api/v1/options/instruments/ HTTP/1.1" 200 260
-INFO 2026-02-08 23:40:01,602 basehttp "GET /api/v1/options/years/?symbol=TECHM HTTP/1.1" 200 15
-INFO 2026-02-08 23:40:02,068 basehttp "GET /api/v1/options/expiries/?symbol=TECHM&year=2025 HTTP/1.1" 200 23
-INFO 2026-02-08 23:40:14,311 basehttp "GET /api/v1/options/expiries/?symbol=NIFTY50&year=2025 HTTP/1.1" 200 36
-INFO 2026-02-08 23:40:15,086 basehttp "GET /api/v1/options/years/?symbol=NIFTY50 HTTP/1.1" 200 20
-INFO 2026-02-08 23:40:15,618 basehttp "GET /api/v1/options/expiries/?symbol=NIFTY50&year=2026 HTTP/1.1" 200 36
-INFO 2026-02-08 23:40:23,032 basehttp "GET /api/v1/options/chain/?symbol=NIFTY50&expiry=2026-01-13&type=BOTH HTTP/1.1" 200 25480
-INFO 2026-02-08 23:40:47,024 basehttp "GET /api/v1/options/chain/?symbol=NIFTY50&expiry=2026-01-06&type=BOTH HTTP/1.1" 200 25626
-INFO 2026-02-08 23:40:54,895 basehttp "GET /api/v1/options/chain/?symbol=NIFTY50&expiry=2026-01-13&type=BOTH HTTP/1.1" 200 25480
-INFO 2026-02-08 23:42:57,830 basehttp "GET /api/v1/options/instruments/ HTTP/1.1" 200 260
-INFO 2026-02-08 23:42:58,095 basehttp "GET /api/v1/options/instruments/ HTTP/1.1" 200 260
-INFO 2026-02-08 23:42:58,816 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-08 23:42:59,360 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-08 23:43:00,102 basehttp "GET /api/v1/options/years/?symbol=NIFTY50 HTTP/1.1" 200 20
-INFO 2026-02-08 23:43:00,205 basehttp "GET /api/v1/options/years/?symbol=TECHM HTTP/1.1" 200 15
-INFO 2026-02-08 23:43:00,636 basehttp "GET /api/v1/options/expiries/?symbol=NIFTY50&year=2026 HTTP/1.1" 200 36
-INFO 2026-02-08 23:43:00,735 basehttp "GET /api/v1/options/expiries/?symbol=NIFTY50&year=2025 HTTP/1.1" 200 36
-INFO 2026-02-08 23:43:26,898 basehttp "GET /api/v1/options/instruments/ HTTP/1.1" 200 260
-INFO 2026-02-08 23:43:27,165 basehttp "GET /api/v1/options/instruments/ HTTP/1.1" 200 260
-INFO 2026-02-08 23:43:28,573 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-08 23:43:29,250 basehttp "GET /api/v1/options/years/?symbol=TECHM HTTP/1.1" 200 15
-INFO 2026-02-08 23:43:29,790 basehttp "GET /api/v1/options/expiries/?symbol=NIFTY50&year=2025 HTTP/1.1" 200 36
-INFO 2026-02-08 23:43:29,879 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-08 23:43:32,504 basehttp "GET /api/v1/options/years/?symbol=NIFTY50 HTTP/1.1" 200 20
-INFO 2026-02-08 23:43:32,962 basehttp "GET /api/v1/options/expiries/?symbol=NIFTY50&year=2026 HTTP/1.1" 200 36
-INFO 2026-02-08 23:47:14,689 basehttp "OPTIONS /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 0
-INFO 2026-02-08 23:47:18,764 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
-INFO 2026-02-08 23:47:19,961 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-08 23:47:22,681 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-08 23:47:52,468 basehttp "OPTIONS /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 0
-INFO 2026-02-08 23:47:56,369 basehttp "GET /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 1056
-INFO 2026-02-08 23:48:02,903 basehttp "OPTIONS /api/v1/admin-panel/database/query/ HTTP/1.1" 200 0
-INFO 2026-02-08 23:48:06,035 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 375
-WARNING 2026-02-08 23:48:23,462 log Bad Request: /api/v1/admin-panel/database/query/
-WARNING 2026-02-08 23:48:23,464 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 400 330
-INFO 2026-02-08 23:49:20,618 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 151
-INFO 2026-02-08 23:49:39,537 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 22003
-INFO 2026-02-08 23:49:55,305 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 151
-INFO 2026-02-08 23:50:05,043 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 375
-INFO 2026-02-08 23:50:08,216 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 274
+INFO 2026-02-12 00:15:27,238 autoreload Watching for file changes with StatReloader
+INFO 2026-02-12 00:29:08,852 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:29:08,856 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-12 00:29:08,861 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:29:08,865 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-12 00:29:08,876 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-12 00:29:08,877 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-12 00:29:12,210 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:29:12,679 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:29:13,690 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:29:14,788 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2919
+INFO 2026-02-12 00:29:16,049 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:29:18,720 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2919
+INFO 2026-02-12 00:29:22,894 basehttp "OPTIONS /api/v1/backtest/option-backtest/33/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:29:26,742 basehttp "DELETE /api/v1/backtest/option-backtest/33/ HTTP/1.1" 200 128
+INFO 2026-02-12 00:29:27,190 basehttp "OPTIONS /api/v1/backtest/option-backtest/bulk_delete/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:29:30,303 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2913
+INFO 2026-02-12 00:29:30,497 basehttp "POST /api/v1/backtest/option-backtest/bulk_delete/ HTTP/1.1" 200 129
+INFO 2026-02-12 00:29:32,545 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 1014
+INFO 2026-02-12 00:29:41,249 basehttp "POST /api/v1/backtest/option-backtest/bulk_delete/ HTTP/1.1" 200 129
+INFO 2026-02-12 00:29:41,919 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-12 00:30:04,586 basehttp "OPTIONS /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 0
+INFO 2026-02-12 00:30:04,586 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:30:04,593 basehttp "OPTIONS /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 0
+INFO 2026-02-12 00:30:07,077 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 00:30:08,659 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:30:09,288 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1049
+INFO 2026-02-12 00:30:11,285 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1201
+INFO 2026-02-12 00:30:41,509 basehttp "OPTIONS /api/v1/backtest/option-backtest/run/ HTTP/1.1" 200 0
+DEBUG 2026-02-12 00:30:46,166 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-12 00:30:46,183 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-12 00:30:46,184 option_engine_v2 Option Backtest OPT-BT-75476D4BA062 delegated to FastAPI successfully
+INFO 2026-02-12 00:30:46,407 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
+INFO 2026-02-12 00:30:47,547 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 458
+INFO 2026-02-12 00:30:50,233 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:31:04,604 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:31:05,198 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:31:05,417 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 467
+INFO 2026-02-12 00:31:06,540 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:31:08,365 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 467
+INFO 2026-02-12 00:31:09,274 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:31:29,136 basehttp "OPTIONS /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:31:29,136 basehttp "OPTIONS /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:31:32,988 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2461
+INFO 2026-02-12 00:31:32,995 basehttp "OPTIONS /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:31:34,478 basehttp "GET /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 2030
+INFO 2026-02-12 00:31:37,069 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2461
+INFO 2026-02-12 00:31:38,198 basehttp "GET /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 2030
+INFO 2026-02-12 00:40:46,672 autoreload /Users/chat360team/Documents/papertrade/papertrade-backend/apps/backtests/option_serializers.py changed, reloading.
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 12, 2026 - 00:15:30
+Django version 5.1.4, using settings 'config.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+INFO 2026-02-12 00:40:47,214 autoreload Watching for file changes with StatReloader
+WARNING 2026-02-12 00:41:32,308 log Forbidden: /api/v1/backtest/option-backtest/34/
+WARNING 2026-02-12 00:41:32,311 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 403 219
+WARNING 2026-02-12 00:41:32,316 log Forbidden: /api/v1/backtest/option-backtest/34/
+WARNING 2026-02-12 00:41:32,318 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 403 219
+INFO 2026-02-12 00:44:37,186 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:44:38,170 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2524
+INFO 2026-02-12 00:44:39,254 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:44:39,315 basehttp "GET /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 2030
+INFO 2026-02-12 00:44:39,532 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2524
+INFO 2026-02-12 00:44:42,352 basehttp "GET /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 2030
+INFO 2026-02-12 00:47:58,442 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:47:59,412 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2524
+INFO 2026-02-12 00:48:00,721 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:48:00,731 basehttp "GET /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 2030
+INFO 2026-02-12 00:48:00,944 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2524
+INFO 2026-02-12 00:48:02,194 basehttp "GET /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 2030
+INFO 2026-02-12 00:53:04,866 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2526
+INFO 2026-02-12 00:53:16,698 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2526
+INFO 2026-02-12 00:56:07,166 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:56:08,244 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2526
+INFO 2026-02-12 00:56:09,479 basehttp "GET /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 2030
+INFO 2026-02-12 00:56:09,497 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:56:09,738 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2526
+INFO 2026-02-12 00:56:11,021 basehttp "GET /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 2030
+INFO 2026-02-12 00:56:25,116 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 481
+INFO 2026-02-12 00:56:26,284 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 481
+INFO 2026-02-12 00:56:26,326 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:56:28,619 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:57:54,987 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:57:55,510 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 00:57:55,702 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 481
+INFO 2026-02-12 00:57:57,087 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:57:58,639 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 481
+INFO 2026-02-12 00:57:59,491 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:58:07,732 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2526
+INFO 2026-02-12 00:58:09,130 basehttp "GET /api/v1/backtest/option-backtest/34/ HTTP/1.1" 200 2526
+INFO 2026-02-12 00:58:10,646 basehttp "GET /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 2030
+INFO 2026-02-12 00:58:11,825 basehttp "GET /api/v1/backtest/option-backtest/34/results/ HTTP/1.1" 200 2030
+INFO 2026-02-12 00:58:37,336 basehttp "OPTIONS /api/v1/strategies/rule-based/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:58:37,338 basehttp "OPTIONS /api/v1/strategies/rule-based/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:58:39,680 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 551
+INFO 2026-02-12 00:58:39,686 basehttp "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:58:40,619 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1229
+INFO 2026-02-12 00:58:41,217 basehttp "OPTIONS /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-12 00:58:41,218 basehttp "OPTIONS /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-12 00:58:41,362 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:58:41,992 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 551
+INFO 2026-02-12 00:58:42,942 basehttp "OPTIONS /api/v1/stocks/?page_size=2000 HTTP/1.1" 200 0
+INFO 2026-02-12 00:58:42,945 basehttp "OPTIONS /api/v1/sectors/?page_size=100 HTTP/1.1" 200 0
+INFO 2026-02-12 00:58:42,945 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:58:42,975 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1229
+INFO 2026-02-12 00:58:43,618 basehttp "GET /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-12 00:58:43,635 basehttp "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 551
+INFO 2026-02-12 00:58:43,669 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:58:43,669 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
+INFO 2026-02-12 00:58:44,366 basehttp "GET /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-12 00:58:44,588 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1229
+INFO 2026-02-12 00:58:45,269 basehttp "GET /api/v1/sectors/?page_size=100 HTTP/1.1" 200 514
+INFO 2026-02-12 00:58:50,258 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 481
+INFO 2026-02-12 00:58:51,425 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:58:51,466 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 481
+INFO 2026-02-12 00:58:54,126 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:58:55,805 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 00:58:58,280 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:59:00,069 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1049
+INFO 2026-02-12 00:59:02,019 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1201
+INFO 2026-02-12 00:59:05,139 basehttp "GET /api/v1/stocks/?page_size=2000 HTTP/1.1" 200 6259
+DEBUG 2026-02-12 00:59:26,447 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-12 00:59:26,465 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-12 00:59:26,466 option_engine_v2 Option Backtest OPT-BT-B1524782754D delegated to FastAPI successfully
+INFO 2026-02-12 00:59:26,700 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
+INFO 2026-02-12 00:59:28,309 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 764
+INFO 2026-02-12 00:59:31,193 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 00:59:37,240 basehttp "OPTIONS /api/v1/backtest/option-backtest/35/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:59:37,242 basehttp "OPTIONS /api/v1/backtest/option-backtest/35/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:59:40,757 basehttp "GET /api/v1/backtest/option-backtest/35/ HTTP/1.1" 200 986
+INFO 2026-02-12 00:59:40,763 basehttp "OPTIONS /api/v1/backtest/option-backtest/35/results/ HTTP/1.1" 200 0
+INFO 2026-02-12 00:59:42,476 basehttp "GET /api/v1/backtest/option-backtest/35/ HTTP/1.1" 200 986
+INFO 2026-02-12 00:59:44,033 basehttp "GET /api/v1/backtest/option-backtest/35/results/ HTTP/1.1" 200 498
+INFO 2026-02-12 00:59:45,252 basehttp "GET /api/v1/backtest/option-backtest/35/results/ HTTP/1.1" 200 498
+INFO 2026-02-12 01:00:24,115 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 772
+INFO 2026-02-12 01:00:25,170 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:00:27,186 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 772
+INFO 2026-02-12 01:00:27,533 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:00:58,921 basehttp "OPTIONS /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:01:20,157 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
+WARNING 2026-02-12 01:01:20,229 log Forbidden: /api/v1/strategies/option-strategies/22/
+WARNING 2026-02-12 01:01:20,229 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 403 219
+WARNING 2026-02-12 01:01:20,232 log Forbidden: /api/v1/strategies/option-strategies/22/
+WARNING 2026-02-12 01:01:20,232 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 403 219
+WARNING 2026-02-12 01:01:20,234 log Forbidden: /api/v1/strategies/option-strategies/22/
+WARNING 2026-02-12 01:01:20,234 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 403 219
+WARNING 2026-02-12 01:01:20,236 log Forbidden: /api/v1/strategies/option-strategies/22/
+WARNING 2026-02-12 01:01:20,239 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 403 219
+WARNING 2026-02-12 01:01:20,240 log Forbidden: /api/v1/strategies/option-strategies/22/
+WARNING 2026-02-12 01:01:20,240 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 403 219
+WARNING 2026-02-12 01:01:20,243 log Forbidden: /api/v1/strategies/option-strategies/22/
+WARNING 2026-02-12 01:01:20,243 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 403 219
+INFO 2026-02-12 01:01:28,085 basehttp "OPTIONS /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:01:30,907 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
+INFO 2026-02-12 01:01:30,922 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:01:31,386 basehttp "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:01:31,423 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 01:01:34,655 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
+INFO 2026-02-12 01:01:44,463 basehttp "OPTIONS /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:01:47,501 basehttp "GET /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 1056
+INFO 2026-02-12 01:02:01,276 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:02:03,765 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:02:05,406 basehttp "OPTIONS /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:02:05,409 basehttp "OPTIONS /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:02:06,162 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:02:08,688 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:05:48,490 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 01:05:48,802 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:05:49,602 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:05:50,997 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:05:51,927 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:10:54,750 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 01:10:55,090 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:10:55,768 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:10:56,610 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:10:57,276 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:11:43,106 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:11:43,775 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:11:44,794 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:11:45,039 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:11:46,231 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:11:46,976 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:11:47,443 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:11:47,443 basehttp - Broken pipe from ('127.0.0.1', 54138)
+INFO 2026-02-12 01:11:47,642 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:11:47,673 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:48,121 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:48,135 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:48,581 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:48,596 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:49,068 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:49,315 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:11:49,514 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:50,838 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:11:51,597 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:11:52,420 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:11:53,140 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:11:53,812 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:11:54,613 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:11:54,647 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:11:56,239 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:56,687 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:56,994 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:11:57,134 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:57,942 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:57,948 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
+INFO 2026-02-12 01:11:58,459 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:58,902 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:58,912 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-12 01:11:58,917 basehttp "OPTIONS /api/v1/portfolio/holdings/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:11:59,349 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:11:59,787 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-12 01:12:04,947 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2448
+INFO 2026-02-12 01:12:10,644 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2448
+INFO 2026-02-12 01:12:13,401 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:12:14,168 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:12:15,201 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:12:17,465 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:12:21,209 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:12:23,812 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+WARNING 2026-02-12 01:18:32,315 log Forbidden: /api/v1/subscriptions/current/
+WARNING 2026-02-12 01:18:32,323 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 403 219
+WARNING 2026-02-12 01:18:32,337 log Forbidden: /api/v1/subscriptions/current/
+WARNING 2026-02-12 01:18:32,337 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 403 219
+INFO 2026-02-12 01:19:54,412 basehttp "OPTIONS /api/v1/auth/login HTTP/1.1" 200 0
+WARNING 2026-02-12 01:19:59,471 log Unauthorized: /api/v1/auth/login
+WARNING 2026-02-12 01:19:59,474 basehttp "POST /api/v1/auth/login HTTP/1.1" 401 145
+WARNING 2026-02-12 01:20:51,284 log Forbidden: /api/v1/subscriptions/current/
+WARNING 2026-02-12 01:20:51,285 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 403 219
+WARNING 2026-02-12 01:20:51,287 log Forbidden: /api/v1/subscriptions/current/
+WARNING 2026-02-12 01:20:51,287 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 403 219
+INFO 2026-02-12 01:21:18,389 basehttp "OPTIONS /api/v1/auth/signup HTTP/1.1" 200 0
+INFO 2026-02-12 01:21:20,790 basehttp "POST /api/v1/auth/signup HTTP/1.1" 201 421
+INFO 2026-02-12 01:21:20,801 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-12 01:21:21,389 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:21:21,868 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:21:21,874 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
+INFO 2026-02-12 01:21:22,352 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:21:24,882 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-12 01:21:24,890 basehttp "OPTIONS /api/v1/portfolio/holdings/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:21:25,921 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 141
+INFO 2026-02-12 01:21:26,158 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-12 01:21:27,280 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 141
+INFO 2026-02-12 01:21:37,473 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:21:37,489 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:21:37,975 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:21:38,464 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:21:39,947 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:21:41,646 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:22:52,520 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:22:52,563 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:22:55,274 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:22:55,443 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:22:55,749 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:22:56,150 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:22:56,459 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:22:58,148 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:23:06,812 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:23:07,312 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:23:07,885 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:23:09,538 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:23:26,745 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
+WARNING 2026-02-12 01:23:26,750 log Unauthorized: /api/v1/admin-panel/auth/profile/
+WARNING 2026-02-12 01:23:26,751 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 401 133
+INFO 2026-02-12 01:23:48,261 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:23:48,895 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:23:49,628 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:23:51,293 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:24:41,954 basehttp "OPTIONS /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:24:41,986 basehttp "OPTIONS /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:24:44,188 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:24:44,444 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:24:44,650 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:24:45,366 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:30:58,019 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:31:01,189 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:36:27,395 basehttp "OPTIONS /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:36:29,851 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
+INFO 2026-02-12 01:36:29,859 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:36:30,302 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 01:36:30,385 basehttp "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:36:31,842 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
+INFO 2026-02-12 01:36:33,983 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:36:34,744 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:36:38,363 basehttp "OPTIONS /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:36:38,363 basehttp "OPTIONS /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:36:41,136 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:36:41,921 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:39:19,414 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 01:39:20,605 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
+INFO 2026-02-12 01:39:38,807 basehttp "OPTIONS /api/v1/auth/login HTTP/1.1" 200 0
+INFO 2026-02-12 01:39:39,884 basehttp "POST /api/v1/auth/login HTTP/1.1" 200 604
+INFO 2026-02-12 01:39:39,893 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-12 01:39:40,477 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:39:40,918 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:39:40,923 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
+INFO 2026-02-12 01:39:41,390 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 01:39:41,958 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-12 01:39:41,963 basehttp "OPTIONS /api/v1/portfolio/holdings/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:39:42,927 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-12 01:39:48,071 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2448
+INFO 2026-02-12 01:39:50,446 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-12 01:39:50,447 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:39:50,452 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-12 01:39:50,452 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:39:51,783 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 772
+INFO 2026-02-12 01:39:53,989 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2448
+INFO 2026-02-12 01:39:54,446 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:39:54,837 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 772
+INFO 2026-02-12 01:39:57,335 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 01:40:22,735 basehttp "OPTIONS /api/v1/backtest/option-backtest/35/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:40:22,735 basehttp "OPTIONS /api/v1/backtest/option-backtest/35/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:40:24,235 basehttp "GET /api/v1/backtest/option-backtest/35/ HTTP/1.1" 200 986
+INFO 2026-02-12 01:40:24,250 basehttp "OPTIONS /api/v1/backtest/option-backtest/35/results/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:40:25,690 basehttp "GET /api/v1/backtest/option-backtest/35/ HTTP/1.1" 200 986
+INFO 2026-02-12 01:40:26,349 basehttp "GET /api/v1/backtest/option-backtest/35/results/ HTTP/1.1" 200 498
+INFO 2026-02-12 01:40:27,660 basehttp "GET /api/v1/backtest/option-backtest/35/results/ HTTP/1.1" 200 498
+INFO 2026-02-12 01:41:19,497 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:41:19,519 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-12 01:41:19,537 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:41:19,542 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-12 01:41:21,716 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:41:22,709 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:41:23,920 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:41:24,277 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:42:33,182 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 01:42:33,670 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:42:34,380 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:42:34,381 basehttp - Broken pipe from ('127.0.0.1', 60765)
+INFO 2026-02-12 01:42:34,384 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 01:42:34,384 basehttp - Broken pipe from ('127.0.0.1', 60714)
+INFO 2026-02-12 01:42:47,269 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
+INFO 2026-02-12 01:42:47,802 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 01:42:49,582 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
+INFO 2026-02-12 01:43:05,695 basehttp "OPTIONS /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:43:06,693 basehttp "GET /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 1056
+INFO 2026-02-12 01:43:12,132 basehttp "OPTIONS /api/v1/admin-panel/database/query/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:43:12,836 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 648
+INFO 2026-02-12 01:43:19,097 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 862
+INFO 2026-02-12 01:43:37,133 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 21528
+INFO 2026-02-12 01:43:49,986 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 2155
+INFO 2026-02-12 01:44:21,325 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 862
+INFO 2026-02-12 01:45:33,623 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 01:45:34,192 basehttp "GET /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 1056
+INFO 2026-02-12 01:45:48,717 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 1692
+INFO 2026-02-12 01:55:28,865 autoreload /Users/chat360team/Documents/papertrade/papertrade-backend/apps/backtests/models.py changed, reloading.
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 12, 2026 - 00:40:51
+Django version 5.1.4, using settings 'config.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+INFO 2026-02-12 01:55:30,411 autoreload Watching for file changes with StatReloader
+INFO 2026-02-12 01:55:47,940 autoreload /Users/chat360team/Documents/papertrade/papertrade-backend/apps/backtests/option_views.py changed, reloading.
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 12, 2026 - 01:55:34
+Django version 5.1.4, using settings 'config.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+INFO 2026-02-12 01:55:48,845 autoreload Watching for file changes with StatReloader
+INFO 2026-02-12 01:55:56,020 autoreload /Users/chat360team/Documents/papertrade/papertrade-backend/apps/backtests/option_serializers.py changed, reloading.
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 12, 2026 - 01:55:52
+Django version 5.1.4, using settings 'config.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+INFO 2026-02-12 01:55:56,947 autoreload Watching for file changes with StatReloader
+INFO 2026-02-12 01:56:01,834 autoreload /Users/chat360team/Documents/papertrade/papertrade-backend/apps/backtests/option_serializers.py changed, reloading.
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 12, 2026 - 01:56:00
+Django version 5.1.4, using settings 'config.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+INFO 2026-02-12 01:56:02,916 autoreload Watching for file changes with StatReloader
+INFO 2026-02-12 01:58:40,514 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-12 01:58:40,523 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-12 01:58:42,898 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:58:43,125 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-12 01:58:43,357 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 01:58:43,863 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-12 01:58:44,108 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:58:46,109 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:58:51,393 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-12 01:58:51,404 basehttp "OPTIONS /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 0
+INFO 2026-02-12 01:58:51,416 basehttp "OPTIONS /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 0
+INFO 2026-02-12 01:58:53,915 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 01:58:54,838 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 01:58:56,030 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
+INFO 2026-02-12 01:58:57,923 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1202
+INFO 2026-02-12 02:01:26,170 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 02:01:26,419 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-12 02:01:26,649 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 02:01:27,217 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-12 02:01:27,443 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 02:01:29,125 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 02:01:47,000 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 02:01:47,875 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 02:01:49,041 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
+INFO 2026-02-12 02:01:50,805 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1202
+INFO 2026-02-12 02:02:50,884 basehttp "OPTIONS /api/v1/backtest/option-backtest/run/ HTTP/1.1" 200 0
+WARNING 2026-02-12 02:02:53,273 log Forbidden: /api/v1/backtest/option-backtest/run/
+WARNING 2026-02-12 02:02:53,275 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 403 193
+INFO 2026-02-12 02:04:58,156 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 02:04:58,855 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 02:04:59,062 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 02:05:00,853 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 02:06:18,342 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 02:06:18,945 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
+INFO 2026-02-12 02:06:19,616 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 02:06:21,407 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 965
+INFO 2026-02-12 02:14:51,814 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:14:51,908 basehttp "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:14:54,940 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 02:14:55,279 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:14:55,509 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
+INFO 2026-02-12 02:14:56,041 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 02:14:58,818 basehttp "OPTIONS /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:14:58,818 basehttp "OPTIONS /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:14:59,549 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 02:15:00,232 basehttp "GET /api/v1/strategies/option-strategies/22/ HTTP/1.1" 200 1254
+INFO 2026-02-12 02:16:07,055 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1351
+INFO 2026-02-12 02:16:12,153 basehttp "DELETE /api/v1/strategies/option-strategies/22/ HTTP/1.1" 204 0
+INFO 2026-02-12 02:16:12,831 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 97
+INFO 2026-02-12 02:16:17,470 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 02:16:19,539 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 97
+INFO 2026-02-12 02:16:23,995 basehttp "OPTIONS /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:16:25,071 basehttp "GET /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 1056
+INFO 2026-02-12 02:16:32,733 basehttp "OPTIONS /api/v1/admin-panel/database/query/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:16:33,529 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 274
+INFO 2026-02-12 02:16:37,475 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 21528
+INFO 2026-02-12 02:16:43,026 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 432
+INFO 2026-02-12 02:17:16,638 basehttp "POST /api/v1/admin-panel/database/query/ HTTP/1.1" 200 231
+INFO 2026-02-12 02:17:20,193 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 97
+INFO 2026-02-12 02:18:40,471 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:41,173 basehttp "POST /api/v1/strategies/option-strategies/ HTTP/1.1" 201 1261
+INFO 2026-02-12 02:18:41,887 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1358
+INFO 2026-02-12 02:18:46,362 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 02:18:46,923 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:46,924 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:47,460 basehttp - Broken pipe from ('127.0.0.1', 61443)
+INFO 2026-02-12 02:18:47,461 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:18:49,765 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:18:50,072 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:50,074 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:50,075 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:50,075 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:50,220 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:18:50,225 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:50,777 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-12 02:18:51,138 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-12 02:18:51,143 basehttp "OPTIONS /api/v1/portfolio/holdings/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:52,263 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:18:53,168 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-12 02:18:53,548 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-12 02:18:53,931 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:18:54,818 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:54,819 basehttp "OPTIONS /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:54,819 basehttp "OPTIONS /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 0
+INFO 2026-02-12 02:18:55,499 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1358
+INFO 2026-02-12 02:18:56,252 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:18:56,930 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2448
+INFO 2026-02-12 02:18:57,542 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1049
+INFO 2026-02-12 02:18:58,528 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:18:59,335 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1201
+INFO 2026-02-12 02:19:03,015 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2448
+INFO 2026-02-12 02:19:12,901 basehttp "OPTIONS /api/v1/backtest/option-backtest/run/ HTTP/1.1" 200 0
+DEBUG 2026-02-12 02:19:15,682 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-12 02:19:15,768 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-12 02:19:15,769 option_engine_v2 Option Backtest OPT-BT-5C5A73A2D348 delegated to FastAPI successfully
+INFO 2026-02-12 02:19:15,993 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
+INFO 2026-02-12 02:19:17,136 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 509
+INFO 2026-02-12 02:19:18,261 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:19:20,770 basehttp "OPTIONS /api/v1/backtest/option-backtest/36/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:19:20,771 basehttp "OPTIONS /api/v1/backtest/option-backtest/36/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:19:22,294 basehttp "GET /api/v1/backtest/option-backtest/36/ HTTP/1.1" 200 1742
+INFO 2026-02-12 02:19:22,299 basehttp "OPTIONS /api/v1/backtest/option-backtest/36/results/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:19:23,266 basehttp "GET /api/v1/backtest/option-backtest/36/results/ HTTP/1.1" 200 188
+INFO 2026-02-12 02:19:23,729 basehttp "GET /api/v1/backtest/option-backtest/36/ HTTP/1.1" 200 1742
+INFO 2026-02-12 02:19:24,731 basehttp "GET /api/v1/backtest/option-backtest/36/results/ HTTP/1.1" 200 188
+INFO 2026-02-12 02:19:32,085 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:19:33,374 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:19:33,385 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:19:34,091 basehttp "OPTIONS /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:19:34,091 basehttp "OPTIONS /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:19:35,770 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:19:41,545 basehttp "OPTIONS /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:19:41,546 basehttp "OPTIONS /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:19:41,546 basehttp "OPTIONS /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:19:41,546 basehttp "OPTIONS /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:19:41,961 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+WARNING 2026-02-12 02:19:41,974 log Forbidden: /api/v1/strategies/option-strategies/23/
+WARNING 2026-02-12 02:19:41,974 basehttp "GET /api/v1/strategies/option-strategies/23/ HTTP/1.1" 403 219
+WARNING 2026-02-12 02:19:41,976 log Forbidden: /api/v1/strategies/option-strategies/23/
+WARNING 2026-02-12 02:19:41,976 basehttp "GET /api/v1/strategies/option-strategies/23/ HTTP/1.1" 403 219
+WARNING 2026-02-12 02:19:41,977 log Forbidden: /api/v1/strategies/option-strategies/23/
+WARNING 2026-02-12 02:19:41,978 basehttp "GET /api/v1/strategies/option-strategies/23/ HTTP/1.1" 403 219
+INFO 2026-02-12 02:19:51,396 basehttp "OPTIONS /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 0
+WARNING 2026-02-12 02:19:51,838 log Unauthorized: /api/v1/admin-panel/auth/login/
+WARNING 2026-02-12 02:19:51,838 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 401 145
+INFO 2026-02-12 02:20:21,888 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
+INFO 2026-02-12 02:20:22,365 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-12 02:20:23,347 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
+INFO 2026-02-12 02:20:26,088 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1358
+INFO 2026-02-12 02:20:32,167 basehttp "OPTIONS /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:20:32,168 basehttp "OPTIONS /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:20:33,065 basehttp "GET /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 1261
+INFO 2026-02-12 02:20:33,808 basehttp "GET /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 1261
+INFO 2026-02-12 02:20:46,827 basehttp "OPTIONS /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:20:47,841 basehttp "PUT /api/v1/strategies/option-strategies/23/ HTTP/1.1" 200 1261
+INFO 2026-02-12 02:20:48,610 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1358
+INFO 2026-02-12 02:20:53,633 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:20:54,148 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:20:54,375 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:20:54,599 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:20:55,573 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:20:55,574 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:20:56,752 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:20:57,873 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:20:57,987 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:20:58,325 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:20:58,779 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:20:58,780 basehttp - Broken pipe from ('127.0.0.1', 61498)
+INFO 2026-02-12 02:20:59,036 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:20:59,490 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:20:59,993 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-12 02:20:59,997 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:21:00,245 basehttp - Broken pipe from ('127.0.0.1', 61454)
+INFO 2026-02-12 02:21:00,455 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:21:00,903 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-12 02:21:06,631 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2448
+INFO 2026-02-12 02:21:12,949 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2448
+INFO 2026-02-12 02:21:14,783 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:21:15,986 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:21:16,054 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:21:17,329 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1358
+INFO 2026-02-12 02:21:18,233 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:21:20,516 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:21:21,041 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1049
+INFO 2026-02-12 02:21:21,122 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1201
+INFO 2026-02-12 02:21:25,167 basehttp "GET /api/v1/backtest/option-backtest/36/ HTTP/1.1" 200 2435
+INFO 2026-02-12 02:21:26,403 basehttp "GET /api/v1/backtest/option-backtest/36/results/ HTTP/1.1" 200 811
+INFO 2026-02-12 02:21:26,631 basehttp "GET /api/v1/backtest/option-backtest/36/ HTTP/1.1" 200 2435
+INFO 2026-02-12 02:21:27,869 basehttp "GET /api/v1/backtest/option-backtest/36/results/ HTTP/1.1" 200 811
+INFO 2026-02-12 02:21:36,869 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:21:37,997 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:21:38,011 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:21:39,898 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1358
+INFO 2026-02-12 02:21:40,387 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:21:41,941 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1049
+INFO 2026-02-12 02:21:42,664 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:21:43,740 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1201
+INFO 2026-02-12 02:21:57,661 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:21:58,110 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:21:58,445 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:21:59,573 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:21:59,573 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:22:00,092 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1358
+INFO 2026-02-12 02:22:00,772 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1358
+INFO 2026-02-12 02:22:02,368 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:22:02,491 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:22:03,648 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 517
+INFO 2026-02-12 02:22:04,714 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:22:07,169 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:22:09,887 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:22:12,392 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+DEBUG 2026-02-12 02:22:37,561 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-12 02:22:37,570 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-12 02:22:37,570 option_engine_v2 Option Backtest OPT-BT-B32423CCA964 delegated to FastAPI successfully
+INFO 2026-02-12 02:22:37,792 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
+INFO 2026-02-12 02:22:39,203 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 839
+INFO 2026-02-12 02:22:40,178 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:22:47,769 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:22:48,345 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-12 02:22:49,292 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 849
+INFO 2026-02-12 02:22:50,003 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:22:50,655 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 849
+INFO 2026-02-12 02:22:52,093 basehttp "OPTIONS /api/v1/backtest/option-backtest/37/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:22:52,093 basehttp "OPTIONS /api/v1/backtest/option-backtest/37/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:22:52,314 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
+INFO 2026-02-12 02:22:53,499 basehttp "GET /api/v1/backtest/option-backtest/37/ HTTP/1.1" 200 3061
+INFO 2026-02-12 02:22:53,504 basehttp "OPTIONS /api/v1/backtest/option-backtest/37/results/ HTTP/1.1" 200 0
+INFO 2026-02-12 02:22:54,749 basehttp "GET /api/v1/backtest/option-backtest/37/results/ HTTP/1.1" 200 1434
+INFO 2026-02-12 02:22:55,099 basehttp "GET /api/v1/backtest/option-backtest/37/ HTTP/1.1" 200 3061
+INFO 2026-02-12 02:22:56,339 basehttp "GET /api/v1/backtest/option-backtest/37/results/ HTTP/1.1" 200 1434
+INFO 2026-02-12 02:22:59,482 basehttp "GET /api/v1/backtest/option-backtest/36/ HTTP/1.1" 200 2435
+INFO 2026-02-12 02:23:00,833 basehttp "GET /api/v1/backtest/option-backtest/36/results/ HTTP/1.1" 200 811
+INFO 2026-02-12 02:23:01,055 basehttp "GET /api/v1/backtest/option-backtest/36/ HTTP/1.1" 200 2435
+INFO 2026-02-12 02:23:02,312 basehttp "GET /api/v1/backtest/option-backtest/36/results/ HTTP/1.1" 200 811
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 12, 2026 - 01:56:06
+Django version 5.1.4, using settings 'config.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
 SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
 SETTINGS-DEBUG: .env exists: True
 SETTINGS-DEBUG: Loaded .env successfully

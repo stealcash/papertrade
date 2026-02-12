@@ -195,9 +195,12 @@ CORS_ALLOW_CREDENTIALS = True
 JWT_SECRET_KEY = config('JWT_SECRET_KEY', default='jwt-secret-change-this')
 JWT_ACCESS_EXP_HOURS = config('JWT_ACCESS_EXP_HOURS', default=24, cast=int)
 
-# Internal API Secret for Go service communication
+# Internal API Secret for Go/FastAPI service communication
 INTERNAL_API_SECRET = config('INTERNAL_API_SECRET', default='shared-secret-for-go-service-change-this')
 GO_SERVICE_URL = config('GO_SERVICE_URL', default='http://localhost:8080/api/v1')
+FASTAPI_SERVICE_URL = config('FASTAPI_SERVICE_URL', default='http://localhost:8001/api/v1')
+NSE_API_BASE_URL = config('NSE_API_BASE_URL', default='https://www.nseindia.com')
+FRONTEND_URL = config('FRONTEND_URL', default='http://localhost:3000')
 
 # Redis Configuration
 REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')

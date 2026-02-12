@@ -24,12 +24,6 @@ class BacktestRunSerializer(serializers.ModelSerializer):
                 'name': obj.strategy_rule_based.name,
                 'code': f"RULE_{obj.strategy_rule_based.id}"
             }
-        elif obj.strategy_options:
-            return {
-                'id': obj.strategy_options.id,
-                'name': obj.strategy_options.name,
-                'code': f"OPT_{obj.strategy_options.id}"
-            }
         return None
 
 
@@ -47,11 +41,10 @@ class BacktestRunRequestSerializer(serializers.Serializer):
     # Strategy (One of them is required)
     strategy_id = serializers.IntegerField(required=False, help_text="ID of StrategyMaster (System/Auto)")
     strategy_rule_based = serializers.IntegerField(required=False, help_text="ID of StrategyRuleBased (User Custom)")
-    strategy_options = serializers.IntegerField(required=False, help_text="ID of OptionStrategy")
 
     def validate(self, attrs):
-        if not any([attrs.get('strategy_id'), attrs.get('strategy_rule_based'), attrs.get('strategy_options')]):
-            raise serializers.ValidationError("Must provide a strategy ID (System, RuleBased, or Options).")
+        if not any([attrs.get('strategy_id'), attrs.get('strategy_rule_based')]):
+            raise serializers.ValidationError("Must provide a strategy ID (System or RuleBased).")
         return attrs
     
     # Selection

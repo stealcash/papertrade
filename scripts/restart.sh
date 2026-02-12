@@ -37,7 +37,7 @@ check_port() {
 
 # Kill existing processes on ports if running
 # print_step "Checking for existing processes..."
-for port in 8000 8080 3000 4000; do
+for port in 8000 8001 8080 3000 4000; do
     if check_port $port; then
         # echo "Port $port is in use. Killing process..."
         lsof -ti :$port | xargs kill -9 2>/dev/null || true
@@ -136,6 +136,13 @@ GO_PID=$!
 # echo "Go service started with PID: $GO_PID"
 # sleep 2
 
+# Start FastAPI Backend in background
+# print_step "Starting FastAPI Backend (port 8001)..."
+bash scripts/run-fastapi.sh > logs/fastapi.log 2>&1 &
+FASTAPI_PID=$!
+# echo "FastAPI started with PID: $FASTAPI_PID"
+# sleep 2
+
 # Start User Frontend in background
 # print_step "Starting User Frontend (port 3000)..."
 cd "$PROJECT_ROOT"
@@ -161,11 +168,13 @@ ADMIN_FRONTEND_PID=$!
 # echo "  User Frontend:   http://localhost:3000"
 # echo "  Admin Frontend:  http://localhost:4000"
 # echo "  Django API:      http://localhost:8000/api/v1"
+# echo "  FastAPI API:     http://localhost:8001/api/v1"
 # echo "  Swagger Docs:    http://localhost:8000/api/v1/docs"
 # echo "  Go Service:      http://localhost:8080/api/v1"
 # echo ""
 # echo "📝 Process IDs:"
 # echo "  Django:          $DJANGO_PID"
+# echo "  FastAPI:         $FASTAPI_PID"
 # echo "  Celery Worker:   $CELERY_WORKER_PID"
 # echo "  Celery Beat:     $CELERY_BEAT_PID"
 # echo "  Go Service:      $GO_PID"
@@ -174,6 +183,7 @@ ADMIN_FRONTEND_PID=$!
 # echo ""
 # echo "📋 Logs are available in:"
 # echo "  Django:          logs/django.log"
+# echo "  FastAPI:         logs/fastapi.log"
 # echo "  Celery Worker:   logs/celery-worker.log"
 # echo "  Celery Beat:     logs/celery-beat.log"
 # echo "  Go Service:      logs/go.log"
@@ -181,8 +191,8 @@ ADMIN_FRONTEND_PID=$!
 # echo "  Admin Frontend:  logs/admin-frontend.log"
 # echo ""
 # echo "🛑 To stop all services:"
-# echo "  kill $DJANGO_PID $GO_PID $FRONTEND_PID $ADMIN_FRONTEND_PID $CELERY_WORKER_PID $CELERY_BEAT_PID"
-# echo "  OR run: lsof -ti :8000,:8080,:3000,:4000 | xargs kill -9"
+# echo "  kill $DJANGO_PID $FASTAPI_PID $GO_PID $FRONTEND_PID $ADMIN_FRONTEND_PID $CELERY_WORKER_PID $CELERY_BEAT_PID"
+# echo "  OR run: lsof -ti :8000,:8001,:8080,:3000,:4000 | xargs kill -9"
 # echo "========================================="
 # echo ""
 

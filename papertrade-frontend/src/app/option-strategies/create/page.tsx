@@ -86,6 +86,12 @@ const ErrorMsg = ({ children }: { children: React.ReactNode }) => (
     </div>
 );
 
+const isValidOptionInput = (val: string) => {
+    if (val === '') return true;
+    const numericOrRegex = /^[0-9.\-\[\]()*+?|^$\\]*$/;
+    return numericOrRegex.test(val);
+};
+
 export default function CreateOptionStrategyPage() {
     const router = useRouter();
     const [name, setName] = useState('');
@@ -140,6 +146,7 @@ export default function CreateOptionStrategyPage() {
     const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
     const [upgradeMessage, setUpgradeMessage] = useState('');
     const [subscription, setSubscription] = useState<any>(null);
+    const [isAdvanced, setIsAdvanced] = useState(false);
 
     useEffect(() => {
         fetchSubscription();
@@ -366,24 +373,47 @@ export default function CreateOptionStrategyPage() {
 
                 {/* Form */}
                 <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 space-y-8">
-                    <div className="grid grid-cols-1 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Strategy Name</label>
+                    <div className="flex items-center justify-between gap-4 border-b border-gray-100 dark:border-gray-700 pb-4">
+                        <div className="flex-grow max-w-md">
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Strategy Name</label>
                             <input
                                 type="text"
                                 value={name}
                                 onChange={e => setName(e.target.value)}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm px-3 py-2 border"
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm px-3 py-2 border font-bold"
                                 placeholder="e.g. Short Straddle"
                             />
                         </div>
+                        <div className="flex flex-col items-end gap-1.5">
+                            <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">UI Mode</label>
+                            <div className="flex bg-gray-100 dark:bg-gray-900 p-1 rounded-lg border border-gray-200 dark:border-gray-700 shadow-inner">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsAdvanced(false)}
+                                    className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${!isAdvanced ? 'bg-white dark:bg-gray-700 text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                                >
+                                    Basic
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsAdvanced(true)}
+                                    className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${isAdvanced ? 'bg-white dark:bg-gray-700 text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                                >
+                                    Advanced
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
                             <textarea
                                 value={description}
                                 onChange={e => setDescription(e.target.value)}
                                 rows={2}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm px-3 py-2 border"
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm px-3 py-2 border"
+                                placeholder="Describe your strategy optional"
                             />
                         </div>
                     </div>
@@ -410,10 +440,14 @@ export default function CreateOptionStrategyPage() {
                                         <div className="flex items-center gap-2 mb-3">
                                             <span className="text-sm dark:text-gray-300">Expiry Day minus</span>
                                             <input
-                                                type="number"
+                                                type="text"
                                                 min="0"
                                                 value={entry.daysBeforeExpiry}
-                                                onChange={e => updateEntry('daysBeforeExpiry', e.target.value)}
+                                                onChange={e => {
+                                                    if (isValidOptionInput(e.target.value)) {
+                                                        updateEntry('daysBeforeExpiry', e.target.value);
+                                                    }
+                                                }}
                                                 className="w-20 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500 border"
                                             />
                                             <span className="text-sm dark:text-gray-300">days</span>
@@ -446,71 +480,83 @@ export default function CreateOptionStrategyPage() {
                                 </select>
                             </div>
 
-                            <div className="pt-4 border-t border-blue-100 dark:border-blue-900/40">
-                                <label className="block text-xs font-bold text-blue-600 dark:text-blue-400 mb-1.5 uppercase flex items-center gap-2">
-                                    Minimum Order Volume
-                                    <span className="bg-blue-100 dark:bg-blue-900/50 text-[10px] px-2 py-0.5 rounded-full lowercase font-medium">liquidity filter</span>
-                                </label>
-                                <input
-                                    type="number"
-                                    min="0"
-                                    value={entry.minVolume}
-                                    onChange={e => updateEntry('minVolume', e.target.value)}
-                                    className="w-full rounded border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-blue-500"
-                                    placeholder="0"
-                                />
-                                <p className="text-[10px] text-gray-500 mt-2 font-medium italic">
-                                    Note: If any selected strike has daily volume less than this value, the entire strategy entry will be skipped.
-                                </p>
-                            </div>
-
-                            <div className="pt-4 border-t border-blue-100 dark:border-blue-900/40">
-                                <div className="flex items-center gap-2 mb-3">
+                            {isAdvanced && (
+                                <div className="pt-4 border-t border-blue-100 dark:border-blue-900/40">
+                                    <label className="block text-xs font-bold text-blue-600 dark:text-blue-400 mb-1.5 uppercase flex items-center gap-2">
+                                        Minimum Order Volume
+                                        <span className="bg-blue-100 dark:bg-blue-900/50 text-[10px] px-2 py-0.5 rounded-full lowercase font-medium">liquidity filter</span>
+                                    </label>
                                     <input
-                                        type="checkbox"
-                                        checked={entry.waitAndTrade.enabled}
-                                        onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, enabled: e.target.checked })}
-                                        className="h-4 w-4 text-blue-600 rounded cursor-pointer"
+                                        type="text"
+                                        min="0"
+                                        value={entry.minVolume}
+                                        onChange={e => {
+                                            if (isValidOptionInput(e.target.value)) {
+                                                updateEntry('minVolume', e.target.value);
+                                            }
+                                        }}
+                                        className="w-full rounded border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-blue-500"
+                                        placeholder="0"
                                     />
-                                    <label className="text-xs font-bold text-gray-700 dark:text-gray-300 cursor-pointer uppercase tracking-wider">Wait & Trade Entry Condition</label>
+                                    <p className="text-[10px] text-gray-500 mt-2 font-medium italic">
+                                        Note: If any selected strike has daily volume less than this value, the entire strategy entry will be skipped.
+                                    </p>
                                 </div>
+                            )}
 
-                                {entry.waitAndTrade.enabled && (
-                                    <div className="space-y-3 pl-6">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-xs font-bold dark:text-gray-400">If price</span>
-                                            <select
-                                                value={entry.waitAndTrade.type}
-                                                onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, type: e.target.value })}
-                                                className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold"
-                                            >
-                                                <option value="INCREASE">INCREASE</option>
-                                                <option value="DECREASE">DECREASE</option>
-                                            </select>
-                                            <span className="text-xs font-bold dark:text-gray-400">by</span>
-                                            <input
-                                                type="number"
-                                                step="0.1"
-                                                value={entry.waitAndTrade.value}
-                                                onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, value: e.target.value })}
-                                                className="w-16 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold"
-                                            />
-                                            <span className="text-xs font-bold dark:text-gray-400">% from</span>
-                                        </div>
-                                        <div>
-                                            <select
-                                                value={entry.waitAndTrade.ref}
-                                                onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, ref: e.target.value })}
-                                                className="w-full rounded border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-xs border font-bold"
-                                            >
-                                                <option value="PREV_CLOSE">Previous Day Close</option>
-                                                <option value="PREV_OPEN">Previous Day Open</option>
-                                                {entry.priceRef === 'CLOSE' && <option value="TODAY_OPEN">Today's Open</option>}
-                                            </select>
-                                        </div>
+                            {isAdvanced && (
+                                <div className="pt-4 border-t border-blue-100 dark:border-blue-900/40">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <input
+                                            type="checkbox"
+                                            checked={entry.waitAndTrade.enabled}
+                                            onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, enabled: e.target.checked })}
+                                            className="h-4 w-4 text-blue-600 rounded cursor-pointer"
+                                        />
+                                        <label className="text-xs font-bold text-gray-700 dark:text-gray-300 cursor-pointer uppercase tracking-wider">Wait & Trade Entry Condition</label>
                                     </div>
-                                )}
-                            </div>
+
+                                    {entry.waitAndTrade.enabled && (
+                                        <div className="space-y-3 pl-6">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-xs font-bold dark:text-gray-400">If price</span>
+                                                <select
+                                                    value={entry.waitAndTrade.type}
+                                                    onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, type: e.target.value })}
+                                                    className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold"
+                                                >
+                                                    <option value="INCREASE">INCREASE</option>
+                                                    <option value="DECREASE">DECREASE</option>
+                                                </select>
+                                                <span className="text-xs font-bold dark:text-gray-400">by</span>
+                                                <input
+                                                    type="text"
+                                                    step="0.1"
+                                                    value={entry.waitAndTrade.value}
+                                                    onChange={e => {
+                                                        if (isValidOptionInput(e.target.value)) {
+                                                            updateEntry('waitAndTrade', { ...entry.waitAndTrade, value: e.target.value });
+                                                        }
+                                                    }}
+                                                    className="w-16 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold"
+                                                />
+                                                <span className="text-xs font-bold dark:text-gray-400">% from</span>
+                                            </div>
+                                            <div>
+                                                <select
+                                                    value={entry.waitAndTrade.ref}
+                                                    onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, ref: e.target.value })}
+                                                    className="w-full rounded border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-xs border font-bold"
+                                                >
+                                                    <option value="PREV_CLOSE">Previous Day Close</option>
+                                                    <option value="PREV_OPEN">Previous Day Open</option>
+                                                    {entry.priceRef === 'CLOSE' && <option value="TODAY_OPEN">Today's Open</option>}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
 
                         <div className="space-y-6 bg-amber-50/30 dark:bg-amber-900/10 p-5 rounded-xl border border-amber-100 dark:border-amber-900/30">
@@ -527,17 +573,20 @@ export default function CreateOptionStrategyPage() {
                                                 className="rounded border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-sm border flex-grow"
                                             >
                                                 <option value="SAME_DAY">Same Day</option>
-                                                <option value="NEXT_DAY">Next Day</option>
-                                                <option value="AFTER_DAYS">After X Days</option>
+                                                <option value="AFTER_DAYS">After n days</option>
                                             </select>
 
                                             {exit.dailyExitType === 'AFTER_DAYS' && (
                                                 <div className="flex items-center gap-1">
                                                     <input
-                                                        type="number"
-                                                        min="2"
+                                                        type="text"
+                                                        min="1"
                                                         value={exit.dailyExitDays}
-                                                        onChange={e => updateExit('exit', 'dailyExitDays', e.target.value)}
+                                                        onChange={e => {
+                                                            if (isValidOptionInput(e.target.value)) {
+                                                                updateExit('exit', 'dailyExitDays', e.target.value);
+                                                            }
+                                                        }}
                                                         className="w-16 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white border"
                                                     />
                                                     <span className="text-xs dark:text-gray-300">days</span>
@@ -561,10 +610,14 @@ export default function CreateOptionStrategyPage() {
                                         <div className="flex items-center gap-2">
                                             <span className="text-sm dark:text-gray-300">Expiry minus</span>
                                             <input
-                                                type="number"
+                                                type="text"
                                                 min="0"
                                                 value={exit.daysBeforeExpiry}
-                                                onChange={e => updateExit('exit', 'daysBeforeExpiry', e.target.value)}
+                                                onChange={e => {
+                                                    if (isValidOptionInput(e.target.value)) {
+                                                        updateExit('exit', 'daysBeforeExpiry', e.target.value);
+                                                    }
+                                                }}
                                                 className="w-16 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white border"
                                             />
                                             <span className="text-sm dark:text-gray-300">days at</span>
@@ -584,33 +637,47 @@ export default function CreateOptionStrategyPage() {
                             {/* Safety Features */}
                             <div className="space-y-4 pt-4 border-t border-gray-100 dark:border-gray-800/50">
                                 <div className="flex flex-col gap-2 mb-2">
-                                    <label className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest pl-1">Risk Management Mode</label>
-                                    <div className="flex gap-4 bg-gray-50 dark:bg-gray-800/50 p-2 rounded-lg border border-gray-100 dark:border-gray-700/50">
-                                        <label className="flex items-center gap-2 cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                name="riskMode"
-                                                checked={exit.riskManagementMode === 'GLOBAL'}
-                                                onChange={() => updateExit('exit', 'riskManagementMode', 'GLOBAL')}
-                                                className="h-3 w-3 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                                            />
-                                            <div className="flex flex-col">
-                                                <span className="text-xs font-bold text-gray-700 dark:text-gray-200">Global</span>
+                                    {isAdvanced && (
+                                        <div className="flex flex-col gap-2 mb-2">
+                                            <label className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest pl-1">Risk Management Mode</label>
+                                            <div className="flex gap-4 bg-gray-50 dark:bg-gray-800/50 p-2 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-inner">
+                                                <label className={`flex items-center gap-2 cursor-pointer p-1.5 rounded-lg transition-all ${exit.riskManagementMode === 'GLOBAL' ? 'bg-white dark:bg-gray-700 shadow-sm' : 'opacity-60'}`}>
+                                                    <input
+                                                        type="radio"
+                                                        name="riskMode"
+                                                        checked={exit.riskManagementMode === 'GLOBAL'}
+                                                        onChange={() => updateExit('exit', 'riskManagementMode', 'GLOBAL')}
+                                                        className="h-3 w-3 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                                    />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-200">Global</span>
+                                                    </div>
+                                                </label>
+                                                <label className={`flex items-center gap-2 cursor-pointer p-1.5 rounded-lg transition-all ${exit.riskManagementMode === 'LEG_WISE' ? 'bg-white dark:bg-gray-700 shadow-sm' : 'opacity-60'}`}>
+                                                    <input
+                                                        type="radio"
+                                                        name="riskMode"
+                                                        checked={exit.riskManagementMode === 'LEG_WISE'}
+                                                        onChange={() => updateExit('exit', 'riskManagementMode', 'LEG_WISE')}
+                                                        className="h-3 w-3 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                                    />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-200">Leg-wise</span>
+                                                    </div>
+                                                </label>
                                             </div>
-                                        </label>
-                                        <label className="flex items-center gap-2 cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                name="riskMode"
-                                                checked={exit.riskManagementMode === 'LEG_WISE'}
-                                                onChange={() => updateExit('exit', 'riskManagementMode', 'LEG_WISE')}
-                                                className="h-3 w-3 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                                            />
-                                            <div className="flex flex-col">
-                                                <span className="text-xs font-bold text-gray-700 dark:text-gray-200">Leg-wise</span>
-                                            </div>
-                                        </label>
-                                    </div>
+
+                                            {exit.riskManagementMode === 'LEG_WISE' && (
+                                                <div className="mt-2 p-3 bg-amber-50 dark:bg-amber-900/20 text-[10px] text-amber-800 dark:text-amber-300 rounded-lg border border-amber-100 dark:border-amber-900/30 flex items-start gap-2 animate-pulse">
+                                                    <span className="text-sm leading-none">💡</span>
+                                                    <div>
+                                                        <p className="font-bold uppercase tracking-wider mb-0.5">Leg-wise Risk Active</p>
+                                                        <p className="font-medium opacity-80 leading-relaxed">Individual rules active. Configure them in the Leg Builder above.</p>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
 
                                 {exit.riskManagementMode === 'GLOBAL' ? (
@@ -865,10 +932,14 @@ export default function CreateOptionStrategyPage() {
                                                     {leg.strikeSelection !== 'ATM' && (
                                                         <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 p-1 rounded-lg border dark:border-gray-700">
                                                             <input
-                                                                type="number"
+                                                                type="text"
                                                                 min="0"
                                                                 value={leg.strikeOffset}
-                                                                onChange={e => updateLeg(index, 'strikeOffset', e.target.value)}
+                                                                onChange={e => {
+                                                                    if (isValidOptionInput(e.target.value)) {
+                                                                        updateLeg(index, 'strikeOffset', e.target.value);
+                                                                    }
+                                                                }}
                                                                 className="w-20 bg-transparent border-0 focus:ring-0 py-1.5 px-3 dark:text-white text-sm text-center font-bold"
                                                                 placeholder="1"
                                                             />
@@ -887,10 +958,14 @@ export default function CreateOptionStrategyPage() {
                                                         <div className="flex items-center gap-2">
                                                             <span className="text-[10px] font-bold text-gray-400 uppercase">Min Option Price</span>
                                                             <input
-                                                                type="number"
+                                                                type="text"
                                                                 min="0"
                                                                 value={leg.minPremium}
-                                                                onChange={e => updateLeg(index, 'minPremium', e.target.value)}
+                                                                onChange={e => {
+                                                                    if (isValidOptionInput(e.target.value)) {
+                                                                        updateLeg(index, 'minPremium', e.target.value);
+                                                                    }
+                                                                }}
                                                                 className="w-20 rounded-lg border-gray-200 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-xs border font-bold"
                                                                 placeholder="0"
                                                             />
@@ -898,10 +973,14 @@ export default function CreateOptionStrategyPage() {
                                                         <div className="flex items-center gap-2">
                                                             <span className="text-[10px] font-bold text-gray-400 uppercase">Max Option Price</span>
                                                             <input
-                                                                type="number"
+                                                                type="text"
                                                                 min="0"
                                                                 value={leg.maxPremium}
-                                                                onChange={e => updateLeg(index, 'maxPremium', e.target.value)}
+                                                                onChange={e => {
+                                                                    if (isValidOptionInput(e.target.value)) {
+                                                                        updateLeg(index, 'maxPremium', e.target.value);
+                                                                    }
+                                                                }}
                                                                 className="w-20 rounded-lg border-gray-200 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-xs border font-bold"
                                                                 placeholder="0"
                                                             />
@@ -919,18 +998,26 @@ export default function CreateOptionStrategyPage() {
                                                         <div className="flex items-center gap-2">
                                                             <span className="text-xs font-bold text-gray-500 uppercase">Target Option Price</span>
                                                             <input
-                                                                type="number"
+                                                                type="text"
                                                                 value={leg.targetPremium}
-                                                                onChange={e => updateLeg(index, 'targetPremium', e.target.value)}
+                                                                onChange={e => {
+                                                                    if (isValidOptionInput(e.target.value)) {
+                                                                        updateLeg(index, 'targetPremium', e.target.value);
+                                                                    }
+                                                                }}
                                                                 className="w-28 rounded-lg border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-blue-500"
                                                             />
                                                         </div>
                                                         <div className="flex items-center gap-2">
                                                             <span className="text-xs font-bold text-gray-500 uppercase">Tolerance (+/-)</span>
                                                             <input
-                                                                type="number"
+                                                                type="text"
                                                                 value={leg.premiumTolerance}
-                                                                onChange={e => updateLeg(index, 'premiumTolerance', e.target.value)}
+                                                                onChange={e => {
+                                                                    if (isValidOptionInput(e.target.value)) {
+                                                                        updateLeg(index, 'premiumTolerance', e.target.value);
+                                                                    }
+                                                                }}
                                                                 className="w-20 rounded-lg border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-blue-500"
                                                             />
                                                         </div>
@@ -963,9 +1050,13 @@ export default function CreateOptionStrategyPage() {
                                                         {leg.stopLoss.enabled && (
                                                             <div className="flex items-center gap-2">
                                                                 <input
-                                                                    type="number"
+                                                                    type="text"
                                                                     value={leg.stopLoss.value}
-                                                                    onChange={e => updateLegRisk(index, 'sl', 'value', e.target.value)}
+                                                                    onChange={e => {
+                                                                        if (isValidOptionInput(e.target.value)) {
+                                                                            updateLegRisk(index, 'sl', 'value', e.target.value);
+                                                                        }
+                                                                    }}
                                                                     className="w-16 rounded border-gray-300 py-1 px-2 dark:bg-gray-700 dark:text-white text-[10px] border font-bold focus:ring-1 focus:ring-amber-500"
                                                                 />
                                                                 <select
@@ -1005,9 +1096,13 @@ export default function CreateOptionStrategyPage() {
                                                         {leg.takeProfit.enabled && (
                                                             <div className="flex items-center gap-2">
                                                                 <input
-                                                                    type="number"
+                                                                    type="text"
                                                                     value={leg.takeProfit.value}
-                                                                    onChange={e => updateLegRisk(index, 'tp', 'value', e.target.value)}
+                                                                    onChange={e => {
+                                                                        if (isValidOptionInput(e.target.value)) {
+                                                                            updateLegRisk(index, 'tp', 'value', e.target.value);
+                                                                        }
+                                                                    }}
                                                                     className="w-16 rounded border-gray-300 py-1 px-2 dark:bg-gray-700 dark:text-white text-[10px] border font-bold focus:ring-1 focus:ring-emerald-500"
                                                                 />
                                                                 <select
@@ -1047,9 +1142,13 @@ export default function CreateOptionStrategyPage() {
                                                         {leg.trailingStopLoss.enabled && (
                                                             <div className="flex items-center gap-2">
                                                                 <input
-                                                                    type="number"
+                                                                    type="text"
                                                                     value={leg.trailingStopLoss.value}
-                                                                    onChange={e => updateLegRisk(index, 'tsl', 'value', e.target.value)}
+                                                                    onChange={e => {
+                                                                        if (isValidOptionInput(e.target.value)) {
+                                                                            updateLegRisk(index, 'tsl', 'value', e.target.value);
+                                                                        }
+                                                                    }}
                                                                     className="w-16 rounded border-gray-300 py-1 px-2 dark:bg-gray-700 dark:text-white text-[10px] border font-bold focus:ring-1 focus:ring-blue-500"
                                                                 />
                                                                 <select

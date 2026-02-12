@@ -43,3 +43,31 @@ class OptionStrategySerializer(serializers.ModelSerializer):
         model = OptionStrategy
         fields = '__all__'
         read_only_fields = ['user', 'is_system']
+
+    def to_internal_value(self, data):
+        # Normalize configuration numeric strings to actual numbers if possible
+        if 'configuration' in data and isinstance(data['configuration'], dict):
+            config = data['configuration']
+            legs = config.get('legs', [])
+            for leg in legs:
+                for field in ['minPremium', 'maxPremium', 'targetPremium', 'premiumTolerance', 'strikeOffset']:
+                    if field in leg and leg[field] != "":
+                        try:
+                            leg[field] = float(leg[field])
+                        except (ValueError, TypeError):
+                            pass
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        if 'configuration' in ret and isinstance(ret['configuration'], dict):
+            config = ret['configuration']
+            legs = config.get('legs', [])
+            for leg in legs:
+                for field in ['minPremium', 'maxPremium', 'targetPremium', 'premiumTolerance', 'strikeOffset']:
+                    if field in leg and leg[field] is not None:
+                        try:
+                            leg[field] = float(leg[field])
+                        except (ValueError, TypeError):
+                            pass
+        return ret

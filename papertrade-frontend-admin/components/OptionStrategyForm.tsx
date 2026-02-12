@@ -90,6 +90,16 @@ const ErrorMsg = ({ children }: { children: React.ReactNode }) => (
     </div>
 );
 
+const isValidOptionInput = (val: string) => {
+    // Allows: 
+    // - Numeric values (including empty, minus, decimals)
+    // - Regex special characters: []()*+?|^$
+    // - Rejects: Arbitrary text like "abc", "sdfsf"
+    if (val === '') return true;
+    const numericOrRegex = /^[0-9.\-\[\]()*+?|^$\\]*$/;
+    return numericOrRegex.test(val);
+};
+
 export default function OptionStrategyForm({ mode, initialData, onSave }: OptionStrategyFormProps) {
     const router = useRouter();
     const [name, setName] = useState('');
@@ -141,6 +151,7 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [isAdvanced, setIsAdvanced] = useState(false);
 
     useEffect(() => {
         if (initialData) {
@@ -194,6 +205,8 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                 selectBy: l.selectBy || 'STRIKE',
                 targetPremium: (l.targetPremium || '100').toString(),
                 premiumTolerance: (l.premiumTolerance || '10').toString(),
+                minPremium: (l.minPremium || '0').toString(),
+                maxPremium: (l.maxPremium || '0').toString(),
                 lotMultiplier: l.lotMultiplier || 1,
                 stopLoss: l.stopLoss || { enabled: false, type: '%', value: '5', ref: 'OPEN' },
                 takeProfit: l.takeProfit || { enabled: false, type: '%', value: '10', ref: 'BOTH' },
@@ -391,17 +404,40 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
         <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 space-y-6">
             {error && <div className="bg-red-50 text-red-700 p-4 rounded mb-4">{error}</div>}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Strategy Name</label>
+            <div className="flex items-center justify-between gap-4 mb-4 border-b border-gray-100 dark:border-gray-700 pb-4">
+                <div className="flex-grow max-w-md">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Strategy Name</label>
                     <input
                         type="text"
                         value={name}
                         onChange={e => setName(e.target.value)}
                         disabled={isReadOnly}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm px-3 py-2 border disabled:bg-gray-100 dark:disabled:bg-gray-800 transition-colors"
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm px-3 py-2 border disabled:bg-gray-100 dark:disabled:bg-gray-800 transition-colors font-bold"
+                        placeholder="NIFTY Iron Condor"
                     />
                 </div>
+                <div className="flex flex-col items-end gap-1.5">
+                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">UI Mode</label>
+                    <div className="flex bg-gray-100 dark:bg-gray-900 p-1 rounded-lg border border-gray-200 dark:border-gray-700 shadow-inner">
+                        <button
+                            type="button"
+                            onClick={() => setIsAdvanced(false)}
+                            className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${!isAdvanced ? 'bg-white dark:bg-gray-700 text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Basic
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setIsAdvanced(true)}
+                            className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${isAdvanced ? 'bg-white dark:bg-gray-700 text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Advanced
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
                     <select
@@ -449,10 +485,14 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                 <div className="flex items-center gap-2 mb-3">
                                     <span className="text-sm dark:text-gray-300 font-medium">Expiry Day minus</span>
                                     <input
-                                        type="number"
+                                        type="text"
                                         min="0"
                                         value={entry.daysBeforeExpiry}
-                                        onChange={e => updateEntry('daysBeforeExpiry', e.target.value)}
+                                        onChange={e => {
+                                            if (isValidOptionInput(e.target.value)) {
+                                                updateEntry('daysBeforeExpiry', e.target.value);
+                                            }
+                                        }}
                                         disabled={isReadOnly}
                                         className="w-20 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white focus:ring-blue-500 focus:border-blue-500 border font-bold disabled:opacity-50"
                                     />
@@ -488,78 +528,90 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                         </select>
                     </div>
 
-                    <div className="mt-4 pt-4 border-t border-blue-50 dark:border-blue-900/20">
-                        <label className="block text-xs font-bold text-blue-600 dark:text-blue-400 mb-1.5 uppercase tracking-wider flex items-center gap-2">
-                            Minimum Order Volume
-                            <span className="bg-blue-100 dark:bg-blue-900/50 text-[10px] px-2 py-0.5 rounded-full lowercase font-medium">liquidity filter</span>
-                        </label>
-                        <div className="flex items-center gap-3">
-                            <input
-                                type="number"
-                                min="0"
-                                value={entry.minVolume}
-                                onChange={e => updateEntry('minVolume', e.target.value)}
-                                disabled={isReadOnly}
-                                className="w-full rounded border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-                                placeholder="0"
-                            />
-                        </div>
-                        <p className="text-[10px] text-gray-500 mt-2 font-medium italic">
-                            Note: If any selected option strike has daily volume less than this value, the entire strategy entry will be skipped.
-                        </p>
-                    </div>
-
-                    <div className="pt-4 border-t border-blue-100 dark:border-blue-900/40">
-                        <div className="flex items-center gap-2 mb-3">
-                            <input
-                                type="checkbox"
-                                checked={entry.waitAndTrade.enabled}
-                                onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, enabled: e.target.checked })}
-                                disabled={isReadOnly}
-                                className="h-4 w-4 text-blue-600 rounded cursor-pointer disabled:opacity-50"
-                            />
-                            <label className="text-xs font-bold text-gray-700 dark:text-gray-300 cursor-pointer uppercase tracking-wider">Wait & Trade Entry Condition</label>
-                        </div>
-
-                        {entry.waitAndTrade.enabled && (
-                            <div className="space-y-3 pl-6">
-                                <div className="flex items-center gap-2">
-                                    <span className="text-xs font-bold dark:text-gray-400">If price</span>
-                                    <select
-                                        value={entry.waitAndTrade.type}
-                                        onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, type: e.target.value })}
-                                        disabled={isReadOnly}
-                                        className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
-                                    >
-                                        <option value="INCREASE">INCREASE</option>
-                                        <option value="DECREASE">DECREASE</option>
-                                    </select>
-                                    <span className="text-xs font-bold dark:text-gray-400">by</span>
-                                    <input
-                                        type="number"
-                                        step="0.1"
-                                        value={entry.waitAndTrade.value}
-                                        onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, value: e.target.value })}
-                                        disabled={isReadOnly}
-                                        className="w-16 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
-                                    />
-                                    <span className="text-xs font-bold dark:text-gray-400">% from</span>
-                                </div>
-                                <div>
-                                    <select
-                                        value={entry.waitAndTrade.ref}
-                                        onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, ref: e.target.value })}
-                                        disabled={isReadOnly}
-                                        className="w-full rounded border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
-                                    >
-                                        <option value="PREV_CLOSE">Previous Day Close</option>
-                                        <option value="PREV_OPEN">Previous Day Open</option>
-                                        {entry.priceRef === 'CLOSE' && <option value="TODAY_OPEN">Today's Open</option>}
-                                    </select>
-                                </div>
+                    {isAdvanced && (
+                        <div className="mt-4 pt-4 border-t border-blue-50 dark:border-blue-900/20">
+                            <label className="block text-xs font-bold text-blue-600 dark:text-blue-400 mb-1.5 uppercase tracking-wider flex items-center gap-2">
+                                Minimum Order Volume
+                                <span className="bg-blue-100 dark:bg-blue-900/50 text-[10px] px-2 py-0.5 rounded-full lowercase font-medium">liquidity filter</span>
+                            </label>
+                            <div className="flex items-center gap-3">
+                                <input
+                                    type="text"
+                                    min="0"
+                                    value={entry.minVolume}
+                                    onChange={e => {
+                                        if (isValidOptionInput(e.target.value)) {
+                                            updateEntry('minVolume', e.target.value);
+                                        }
+                                    }}
+                                    disabled={isReadOnly}
+                                    className="w-full rounded border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                                    placeholder="0"
+                                />
                             </div>
-                        )}
-                    </div>
+                            <p className="text-[10px] text-gray-500 mt-2 font-medium italic">
+                                Note: If any selected option strike has daily volume less than this value, the entire strategy entry will be skipped.
+                            </p>
+                        </div>
+                    )}
+
+                    {isAdvanced && (
+                        <div className="pt-4 border-t border-blue-100 dark:border-blue-900/40">
+                            <div className="flex items-center gap-2 mb-3">
+                                <input
+                                    type="checkbox"
+                                    checked={entry.waitAndTrade.enabled}
+                                    onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, enabled: e.target.checked })}
+                                    disabled={isReadOnly}
+                                    className="h-4 w-4 text-blue-600 rounded cursor-pointer disabled:opacity-50"
+                                />
+                                <label className="text-xs font-bold text-gray-700 dark:text-gray-300 cursor-pointer uppercase tracking-wider">Wait & Trade Entry Condition</label>
+                            </div>
+
+                            {entry.waitAndTrade.enabled && (
+                                <div className="space-y-3 pl-6">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-xs font-bold dark:text-gray-400">If price</span>
+                                        <select
+                                            value={entry.waitAndTrade.type}
+                                            onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, type: e.target.value })}
+                                            disabled={isReadOnly}
+                                            className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
+                                        >
+                                            <option value="INCREASE">INCREASE</option>
+                                            <option value="DECREASE">DECREASE</option>
+                                        </select>
+                                        <span className="text-xs font-bold dark:text-gray-400">by</span>
+                                        <input
+                                            type="text"
+                                            step="0.1"
+                                            value={entry.waitAndTrade.value}
+                                            onChange={e => {
+                                                if (isValidOptionInput(e.target.value)) {
+                                                    updateEntry('waitAndTrade', { ...entry.waitAndTrade, value: e.target.value });
+                                                }
+                                            }}
+                                            disabled={isReadOnly}
+                                            className="w-16 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
+                                        />
+                                        <span className="text-xs font-bold dark:text-gray-400">% from</span>
+                                    </div>
+                                    <div>
+                                        <select
+                                            value={entry.waitAndTrade.ref}
+                                            onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, ref: e.target.value })}
+                                            disabled={isReadOnly}
+                                            className="w-full rounded border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
+                                        >
+                                            <option value="PREV_CLOSE">Previous Day Close</option>
+                                            <option value="PREV_OPEN">Previous Day Open</option>
+                                            {entry.priceRef === 'CLOSE' && <option value="TODAY_OPEN">Today's Open</option>}
+                                        </select>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 {/* Exit Section */}
@@ -578,17 +630,20 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                         className="rounded border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-sm border flex-grow focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                                     >
                                         <option value="SAME_DAY">Same Day</option>
-                                        <option value="NEXT_DAY">Next Day</option>
-                                        <option value="AFTER_DAYS">After X Days</option>
+                                        <option value="AFTER_DAYS">After n days</option>
                                     </select>
 
                                     {exit.dailyExitType === 'AFTER_DAYS' && (
                                         <div className="flex items-center gap-1">
                                             <input
-                                                type="number"
-                                                min="2"
+                                                type="text"
+                                                min="1"
                                                 value={exit.dailyExitDays}
-                                                onChange={e => updateExit('exit', 'dailyExitDays', e.target.value)}
+                                                onChange={e => {
+                                                    if (isValidOptionInput(e.target.value)) {
+                                                        updateExit('exit', 'dailyExitDays', e.target.value);
+                                                    }
+                                                }}
                                                 disabled={isReadOnly}
                                                 className="w-16 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white border font-bold disabled:opacity-50"
                                             />
@@ -614,10 +669,14 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                 <div className="flex items-center gap-2">
                                     <span className="text-sm dark:text-gray-300 font-medium">Expiry Day minus</span>
                                     <input
-                                        type="number"
+                                        type="text"
                                         min="0"
                                         value={exit.daysBeforeExpiry}
-                                        onChange={e => updateExit('exit', 'daysBeforeExpiry', e.target.value)}
+                                        onChange={e => {
+                                            if (isValidOptionInput(e.target.value)) {
+                                                updateExit('exit', 'daysBeforeExpiry', e.target.value);
+                                            }
+                                        }}
                                         disabled={isReadOnly}
                                         className="w-16 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white border font-bold focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                                     />
@@ -637,219 +696,232 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                     </div>
 
                     {/* Safety Features */}
-                    <div className="space-y-5 pt-5 border-t border-gray-100 dark:border-gray-800/50">
-                        <div className="flex flex-col gap-3 mb-2">
-                            <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest pl-1">Risk Management Mode</label>
-                            <div className="flex gap-8 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-700/50">
-                                <label className="flex items-center gap-2.5 cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="riskMode"
-                                        checked={exit.riskManagementMode === 'GLOBAL'}
-                                        onChange={() => updateExit('exit', 'riskManagementMode', 'GLOBAL')}
-                                        disabled={isReadOnly}
-                                        className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                                    />
-                                    <div className="flex flex-col">
-                                        <span className="text-sm font-bold text-gray-700 dark:text-gray-200">Global (Portfolio)</span>
-                                        <span className="text-[10px] text-gray-500 font-medium tracking-tight">Triggers based on total strategy P&L</span>
+                    {isAdvanced && (
+                        <div className="space-y-5 pt-5 border-t border-gray-100 dark:border-gray-800/50">
+                            <div className="flex flex-col gap-3 mb-2">
+                                <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest pl-1">Risk Management Mode</label>
+                                <div className="flex gap-8 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-inner">
+                                    <label className={`flex items-center gap-3 cursor-pointer p-2 rounded-lg transition-all ${exit.riskManagementMode === 'GLOBAL' ? 'bg-white dark:bg-gray-700 shadow-sm ring-1 ring-amber-100 dark:ring-amber-900/30' : 'opacity-70'}`}>
+                                        <input
+                                            type="radio"
+                                            name="riskMode"
+                                            checked={exit.riskManagementMode === 'GLOBAL'}
+                                            onChange={() => updateExit('exit', 'riskManagementMode', 'GLOBAL')}
+                                            disabled={isReadOnly}
+                                            className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                        />
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-bold text-gray-700 dark:text-gray-200">Global (Portfolio)</span>
+                                            <span className="text-[10px] text-gray-500 font-medium tracking-tight">Triggers based on total strategy P&L</span>
+                                        </div>
+                                    </label>
+                                    <label className={`flex items-center gap-3 cursor-pointer p-2 rounded-lg transition-all ${exit.riskManagementMode === 'LEG_WISE' ? 'bg-white dark:bg-gray-700 shadow-sm ring-1 ring-amber-100 dark:ring-amber-900/30' : 'opacity-70'}`}>
+                                        <input
+                                            type="radio"
+                                            name="riskMode"
+                                            checked={exit.riskManagementMode === 'LEG_WISE'}
+                                            onChange={() => updateExit('exit', 'riskManagementMode', 'LEG_WISE')}
+                                            disabled={isReadOnly}
+                                            className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                        />
+                                        <div className="flex flex-col">
+                                            <span className="text-sm font-bold text-gray-700 dark:text-gray-200">Leg-wise</span>
+                                            <span className="text-[10px] text-gray-500 font-medium tracking-tight">Individual exit rules for each leg</span>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                {exit.riskManagementMode === 'LEG_WISE' && (
+                                    <div className="mt-2 p-3 bg-blue-50/30 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-100/50 dark:border-blue-900/20 flex gap-3">
+                                        <div className="mt-0.5">💡</div>
+                                        <div className="flex flex-col gap-0.5">
+                                            <p className="text-xs font-bold text-blue-700 dark:text-blue-300">Leg-wise Risk Management Active</p>
+                                            <p className="text-[11px] text-blue-600/80 dark:text-blue-400/80 font-medium">Configure individual targets for each leg in the Leg Builder section above.</p>
+                                        </div>
                                     </div>
-                                </label>
-                                <label className="flex items-center gap-2.5 cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="riskMode"
-                                        checked={exit.riskManagementMode === 'LEG_WISE'}
-                                        onChange={() => updateExit('exit', 'riskManagementMode', 'LEG_WISE')}
-                                        disabled={isReadOnly}
-                                        className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                                    />
-                                    <div className="flex flex-col">
-                                        <span className="text-sm font-bold text-gray-700 dark:text-gray-200">Leg-wise</span>
-                                        <span className="text-[10px] text-gray-500 font-medium tracking-tight">Individual exit rules for each leg</span>
-                                    </div>
-                                </label>
+                                )}
                             </div>
+
+                            {exit.riskManagementMode === 'GLOBAL' && (
+                                <div className="bg-white dark:bg-gray-900 p-4 rounded-lg border border-amber-50 dark:border-amber-900/20 shadow-sm space-y-4">
+                                    <div>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <input
+                                                type="checkbox"
+                                                checked={exit.stopLoss.enabled}
+                                                onChange={e => updateExit('sl', 'enabled', e.target.checked)}
+                                                disabled={isReadOnly}
+                                                className="h-4 w-4 text-amber-600 rounded cursor-pointer disabled:opacity-50"
+                                            />
+                                            <span className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest">Stop Loss</span>
+                                        </div>
+                                        {exit.stopLoss.enabled && (
+                                            <div className="flex gap-2 pl-6 items-center">
+                                                <input
+                                                    type="text"
+                                                    value={exit.stopLoss.value}
+                                                    onChange={e => {
+                                                        if (isValidOptionInput(e.target.value)) {
+                                                            updateExit('sl', 'value', e.target.value);
+                                                        }
+                                                    }}
+                                                    disabled={isReadOnly}
+                                                    className="w-20 rounded border-gray-300 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-amber-500 disabled:opacity-50"
+                                                />
+                                                <select
+                                                    value={exit.stopLoss.type || '%'}
+                                                    onChange={e => updateExit('sl', 'type', e.target.value)}
+                                                    disabled={isReadOnly}
+                                                    className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
+                                                >
+                                                    <option value="%">%</option>
+                                                    <option value="points">Pt</option>
+                                                    <option value="Spot %">Spot %</option>
+                                                </select>
+                                                <span className="text-xs font-bold dark:text-gray-400">on</span>
+                                                <select
+                                                    value={exit.stopLoss.ref}
+                                                    onChange={e => updateExit('sl', 'ref', e.target.value)}
+                                                    disabled={isReadOnly}
+                                                    className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
+                                                >
+                                                    <option value="OPEN">Market Open</option>
+                                                    <option value="CLOSE">Market Close</option>
+                                                    <option value="BOTH">Both</option>
+                                                </select>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <input
+                                                type="checkbox"
+                                                checked={exit.takeProfit.enabled}
+                                                onChange={e => updateExit('tp', 'enabled', e.target.checked)}
+                                                disabled={isReadOnly}
+                                                className="h-4 w-4 text-emerald-600 rounded cursor-pointer disabled:opacity-50"
+                                            />
+                                            <span className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest">Take Profit</span>
+                                        </div>
+                                        {exit.takeProfit.enabled && (
+                                            <div className="flex gap-2 pl-6 items-center">
+                                                <input
+                                                    type="text"
+                                                    value={exit.takeProfit.value}
+                                                    onChange={e => {
+                                                        if (isValidOptionInput(e.target.value)) {
+                                                            updateExit('tp', 'value', e.target.value);
+                                                        }
+                                                    }}
+                                                    disabled={isReadOnly}
+                                                    className="w-20 rounded border-gray-300 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-emerald-500 disabled:opacity-50"
+                                                />
+                                                <select
+                                                    value={exit.takeProfit.type || '%'}
+                                                    onChange={e => updateExit('tp', 'type', e.target.value)}
+                                                    disabled={isReadOnly}
+                                                    className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
+                                                >
+                                                    <option value="%">%</option>
+                                                    <option value="points">Pt</option>
+                                                    <option value="Spot %">Spot %</option>
+                                                </select>
+                                                <span className="text-xs font-bold dark:text-gray-400">on</span>
+                                                <select
+                                                    value={exit.takeProfit.ref}
+                                                    onChange={e => updateExit('tp', 'ref', e.target.value)}
+                                                    disabled={isReadOnly}
+                                                    className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
+                                                >
+                                                    <option value="OPEN">Market Open</option>
+                                                    <option value="CLOSE">Market Close</option>
+                                                    <option value="BOTH">Both</option>
+                                                </select>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <input
+                                                type="checkbox"
+                                                checked={exit.trailingStopLoss.enabled}
+                                                onChange={e => updateExit('tsl', 'enabled', e.target.checked)}
+                                                disabled={isReadOnly}
+                                                className="h-4 w-4 text-blue-600 rounded cursor-pointer disabled:opacity-50"
+                                            />
+                                            <span className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest">Trailing SL</span>
+                                        </div>
+                                        {exit.trailingStopLoss.enabled && (
+                                            <div className="flex gap-2 pl-6 items-center">
+                                                <input
+                                                    type="text"
+                                                    value={exit.trailingStopLoss.value}
+                                                    onChange={e => {
+                                                        if (isValidOptionInput(e.target.value)) {
+                                                            updateExit('tsl', 'value', e.target.value);
+                                                        }
+                                                    }}
+                                                    disabled={isReadOnly}
+                                                    className="w-20 rounded border-gray-300 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                                                />
+                                                <select
+                                                    value={exit.trailingStopLoss.type}
+                                                    onChange={e => updateExit('tsl', 'type', e.target.value)}
+                                                    disabled={isReadOnly}
+                                                    className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
+                                                >
+                                                    <option value="points">Points</option>
+                                                    <option value="%">%</option>
+                                                    <option value="Spot %">Spot %</option>
+                                                </select>
+                                                <span className="text-xs font-bold dark:text-gray-400">on</span>
+                                                <select
+                                                    value={exit.trailingStopLoss.ref || 'OPEN'}
+                                                    onChange={e => updateExit('tsl', 'ref', e.target.value)}
+                                                    disabled={isReadOnly}
+                                                    className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
+                                                >
+                                                    <option value="OPEN">Market Open</option>
+                                                    <option value="CLOSE">Market Close</option>
+                                                    <option value="BOTH">Both</option>
+                                                </select>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {(exit.stopLoss.enabled || exit.takeProfit.enabled) && (
+                                <div className="pt-4 mt-2 border-t border-amber-50 dark:border-amber-900/20">
+                                    <label className="block text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-3">Re-entry Settings</label>
+                                    <div className="flex gap-4 mb-3">
+                                        <label className="flex items-center gap-2 cursor-pointer">
+                                            <input
+                                                type="radio"
+                                                checked={!exit.allowReentry}
+                                                onChange={() => updateExit('exit', 'allowReentry', false)}
+                                                disabled={isReadOnly}
+                                                className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                            />
+                                            <span className="text-xs font-bold text-gray-700 dark:text-gray-300">Exit Only</span>
+                                        </label>
+                                        <label className="flex items-center gap-2 cursor-pointer">
+                                            <input
+                                                type="radio"
+                                                checked={exit.allowReentry}
+                                                onChange={() => updateExit('exit', 'allowReentry', true)}
+                                                disabled={isReadOnly}
+                                                className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                            />
+                                            <span className="text-xs font-bold text-gray-700 dark:text-gray-300">Allow Re-entry</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-
-                        {exit.riskManagementMode === 'GLOBAL' ? (
-                            <div className="bg-white dark:bg-gray-900 p-4 rounded-lg border border-amber-50 dark:border-amber-900/20 shadow-sm space-y-4">
-                                <div>
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <input
-                                            type="checkbox"
-                                            checked={exit.stopLoss.enabled}
-                                            onChange={e => updateExit('sl', 'enabled', e.target.checked)}
-                                            disabled={isReadOnly}
-                                            className="h-4 w-4 text-amber-600 rounded cursor-pointer disabled:opacity-50"
-                                        />
-                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest">Stop Loss</span>
-                                    </div>
-                                    {exit.stopLoss.enabled && (
-                                        <div className="flex gap-2 pl-6 items-center">
-                                            <input
-                                                type="number"
-                                                value={exit.stopLoss.value}
-                                                onChange={e => updateExit('sl', 'value', e.target.value)}
-                                                disabled={isReadOnly}
-                                                className="w-20 rounded border-gray-300 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-amber-500 disabled:opacity-50"
-                                            />
-                                            <select
-                                                value={exit.stopLoss.type || '%'}
-                                                onChange={e => updateExit('sl', 'type', e.target.value)}
-                                                disabled={isReadOnly}
-                                                className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
-                                            >
-                                                <option value="%">%</option>
-                                                <option value="points">Pt</option>
-                                                <option value="Spot %">Spot %</option>
-                                            </select>
-                                            <span className="text-xs font-bold dark:text-gray-400">on</span>
-                                            <select
-                                                value={exit.stopLoss.ref}
-                                                onChange={e => updateExit('sl', 'ref', e.target.value)}
-                                                disabled={isReadOnly}
-                                                className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
-                                            >
-                                                <option value="OPEN">Market Open</option>
-                                                <option value="CLOSE">Market Close</option>
-                                                <option value="BOTH">Both</option>
-                                            </select>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div>
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <input
-                                            type="checkbox"
-                                            checked={exit.takeProfit.enabled}
-                                            onChange={e => updateExit('tp', 'enabled', e.target.checked)}
-                                            disabled={isReadOnly}
-                                            className="h-4 w-4 text-emerald-600 rounded cursor-pointer disabled:opacity-50"
-                                        />
-                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest">Take Profit</span>
-                                    </div>
-                                    {exit.takeProfit.enabled && (
-                                        <div className="flex gap-2 pl-6 items-center">
-                                            <input
-                                                type="number"
-                                                value={exit.takeProfit.value}
-                                                onChange={e => updateExit('tp', 'value', e.target.value)}
-                                                disabled={isReadOnly}
-                                                className="w-20 rounded border-gray-300 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-emerald-500 disabled:opacity-50"
-                                            />
-                                            <select
-                                                value={exit.takeProfit.type || '%'}
-                                                onChange={e => updateExit('tp', 'type', e.target.value)}
-                                                disabled={isReadOnly}
-                                                className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
-                                            >
-                                                <option value="%">%</option>
-                                                <option value="points">Pt</option>
-                                                <option value="Spot %">Spot %</option>
-                                            </select>
-                                            <span className="text-xs font-bold dark:text-gray-400">on</span>
-                                            <select
-                                                value={exit.takeProfit.ref}
-                                                onChange={e => updateExit('tp', 'ref', e.target.value)}
-                                                disabled={isReadOnly}
-                                                className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
-                                            >
-                                                <option value="OPEN">Market Open</option>
-                                                <option value="CLOSE">Market Close</option>
-                                                <option value="BOTH">Both</option>
-                                            </select>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div>
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <input
-                                            type="checkbox"
-                                            checked={exit.trailingStopLoss.enabled}
-                                            onChange={e => updateExit('tsl', 'enabled', e.target.checked)}
-                                            disabled={isReadOnly}
-                                            className="h-4 w-4 text-blue-600 rounded cursor-pointer disabled:opacity-50"
-                                        />
-                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest">Trailing SL</span>
-                                    </div>
-                                    {exit.trailingStopLoss.enabled && (
-                                        <div className="flex gap-2 pl-6 items-center">
-                                            <input
-                                                type="number"
-                                                value={exit.trailingStopLoss.value}
-                                                onChange={e => updateExit('tsl', 'value', e.target.value)}
-                                                disabled={isReadOnly}
-                                                className="w-20 rounded border-gray-300 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-                                            />
-                                            <select
-                                                value={exit.trailingStopLoss.type}
-                                                onChange={e => updateExit('tsl', 'type', e.target.value)}
-                                                disabled={isReadOnly}
-                                                className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
-                                            >
-                                                <option value="points">Points</option>
-                                                <option value="%">%</option>
-                                                <option value="Spot %">Spot %</option>
-                                            </select>
-                                            <span className="text-xs font-bold dark:text-gray-400">on</span>
-                                            <select
-                                                value={exit.trailingStopLoss.ref || 'OPEN'}
-                                                onChange={e => updateExit('tsl', 'ref', e.target.value)}
-                                                disabled={isReadOnly}
-                                                className="rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
-                                            >
-                                                <option value="OPEN">Market Open</option>
-                                                <option value="CLOSE">Market Close</option>
-                                                <option value="BOTH">Both</option>
-                                            </select>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="bg-blue-50/30 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-100/50 dark:border-blue-900/20 flex gap-3">
-                                <div className="mt-0.5">💡</div>
-                                <div className="flex flex-col gap-0.5">
-                                    <p className="text-xs font-bold text-blue-700 dark:text-blue-300">Leg-wise Risk Management Active</p>
-                                    <p className="text-[11px] text-blue-600/80 dark:text-blue-400/80 font-medium">Configure individual targets for each leg in the Leg Builder section above.</p>
-                                </div>
-                            </div>
-                        )}
-
-                        {(exit.stopLoss.enabled || exit.takeProfit.enabled) && (
-                            <div className="pt-4 mt-2 border-t border-amber-50 dark:border-amber-900/20">
-                                <label className="block text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest mb-3">Re-entry Settings</label>
-                                <div className="flex gap-4 mb-3">
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            checked={!exit.allowReentry}
-                                            onChange={() => updateExit('exit', 'allowReentry', false)}
-                                            disabled={isReadOnly}
-                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500"
-                                        />
-                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-300">Exit Only</span>
-                                    </label>
-                                    <label className="flex items-center gap-2 cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            checked={exit.allowReentry}
-                                            onChange={() => updateExit('exit', 'allowReentry', true)}
-                                            disabled={isReadOnly}
-                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500"
-                                        />
-                                        <span className="text-xs font-bold text-gray-700 dark:text-gray-300">Exit & Re-entry</span>
-                                    </label>
-                                </div>
-                                <p className="text-[10px] text-amber-600/80 dark:text-amber-400/80 font-medium italic leading-relaxed">
-                                    Note: When Stop Loss or Take Profit is triggered, the system will ignore entry timing/DTE constraints and automatically re-enter based on your leg selection criteria.
-                                </p>
-                            </div>
-                        )}
-                    </div>
+                    )}
                 </div>
             </div>
 
@@ -955,10 +1027,14 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                             {leg.strikeSelection !== 'ATM' && (
                                                 <div className="flex items-center gap-2 bg-white dark:bg-gray-700 p-1 rounded-lg border border-gray-200 dark:border-gray-600 shadow-sm">
                                                     <input
-                                                        type="number"
+                                                        type="text"
                                                         min="0"
                                                         value={leg.strikeOffset}
-                                                        onChange={e => updateLeg(index, 'strikeOffset', e.target.value)}
+                                                        onChange={e => {
+                                                            if (isValidOptionInput(e.target.value)) {
+                                                                updateLeg(index, 'strikeOffset', e.target.value);
+                                                            }
+                                                        }}
                                                         disabled={isReadOnly}
                                                         className="w-24 bg-transparent border-0 focus:ring-0 py-1.5 px-3 dark:text-white text-sm text-center font-black disabled:opacity-50"
                                                         placeholder="1"
@@ -979,10 +1055,14 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-[10px] font-bold text-gray-400 uppercase">Min Option Price</span>
                                                     <input
-                                                        type="number"
+                                                        type="text"
                                                         min="0"
                                                         value={leg.minPremium}
-                                                        onChange={e => updateLeg(index, 'minPremium', e.target.value)}
+                                                        onChange={e => {
+                                                            if (isValidOptionInput(e.target.value)) {
+                                                                updateLeg(index, 'minPremium', e.target.value);
+                                                            }
+                                                        }}
                                                         disabled={isReadOnly}
                                                         className="w-20 rounded-lg border-gray-200 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
                                                         placeholder="0"
@@ -991,10 +1071,14 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-[10px] font-bold text-gray-400 uppercase">Max Option Price</span>
                                                     <input
-                                                        type="number"
+                                                        type="text"
                                                         min="0"
                                                         value={leg.maxPremium}
-                                                        onChange={e => updateLeg(index, 'maxPremium', e.target.value)}
+                                                        onChange={e => {
+                                                            if (isValidOptionInput(e.target.value)) {
+                                                                updateLeg(index, 'maxPremium', e.target.value);
+                                                            }
+                                                        }}
                                                         disabled={isReadOnly}
                                                         className="w-20 rounded-lg border-gray-200 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
                                                         placeholder="0"
@@ -1013,9 +1097,13 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-xs font-bold text-gray-500 uppercase">Target Option Price</span>
                                                     <input
-                                                        type="number"
+                                                        type="text"
                                                         value={leg.targetPremium}
-                                                        onChange={e => updateLeg(index, 'targetPremium', e.target.value)}
+                                                        onChange={e => {
+                                                            if (isValidOptionInput(e.target.value)) {
+                                                                updateLeg(index, 'targetPremium', e.target.value);
+                                                            }
+                                                        }}
                                                         disabled={isReadOnly}
                                                         className="w-28 rounded-lg border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-blue-500"
                                                     />
@@ -1023,9 +1111,13 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-xs font-bold text-gray-500 uppercase">Tolerance (+/-)</span>
                                                     <input
-                                                        type="number"
+                                                        type="text"
                                                         value={leg.premiumTolerance}
-                                                        onChange={e => updateLeg(index, 'premiumTolerance', e.target.value)}
+                                                        onChange={e => {
+                                                            if (isValidOptionInput(e.target.value)) {
+                                                                updateLeg(index, 'premiumTolerance', e.target.value);
+                                                            }
+                                                        }}
                                                         disabled={isReadOnly}
                                                         className="w-20 rounded-lg border-gray-300 py-2 px-3 dark:bg-gray-700 dark:text-white text-sm border font-bold focus:ring-2 focus:ring-blue-500"
                                                     />
@@ -1060,9 +1152,13 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                                 {leg.stopLoss.enabled && (
                                                     <div className="flex items-center gap-2 animate-in fade-in slide-in-from-left-2 duration-200">
                                                         <input
-                                                            type="number"
+                                                            type="text"
                                                             value={leg.stopLoss.value}
-                                                            onChange={e => updateLegRisk(index, 'sl', 'value', e.target.value)}
+                                                            onChange={e => {
+                                                                if (isValidOptionInput(e.target.value)) {
+                                                                    updateLegRisk(index, 'sl', 'value', e.target.value);
+                                                                }
+                                                            }}
                                                             disabled={isReadOnly}
                                                             className="w-20 rounded-md border-gray-300 py-1 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold focus:ring-2 focus:ring-amber-500 disabled:opacity-50"
                                                         />
@@ -1106,9 +1202,13 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                                 {leg.takeProfit.enabled && (
                                                     <div className="flex items-center gap-2 animate-in fade-in slide-in-from-left-2 duration-200">
                                                         <input
-                                                            type="number"
+                                                            type="text"
                                                             value={leg.takeProfit.value}
-                                                            onChange={e => updateLegRisk(index, 'tp', 'value', e.target.value)}
+                                                            onChange={e => {
+                                                                if (isValidOptionInput(e.target.value)) {
+                                                                    updateLegRisk(index, 'tp', 'value', e.target.value);
+                                                                }
+                                                            }}
                                                             disabled={isReadOnly}
                                                             className="w-20 rounded-md border-gray-300 py-1 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold focus:ring-2 focus:ring-emerald-500 disabled:opacity-50"
                                                         />
@@ -1152,9 +1252,13 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                                 {leg.trailingStopLoss.enabled && (
                                                     <div className="flex items-center gap-2 animate-in fade-in slide-in-from-left-2 duration-200">
                                                         <input
-                                                            type="number"
+                                                            type="text"
                                                             value={leg.trailingStopLoss.value}
-                                                            onChange={e => updateLegRisk(index, 'tsl', 'value', e.target.value)}
+                                                            onChange={e => {
+                                                                if (isValidOptionInput(e.target.value)) {
+                                                                    updateLegRisk(index, 'tsl', 'value', e.target.value);
+                                                                }
+                                                            }}
                                                             disabled={isReadOnly}
                                                             className="w-20 rounded-md border-gray-300 py-1 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                                                         />
@@ -1213,6 +1317,6 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                     </button>
                 )}
             </div>
-        </div>
+        </div >
     );
 }

@@ -49,7 +49,7 @@ def send_welcome_email(user):
 def send_password_reset_email(user, reset_token):
     """Send password reset email."""
     subject = 'Reset Your PaperTrade Password'
-    reset_link = f"http://localhost:3000/reset-password?token={reset_token}"
+    reset_link = f"{settings.FRONTEND_URL}/reset-password?token={reset_token}"
     
     message = f'''
     Hi {user.email},
@@ -172,7 +172,7 @@ def send_trial_expiry_reminder_email(user, days_left):
     
     Subscribe now to continue enjoying all features!
     
-    View our plans: http://localhost:3000/subscription
+    View our plans: {settings.FRONTEND_URL}/subscription
     
     Best regards,
     PaperTrade Team

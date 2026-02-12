@@ -7,25 +7,94 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 5.6s
- ○ Compiling /dashboard ...
- ✓ Compiled /dashboard in 4.4s (1549 modules)
- GET /dashboard 200 in 5148ms
+ ✓ Ready in 1941ms
+ ○ Compiling /option-strategies/[id]/edit ...
+ ✓ Compiled /option-strategies/[id]/edit in 1401ms (1551 modules)
+ GET /option-strategies/22/edit 200 in 1931ms
+ ✓ Compiled /_not-found in 343ms (1554 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 439ms
+ GET /_next/static/chunks/app/LayoutGroupContext.mjs.map 404 in 92ms
+ ✓ Compiled /login in 288ms (860 modules)
+ ✓ Compiled in 201ms (728 modules)
+ GET /favicon.ico 200 in 688ms
+ GET /login 200 in 678ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 24ms
+ GET /_next/static/chunks/app/LayoutGroupContext.mjs.map 404 in 22ms
+ ✓ Compiled /dashboard in 304ms (1598 modules)
+ ✓ Compiled /tables in 296ms (1604 modules)
+ ✓ Compiled /option-strategies in 333ms (1610 modules)
+ ✓ Compiled in 1584ms (1589 modules)
+ GET /option-strategies/22/edit 200 in 168ms
+ ✓ Compiled /_not-found in 388ms (1578 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 473ms
+ GET /_next/static/chunks/app/LayoutGroupContext.mjs.map 404 in 10ms
+ ✓ Compiled /favicon.ico in 180ms (876 modules)
+ GET /favicon.ico 200 in 243ms
+ ✓ Compiled in 809ms (1589 modules)
+ GET /option-strategies/22/edit 200 in 174ms
+ ✓ Compiled /_not-found in 325ms (1578 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 395ms
+ GET /_next/static/chunks/app/LayoutGroupContext.mjs.map 404 in 14ms
+ ✓ Compiled /favicon.ico in 164ms (876 modules)
+ GET /favicon.ico 200 in 219ms
+ ✓ Compiled in 1741ms (1589 modules)
+ ✓ Compiled in 1308ms (1589 modules)
+ ○ Compiling /option-strategies/create ...
+ ✓ Compiled /option-strategies/create in 8s (1581 modules)
+ GET /option-strategies/create 200 in 11888ms
  ○ Compiling /favicon.ico ...
- ✓ Compiled /favicon.ico in 700ms (858 modules)
- GET /favicon.ico 200 in 834ms
- ○ Compiling /option-strategies ...
- ✓ Compiled /option-strategies in 724ms (1555 modules)
+ ✓ Compiled /favicon.ico in 1142ms (879 modules)
+ GET /favicon.ico 200 in 2510ms
+ GET /login 200 in 2330ms
+ GET /favicon.ico 200 in 119ms
+ GET /login 200 in 577ms
+ ✓ Compiled in 3.9s (1591 modules)
+ ✓ Compiled in 2.4s (1591 modules)
  ○ Compiling / ...
- ✓ Compiled / in 965ms (1561 modules)
- GET / 200 in 1509ms
- ○ Compiling /login ...
- ✓ Compiled /login in 1206ms (1567 modules)
- GET /login 200 in 1580ms
- GET /option-strategies 200 in 106ms
- ○ Compiling /login ...
- ✓ Compiled /login in 667ms (862 modules)
- ✓ Compiled (866 modules)
- GET /favicon.ico 200 in 1241ms
- ○ Compiling /tables ...
- ✓ Compiled /tables in 970ms (1601 modules)
+ ✓ Compiled / in 2.7s (1583 modules)
+ GET / 200 in 3552ms
+ ✓ Compiled in 2.1s (1593 modules)
+ ✓ Compiled /dashboard in 361ms (847 modules)
+ ✓ Compiled in 1657ms (1593 modules)
+ GET / 200 in 312ms
+ ⨯ ./components/OptionStrategyForm.tsx
+Error: 
+  [31mx[0m Expected ',', got 'className'
+     ,-[[36;1;4m/Users/chat360team/Documents/papertrade/papertrade-frontend-admin/components/OptionStrategyForm.tsx[0m:926:1]
+ [2m926[0m |                 </div>
+ [2m927[0m |             </div>
+ [2m928[0m | 
+ [2m929[0m |             <div className="border-t border-gray-200 dark:border-gray-700 pt-8">
+     : [31;1m                 ^^^^^^^^^[0m
+ [2m930[0m |                 <div className="flex justify-between items-center mb-6">
+ [2m931[0m |                     <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+ [2m932[0m |                         <span className="w-1.5 h-6 bg-green-600 rounded-full"></span>
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/OptionStrategyForm.tsx
+./app/option-strategies/[id]/edit/page.tsx
+ ✓ Compiled in 948ms (1593 modules)
+ GET /option-strategies/22/edit 200 in 335ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 792ms (875 modules)
+ GET /favicon.ico 200 in 1148ms
+ GET /login 200 in 859ms
+ ✓ Compiled /tables in 446ms (879 modules)
+ GET /tables 200 in 156ms
+ GET / 200 in 174ms
+ GET /option-strategies 200 in 93ms
+ GET /favicon.ico 200 in 40ms
+ ✓ Compiled /option-strategies/create in 496ms (847 modules)
+ ✓ Compiled / in 251ms (847 modules)
+ GET / 200 in 339ms
+ GET /option-strategies/23/edit 200 in 72ms
+ ✓ Compiled /favicon.ico in 171ms (879 modules)
+ GET /favicon.ico 200 in 291ms
+ ✓ Compiled /login in 146ms (883 modules)
+ GET /login 200 in 237ms
+ GET /login 200 in 26ms
+[?25h

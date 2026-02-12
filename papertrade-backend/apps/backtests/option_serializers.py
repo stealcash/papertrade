@@ -29,14 +29,15 @@ class OptionBacktestRunSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'run_id', 'user', 'user_email',
             'strategy', 'strategy_id', 'strategy_name',
-            'underlying_symbol', 'start_date', 'end_date',
+            'snapshot_name', 'snapshot_description', 'snapshot_config',
+            'underlying_symbol', 'start_date', 'end_date', 'lot_size',
             'total_trades', 'win_count', 'loss_count', 'win_rate',
             'total_pnl', 'results_summary_json',
             'status', 'time_taken', 'error_message',
             'created_at', 'updated_at', 'trades'
         ]
         read_only_fields = [
-            'id', 'run_id', 'user', 'total_trades', 'win_count',
+            'id', 'run_id', 'user', 'lot_size', 'total_trades', 'win_count',
             'loss_count', 'win_rate', 'total_pnl', 'results_summary_json',
             'status', 'time_taken', 'error_message', 'created_at', 'updated_at'
         ]
@@ -50,8 +51,8 @@ class OptionBacktestRunListSerializer(serializers.ModelSerializer):
     class Meta:
         model = OptionBacktestRun
         fields = [
-            'id', 'run_id', 'strategy_name', 'underlying_symbol',
-            'start_date', 'end_date', 'total_trades', 'win_rate',
+            'id', 'run_id', 'strategy_name', 'snapshot_name', 'underlying_symbol',
+            'start_date', 'end_date', 'lot_size', 'total_trades', 'win_rate',
             'total_pnl', 'status', 'created_at'
         ]
 

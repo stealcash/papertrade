@@ -42,6 +42,26 @@ export default function OptionBacktestDetailPage() {
     if (loading) return <div className="flex justify-center items-center h-60 text-gray-600">Loading...</div>;
     if (!run) return <div className="flex justify-center items-center h-60 text-gray-500">Backtest Not Found</div>;
 
+    // Calculate Points (Fallback to summary if available)
+    let totalBuyPoints = Number(run.results_summary_json?.total_buy_points || 0);
+    let totalSellPoints = Number(run.results_summary_json?.total_sell_points || 0);
+
+    if (!run.results_summary_json?.total_buy_points && !run.results_summary_json?.total_sell_points) {
+        trades.forEach(trade => {
+            trade.legs_json.forEach((leg: any) => {
+                const entry = Number(leg.entry || 0);
+                const exit = Number(leg.exit || 0);
+                if (leg.action === 'BUY') {
+                    totalBuyPoints += entry;
+                    totalSellPoints += exit;
+                } else {
+                    totalSellPoints += entry;
+                    totalBuyPoints += exit;
+                }
+            });
+        });
+    }
+
     return (
         <div className="max-w-7xl mx-auto space-y-10 pb-20">
             {/* Header */}
@@ -55,12 +75,20 @@ export default function OptionBacktestDetailPage() {
                     </button>
 
                     <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                        {run.strategy_name}
+                        {run.snapshot_name || run.strategy_name}
                     </h1>
+                    {run.snapshot_name && run.snapshot_name !== run.strategy_name && (
+                        <p className="text-sm text-gray-500 italic mb-2">
+                            Original strategy: {run.strategy_name}
+                        </p>
+                    )}
 
                     <div className="flex items-center text-sm gap-4 text-gray-500">
                         <span className="flex items-center gap-1 bg-purple-100 px-2 py-1 rounded text-purple-700 font-mono">
                             {run.underlying_symbol}
+                        </span>
+                        <span className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded font-mono">
+                            Lot: {run.lot_size}
                         </span>
                         <span className="flex items-center gap-1 bg-gray-100 px-2 py-1 rounded">
                             <Calendar size={14} /> {run.start_date} → {run.end_date}
@@ -77,7 +105,7 @@ export default function OptionBacktestDetailPage() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6">
                 <Card label="Total Trades" value={run.total_trades} />
                 <Card label="Winning Trades" value={run.win_count} color="text-green-600" />
                 <Card label="Losing Trades" value={run.loss_count} color="text-red-500" />
@@ -85,6 +113,16 @@ export default function OptionBacktestDetailPage() {
                     label="Total PnL"
                     value={`₹${Math.round(Number(run.total_pnl)).toLocaleString()}`}
                     color={Number(run.total_pnl) >= 0 ? "text-green-600" : "text-red-600"}
+                />
+                <Card
+                    label="Buy Points"
+                    value={totalBuyPoints.toFixed(1)}
+                    color={totalBuyPoints >= 0 ? "text-blue-600" : "text-red-600"}
+                />
+                <Card
+                    label="Sell Points"
+                    value={totalSellPoints.toFixed(1)}
+                    color={totalSellPoints >= 0 ? "text-orange-600" : "text-red-600"}
                 />
             </div>
 
@@ -97,6 +135,7 @@ export default function OptionBacktestDetailPage() {
                             <tr>
                                 <th className="px-6 py-3 text-left">Entry - Exit</th>
                                 <th className="px-6 py-3 text-left">Expiry</th>
+                                <th className="px-6 py-3 text-left">Slot</th>
                                 <th className="px-6 py-3 text-left">Legs</th>
                                 <th className="px-6 py-3 text-right">Total PnL</th>
                             </tr>
@@ -118,6 +157,9 @@ export default function OptionBacktestDetailPage() {
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className="text-xs bg-gray-100 px-2 py-1 rounded">{trade.expiry_date}</span>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <span className="text-xs font-mono">{run.lot_size}</span>
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="space-y-1">

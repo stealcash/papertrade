@@ -182,8 +182,12 @@ func (p *UpstoxProvider) getInstrumentKey(symbol string) (string, bool) {
 }
 
 func (p *UpstoxProvider) fetchCandles(key, interval, fromDate, toDate string) ([][]interface{}, error) {
+	baseURL := os.Getenv("UPSTOX_API_BASE_URL")
+	if baseURL == "" {
+		baseURL = "https://api.upstox.com/v2"
+	}
 	encodedKey := strings.ReplaceAll(key, "|", "%7C")
-	url := fmt.Sprintf("https://api.upstox.com/v2/historical-candle/%s/%s/%s/%s", encodedKey, interval, toDate, fromDate)
+	url := fmt.Sprintf("%s/historical-candle/%s/%s/%s/%s", baseURL, encodedKey, interval, toDate, fromDate)
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
