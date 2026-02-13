@@ -29,48 +29,311 @@ Requirement already satisfied: six>=1.5 in ./venv/lib/python3.13/site-packages (
 [notice] To update, run: pip install --upgrade pip
 INFO:     Will watch for changes in these directories: ['/Users/chat360team/Documents/papertrade/papertrade-backend-fast']
 INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
-INFO:     Started reloader process [58101] using StatReload
-INFO:     Started server process [58220]
+INFO:     Started reloader process [49905] using StatReload
+INFO:     Started server process [50030]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:59939 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62029 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62161 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63218 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64289 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+Option Backtest Engine Failed: (sqlalchemy.dialects.postgresql.asyncpg.InterfaceError) <class 'asyncpg.exceptions._base.InterfaceError'>: connection is closed
+[SQL: SELECT option_backtest_runs.id, option_backtest_runs.run_id, option_backtest_runs.user_id, option_backtest_runs.strategy_id, option_backtest_runs.underlying_symbol, option_backtest_runs.start_date, option_backtest_runs.end_date, option_backtest_runs.lot_size, option_backtest_runs.snapshot_name, option_backtest_runs.snapshot_description, option_backtest_runs.snapshot_config, option_backtest_runs.status, option_backtest_runs.total_trades, option_backtest_runs.win_count, option_backtest_runs.loss_count, option_backtest_runs.win_rate, option_backtest_runs.total_pnl, option_backtest_runs.results_summary_json, option_backtest_runs.time_taken, option_backtest_runs.error_message, option_backtest_runs.created_at, option_backtest_runs.updated_at 
+FROM option_backtest_runs 
+WHERE option_backtest_runs.id = $1::INTEGER]
+[parameters: (41,)]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 843, in _start_transaction
+    self._transaction = self._connection.transaction(
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        isolation=self.isolation_level,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        readonly=self.readonly,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+        deferrable=self.deferrable,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/asyncpg/connection.py", line 302, in transaction
+    self._check_open()
+    ~~~~~~~~~~~~~~~~^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/asyncpg/connection.py", line 1605, in _check_open
+    raise exceptions.InterfaceError('connection is closed')
+asyncpg.exceptions._base.InterfaceError: connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 520, in _prepare_and_execute
+    await adapt_connection._start_transaction()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 850, in _start_transaction
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.InterfaceError: <class 'asyncpg.exceptions._base.InterfaceError'>: connection is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/app/engine/option_backtest.py", line 33, in execute
+    result = await self.db.execute(select(OptionBacktestRun).filter(OptionBacktestRun.id == self.run_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/ext/asyncio/session.py", line 449, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2249, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        conn,
+        ^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+        statement, params or {}, execution_options=execution_options
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 585, in execute
+    self._adapt_connection.await_(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self._prepare_and_execute(operation, parameters)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 520, in _prepare_and_execute
+    await adapt_connection._start_transaction()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 850, in _start_transaction
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 797, in _handle_exception
+    raise translated_error from error
+sqlalchemy.exc.InterfaceError: (sqlalchemy.dialects.postgresql.asyncpg.InterfaceError) <class 'asyncpg.exceptions._base.InterfaceError'>: connection is closed
+[SQL: SELECT option_backtest_runs.id, option_backtest_runs.run_id, option_backtest_runs.user_id, option_backtest_runs.strategy_id, option_backtest_runs.underlying_symbol, option_backtest_runs.start_date, option_backtest_runs.end_date, option_backtest_runs.lot_size, option_backtest_runs.snapshot_name, option_backtest_runs.snapshot_description, option_backtest_runs.snapshot_config, option_backtest_runs.status, option_backtest_runs.total_trades, option_backtest_runs.win_count, option_backtest_runs.loss_count, option_backtest_runs.win_rate, option_backtest_runs.total_pnl, option_backtest_runs.results_summary_json, option_backtest_runs.time_taken, option_backtest_runs.error_message, option_backtest_runs.created_at, option_backtest_runs.updated_at 
+FROM option_backtest_runs 
+WHERE option_backtest_runs.id = $1::INTEGER]
+[parameters: (41,)]
+(Background on this error at: https://sqlalche.me/e/20/rvf5)
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1138, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/fastapi/routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/fastapi/routing.py", line 108, in app
+    await response(scope, receive, send)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/responses.py", line 167, in __call__
+    await self.background()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/background.py", line 36, in __call__
+    await task()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/background.py", line 21, in __call__
+    await self.func(*self.args, **self.kwargs)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/app/engine/option_backtest.py", line 129, in execute
+    result = await self.db.execute(select(OptionBacktestRun).filter(OptionBacktestRun.id == self.run_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/ext/asyncio/session.py", line 449, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2351, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/orm/session.py", line 2249, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        conn,
+        ^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+        statement, params or {}, execution_options=execution_options
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 1813, in _execute_context
+    conn = self._revalidate_connection()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 673, in _revalidate_connection
+    self._invalid_transaction()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/engine/base.py", line 663, in _invalid_transaction
+    raise exc.PendingRollbackError(
+    ...<4 lines>...
+    )
+sqlalchemy.exc.PendingRollbackError: Can't reconnect until invalid transaction is rolled back.  Please rollback() fully before proceeding (Background on this error at: https://sqlalche.me/e/20/8s2b)
+INFO:     127.0.0.1:65281 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65416 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49303 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49328 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49341 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
 WARNING:  StatReload detected changes in 'app/engine/option_backtest.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
-INFO:     Finished server process [58220]
-INFO:     Started server process [64632]
+INFO:     Finished server process [50030]
+INFO:     Started server process [65766]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-WARNING:  StatReload detected changes in 'app/engine/option_backtest.py'. Reloading...
+INFO:     127.0.0.1:49750 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
-INFO:     Finished server process [64632]
-INFO:     Started server process [68655]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     127.0.0.1:51176 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
-WARNING:  StatReload detected changes in 'app/models.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [68655]
-INFO:     Started server process [85525]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-WARNING:  StatReload detected changes in 'app/models.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [85525]
-INFO:     Started server process [85550]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     127.0.0.1:61506 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61568 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [85550]
-INFO:     Stopping reloader process [58101]
+INFO:     Finished server process [65766]
+INFO:     Stopping reloader process [49905]

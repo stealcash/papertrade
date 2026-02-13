@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Plus, Trash2, Calendar, Settings, Eye, Loader2, Info } from 'lucide-react';
+import { Plus, Trash2, Calendar, Settings, Eye, Loader2, Info, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
 import NewOptionBacktestModal from '@/components/backtest/NewOptionBacktestModal';
 import { optionBacktestAPI, subscriptionsAPI } from '@/lib/api';
@@ -14,6 +14,7 @@ export default function OptionBacktestPage() {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [subscription, setSubscription] = useState<any>(null);
+    const [resyncingId, setResyncingId] = useState<number | null>(null);
     const { confirm } = useConfirm();
 
     useEffect(() => {
@@ -73,6 +74,28 @@ export default function OptionBacktestPage() {
             fetchRuns(pagination.page);
         } catch (e) {
             toast.error("Failed to delete backtest");
+        }
+    };
+
+    const handleResync = async (id: number) => {
+        const isConfirmed = await confirm({
+            title: "Resync Backtest",
+            message: "This will delete all existing trades and re-run the backtest with fresh option data. This counts as a new run towards your plan limit.",
+            confirmText: "Resync",
+            type: 'warning'
+        });
+        if (!isConfirmed) return;
+
+        setResyncingId(id);
+        try {
+            await optionBacktestAPI.resync(id);
+            toast.success("Backtest resynced successfully");
+            await fetchData(pagination.page);
+        } catch (e: any) {
+            const msg = e.response?.data?.message?.subscription || e.response?.data?.message || "Failed to resync backtest";
+            toast.error(typeof msg === 'string' ? msg : "Failed to resync backtest");
+        } finally {
+            setResyncingId(null);
         }
     };
 
@@ -235,6 +258,15 @@ export default function OptionBacktestPage() {
                                     </span>
                                 </div>
                                 <div className="col-span-2 flex justify-end gap-2">
+                                    <button
+                                        onClick={() => handleResync(run.id)}
+                                        disabled={resyncingId !== null}
+                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-600 hover:bg-amber-100 rounded-lg text-xs font-medium transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                        title="Re-run with fresh option data"
+                                    >
+                                        <RefreshCw size={14} className={resyncingId === run.id ? 'animate-spin' : ''} />
+                                        {resyncingId === run.id ? 'Syncing...' : 'Resync'}
+                                    </button>
                                     <Link
                                         href={`/option-backtest/${run.id}`}
                                         className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-xs font-medium transition"

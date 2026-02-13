@@ -96,22 +96,4 @@ class StockPriceDaily(models.Model):
         return f"{self.stock.symbol} - {self.date}"
 
 
-class Stock5MinByDay(models.Model):
-    """5-minute candle data stored per day as JSON."""
-    
-    stock = models.ForeignKey(Stock, on_delete=models.CASCADE, related_name='intraday_candles')
-    date = models.DateField(db_index=True)
-    
-    candles_json = models.JSONField(help_text='Map of time -> OHLCV data')
-    extra = models.JSONField(default=dict, blank=True)
-    
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        db_table = 'stock_5min_by_day'
-        unique_together = ['stock', 'date']
-        ordering = ['-date']
-    
-    def __str__(self):
-        return f"{self.stock.symbol} - {self.date} (5min)"
+

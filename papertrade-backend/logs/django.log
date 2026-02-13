@@ -8470,3 +8470,833 @@ def chain(*args, **kwargs):
 {"time": "2026-02-12 02:22:37", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
 {"time": "2026-02-12 02:22:37", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
 {"time": "2026-02-12 02:22:37", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-B32423CCA964 delegated to FastAPI successfully"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-12 21:14:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 21:15:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-02-12&timewise=true HTTP/1.1" 500 155"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-10&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-11&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-12&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2025-12-13: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2025-12-14: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-15&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-16&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-17&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-18&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-19&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2025-12-20: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2025-12-21: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-22&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-23&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-24&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2025-12-25: Market Closed (Christmas)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-26&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2025-12-27: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2025-12-28: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-29&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-30&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2025-12-31&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-01&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-02&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-01-03: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-01-04: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-05&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-06&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-07&timewise=true HTTP/1.1" 500 137"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-08&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-09&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-01-10: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-01-11: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-12&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-13&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-14&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-15&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-16&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-01-17: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-01-18: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-19&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-20&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-21&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-22&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-23&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-01-24: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-01-25: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-01-26: Market Closed (Republic Day)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-27&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-28&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-29&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-01-30&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-01-31: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-02-01: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-02-02&timewise=true HTTP/1.1" 500 137"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-02-03&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-02-04&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-02-05&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-02-06&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-02-07: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping NIFTY for 2026-02-08: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-02-09&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-02-10&timewise=true HTTP/1.1" 500 137"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-02-11&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=NIFTY&date=2026-02-12&timewise=true HTTP/1.1" 500 138"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=RBLBANK&date=2026-02-12&timewise=true HTTP/1.1" 500 154"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TCS&date=2026-02-12&timewise=true HTTP/1.1" 500 150"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TECHM&date=2026-02-12&timewise=true HTTP/1.1" 500 152"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-10&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-11&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-12&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2025-12-13: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2025-12-14: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-15&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-16&timewise=true HTTP/1.1" 500 139"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-17&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-18&timewise=true HTTP/1.1" 500 139"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-19&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2025-12-20: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2025-12-21: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-22&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-23&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-24&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2025-12-25: Market Closed (Christmas)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-26&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2025-12-27: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2025-12-28: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-29&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-30&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2025-12-31&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-01&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-02&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-01-03: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-01-04: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-05&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-06&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-07&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-08&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-09&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-01-10: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-01-11: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-12&timewise=true HTTP/1.1" 500 139"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-13&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-14&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-15&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-16&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-01-17: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-01-18: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-19&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-20&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-21&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-22&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-23&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-01-24: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-01-25: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-01-26: Market Closed (Republic Day)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-27&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-28&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-29&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-01-30&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-01-31: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-02-01: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-02-02&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-02-03&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-02-04&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-02-05&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-02-06&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-02-07: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Skipping TESTIDX for 2026-02-08: Market Closed (Weekend)"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-02-09&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-02-10&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-02-11&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TESTIDX&date=2026-02-12&timewise=true HTTP/1.1" 500 140"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/stock/data?symbol=TORNTPOWER&date=2026-02-12&timewise=true HTTP/1.1" 500 157"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Stock sync completed: 7/7 successful"}
+{"time": "2026-02-12 21:15:32", "level": "INFO", "name": "celery.app.trace", "message": "Task apps.sync.tasks.sync_stocks_task[8ace9dc0-ef9e-4530-92eb-8c884e819ffe] succeeded in 3.0459478339998896s: None"}
+{"time": "2026-02-12 21:15:43", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:43", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/sector/data?symbol=BANKNIFTY&date=2026-02-12&timewise=false HTTP/1.1" 500 157"}
+{"time": "2026-02-12 21:15:43", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8080"}
+{"time": "2026-02-12 21:15:43", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8080 "GET /api/v1/sector/data?symbol=NIFTY50&date=2026-02-12&timewise=false HTTP/1.1" 500 155"}
+{"time": "2026-02-12 21:15:43", "level": "INFO", "name": "apps.sync.tasks", "message": "Stock sync completed: 2/2 successful"}
+{"time": "2026-02-12 21:15:43", "level": "INFO", "name": "celery.app.trace", "message": "Task apps.sync.tasks.sync_stocks_task[102a1df2-1cc6-4be5-9fd7-e99847fc5a60] succeeded in 2.1832316249997348s: None"}
+{"time": "2026-02-12 21:15:51", "level": "INFO", "name": "apps.sync.tasks", "message": "Starting Option Sync. Start Config: 2025-11-26, Lookback: 32 days"}
+{"time": "2026-02-12 21:15:51", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTPS connection (1): www.nseindia.com:443"}
+{"time": "2026-02-12 21:15:51", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET / HTTP/1.1" 200 26585"}
+{"time": "2026-02-12 21:15:52", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/meta/foCPV/expireDts?instrument=OPTIDX&symbol=BANKNIFTY&year=2026 HTTP/1.1" 200 96"}
+{"time": "2026-02-12 21:15:53", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=24-FEB-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:15:54", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 24-FEB-2026 CE: Fetched 1941 records"}
+{"time": "2026-02-12 21:15:54", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=24-FEB-2026&optionType=PE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:15:56", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 24-FEB-2026 PE: Fetched 1941 records"}
+{"time": "2026-02-12 21:15:56", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-02-2026&to=26-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=26-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:15:56", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 26-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:15:57", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-02-2026&to=26-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=26-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:15:57", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 26-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:15:58", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=30-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:15:58", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 30-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:15:58", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=30-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:15:58", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 30-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:15:59", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-02-2026&to=31-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=31-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:15:59", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 31-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:00", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-02-2026&to=31-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=31-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:00", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 31-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:01", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=28-APR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:01", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 28-APR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:01", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=28-APR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:01", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 28-APR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:02", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-05-2026&to=30-06-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=30-JUN-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:02", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 30-JUN-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:03", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-05-2026&to=30-06-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=30-JUN-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:03", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 30-JUN-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:04", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=28-08-2026&to=29-09-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=29-SEP-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:04", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 29-SEP-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:04", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=28-08-2026&to=29-09-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=29-SEP-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:04", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 29-SEP-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:05", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-11-2026&to=29-12-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=29-DEC-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:05", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 29-DEC-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:06", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-11-2026&to=29-12-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=29-DEC-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:06", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 29-DEC-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:06", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/meta/foCPV/expireDts?instrument=OPTIDX&symbol=NIFTY&year=2026 HTTP/1.1" 200 132"}
+{"time": "2026-02-12 21:16:09", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=09-01-2026&to=10-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=10-FEB-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:09", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 10-FEB-2026 CE: Fetched 1997 records"}
+{"time": "2026-02-12 21:16:11", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=09-01-2026&to=10-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=10-FEB-2026&optionType=PE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:12", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 10-FEB-2026 PE: Fetched 1997 records"}
+{"time": "2026-02-12 21:16:14", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=16-01-2026&to=17-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=17-FEB-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:15", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 17-FEB-2026 CE: Fetched 1708 records"}
+{"time": "2026-02-12 21:16:18", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=16-01-2026&to=17-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=17-FEB-2026&optionType=PE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:18", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 17-FEB-2026 PE: Fetched 1708 records"}
+{"time": "2026-02-12 21:16:20", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=24-FEB-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:21", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 24-FEB-2026 CE: Fetched 1489 records"}
+{"time": "2026-02-12 21:16:23", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=24-FEB-2026&optionType=PE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:24", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 24-FEB-2026 PE: Fetched 1489 records"}
+{"time": "2026-02-12 21:16:26", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-01-2026&to=02-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=02-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:27", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 02-MAR-2026 CE: Fetched 1042 records"}
+{"time": "2026-02-12 21:16:29", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-01-2026&to=02-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=02-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:30", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 02-MAR-2026 PE: Fetched 1042 records"}
+{"time": "2026-02-12 21:16:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=06-02-2026&to=10-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=10-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 10-MAR-2026 CE: Fetched 377 records"}
+{"time": "2026-02-12 21:16:33", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=06-02-2026&to=10-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=10-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11264"}
+{"time": "2026-02-12 21:16:34", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 10-MAR-2026 PE: Fetched 377 records"}
+{"time": "2026-02-12 21:16:34", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=13-02-2026&to=17-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=17-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:34", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 17-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:35", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=13-02-2026&to=17-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=17-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:35", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 17-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:36", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-02-2026&to=26-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=26-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:36", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 26-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:36", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-02-2026&to=26-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=26-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:36", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 26-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:37", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=30-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:37", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 30-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:37", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=30-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:37", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 30-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:38", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-02-2026&to=31-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=31-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:38", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 31-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:39", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-02-2026&to=31-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=31-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:39", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 31-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:39", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=28-APR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:39", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 28-APR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:40", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=28-APR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:40", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 28-APR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:41", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=25-05-2026&to=25-06-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=25-JUN-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:41", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 25-JUN-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:41", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=25-05-2026&to=25-06-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=25-JUN-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:41", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 25-JUN-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:42", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-05-2026&to=30-06-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=30-JUN-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:42", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 30-JUN-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:42", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-05-2026&to=30-06-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=30-JUN-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:42", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 30-JUN-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:43", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=28-08-2026&to=29-09-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=29-SEP-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:43", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 29-SEP-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:44", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=28-08-2026&to=29-09-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=29-SEP-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:44", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 29-SEP-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:44", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-11-2026&to=29-12-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=29-DEC-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:44", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 29-DEC-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:45", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-11-2026&to=29-12-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=29-DEC-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:45", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 29-DEC-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:46", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=30-11-2026&to=31-12-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=31-DEC-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:46", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 31-DEC-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:46", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=30-11-2026&to=31-12-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=31-DEC-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:46", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 31-DEC-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:47", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/meta/foCPV/expireDts?instrument=OPTSTK&symbol=TECHM&year=2026 HTTP/1.1" 200 73"}
+{"time": "2026-02-12 21:16:49", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=24-FEB-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:50", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 24-FEB-2026 CE: Fetched 522 records"}
+{"time": "2026-02-12 21:16:52", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=24-FEB-2026&optionType=PE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-12 21:16:52", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 24-FEB-2026 PE: Fetched 506 records"}
+{"time": "2026-02-12 21:16:53", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=30-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:53", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 30-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:54", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=30-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:54", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 30-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:54", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=28-APR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:54", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 28-APR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:55", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=28-APR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-12 21:16:55", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 28-APR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-12 21:16:55", "level": "INFO", "name": "celery.app.trace", "message": "Task apps.sync.tasks.sync_options_task[5c261d79-a809-4600-8aa0-62f8fea68606] succeeded in 66.57321587500019s: None"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-12 22:18:16", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 22:49:05", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-12 22:49:05", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-12 22:49:05", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-43628EA66C7D delegated to FastAPI successfully"}
+{"time": "2026-02-12 22:51:20", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-12 22:51:20", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-12 22:51:20", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-43628EA66C7D delegated to FastAPI successfully"}
+{"time": "2026-02-12 22:59:45", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-12 22:59:45", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-12 22:59:45", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-91943FDD02B3 delegated to FastAPI successfully"}
+{"time": "2026-02-12 23:23:35", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-12 23:23:35", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-12 23:23:35", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-91943FDD02B3 delegated to FastAPI successfully"}
+{"time": "2026-02-12 23:24:21", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-12 23:24:21", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-12 23:24:21", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-91943FDD02B3 delegated to FastAPI successfully"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-12 23:27:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-12 23:28:26", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-12 23:28:26", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-12 23:28:26", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-91943FDD02B3 delegated to FastAPI successfully"}
+{"time": "2026-02-12 23:28:58", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-12 23:28:58", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-12 23:28:58", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-91943FDD02B3 delegated to FastAPI successfully"}
+{"time": "2026-02-12 23:32:50", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-12 23:32:50", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-12 23:32:50", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-37DC896CA64E delegated to FastAPI successfully"}
+{"time": "2026-02-13 00:14:16", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-13 00:14:16", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-13 00:14:16", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-5ED77C733A88 delegated to FastAPI successfully"}
+{"time": "2026-02-13 00:17:44", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-13 00:17:44", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-13 00:17:44", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-5ED77C733A88 delegated to FastAPI successfully"}
+{"time": "2026-02-13 00:19:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-13 00:19:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-13 00:19:31", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-CC93C90E5632 delegated to FastAPI successfully"}
+{"time": "2026-02-13 00:27:23", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-13 00:27:23", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-13 00:27:23", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-428FDBD80570 delegated to FastAPI successfully"}
+{"time": "2026-02-13 00:27:57", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-13 00:27:57", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-13 00:27:57", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-2B390CF680A5 delegated to FastAPI successfully"}
+{"time": "2026-02-13 00:28:09", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-13 00:28:09", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-13 00:28:09", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-A8F8270CA670 delegated to FastAPI successfully"}
+{"time": "2026-02-13 00:49:11", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-13 00:49:11", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-13 00:49:11", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-A8F8270CA670 delegated to FastAPI successfully"}

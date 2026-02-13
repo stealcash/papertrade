@@ -67,6 +67,7 @@ interface StrategyLeg {
     premiumTolerance: string;
     minPremium: string;
     maxPremium: string;
+    priceBoundaryEnabled: boolean;
     lotMultiplier: number;
     stopLoss: StopLoss;
     takeProfit: TakeProfit;
@@ -188,6 +189,7 @@ export default function EditOptionStrategyPage() {
                 premiumTolerance: (l.premiumTolerance || '10').toString(),
                 minPremium: (l.minPremium || '0').toString(),
                 maxPremium: (l.maxPremium || '0').toString(),
+                priceBoundaryEnabled: (parseFloat(l.minPremium || '0') > 0 || parseFloat(l.maxPremium || '0') > 0),
                 lotMultiplier: l.lotMultiplier || 1,
                 stopLoss: l.stopLoss || { enabled: false, type: '%', value: '5', ref: 'OPEN' },
                 takeProfit: l.takeProfit || { enabled: false, type: '%', value: '10', ref: 'OPEN' },
@@ -218,6 +220,7 @@ export default function EditOptionStrategyPage() {
             premiumTolerance: '10',
             minPremium: '0',
             maxPremium: '0',
+            priceBoundaryEnabled: false,
             lotMultiplier: 1,
             stopLoss: { enabled: false, type: '%', value: '5', ref: 'OPEN' },
             takeProfit: { enabled: false, type: '%', value: '10', ref: 'OPEN' },
@@ -945,9 +948,9 @@ export default function EditOptionStrategyPage() {
                                                     onChange={e => updateLeg(index, 'strikeSelection', e.target.value)}
                                                     className="flex-grow min-w-[200px] rounded-lg border-gray-300 py-2.5 px-4 dark:bg-gray-700 dark:text-white text-sm border focus:ring-2 focus:ring-blue-500 transition-all font-medium"
                                                 >
-                                                    <option value="ATM">ATM (At The Money)</option>
-                                                    <option value="ATM_PLUS">ATM + Offset (Out of Money for SELL)</option>
-                                                    <option value="ATM_MINUS">ATM - Offset (In The Money for SELL)</option>
+                                                    <option value="ATM">ATM</option>
+                                                    <option value="ATM_PLUS">ATM + Offset</option>
+                                                    <option value="ATM_MINUS">ATM - Offset</option>
                                                 </select>
 
                                                 {leg.strikeSelection !== 'ATM' && (
@@ -975,39 +978,60 @@ export default function EditOptionStrategyPage() {
                                                     </div>
                                                 )}
 
-                                                <div className="flex items-center gap-4 border-l border-gray-200 dark:border-gray-700 pl-4">
+                                                <div className="flex flex-col gap-4 border-l border-gray-200 dark:border-gray-700 pl-4">
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-[10px] font-bold text-gray-400 uppercase">Min Option Price</span>
                                                         <input
-                                                            type="text"
-                                                            min="0"
-                                                            value={leg.minPremium}
+                                                            type="checkbox"
+                                                            checked={leg.priceBoundaryEnabled}
                                                             onChange={e => {
-                                                                if (isValidOptionInput(e.target.value)) {
-                                                                    updateLeg(index, 'minPremium', e.target.value);
+                                                                const enabled = e.target.checked;
+                                                                updateLeg(index, 'priceBoundaryEnabled', enabled);
+                                                                if (!enabled) {
+                                                                    updateLeg(index, 'minPremium', '0');
+                                                                    updateLeg(index, 'maxPremium', '0');
                                                                 }
                                                             }}
-                                                            className="w-20 rounded-lg border-gray-200 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-xs border font-bold"
-                                                            placeholder="0"
+                                                            className="h-4 w-4 text-blue-600 rounded cursor-pointer"
                                                         />
+                                                        <span className="text-[10px] font-bold text-gray-400 uppercase">Price Boundary</span>
                                                     </div>
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="text-[10px] font-bold text-gray-400 uppercase">Max Option Price</span>
-                                                        <input
-                                                            type="text"
-                                                            min="0"
-                                                            value={leg.maxPremium}
-                                                            onChange={e => {
-                                                                if (isValidOptionInput(e.target.value)) {
-                                                                    updateLeg(index, 'maxPremium', e.target.value);
-                                                                }
-                                                            }}
-                                                            className="w-20 rounded-lg border-gray-200 py-1.5 px-3 dark:bg-gray-700 dark:text-white text-xs border font-bold"
-                                                            placeholder="0"
-                                                        />
-                                                    </div>
+
+                                                    {leg.priceBoundaryEnabled && (
+                                                        <div className="flex items-center gap-4 animate-in fade-in slide-in-from-left-2 duration-200">
+                                                            <div className="flex items-center gap-2">
+                                                                <span className="text-[10px] font-bold text-gray-400 uppercase">Min</span>
+                                                                <input
+                                                                    type="text"
+                                                                    min="0"
+                                                                    value={leg.minPremium}
+                                                                    onChange={e => {
+                                                                        if (isValidOptionInput(e.target.value)) {
+                                                                            updateLeg(index, 'minPremium', e.target.value);
+                                                                        }
+                                                                    }}
+                                                                    className="w-16 rounded-lg border-gray-200 py-1 px-2 dark:bg-gray-700 dark:text-white text-[10px] border font-bold"
+                                                                    placeholder="0"
+                                                                />
+                                                            </div>
+                                                            <div className="flex items-center gap-2">
+                                                                <span className="text-[10px] font-bold text-gray-400 uppercase">Max</span>
+                                                                <input
+                                                                    type="text"
+                                                                    min="0"
+                                                                    value={leg.maxPremium}
+                                                                    onChange={e => {
+                                                                        if (isValidOptionInput(e.target.value)) {
+                                                                            updateLeg(index, 'maxPremium', e.target.value);
+                                                                        }
+                                                                    }}
+                                                                    className="w-16 rounded-lg border-gray-200 py-1 px-2 dark:bg-gray-700 dark:text-white text-[10px] border font-bold"
+                                                                    placeholder="0"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                                {(parseFloat(leg.minPremium) > 0 || parseFloat(leg.maxPremium) > 0) && (
+                                                {leg.priceBoundaryEnabled && (parseFloat(leg.minPremium) > 0 || parseFloat(leg.maxPremium) > 0) && (
                                                     <p className="w-full text-[10px] text-orange-600 font-medium italic mt-2">
                                                         Note: Trade will be skipped if option price is {parseFloat(leg.minPremium) > 0 ? `below ${leg.minPremium}` : ''} {parseFloat(leg.minPremium) > 0 && parseFloat(leg.maxPremium) > 0 ? 'or' : ''} {parseFloat(leg.maxPremium) > 0 ? `above ${leg.maxPremium}` : ''}.
                                                     </p>

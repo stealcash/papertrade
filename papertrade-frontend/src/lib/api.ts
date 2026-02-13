@@ -59,7 +59,6 @@ export const stocksAPI = {
     getAll: (params?: any) => apiClient.get('/stocks/', { params }),
     getById: (id: number) => apiClient.get(`/stocks/${id}/`),
     getPrices: (params: any) => apiClient.get('/stocks/prices/daily/', { params }),
-    get5MinData: (params: any) => apiClient.get('/stocks/prices/5min/', { params }),
     getCategories: () => apiClient.get('/stocks/categories/'),
 };
 
@@ -150,6 +149,7 @@ export const optionBacktestAPI = {
     getById: (id: number | string) => apiClient.get(`/backtest/option-backtest/${id}/`),
     delete: (id: number | string) => apiClient.delete(`/backtest/option-backtest/${id}/`),
     deleteBulk: (ids: number[]) => apiClient.post('/backtest/option-backtest/bulk_delete/', { ids }),
+    resync: (id: number | string) => apiClient.post(`/backtest/option-backtest/${id}/resync/`),
 };
 
 export const subscriptionsAPI = {

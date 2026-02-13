@@ -3,10 +3,10 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from apps.users.utils import get_success_response, get_error_response
-from .models import Stock, StockCategory, StockPriceDaily, Stock5MinByDay
+from .models import Stock, StockCategory, StockPriceDaily
 from .serializers import (
     StockSerializer, StockCategorySerializer, 
-    StockPriceDailySerializer, Stock5MinByDaySerializer
+    StockPriceDailySerializer
 )
 
 
@@ -349,26 +349,4 @@ class StockPriceDailyViewSet(viewsets.ReadOnlyModelViewSet):
         return get_success_response(serializer.data)
 
 
-class Stock5MinByDayViewSet(viewsets.ReadOnlyModelViewSet):
-    """ViewSet for Stock5MinByDay model (read-only)."""
-    
-    queryset = Stock5MinByDay.objects.all()
-    serializer_class = Stock5MinByDaySerializer
-    permission_classes = [IsAuthenticated]
-    
-    def list(self, request):
-        """List 5-minute candle data."""
-        queryset = self.get_queryset()
-        
-        # Filter by stock
-        stock_id = request.query_params.get('stock_id')
-        if stock_id:
-            queryset = queryset.filter(stock_id=stock_id)
-        
-        # Filter by date
-        date = request.query_params.get('date')
-        if date:
-            queryset = queryset.filter(date=date)
-        
-        serializer = self.get_serializer(queryset, many=True)
-        return get_success_response(serializer.data)
+

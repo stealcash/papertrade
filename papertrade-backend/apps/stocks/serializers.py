@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Stock, StockCategory, StockPriceDaily, Stock5MinByDay
+from .models import Stock, StockCategory, StockPriceDaily
 from apps.sectors.serializers import SectorSerializer
 
 
@@ -106,13 +106,4 @@ class StockPriceDailySerializer(serializers.ModelSerializer):
         return None
 
 
-class Stock5MinByDaySerializer(serializers.ModelSerializer):
-    """Serializer for Stock5MinByDay model."""
-    
-    stock_symbol = serializers.CharField(source='stock.symbol', read_only=True)
-    
-    class Meta:
-        model = Stock5MinByDay
-        fields = ['id', 'stock', 'stock_symbol', 'date', 'candles_json', 
-                 'extra', 'created_at', 'updated_at']
-        read_only_fields = ['id', 'created_at', 'updated_at']
+

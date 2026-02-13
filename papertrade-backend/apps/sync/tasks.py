@@ -11,7 +11,7 @@ import time
 from datetime import datetime, timedelta, date
 from .models import SyncLog
 from .utils import ExternalAPILogger
-from apps.stocks.models import Stock, StockPriceDaily, Stock5MinByDay
+from apps.stocks.models import Stock, StockPriceDaily
 from apps.sectors.models import Sector
 from apps.common.market_schedule import MarketSchedule
 
@@ -211,26 +211,8 @@ def sync_stocks_task(is_auto=False, user_id=None, from_date=None, to_date=None, 
                             except Exception as save_err:
                                 raise save_err
                             
-                            # Save 5-min candles if available
-                            if data.get('timewise'):
-                                candles_json = {
-                                    candle['time']: {
-                                        'open': candle['open_price'],
-                                        'high': candle['high_price'],
-                                        'low': candle['low_price'],
-                                        'close': candle['close_price'],
-                                        'volume': candle['volume'],
-                                    }
-                                    for candle in data['timewise']
-                                }
-                                
-                                Stock5MinByDay.objects.update_or_create(
-                                    stock=stock,
-                                    date=current_date,
-                                    defaults={
-                                        'candles_json': candles_json,
-                                    }
-                                )
+                        # Save 5-min candles if available
+                        # (Removed per user request as Stock5MinByDay is deleted)
                         
                         else:
                             # No data for this date - might be market closed

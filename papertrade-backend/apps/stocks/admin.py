@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Stock, StockCategory, StockPriceDaily, Stock5MinByDay
+from .models import Stock, StockCategory, StockPriceDaily
 
 
 @admin.register(StockCategory)
@@ -24,9 +24,4 @@ class StockPriceDailyAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
 
 
-@admin.register(Stock5MinByDay)
-class Stock5MinByDayAdmin(admin.ModelAdmin):
-    list_display = ['stock', 'date', 'created_at']
-    list_filter = ['date']
-    search_fields = ['stock__symbol']
-    date_hierarchy = 'date'
+

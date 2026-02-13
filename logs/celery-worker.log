@@ -1,68 +1,68 @@
-DEBUG 2026-02-12 00:15:22,869 functional 
+DEBUG 2026-02-12 23:27:25,320 functional 
 def accumulate(self, *args, **kwargs):
     return 1
 
-DEBUG 2026-02-12 00:15:22,869 functional 
+DEBUG 2026-02-12 23:27:25,321 functional 
 def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
     return 1
 
-DEBUG 2026-02-12 00:15:22,870 functional 
+DEBUG 2026-02-12 23:27:25,322 functional 
 def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
     return 1
 
-DEBUG 2026-02-12 00:15:22,870 functional 
-def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
-    return 1
-
-DEBUG 2026-02-12 00:15:22,870 functional 
+DEBUG 2026-02-12 23:27:25,322 functional 
 def xmap(task, it):
     return 1
 
-DEBUG 2026-02-12 00:15:22,871 functional 
+DEBUG 2026-02-12 23:27:25,323 functional 
 def auto_sync_daily():
     return 1
 
-DEBUG 2026-02-12 00:15:22,871 functional 
-def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+DEBUG 2026-02-12 23:27:25,323 functional 
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
     return 1
 
-DEBUG 2026-02-12 00:15:22,871 functional 
+DEBUG 2026-02-12 23:27:25,324 functional 
 def debug_task(self):
     return 1
 
-DEBUG 2026-02-12 00:15:22,871 functional 
+DEBUG 2026-02-12 23:27:25,324 functional 
 def xstarmap(task, it):
     return 1
 
-DEBUG 2026-02-12 00:15:22,871 functional 
+DEBUG 2026-02-12 23:27:25,325 functional 
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+
+DEBUG 2026-02-12 23:27:25,325 functional 
 def chunks(task, it, n):
     return 1
 
-DEBUG 2026-02-12 00:15:22,871 functional 
-def delete_old_notifications():
-    return 1
-
-DEBUG 2026-02-12 00:15:22,872 functional 
-def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
-    return 1
-
-DEBUG 2026-02-12 00:15:22,872 functional 
+DEBUG 2026-02-12 23:27:25,325 functional 
 def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
     return 1
 
-DEBUG 2026-02-12 00:15:22,872 functional 
-def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+DEBUG 2026-02-12 23:27:25,326 functional 
+def delete_old_notifications():
     return 1
 
-DEBUG 2026-02-12 00:15:22,872 functional 
+DEBUG 2026-02-12 23:27:25,326 functional 
 def backend_cleanup():
     return 1
 
-DEBUG 2026-02-12 00:15:22,872 functional 
+DEBUG 2026-02-12 23:27:25,327 functional 
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+
+DEBUG 2026-02-12 23:27:25,327 functional 
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+
+DEBUG 2026-02-12 23:27:25,327 functional 
 def chain(*args, **kwargs):
     return 1
 
-[2026-02-12 00:15:22,989: WARNING/MainProcess] 
+[2026-02-12 23:27:25,603: WARNING/MainProcess] 
 Setting ssl_cert_reqs=CERT_NONE when connecting to redis means that celery will not validate the identity of the redis broker when connecting. This leaves you vulnerable to man in the middle attacks.
 
 SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
@@ -71,10 +71,10 @@ SETTINGS-DEBUG: Loaded .env successfully
  
  -------------- celery@Chat360s-MacBook-Air.local v5.3.4 (emerald-rush)
 --- ***** ----- 
--- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2026-02-12 00:15:22
+-- ******* ---- macOS-13.2.1-arm64-arm-64bit-Mach-O 2026-02-12 23:27:25
 - *** --- * --- 
 - ** ---------- [config]
-- ** ---------- .> app:         papertrade:0x106f082f0
+- ** ---------- .> app:         papertrade:0x10526c2f0
 - ** ---------- .> transport:   rediss://default:**@pumped-turkey-23712.upstash.io:6379//
 - ** ---------- .> results:     rediss://default:**@pumped-turkey-23712.upstash.io:6379/
 - *** --- * --- .> concurrency: 8 (prefork)
@@ -93,28 +93,101 @@ SETTINGS-DEBUG: Loaded .env successfully
   . apps.sync.tasks.sync_stocks_task
   . config.celery.debug_task
 
-[2026-02-12 00:15:23,606: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+[2026-02-12 23:27:27,958: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
 whether broker connection retries are made during startup in Celery 6.0 and above.
 If you wish to retain the existing behavior for retrying connections on startup,
 you should set broker_connection_retry_on_startup to True.
   warnings.warn(
 
-[2026-02-12 00:15:26,393: INFO/MainProcess] Connected to rediss://default:**@pumped-turkey-23712.upstash.io:6379//
-[2026-02-12 00:15:26,395: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+[2026-02-12 23:27:30,755: INFO/MainProcess] Connected to rediss://default:**@pumped-turkey-23712.upstash.io:6379//
+[2026-02-12 23:27:30,763: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py:507: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
 whether broker connection retries are made during startup in Celery 6.0 and above.
 If you wish to retain the existing behavior for retrying connections on startup,
 you should set broker_connection_retry_on_startup to True.
   warnings.warn(
 
-[2026-02-12 00:15:27,616: INFO/MainProcess] mingle: searching for neighbors
-[2026-02-12 00:15:33,080: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/
-worker: Warm shutdown (MainProcess)
-arning: Received multiple replies from node name: celery@Chat360s-MacBook-Air.local.
-Please make sure you give each node a unique nodename using
-the celery worker `-n` option.
-  warnings.warn(DuplicateNodenameWarning(
-
-[2026-02-12 00:15:33,081: INFO/MainProcess] mingle: all alone
-[2026-02-12 00:15:40,688: INFO/MainProcess] celery@Chat360s-MacBook-Air.local ready.
-
-worker: Warm shutdown (MainProcess)
+[2026-02-12 23:27:31,972: INFO/MainProcess] mingle: searching for neighbors
+[2026-02-12 23:27:36,979: WARNING/MainProcess] /Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/[2026-02-13 01:03:05,648: CRITICAL/MainProcess] Unrecoverable error: ResponseError('max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details')
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/worker.py", line 202, in s[2026-02-13 01:03:08,987: CRITICAL/MainProcess] Unrecoverable error: ResponseError('max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details')
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/worker.py", line 202, in start
+    self.blueprint.start(self)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bootsteps.py", line 365, in start
+    return self.obj.start()
+           ~~~~~~~~~~~~~~^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py", line 742, in start
+    c.loop(*c.loop_args())
+    ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+    ~~~~^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/asynchronous/hub.py", line 377, in create_loop
+    cb(*cbargs)
+    ~~^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 1395, in on_readable
+    self.cycle.on_readable(fileno)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 579, in on_readable
+    chan.handlers[type]()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 982, in _brpop_read
+    dest__item = self.client.parse_response(self.client.connection,
+                                            'BRPOP',
+                                            **options)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/client.py", line 553, in parse_response
+    response = connection.read_response()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 524, in read_response
+    raise response
+redis.exceptions.ResponseError: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          [2026-02-13 01:03:05,649: CRITICAL/MainProcess] Unrecoverable error: ResponseError('max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details')
+Traceback (most recent call last):
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/worker.py", line 202, in start
+    self.blueprint.start(self)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bootsteps.py", line 365, in start
+    return self.obj.start()
+           ~~~~~~~~~~~~~~^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/consumer/consumer.py", line 742, in start
+    c.loop(*c.loop_args())
+    ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+    ~~~~^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/asynchronous/hub.py", line 377, in create_loop
+    cb(*cbargs)
+    ~~^^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 1395, in on_readable
+    self.cycle.on_readable(fileno)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 579, in on_readable
+    chan.handlers[type]()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/kombu/transport/redis.py", line 982, in _brpop_read
+    dest__item = self.client.parse_response(self.client.connection,
+                                            'BRPOP',
+                                            **options)
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/client.py", line 553, in parse_response
+    response = connection.read_response()
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend/venv/lib/python3.13/site-packages/redis/connection.py", line 524, in read_response
+    raise response
+redis.exceptions.ResponseError: max requests limit exceeded. Limit: 500000, Usage: 500000. See https://upstash.com/docs/redis/troubleshooting/max_requests_limit for details

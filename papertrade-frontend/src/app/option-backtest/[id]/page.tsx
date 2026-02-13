@@ -159,7 +159,17 @@ export default function OptionBacktestDetailPage() {
                                             <span className="text-xs bg-gray-100 px-2 py-1 rounded">{trade.expiry_date}</span>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <span className="text-xs font-mono">{run.lot_size}</span>
+                                            <div className="space-y-1">
+                                                {trade.legs_json.map((leg: any, legIdx: number) => (
+                                                    <div key={legIdx} className="text-xs font-mono">
+                                                        {run.lot_size}{leg.lot_multiplier > 1 && (
+                                                            <span className="ml-1 text-[10px] text-purple-600 font-bold bg-purple-50 px-1 rounded border border-purple-100">
+                                                                x{leg.lot_multiplier}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="space-y-1">

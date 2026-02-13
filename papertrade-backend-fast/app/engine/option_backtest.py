@@ -82,7 +82,14 @@ class OptionBacktestEngine:
             for i, spot in enumerate(spot_prices):
                 curr_date = spot.date
                 spot_price = float(spot.close_price)
+                should_reenter = False
                 
+                # Check Entry
+                next_date = spot_prices[i+1].date if i+1 < len(spot_prices) else None
+                new_pos = await self._check_entry(option_symbol, curr_date, spot, expiries, next_date, is_reentry=should_reenter)
+                if new_pos:
+                    active_positions.append(new_pos)
+
                 # Check Exits
                 remaining = []
                 should_reenter = False
@@ -95,13 +102,6 @@ class OptionBacktestEngine:
                     else:
                         remaining.append(pos)
                 active_positions = remaining
-
-                # Check Entry
-                if not active_positions:
-                    next_date = spot_prices[i+1].date if i+1 < len(spot_prices) else None
-                    new_pos = await self._check_entry(option_symbol, curr_date, spot, expiries, next_date, is_reentry=should_reenter)
-                    if new_pos:
-                        active_positions.append(new_pos)
                 
                 self.last_close = float(spot.close_price)
                 self.last_open = float(spot.open_price)
@@ -183,6 +183,7 @@ class OptionBacktestEngine:
             'expiry_date': target_exp,
             'underlying_symbol': symbol,
             'entry_spot_price': float(spot.open_price if entry_conf.get('priceRef') == 'OPEN' else spot.close_price),
+            'entry_price_ref': entry_conf.get('priceRef', 'CLOSE'),
             'legs': [],
             'status': 'OPEN'
         }
@@ -314,7 +315,7 @@ class OptionBacktestEngine:
             if self.exit_config.get('dailyExitType') == 'SAME_DAY' and days_in >= 0:
                 should_exit_now = True
                 exit_reason_str = 'DAILY_EXIT'
-            elif self.exit_config.get('dailyExitType') == 'FOLLOWING_DAYS' and days_in >= int(self.exit_config.get('dailyExitDays', 0)):
+            elif self.exit_config.get('dailyExitType') == 'AFTER_DAYS' and days_in >= int(self.exit_config.get('dailyExitDays', 0)):
                 should_exit_now = True
                 exit_reason_str = 'DAILY_EXIT'
 
@@ -343,13 +344,18 @@ class OptionBacktestEngine:
                 exit_reason_str = 'PORTFOLIO_TP_HIT'
 
         if should_exit_now:
+            exit_time_ref = self.exit_config.get('exitTimeRef', 'CLOSE')
             for leg in active:
                 opt = self.option_data_cache.get(curr_date, {}).get(pos['expiry_date'], {}).get(leg['type'], {}).get(leg['strike'])
-                px = float(opt.close_price) if opt else 0
+                # If expiry or targeted exit, use appropriate price ref
+                px = float(opt.open_price if exit_time_ref == 'OPEN' and opt and opt.open_price else (opt.close_price if opt else 0))
                 self._close_leg(leg, px, curr_date, lot_size, exit_reason_str)
             return True
 
         # Individual Leg SL/TP/TSL
+        # Time Travel Protection: If entered at CLOSE today, don't check SL/TP/TSL until tomorrow
+        if pos['entry_date'] == curr_date and pos.get('entry_price_ref') == 'CLOSE':
+            return False
         entry_spot = pos['entry_spot_price']
         for leg in active:
             opt = self.option_data_cache.get(curr_date, {}).get(pos['expiry_date'], {}).get(leg['type'], {}).get(leg['strike'])
@@ -408,7 +414,8 @@ class OptionBacktestEngine:
             legs_json=[{
                 'type': l['type'], 'action': l['action'], 'strike': l['strike'],
                 'entry': l['entry_price'], 'exit': l['exit_price'], 'pnl': l.get('pnl', 0),
-                'reason': l.get('exit_reason')
+                'reason': l.get('exit_reason'),
+                'lot_multiplier': l.get('lot_multiplier', 1)
             } for l in pos['legs']],
             total_pnl=Decimal(total_pnl)
         ))

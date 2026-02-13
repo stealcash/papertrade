@@ -14,7 +14,6 @@ interface StocksState {
     loading: boolean;
     error: string | null; // Added for error handling
     categories: string[]; // Added for stock categories
-    stock5MinData: any; // Added for 5-minute data, type can be more specific
 }
 
 const initialState: StocksState = {
@@ -23,7 +22,6 @@ const initialState: StocksState = {
     loading: false,
     error: null,
     categories: [],
-    stock5MinData: null,
 };
 
 // Async Actions
@@ -63,17 +61,7 @@ export const fetchStockCategories = createAsyncThunk(
     }
 );
 
-export const fetchStock5Min = createAsyncThunk(
-    'stocks/fetch5Min',
-    async (params: any, { rejectWithValue }) => {
-        try {
-            const response = await stocksAPI.get5MinData(params);
-            return response.data.data;
-        } catch (error: any) {
-            return rejectWithValue(error.response?.data?.message || 'Failed to fetch 5min data');
-        }
-    }
-);
+
 
 const stocksSlice = createSlice({
     name: 'stocks',
@@ -124,19 +112,6 @@ const stocksSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload as string;
             })
-            // Fetch Stock 5 Min Data
-            .addCase(fetchStock5Min.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(fetchStock5Min.fulfilled, (state, action) => {
-                state.loading = false;
-                state.stock5MinData = action.payload;
-            })
-            .addCase(fetchStock5Min.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload as string;
-            });
     },
 });
 

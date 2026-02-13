@@ -7,133 +7,72 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2.1s
+ ✓ Ready in 6.1s
  ○ Compiling /option-backtest ...
- ✓ Compiled /option-backtest in 1306ms (1555 modules)
- GET /option-backtest 200 in 1517ms
- ✓ Compiled /_not-found in 220ms (1558 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 316ms
- ✓ Compiled /favicon.ico in 194ms (864 modules)
- GET /favicon.ico 200 in 244ms
- GET /option-backtest 200 in 134ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 28ms
- GET /favicon.ico 200 in 17ms
- ✓ Compiled /option-backtest/[id] in 426ms (1600 modules)
- ✓ Compiled in 2.1s (1580 modules)
- GET /option-backtest/34 200 in 186ms
- ○ Compiling /favicon.ico ...
- ✓ Compiled /favicon.ico in 965ms (1614 modules)
- GET /favicon.ico 200 in 1016ms
- ✓ Compiled in 759ms (1596 modules)
- GET /option-backtest/34 200 in 239ms
- ✓ Compiled /_not-found in 354ms (847 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 498ms
- ✓ Compiled /favicon.ico in 249ms (879 modules)
- GET /favicon.ico 200 in 609ms
- GET /option-backtest/34 200 in 90ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 34ms
- GET /favicon.ico 200 in 155ms
- ✓ Compiled in 991ms (1630 modules)
- ⚠ Fast Refresh had to perform a full reload due to a runtime error.
- GET /option-backtest/34 200 in 180ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 61ms
- GET /favicon.ico 200 in 67ms
- GET /option-backtest/34 200 in 72ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 92ms
- GET /favicon.ico 200 in 32ms
- ✓ Compiled in 815ms (1596 modules)
- GET /option-backtest/34 200 in 199ms
- ✓ Compiled /favicon.ico in 258ms (877 modules)
- GET /favicon.ico 200 in 350ms
- ✓ Compiled in 912ms (1596 modules)
- GET /option-backtest 200 in 157ms
- ✓ Compiled /favicon.ico in 175ms (877 modules)
- GET /favicon.ico 200 in 243ms
- ○ Compiling /strategies ...
- ✓ Compiled /strategies in 517ms (1624 modules)
- ○ Compiling /backtest ...
- ✓ Compiled /backtest in 602ms (1640 modules)
- ○ Compiling /option-strategies ...
- ✓ Compiled /option-strategies in 540ms (1614 modules)
- GET /option-strategies 200 in 107ms
- ✓ Compiled /favicon.ico in 143ms (896 modules)
- GET /favicon.ico 200 in 214ms
- ✓ Compiled /dashboard in 338ms (1654 modules)
- GET /dashboard 200 in 74ms
- GET /favicon.ico 200 in 12ms
- ○ Compiling /option-strategies/create ...
- ✓ Compiled /option-strategies/create in 520ms (1657 modules)
- ✓ Compiled in 967ms (1627 modules)
- ✓ Compiled in 713ms (1627 modules)
- ✓ Compiled in 397ms (770 modules)
- ✓ Compiled in 282ms (770 modules)
- ✓ Compiled in 406ms (770 modules)
- ✓ Compiled in 437ms (770 modules)
- ✓ Compiled in 1574ms (1627 modules)
- ✓ Compiled in 1010ms (770 modules)
- GET /option-strategies/create 200 in 260ms
- GET /login 200 in 566ms
- GET /option-strategies/create 200 in 128ms
- ○ Compiling /signup ...
- ✓ Compiled /signup in 2.8s (1639 modules)
- GET /signup 200 in 628ms
- GET /option-strategies/create 200 in 251ms
- GET /option-strategies 200 in 548ms
- GET /option-strategies/create 200 in 726ms
- GET /option-strategies/create 200 in 751ms
- ○ Compiling /option-strategies/edit/[id] ...
- ✓ Compiled /option-strategies/edit/[id] in 21.6s (1624 modules)
- GET /option-strategies/edit/22 200 in 25361ms
- ✓ Compiled in 8.4s (1629 modules)
- ✓ Compiled in 5.7s (1629 modules)
- ✓ Compiled in 4.1s (1629 modules)
- ✓ Compiled in 4.1s (1629 modules)
-[Error: ENOSPC: no space left on device, write] {
-  errno: -28,
-  code: 'ENOSPC',
-  syscall: 'write'
-}
- ⨯ unhandledRejection: [Error: ENOSPC: no space left on device, write] {
-  errno: -28,
-  code: 'ENOSPC',
-  syscall: 'write'
-}
- ⨯ unhandledRejection: [Error: ENOSPC: no space left on device, write] {
-  errno: -28,
-  code: 'ENOSPC',
-  syscall: 'write'
-}
-<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOSPC: no space left on device, write
-<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOSPC: no space left on device, write
- ✓ Compiled in 3.7s (1629 modules)
- ○ Compiling / ...
- ✓ Compiled / in 1983ms (1625 modules)
- GET / 200 in 2506ms
- ○ Compiling /option-backtest ...
- ✓ Compiled /option-backtest in 590ms (863 modules)
+ ✓ Compiled /option-backtest in 5.2s (1557 modules)
+ GET /option-backtest 200 in 6192ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /favicon.ico in 4s (1592 modules)
+ GET /favicon.ico 200 in 2897ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 4646ms
+ GET /option-backtest 200 in 370ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 154ms
+ GET /favicon.ico 200 in 55ms
  ○ Compiling /option-backtest/[id] ...
- ✓ Compiled /option-backtest/[id] in 952ms (869 modules)
- ○ Compiling /option-strategies/create ...
- ✓ Compiled /option-strategies/create in 707ms (859 modules)
- GET /option-strategies/create 200 in 1162ms
- ✓ Compiled in 3.4s (1636 modules)
- ✓ Compiled in 2s (1636 modules)
- GET /option-backtest 200 in 229ms
- GET /option-backtest 200 in 290ms
- ○ Compiling /favicon.ico ...
- ✓ Compiled /favicon.ico in 2.2s (885 modules)
- GET /favicon.ico 200 in 2503ms
- ○ Compiling /option-strategies ...
- ✓ Compiled /option-strategies in 6.7s (860 modules)
- GET /option-strategies/create 200 in 714ms
- GET / 200 in 123ms
- GET /option-backtest 200 in 78ms
- ○ Compiling /favicon.ico ...
- ✓ Compiled /favicon.ico in 582ms (885 modules)
- GET /favicon.ico 200 in 753ms
- GET /dashboard 200 in 95ms
- GET /favicon.ico 200 in 8ms
- GET /option-backtest 200 in 66ms
- GET /option-backtest 200 in 101ms
+ ✓ Compiled /option-backtest/[id] in 1406ms (1602 modules)
+ GET /option-backtest 200 in 438ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 79ms
+ GET /favicon.ico 200 in 92ms
+ GET /option-backtest 200 in 54ms
  GET /favicon.ico 200 in 13ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 1733ms (1608 modules)
+ GET /dashboard 200 in 357ms
+ GET /favicon.ico 200 in 109ms
+ ✓ Compiled /_not-found in 413ms (876 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 619ms
+ ○ Compiling /option-strategies ...
+ ✓ Compiled /option-strategies in 1395ms (1588 modules)
+ GET /option-strategies 200 in 384ms
+ ✓ Compiled /_not-found in 386ms (851 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 634ms
+ ✓ Compiled /favicon.ico in 331ms (883 modules)
+ GET /favicon.ico 200 in 463ms
+ GET /dashboard 200 in 208ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 71ms
+ GET /favicon.ico 200 in 39ms
+ GET /option-backtest 200 in 142ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 116ms
+ GET /favicon.ico 200 in 26ms
+ GET /option-backtest 200 in 117ms
+ GET /favicon.ico 200 in 29ms
+ GET /option-backtest/40 200 in 103ms
+ GET /option-backtest 200 in 68ms
+ GET /favicon.ico 200 in 19ms
+ GET /option-backtest/42 200 in 63ms
+ GET /dashboard 200 in 34ms
+ GET /favicon.ico 200 in 14ms
+ GET /dashboard 200 in 59ms
+ GET /favicon.ico 200 in 33ms
+ GET /option-backtest/41 200 in 84ms
+ GET /option-backtest/40 200 in 92ms
+ GET /option-backtest/43 200 in 85ms
+ GET /option-backtest/44 200 in 51ms
+ GET /dashboard 200 in 34ms
+ GET /favicon.ico 200 in 23ms
+ GET /dashboard 200 in 39ms
+ GET /favicon.ico 200 in 15ms
+ GET /option-backtest/45 200 in 86ms
+ GET /favicon.ico 200 in 16ms
+ ✓ Compiled in 4s (1602 modules)
+ GET /option-backtest/45 200 in 458ms
+ GET /option-backtest/45 200 in 161ms
+ GET /option-backtest/45 200 in 129ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 983ms (881 modules)
+ GET /favicon.ico 200 in 1184ms
+ ✓ Compiled in 1292ms (1602 modules)
+ GET /option-backtest/45 200 in 221ms
+ ✓ Compiled /favicon.ico in 255ms (881 modules)
+ GET /favicon.ico 200 in 361ms
 [?25h

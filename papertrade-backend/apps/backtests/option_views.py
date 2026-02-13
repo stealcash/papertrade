@@ -108,6 +108,69 @@ class OptionBacktestRunViewSet(viewsets.ModelViewSet):
         except OptionBacktestRun.DoesNotExist:
             return get_error_response('NOT_FOUND', 'Option backtest not found', status_code=404)
 
+    @action(detail=True, methods=['post'])
+    def resync(self, request, pk=None):
+        """Re-run an existing backtest with the same parameters but fresh option data."""
+        from .option_engine_v2 import OptionBacktestEngineV2
+        from apps.subscriptions.services import SubscriptionService
+        
+        # Subscription Check (counts as a new run)
+        allowed, msg = SubscriptionService.check_limit(request.user, 'OPTION_BACKTEST_RUN')
+        if not allowed:
+            return get_error_response('SUBSCRIPTION_LIMIT_REACHED', {'subscription': msg}, status_code=403)
+        
+        try:
+            backtest = self.get_queryset().get(pk=pk)
+        except OptionBacktestRun.DoesNotExist:
+            return get_error_response('NOT_FOUND', 'Option backtest not found', status_code=404)
+        
+        # 1. Delete all existing trades for this run
+        backtest.trades.all().delete()
+        
+        # 2. Reset result fields
+        backtest.total_trades = 0
+        backtest.win_count = 0
+        backtest.loss_count = 0
+        backtest.win_rate = None
+        backtest.total_pnl = 0
+        backtest.results_summary_json = {}
+        backtest.status = 'pending'
+        backtest.error_message = ''
+        backtest.time_taken = None
+        
+        # 3. Re-snapshot the strategy (it may have been edited)
+        try:
+            strategy = backtest.strategy
+            backtest.snapshot_name = strategy.name
+            backtest.snapshot_description = strategy.description
+            backtest.snapshot_config = strategy.configuration
+        except Exception:
+            pass  # Strategy might have been deleted; keep existing snapshot
+        
+        backtest.save()
+        
+        # 4. Increment Usage
+        SubscriptionService.increment_usage(request.user, 'OPTION_BACKTEST_RUN')
+        
+        # 5. Re-execute
+        try:
+            engine = OptionBacktestEngineV2(backtest)
+            engine.execute()
+            
+            backtest.refresh_from_db()
+            return get_success_response({
+                'run_id': backtest.run_id,
+                'backtest_id': backtest.id,
+                'status': backtest.status,
+                'message': 'Option backtest resynced successfully'
+            })
+        except Exception as e:
+            backtest.status = 'failed'
+            backtest.error_message = str(e)
+            backtest.save()
+            return get_error_response('EXECUTION_FAILED',
+                                     f'Option backtest resync failed: {str(e)}', status_code=500)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
