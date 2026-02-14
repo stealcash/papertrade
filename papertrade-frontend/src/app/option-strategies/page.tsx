@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { optionStrategiesAPI, subscriptionsAPI } from '@/lib/api';
-import { Plus, Trash2, Edit2, Layers, ArrowLeft, Loader2, Info } from 'lucide-react';
+import { Plus, Trash2, Edit2, Layers, ArrowLeft, Loader2, Info, Eye } from 'lucide-react';
 import { useConfirm } from '@/context/ConfirmContext';
 import { toast } from 'react-hot-toast';
 import UpgradeModal from '@/components/common/UpgradeModal';
@@ -15,6 +15,7 @@ export default function OptionStrategiesPage() {
     const [subscription, setSubscription] = useState<any>(null);
     const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
     const [upgradeMessage, setUpgradeMessage] = useState('');
+    const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
     const { confirm } = useConfirm();
 
@@ -51,6 +52,7 @@ export default function OptionStrategiesPage() {
 
             setUserStrategies(allStrategies.filter((s: any) => !s.is_system));
             setSystemStrategies(allStrategies.filter((s: any) => s.is_system));
+            setSelectedIds([]); // Clear selection
         } catch (e) {
             console.error(e);
             toast.error("Failed to load strategies");
@@ -73,6 +75,40 @@ export default function OptionStrategiesPage() {
             fetchStrategies();
         } catch (e) {
             toast.error("Failed to delete strategy");
+        }
+    };
+
+    const handleBulkDelete = async () => {
+        if (selectedIds.length === 0) return;
+        const isConfirmed = await confirm({
+            title: `Delete ${selectedIds.length} Strategies`,
+            message: `Are you sure you want to delete ${selectedIds.length} selected strategies? This action cannot be undone.`,
+            confirmText: "Delete All",
+            type: 'danger'
+        });
+
+        if (!isConfirmed) return;
+
+        try {
+            await optionStrategiesAPI.deleteBulk(selectedIds);
+            toast.success("Strategies deleted successfully");
+            fetchStrategies();
+        } catch (e) {
+            toast.error("Failed to delete strategies");
+        }
+    };
+
+    const toggleSelect = (id: number) => {
+        setSelectedIds(prev =>
+            prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+        );
+    };
+
+    const toggleSelectAll = () => {
+        if (selectedIds.length === userStrategies.length) {
+            setSelectedIds([]);
+        } else {
+            setSelectedIds(userStrategies.map(s => s.id));
         }
     };
 
@@ -103,6 +139,14 @@ export default function OptionStrategiesPage() {
                     </div>
 
                     <div className="flex items-center gap-4">
+                        {selectedIds.length > 0 && (
+                            <button
+                                onClick={handleBulkDelete}
+                                className="flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2.5 rounded-lg hover:bg-red-100 transition border border-red-100 font-bold text-sm"
+                            >
+                                <Trash2 size={18} /> Delete Selected ({selectedIds.length})
+                            </button>
+                        )}
                         {!loading && subscription && (
                             <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-100 px-3 py-1.5 rounded-md border border-gray-200 cursor-default">
                                 <span>Strategies: <span className="font-semibold text-gray-900">{used}</span> / {unlimited ? '∞' : limit}</span>
@@ -144,7 +188,17 @@ export default function OptionStrategiesPage() {
                     <div className="space-y-12">
                         {/* User Strategies Section */}
                         <section>
-                            <h2 className="text-xl font-semibold mb-4 text-gray-800">My Strategies</h2>
+                            <div className="flex justify-between items-center mb-4">
+                                <h2 className="text-xl font-semibold text-gray-800">My Strategies</h2>
+                                {userStrategies.length > 0 && (
+                                    <button
+                                        onClick={toggleSelectAll}
+                                        className="text-xs font-bold text-blue-600 hover:text-blue-800 uppercase tracking-widest"
+                                    >
+                                        {selectedIds.length === userStrategies.length ? 'Deselect All' : 'Select All'}
+                                    </button>
+                                )}
+                            </div>
                             {userStrategies.length === 0 ? (
                                 <div className="text-center py-10 bg-gray-50 rounded-xl border border-dashed border-gray-300">
                                     <p className="text-gray-500 mb-4">You haven't created any option strategies yet.</p>
@@ -157,11 +211,22 @@ export default function OptionStrategiesPage() {
                             ) : (
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {userStrategies.map(strat => (
-                                        <div key={strat.id} className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition relative group flex flex-col justify-between">
-                                            <div className="absolute top-0 right-0 w-12 h-12 bg-blue-50 rounded-bl-full -mr-3 -mt-3" />
+                                        <div
+                                            key={strat.id}
+                                            onClick={() => toggleSelect(strat.id)}
+                                            className={`bg-white dark:bg-gray-900 p-6 rounded-xl border transition relative group flex flex-col justify-between cursor-pointer ${selectedIds.includes(strat.id) ? 'border-blue-500 shadow-md ring-1 ring-blue-500 bg-blue-50/10' : 'border-gray-200 shadow-sm hover:shadow-md'}`}
+                                        >
+                                            <div className="absolute top-4 right-4 z-10">
+                                                <input
+                                                    type="checkbox"
+                                                    className="rounded border-gray-300 dark:bg-gray-700 h-4 w-4 text-blue-600 focus:ring-blue-500 pointer-events-none"
+                                                    checked={selectedIds.includes(strat.id)}
+                                                    readOnly
+                                                />
+                                            </div>
 
                                             <div>
-                                                <h3 className="text-lg font-bold text-gray-900">{strat.name}</h3>
+                                                <h3 className="text-lg font-bold text-gray-900 pr-8">{strat.name}</h3>
                                                 <p className="text-sm text-gray-500 mt-2 line-clamp-3">
                                                     {strat.description || 'No description'}
                                                 </p>
@@ -172,17 +237,26 @@ export default function OptionStrategiesPage() {
                                                 </div>
                                             </div>
 
-                                            <div className="mt-6 pt-4 border-t border-gray-100 flex justify-end items-center">
+                                            <div className="mt-6 pt-4 border-t border-gray-100 flex justify-end items-center" onClick={e => e.stopPropagation()}>
                                                 <div className="flex gap-2">
+                                                    <Link
+                                                        href={`/option-strategies/${strat.id}`}
+                                                        className="p-1.5 text-gray-400 hover:bg-gray-100 rounded-lg hover:text-amber-600 transition"
+                                                        title="View Strategy"
+                                                    >
+                                                        <Eye size={18} />
+                                                    </Link>
                                                     <Link
                                                         href={`/option-strategies/edit/${strat.id}`}
                                                         className="p-1.5 text-gray-400 hover:bg-gray-100 rounded-lg hover:text-blue-600 transition"
+                                                        title="Edit Strategy"
                                                     >
                                                         <Edit2 size={18} />
                                                     </Link>
                                                     <button
                                                         onClick={() => handleDelete(strat.id)}
                                                         className="p-1.5 text-gray-400 hover:bg-red-50 rounded-lg hover:text-red-600 transition"
+                                                        title="Delete Strategy"
                                                     >
                                                         <Trash2 size={18} />
                                                     </button>
@@ -199,19 +273,27 @@ export default function OptionStrategiesPage() {
                             <h2 className="text-xl font-semibold mb-4 text-gray-800">System Strategies</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {systemStrategies.map(strat => (
-                                    <div key={strat.id} className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition relative group overflow-hidden">
+                                    <div key={strat.id} className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition relative group overflow-hidden flex flex-col justify-between">
                                         <div className="absolute top-0 right-0 w-12 h-12 bg-amber-50 rounded-bl-full -mr-3 -mt-3" />
 
-                                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-amber-600 transition-colors">
-                                            {strat.name}
-                                        </h3>
-                                        <p className="text-sm text-gray-500 mt-2 line-clamp-3">
-                                            {strat.description || 'No description'}
-                                        </p>
+                                        <div>
+                                            <h3 className="text-lg font-bold text-gray-900 group-hover:text-amber-600 transition-colors">
+                                                {strat.name}
+                                            </h3>
+                                            <p className="text-sm text-gray-500 mt-2 line-clamp-3">
+                                                {strat.description || 'No description'}
+                                            </p>
+                                        </div>
 
-                                        <div className="mt-6 pt-4 border-t border-gray-100 flex justify-end items-center">
-                                            <Link href={`/option-strategies/${strat.id}`} className="text-sm font-medium text-gray-400 hover:text-gray-600 flex items-center gap-1">
-                                                View <ArrowLeft size={14} className="rotate-180" />
+                                        <div className="mt-6 pt-4 border-t border-gray-100 flex justify-between items-center">
+                                            <span className="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                                                SYSTEM
+                                            </span>
+                                            <Link
+                                                href={`/option-strategies/${strat.id}`}
+                                                className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+                                            >
+                                                <Eye size={16} /> View
                                             </Link>
                                         </div>
                                     </div>

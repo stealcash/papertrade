@@ -7,37 +7,15 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 6.1s
- ○ Compiling /option-strategies ...
- ✓ Compiled /option-strategies in 4.4s (1549 modules)
- GET /option-strategies 200 in 297ms
- ○ Compiling /login ...
- ✓ Compiled /login in 540ms (858 modules)
- ✓ Compiled in 527ms (725 modules)
- GET /favicon.ico 200 in 1274ms
- GET /login 200 in 1432ms
- ○ Compiling /dashboard ...
- ✓ Compiled /dashboard in 718ms (1593 modules)
- ○ Compiling /option-strategies/create ...
- ✓ Compiled /option-strategies/create in 1107ms (1569 modules)
- ○ Compiling /option-strategies/[id]/edit ...
- ✓ Compiled /option-strategies/[id]/edit in 1191ms (1575 modules)
- GET /option-strategies/26/edit 200 in 452ms
- ✓ Compiled /favicon.ico in 400ms (875 modules)
- GET /favicon.ico 200 in 595ms
- GET /login 200 in 353ms
- ○ Compiling /strategy-sync ...
- ✓ Compiled /strategy-sync in 1212ms (1581 modules)
- GET /dashboard 200 in 151ms
- ✓ Compiled /favicon.ico in 303ms (875 modules)
- GET /favicon.ico 200 in 387ms
- GET /login 200 in 110ms
- GET /option-strategies/27/edit 200 in 56ms
- GET /option-strategies/28/edit 200 in 98ms
- ○ Compiling /option-strategies/[id] ...
- ✓ Compiled /option-strategies/[id] in 768ms (1583 modules)
- GET /dashboard 200 in 187ms
- ✓ Compiled /favicon.ico in 224ms (879 modules)
- GET /favicon.ico 200 in 327ms
- GET /login 200 in 178ms
+ ✓ Ready in 2s
+ ○ Compiling / ...
+ ✓ Compiled / in 1124ms (1549 modules)
+ GET / 200 in 1314ms
+ ✓ Compiled /favicon.ico in 324ms (1587 modules)
+ GET /favicon.ico 200 in 367ms
+ ✓ Compiled /option-strategies in 378ms (1557 modules)
+ ✓ Compiled /option-strategies/create in 237ms (1567 modules)
+ GET /option-strategies/create 200 in 142ms
+ ✓ Compiled /favicon.ico in 109ms (868 modules)
+ GET /favicon.ico 200 in 157ms
 [?25h

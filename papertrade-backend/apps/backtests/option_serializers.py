@@ -47,14 +47,23 @@ class OptionBacktestRunListSerializer(serializers.ModelSerializer):
     """Lightweight serializer for list view (no trades)."""
     
     strategy_name = serializers.CharField(source='strategy.name', read_only=True)
+    leg_actions = serializers.SerializerMethodField()
     
     class Meta:
         model = OptionBacktestRun
         fields = [
-            'id', 'run_id', 'strategy_name', 'snapshot_name', 'underlying_symbol',
-            'start_date', 'end_date', 'lot_size', 'total_trades', 'win_rate',
-            'total_pnl', 'status', 'created_at'
+            'id', 'run_id', 'strategy_name', 'snapshot_name', 'snapshot_description',
+            'underlying_symbol', 'start_date', 'end_date', 'lot_size',
+            'total_trades', 'win_rate', 'total_pnl', 'results_summary_json',
+            'status', 'created_at', 'leg_actions'
         ]
+
+    def get_leg_actions(self, obj):
+        if not obj.snapshot_config or 'legs' not in obj.snapshot_config:
+            return ""
+        legs = obj.snapshot_config.get('legs', [])
+        actions = [leg.get('action', '').lower() for leg in legs if leg.get('action')]
+        return ", ".join(actions)
 
 
 class OptionBacktestRunRequestSerializer(serializers.Serializer):

@@ -8,6 +8,15 @@ import { optionBacktestAPI, subscriptionsAPI } from '@/lib/api';
 import { useConfirm } from '@/context/ConfirmContext';
 import { toast } from 'react-hot-toast';
 
+function formatDate(dateStr: string) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    const dd = String(d.getDate()).padStart(2, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const yy = String(d.getFullYear()).slice(-2);
+    return `${dd}/${mm}/${yy}`;
+}
+
 export default function OptionBacktestPage() {
     const [runs, setRuns] = useState<any[]>([]);
     const [pagination, setPagination] = useState({ page: 1, total_pages: 1, total_count: 0 });
@@ -199,91 +208,114 @@ export default function OptionBacktestPage() {
 
             {/* List Section */}
             <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden min-h-[400px]">
-                <div className="grid grid-cols-12 bg-gray-50 dark:bg-gray-800 p-4 font-semibold text-gray-500 dark:text-gray-400 text-sm border-b border-gray-100 dark:border-gray-700">
-                    <div className="col-span-1 text-center">ID</div>
-                    <div className="col-span-3">Strategy Name</div>
-                    <div className="col-span-2">Date Range</div>
-                    <div className="col-span-1 text-center">Index</div>
-                    <div className="col-span-1 text-center">Trades</div>
-                    <div className="col-span-1 text-center">Win Rate</div>
-                    <div className="col-span-1 text-center">Status</div>
-                    <div className="col-span-2 text-right">Actions</div>
-                </div>
+                <div className="overflow-x-auto">
+                    <div className="min-w-[1000px]">
+                        <div className="grid grid-cols-[40px_minmax(100px,150px)_90px_120px_65px_65px_85px_85px_100px_80px_1fr] bg-gray-50 dark:bg-gray-800 px-4 py-3 font-semibold text-gray-500 dark:text-gray-400 text-xs border-b border-gray-100 dark:border-gray-700 uppercase tracking-wider">
+                            <div className="text-center">ID</div>
+                            <div>Strategy</div>
+                            <div className="text-center">Symbol</div>
+                            <div className="text-center">Date Range</div>
+                            <div className="text-center">Trades</div>
+                            <div className="text-center">Win%</div>
+                            <div className="text-right">Buy Pts</div>
+                            <div className="text-right">Sell Pts</div>
+                            <div className="text-center text-[10px]">Legs</div>
+                            <div className="text-center">Status</div>
+                            <div className="text-right">Actions</div>
+                        </div>
 
-                {loading ? (
-                    <div className="flex justify-center items-center py-20">
-                        <Loader2 className="animate-spin text-gray-400" size={32} />
-                    </div>
-                ) : runs.length === 0 ? (
-                    <div className="text-center py-20 text-gray-500">
-                        <p className="text-lg font-medium">No option backtests run yet.</p>
-                        <p className="text-sm">Click "New Backtest" to start testing your strategy.</p>
-                    </div>
-                ) : (
-                    <div className="divide-y divide-gray-100 dark:divide-gray-800">
-                        {runs.map(run => (
-                            <div key={run.id} className="grid grid-cols-12 p-4 items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition text-sm text-gray-900 dark:text-gray-100">
-                                <div className="col-span-1 text-center font-mono text-gray-400 text-xs">#{run.id}</div>
-                                <div className="col-span-3 font-bold">
-                                    {run.snapshot_name || run.strategy_name}
-                                    <div className="text-[10px] text-gray-400 font-normal">{run.run_id}</div>
-                                </div>
-                                <div className="col-span-2 text-gray-500 text-xs">
-                                    <div className="flex items-center gap-1">
-                                        <Calendar size={12} />
-                                        {run.start_date} <br /> to {run.end_date}
-                                    </div>
-                                </div>
-                                <div className="col-span-1 text-center">
-                                    <span className="px-2 py-0.5 bg-purple-50 text-purple-600 rounded text-[10px] font-bold">
-                                        {run.underlying_symbol}
-                                    </span>
-                                </div>
-                                <div className="col-span-1 text-center">
-                                    <span className="font-mono text-xs">{run.total_trades}</span>
-                                </div>
-                                <div className="col-span-1 text-center">
-                                    <span className={`font-bold ${Number(run.win_rate) >= 50 ? 'text-green-600' : 'text-red-500'}`}>
-                                        {run.win_rate}%
-                                    </span>
-                                </div>
-                                <div className="col-span-1 text-center">
-                                    <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase
-                                        ${run.status === 'completed' ? 'bg-green-100 text-green-700' : ''}
-                                        ${run.status === 'failed' ? 'bg-red-100 text-red-700' : ''}
-                                        ${run.status === 'running' ? 'bg-blue-100 text-blue-700' : ''}
-                                        ${run.status === 'pending' ? 'bg-gray-100 text-gray-700' : ''}
-                                    `}>
-                                        {run.status === 'completed' ? 'Done' : run.status}
-                                    </span>
-                                </div>
-                                <div className="col-span-2 flex justify-end gap-2">
-                                    <button
-                                        onClick={() => handleResync(run.id)}
-                                        disabled={resyncingId !== null}
-                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-600 hover:bg-amber-100 rounded-lg text-xs font-medium transition disabled:opacity-50 disabled:cursor-not-allowed"
-                                        title="Re-run with fresh option data"
-                                    >
-                                        <RefreshCw size={14} className={resyncingId === run.id ? 'animate-spin' : ''} />
-                                        {resyncingId === run.id ? 'Syncing...' : 'Resync'}
-                                    </button>
-                                    <Link
-                                        href={`/option-backtest/${run.id}`}
-                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-xs font-medium transition"
-                                    >
-                                        <Eye size={14} /> View
-                                    </Link>
-                                    <button
-                                        onClick={() => handleDelete(run.id)}
-                                        className="p-2 hover:bg-red-50 hover:text-red-600 rounded text-gray-400 transition"
-                                    >
-                                        <Trash2 size={16} />
-                                    </button>
-                                </div>
+                        {loading ? (
+                            <div className="flex justify-center items-center py-20">
+                                <Loader2 className="animate-spin text-gray-400" size={32} />
                             </div>
-                        ))}
+                        ) : runs.length === 0 ? (
+                            <div className="text-center py-20 text-gray-500">
+                                <p className="text-lg font-medium">No option backtests run yet.</p>
+                                <p className="text-sm">Click "New Backtest" to start testing your strategy.</p>
+                            </div>
+                        ) : (
+                            <div className="divide-y divide-gray-100 dark:divide-gray-800">
+                                {runs.map(run => {
+                                    const summary = run.results_summary_json || {};
+                                    const buyPts = summary.total_buy_points != null ? Number(summary.total_buy_points).toFixed(1) : '—';
+                                    const sellPts = summary.total_sell_points != null ? Number(summary.total_sell_points).toFixed(1) : '—';
+                                    const isRunning = run.status === 'running' || run.status === 'pending';
+
+                                    return (
+                                        <div key={run.id} className="grid grid-cols-[40px_minmax(100px,150px)_90px_120px_65px_65px_85px_85px_100px_80px_1fr] px-4 py-3 items-center hover:bg-gray-50 dark:hover:bg-gray-800/50 transition text-sm text-gray-900 dark:text-gray-100">
+                                            <div className="text-center font-mono text-gray-400 text-xs">#{run.id}</div>
+                                            <div className="truncate pr-2">
+                                                <span className="font-bold text-sm">{run.snapshot_name || run.strategy_name}</span>
+                                                <div className="text-[10px] text-gray-400 font-normal truncate">{run.run_id}</div>
+                                            </div>
+                                            <div className="text-center">
+                                                <span className="px-2 py-0.5 bg-purple-50 text-purple-600 rounded text-[10px] font-bold">
+                                                    {run.underlying_symbol}
+                                                </span>
+                                            </div>
+                                            <div className="text-center text-gray-500 text-[10px] leading-tight">
+                                                <div>{formatDate(run.start_date)}</div>
+                                                <div>{formatDate(run.end_date)}</div>
+                                            </div>
+                                            <div className="text-center">
+                                                <span className="font-mono text-xs">{run.total_trades}</span>
+                                            </div>
+                                            <div className="text-center">
+                                                <span className={`font-bold text-xs ${Number(run.win_rate) >= 50 ? 'text-green-600' : 'text-red-500'}`}>
+                                                    {run.win_rate}%
+                                                </span>
+                                            </div>
+                                            <div className="text-right font-mono text-xs text-gray-600 dark:text-gray-400">{buyPts}</div>
+                                            <div className="text-right font-mono text-xs text-gray-600 dark:text-gray-400">{sellPts}</div>
+                                            <div className="text-center font-mono text-[10px] text-gray-500 uppercase">
+                                                {run.leg_actions || '—'}
+                                            </div>
+                                            <div className="text-center">
+                                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase
+                                                    ${run.status === 'completed' ? 'bg-green-100 text-green-700' : ''}
+                                                    ${run.status === 'failed' ? 'bg-red-100 text-red-700' : ''}
+                                                    ${run.status === 'running' ? 'bg-blue-100 text-blue-700' : ''}
+                                                    ${run.status === 'pending' ? 'bg-gray-100 text-gray-700' : ''}
+                                                `}>
+                                                    {run.status === 'completed' ? 'Done' : run.status}
+                                                </span>
+                                            </div>
+                                            <div className="flex justify-end gap-1">
+                                                {!isRunning && (
+                                                    <button
+                                                        onClick={() => handleResync(run.id)}
+                                                        disabled={resyncingId !== null}
+                                                        className="group relative p-1.5 text-amber-500 hover:bg-amber-50 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed"
+                                                        title="Re-run with fresh data"
+                                                    >
+                                                        <RefreshCw size={14} className={resyncingId === run.id ? 'animate-spin' : ''} />
+                                                        <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-[10px] rounded whitespace-nowrap hidden group-hover:block">
+                                                            Resync
+                                                        </span>
+                                                    </button>
+                                                )}
+                                                <Link
+                                                    href={`/option-backtest/${run.id}`}
+                                                    className="p-1.5 text-blue-500 hover:bg-blue-50 rounded-md transition"
+                                                    title="View"
+                                                >
+                                                    <Eye size={14} />
+                                                </Link>
+                                                <button
+                                                    onClick={() => handleDelete(run.id)}
+                                                    className="p-1.5 hover:bg-red-50 hover:text-red-600 rounded-md text-gray-400 transition"
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 size={14} />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
 
                 {/* Pagination */}
                 {!loading && runs.length > 0 && (

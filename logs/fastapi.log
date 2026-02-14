@@ -29,19 +29,72 @@ Requirement already satisfied: six>=1.5 in ./venv/lib/python3.13/site-packages (
 [notice] To update, run: pip install --upgrade pip
 INFO:     Will watch for changes in these directories: ['/Users/chat360team/Documents/papertrade/papertrade-backend-fast']
 INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
-INFO:     Started reloader process [49905] using StatReload
-INFO:     Started server process [50030]
+INFO:     Started reloader process [79214] using StatReload
+INFO:     Started server process [79330]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:62029 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62161 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63218 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64289 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53007 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53037 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53075 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'debug_risk_mgmt.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [79330]
+INFO:     Started server process [83454]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'debug_risk_mgmt.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [83454]
+INFO:     Started server process [83695]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'debug_risk_mgmt.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [83695]
+INFO:     Started server process [84228]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'debug_risk_mgmt.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [84228]
+INFO:     Started server process [84455]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/engine/option_backtest.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [84455]
+INFO:     Started server process [84963]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53267 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53340 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app/engine/option_backtest.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [84963]
+INFO:     Started server process [90137]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53695 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53753 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53816 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54025 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
 Option Backtest Engine Failed: (sqlalchemy.dialects.postgresql.asyncpg.InterfaceError) <class 'asyncpg.exceptions._base.InterfaceError'>: connection is closed
 [SQL: SELECT option_backtest_runs.id, option_backtest_runs.run_id, option_backtest_runs.user_id, option_backtest_runs.strategy_id, option_backtest_runs.underlying_symbol, option_backtest_runs.start_date, option_backtest_runs.end_date, option_backtest_runs.lot_size, option_backtest_runs.snapshot_name, option_backtest_runs.snapshot_description, option_backtest_runs.snapshot_config, option_backtest_runs.status, option_backtest_runs.total_trades, option_backtest_runs.win_count, option_backtest_runs.loss_count, option_backtest_runs.win_rate, option_backtest_runs.total_pnl, option_backtest_runs.results_summary_json, option_backtest_runs.time_taken, option_backtest_runs.error_message, option_backtest_runs.created_at, option_backtest_runs.updated_at 
 FROM option_backtest_runs 
 WHERE option_backtest_runs.id = $1::INTEGER]
-[parameters: (41,)]
+[parameters: (82,)]
 (Background on this error at: https://sqlalche.me/e/20/rvf5)
 Traceback (most recent call last):
   File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 843, in _start_transaction
@@ -100,7 +153,7 @@ sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.InterfaceError: 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/app/engine/option_backtest.py", line 33, in execute
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/app/engine/option_backtest.py", line 35, in execute
     result = await self.db.execute(select(OptionBacktestRun).filter(OptionBacktestRun.id == self.run_id))
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/ext/asyncio/session.py", line 449, in execute
@@ -204,7 +257,7 @@ sqlalchemy.exc.InterfaceError: (sqlalchemy.dialects.postgresql.asyncpg.Interface
 [SQL: SELECT option_backtest_runs.id, option_backtest_runs.run_id, option_backtest_runs.user_id, option_backtest_runs.strategy_id, option_backtest_runs.underlying_symbol, option_backtest_runs.start_date, option_backtest_runs.end_date, option_backtest_runs.lot_size, option_backtest_runs.snapshot_name, option_backtest_runs.snapshot_description, option_backtest_runs.snapshot_config, option_backtest_runs.status, option_backtest_runs.total_trades, option_backtest_runs.win_count, option_backtest_runs.loss_count, option_backtest_runs.win_rate, option_backtest_runs.total_pnl, option_backtest_runs.results_summary_json, option_backtest_runs.time_taken, option_backtest_runs.error_message, option_backtest_runs.created_at, option_backtest_runs.updated_at 
 FROM option_backtest_runs 
 WHERE option_backtest_runs.id = $1::INTEGER]
-[parameters: (41,)]
+[parameters: (82,)]
 (Background on this error at: https://sqlalche.me/e/20/rvf5)
 ERROR:    Exception in ASGI application
 Traceback (most recent call last):
@@ -254,7 +307,7 @@ Traceback (most recent call last):
     await task()
   File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/starlette/background.py", line 21, in __call__
     await self.func(*self.args, **self.kwargs)
-  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/app/engine/option_backtest.py", line 129, in execute
+  File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/app/engine/option_backtest.py", line 132, in execute
     result = await self.db.execute(select(OptionBacktestRun).filter(OptionBacktestRun.id == self.run_id))
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/Users/chat360team/Documents/papertrade/papertrade-backend-fast/venv/lib/python3.13/site-packages/sqlalchemy/ext/asyncio/session.py", line 449, in execute
@@ -318,22 +371,42 @@ Traceback (most recent call last):
     ...<4 lines>...
     )
 sqlalchemy.exc.PendingRollbackError: Can't reconnect until invalid transaction is rolled back.  Please rollback() fully before proceeding (Background on this error at: https://sqlalche.me/e/20/8s2b)
-INFO:     127.0.0.1:65281 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65416 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49303 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49328 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49341 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54262 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
 WARNING:  StatReload detected changes in 'app/engine/option_backtest.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
-INFO:     Finished server process [50030]
-INFO:     Started server process [65766]
+INFO:     Finished server process [90137]
+INFO:     Started server process [1371]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:49750 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app/engine/option_backtest.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
-INFO:     Finished server process [65766]
-INFO:     Stopping reloader process [49905]
+INFO:     Finished server process [1371]
+INFO:     Started server process [2286]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/engine/option_backtest.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2286]
+INFO:     Started server process [6574]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/engine/option_backtest.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6574]
+INFO:     Started server process [7027]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54904 - "POST /api/v1/compute/option-backtest HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [7027]
+INFO:     Stopping reloader process [79214]

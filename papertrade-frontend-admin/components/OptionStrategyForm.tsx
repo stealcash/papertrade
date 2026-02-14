@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { PlusIcon, ChevronLeftIcon } from '@/components/icons';
+import { Info } from 'lucide-react';
 
 // --- Types ---
 interface StopLoss {
@@ -42,6 +43,7 @@ interface ExitCriteria {
 interface EntryCriteria {
     mode: 'EXPIRY_BASED' | 'DAILY';
     daysBeforeExpiry: string;
+    holidayEntryMode: 'PREVIOUS' | 'NONE' | 'NEXT';
     flexibleEntry: boolean;
     priceRef: 'CLOSE' | 'OPEN';
     minVolume: string;
@@ -49,7 +51,8 @@ interface EntryCriteria {
         enabled: boolean;
         type: 'INCREASE' | 'DECREASE';
         value: string;
-        ref: 'PREV_CLOSE' | 'TODAY_OPEN' | 'PREV_OPEN';
+        ref: 'PREV_CLOSE' | 'TODAY_OPEN' | 'PREV_OPEN' | 'XTH_DAY_OPEN' | 'XTH_DAY_CLOSE';
+        refDays: string;
     };
 }
 
@@ -58,6 +61,7 @@ interface StrategyLeg {
     type: 'CE' | 'PE';
     action: 'BUY' | 'SELL';
     strikeSelection: 'ATM' | 'ATM_PLUS' | 'ATM_MINUS';
+    strikeRounding: 'AUTO' | 'DOWN' | 'UP';
     strikeOffsetType: '%' | 'Pt';
     strikeOffset: string;
     selectBy: 'STRIKE' | 'PREMIUM';
@@ -111,6 +115,7 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
         type: 'CE',
         action: 'BUY',
         strikeSelection: 'ATM',
+        strikeRounding: 'AUTO',
         strikeOffsetType: 'Pt',
         strikeOffset: '0',
         selectBy: 'STRIKE',
@@ -128,6 +133,7 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
     const [entry, setEntry] = useState<EntryCriteria>({
         mode: 'EXPIRY_BASED',
         daysBeforeExpiry: '0',
+        holidayEntryMode: 'NONE',
         flexibleEntry: false,
         priceRef: 'OPEN',
         minVolume: '0',
@@ -135,7 +141,8 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
             enabled: false,
             type: 'INCREASE',
             value: '0.5',
-            ref: 'PREV_CLOSE'
+            ref: 'PREV_CLOSE',
+            refDays: '5'
         }
     });
 
@@ -169,14 +176,17 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
             setEntry({
                 mode: conf.entry?.mode || firstLeg.entry?.mode || 'EXPIRY_BASED',
                 daysBeforeExpiry: (conf.entry?.daysBeforeExpiry ?? firstLeg.entry?.daysBeforeExpiry ?? '0').toString(),
+                holidayEntryMode: conf.entry?.holidayEntryMode || (conf.entry?.flexibleEntry ? 'PREVIOUS' : 'NONE'),
                 flexibleEntry: conf.entry?.flexibleEntry ?? firstLeg.entry?.flexibleEntry ?? false,
                 priceRef: conf.entry?.priceRef || firstLeg.entry?.priceRef || 'OPEN',
                 minVolume: (conf.entry?.minVolume ?? firstLeg.entry?.minVolume ?? '0').toString(),
-                waitAndTrade: conf.entry?.waitAndTrade || {
-                    enabled: false,
-                    type: 'INCREASE',
-                    value: '0.5',
-                    ref: 'PREV_CLOSE'
+                waitAndTrade: {
+                    ...(conf.entry?.waitAndTrade || {}),
+                    enabled: conf.entry?.waitAndTrade?.enabled ?? false,
+                    type: conf.entry?.waitAndTrade?.type || 'INCREASE',
+                    value: (conf.entry?.waitAndTrade?.value || '0.5').toString(),
+                    ref: conf.entry?.waitAndTrade?.ref || 'PREV_CLOSE',
+                    refDays: (conf.entry?.waitAndTrade?.refDays || '5').toString()
                 }
             });
 
@@ -202,6 +212,7 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                 type: l.type,
                 action: l.action,
                 strikeSelection: l.strikeSelection || l.entry?.strikeSelection || 'ATM',
+                strikeRounding: l.strikeRounding || 'AUTO',
                 strikeOffsetType: l.strikeOffsetType || l.entry?.strikeOffsetType || 'Pt',
                 strikeOffset: (l.strikeOffset ?? l.entry?.strikeOffset ?? '0').toString(),
                 selectBy: l.selectBy || 'STRIKE',
@@ -229,6 +240,7 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
             type: 'CE',
             action: 'BUY',
             strikeSelection: 'ATM',
+            strikeRounding: 'AUTO',
             strikeOffsetType: 'Pt',
             strikeOffset: '0',
             selectBy: 'STRIKE',
@@ -502,15 +514,40 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                     />
                                     <span className="text-sm dark:text-gray-300 font-medium">days</span>
                                 </div>
-                                <div className="flex items-center gap-2 mb-4 bg-white dark:bg-gray-900 p-2.5 rounded border border-blue-50 dark:border-blue-900/40">
-                                    <input
-                                        type="checkbox"
-                                        checked={entry.flexibleEntry}
-                                        onChange={e => updateEntry('flexibleEntry', e.target.checked)}
-                                        disabled={isReadOnly}
-                                        className="h-4 w-4 text-blue-600 rounded cursor-pointer disabled:opacity-50"
-                                    />
-                                    <label className="text-xs text-gray-700 dark:text-gray-300 cursor-pointer font-medium">Enter ASAP if holidays reduce days except weekly holiday</label>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center bg-white dark:bg-gray-900 p-3 rounded-lg border border-blue-50 dark:border-blue-900/40">
+                                        <div>
+                                            <div className="flex items-center gap-1.5 mb-0.5">
+                                                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">Holiday Entry Mode</label>
+                                                <div className="group relative">
+                                                    <Info size={12} className="text-gray-400 cursor-help" />
+                                                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-gray-900 text-white text-[10px] rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 normal-case leading-relaxed font-medium">
+                                                        Determines what happens if your target entry day falls on a market holiday:
+                                                        <ul className="list-disc ml-3 mt-1.5 space-y-1">
+                                                            <li><b>Previous Day:</b> Enters on the closest trading day <i>before</i> the holiday.</li>
+                                                            <li><b>No Entry:</b> Skips the strategy if the day is a holiday (Default).</li>
+                                                            <li><b>Next Day:</b> Enters on the closest trading day <i>after</i> the holiday. </li>
+                                                        </ul>
+                                                        <p className="mt-2 text-amber-300">Note: If Next Day entry time falls after your exit time, the entry will be skipped to avoid logic errors.</p>
+                                                        <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-gray-900" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p className="text-[10px] text-gray-500 font-medium italic">Logic for market holidays</p>
+                                        </div>
+                                        <div className="flex bg-gray-50 dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm scale-90 origin-right">
+                                            {(['PREVIOUS', 'NONE', 'NEXT'] as const).map((mode) => (
+                                                <button
+                                                    key={mode}
+                                                    type="button"
+                                                    onClick={() => updateEntry('holidayEntryMode', mode)}
+                                                    className={`px-3 py-1.5 rounded-md text-[10px] font-black transition-all ${entry.holidayEntryMode === mode ? 'bg-blue-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-600'}`}
+                                                >
+                                                    {mode}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                                 <Note>{getEntryDayText(entry.daysBeforeExpiry)}</Note>
                             </>
@@ -610,7 +647,34 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                             <option value="PREV_CLOSE">Previous Day Close</option>
                                             <option value="PREV_OPEN">Previous Day Open</option>
                                             {entry.priceRef === 'CLOSE' && <option value="TODAY_OPEN">Today's Open</option>}
+                                            <option value="XTH_DAY_OPEN">X Days Ago Open</option>
+                                            <option value="XTH_DAY_CLOSE">X Days Ago Close</option>
                                         </select>
+                                        {(entry.waitAndTrade.ref === 'XTH_DAY_OPEN' || entry.waitAndTrade.ref === 'XTH_DAY_CLOSE') && (
+                                            <div className="flex items-center gap-2 mt-2">
+                                                <span className="text-xs font-bold dark:text-gray-400">Days back:</span>
+                                                <input
+                                                    type="number"
+                                                    min="2"
+                                                    max="200"
+                                                    value={entry.waitAndTrade.refDays}
+                                                    onChange={e => updateEntry('waitAndTrade', { ...entry.waitAndTrade, refDays: e.target.value })}
+                                                    disabled={isReadOnly}
+                                                    className="w-20 rounded border-gray-300 py-1.5 px-2 dark:bg-gray-700 dark:text-white text-xs border font-bold disabled:opacity-50"
+                                                />
+                                                <span className="text-[10px] text-gray-400">trading days</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="mt-3 bg-blue-50/50 dark:bg-blue-900/10 p-2.5 rounded border border-blue-50 dark:border-blue-900/20">
+                                        <p className="text-[11px] font-bold text-blue-700 dark:text-blue-400 uppercase mb-1 tracking-tight">Wait & Trade Preview</p>
+                                        <p className="text-xs text-blue-600 dark:text-blue-300 italic leading-snug">
+                                            Wait for {entry.waitAndTrade.value}% {entry.waitAndTrade.type.toLowerCase()} from {
+                                                entry.waitAndTrade.ref === 'XTH_DAY_OPEN' ? `Day ${entry.waitAndTrade.refDays} Open` :
+                                                    entry.waitAndTrade.ref === 'XTH_DAY_CLOSE' ? `Day ${entry.waitAndTrade.refDays} Close` :
+                                                        entry.waitAndTrade.ref.replace('_', ' ')
+                                            } before entry.
+                                        </p>
                                     </div>
                                 </div>
                             )}
@@ -701,53 +765,51 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
 
                     {/* Safety Features */}
                     {isAdvanced && (
-                        <div className="space-y-5 pt-5 border-t border-gray-100 dark:border-gray-800/50">
-                            <div className="flex flex-col gap-3 mb-2">
-                                <label className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest pl-1">Risk Management Mode</label>
-                                <div className="flex gap-8 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-inner">
-                                    <label className={`flex items-center gap-3 cursor-pointer p-2 rounded-lg transition-all ${exit.riskManagementMode === 'GLOBAL' ? 'bg-white dark:bg-gray-700 shadow-sm ring-1 ring-amber-100 dark:ring-amber-900/30' : 'opacity-70'}`}>
+                        <div className="space-y-4 pt-4 border-t border-gray-100 dark:border-gray-800/50">
+                            <div className="flex flex-col gap-2 mb-2">
+                                <label className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest pl-1">Risk Management Mode</label>
+                                <div className="flex gap-4 bg-gray-50 dark:bg-gray-800/50 p-2 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-inner">
+                                    <label className={`flex items-center gap-2 cursor-pointer p-1.5 rounded-lg transition-all ${exit.riskManagementMode === 'GLOBAL' ? 'bg-white dark:bg-gray-700 shadow-sm' : 'opacity-60'}`}>
                                         <input
                                             type="radio"
                                             name="riskMode"
                                             checked={exit.riskManagementMode === 'GLOBAL'}
                                             onChange={() => updateExit('exit', 'riskManagementMode', 'GLOBAL')}
                                             disabled={isReadOnly}
-                                            className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                            className="h-3 w-3 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                         />
                                         <div className="flex flex-col">
-                                            <span className="text-sm font-bold text-gray-700 dark:text-gray-200">Global (Portfolio)</span>
-                                            <span className="text-[10px] text-gray-500 font-medium tracking-tight">Triggers based on total strategy P&L</span>
+                                            <span className="text-xs font-bold text-gray-700 dark:text-gray-200">Global</span>
                                         </div>
                                     </label>
-                                    <label className={`flex items-center gap-3 cursor-pointer p-2 rounded-lg transition-all ${exit.riskManagementMode === 'LEG_WISE' ? 'bg-white dark:bg-gray-700 shadow-sm ring-1 ring-amber-100 dark:ring-amber-900/30' : 'opacity-70'}`}>
+                                    <label className={`flex items-center gap-2 cursor-pointer p-1.5 rounded-lg transition-all ${exit.riskManagementMode === 'LEG_WISE' ? 'bg-white dark:bg-gray-700 shadow-sm' : 'opacity-60'}`}>
                                         <input
                                             type="radio"
                                             name="riskMode"
                                             checked={exit.riskManagementMode === 'LEG_WISE'}
                                             onChange={() => updateExit('exit', 'riskManagementMode', 'LEG_WISE')}
                                             disabled={isReadOnly}
-                                            className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                            className="h-3 w-3 text-amber-600 focus:ring-amber-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                         />
                                         <div className="flex flex-col">
-                                            <span className="text-sm font-bold text-gray-700 dark:text-gray-200">Leg-wise</span>
-                                            <span className="text-[10px] text-gray-500 font-medium tracking-tight">Individual exit rules for each leg</span>
+                                            <span className="text-xs font-bold text-gray-700 dark:text-gray-200">Leg-wise</span>
                                         </div>
                                     </label>
                                 </div>
 
                                 {exit.riskManagementMode === 'LEG_WISE' && (
-                                    <div className="mt-2 p-3 bg-blue-50/30 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-100/50 dark:border-blue-900/20 flex gap-3">
-                                        <div className="mt-0.5">💡</div>
-                                        <div className="flex flex-col gap-0.5">
-                                            <p className="text-xs font-bold text-blue-700 dark:text-blue-300">Leg-wise Risk Management Active</p>
-                                            <p className="text-[11px] text-blue-600/80 dark:text-blue-400/80 font-medium">Configure individual targets for each leg in the Leg Builder section above.</p>
+                                    <div className="mt-2 p-3 bg-amber-50 dark:bg-amber-900/20 text-[10px] text-amber-800 dark:text-amber-300 rounded-lg border border-amber-100 dark:border-amber-900/30 flex items-start gap-2 animate-pulse">
+                                        <span className="text-sm leading-none">💡</span>
+                                        <div>
+                                            <p className="font-bold uppercase tracking-wider mb-0.5">Leg-wise Risk Active</p>
+                                            <p className="font-medium opacity-80 leading-relaxed">Individual rules active. Configure them in the Leg Builder above.</p>
                                         </div>
                                     </div>
                                 )}
                             </div>
 
                             {exit.riskManagementMode === 'GLOBAL' && (
-                                <div className="bg-white dark:bg-gray-900 p-4 rounded-lg border border-amber-50 dark:border-amber-900/20 shadow-sm space-y-4">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
                                             <input
@@ -1024,8 +1086,19 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                                 className="flex-grow min-w-[220px] rounded-lg border-gray-300 py-2.5 px-4 dark:bg-gray-700 dark:text-white text-sm border focus:ring-2 focus:ring-blue-500 transition-all font-bold disabled:opacity-50"
                                             >
                                                 <option value="ATM">ATM</option>
-                                                <option value="ATM_PLUS">ATM + Offset</option>
-                                                <option value="ATM_MINUS">ATM - Offset</option>
+                                                <option value="ATM_PLUS">ATM +</option>
+                                                <option value="ATM_MINUS">ATM -</option>
+                                            </select>
+
+                                            <select
+                                                value={leg.strikeRounding}
+                                                onChange={e => updateLeg(index, 'strikeRounding', e.target.value)}
+                                                disabled={isReadOnly}
+                                                className="rounded-lg border-gray-300 py-2.5 px-3 dark:bg-gray-700 dark:text-white text-sm border focus:ring-2 focus:ring-blue-500 transition-all font-bold disabled:opacity-50"
+                                            >
+                                                <option value="AUTO">Nearest Strike</option>
+                                                <option value="DOWN">Round Down ↓</option>
+                                                <option value="UP">Round Up ↑</option>
                                             </select>
 
                                             {leg.strikeSelection !== 'ATM' && (
@@ -1156,7 +1229,7 @@ export default function OptionStrategyForm({ mode, initialData, onSave }: Option
                                     )}
                                     {leg.selectBy === 'STRIKE' && <Note>{getStrikeExample(leg)}</Note>}
 
-                                    {exit.riskManagementMode === 'LEG_WISE' && (
+                                    {isAdvanced && exit.riskManagementMode === 'LEG_WISE' && (
                                         <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-800/50 space-y-4">
                                             <div className="flex items-center justify-between gap-2 mb-2">
                                                 <h5 className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">Leg Risk Management</h5>

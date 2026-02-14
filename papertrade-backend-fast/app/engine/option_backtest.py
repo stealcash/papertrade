@@ -1,9 +1,10 @@
 import logging
 from decimal import Decimal
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy.future import select
 from sqlalchemy import update, insert
 from app.models import OptionBacktestRun, OptionTrade, OptionDailyData, Stock, StockPriceDaily, OptionStrategy
+from .market_schedule import MarketSchedule
 import time
 
 logger = logging.getLogger(__name__)
@@ -25,6 +26,7 @@ class OptionBacktestEngine:
         }
         self.last_close = 0
         self.last_open = 0
+        self.price_history = []  # List of (open, close) tuples for Xth-day lookback
 
     async def execute(self):
         start_time = time.time()
@@ -82,29 +84,55 @@ class OptionBacktestEngine:
             for i, spot in enumerate(spot_prices):
                 curr_date = spot.date
                 spot_price = float(spot.close_price)
-                should_reenter = False
                 
-                # Check Entry
-                next_date = spot_prices[i+1].date if i+1 < len(spot_prices) else None
-                new_pos = await self._check_entry(option_symbol, curr_date, spot, expiries, next_date, is_reentry=should_reenter)
-                if new_pos:
-                    active_positions.append(new_pos)
+                # Pulse-based check for multiple trades in a day if re-entry is allowed
+                max_pulses = 5 
+                pulse = 0
+                
+                while pulse < max_pulses:
+                    pulse += 1
+                    did_anything = False
+                    
+                    # Check Exits first
+                    remaining = []
+                    exited_this_pulse = False
+                    for pos in active_positions:
+                        is_closed = await self._check_exit_conditions(pos, curr_date, spot_price, run.lot_size)
+                        if is_closed:
+                            # Check if it was an expiry exit - if so, don't re-enter the same expiry
+                            reentry_eligible = True
+                            for leg in pos['legs']:
+                                if leg.get('exit_reason') in ('EXPIRY', 'EXPIRY_MISSING'):
+                                    reentry_eligible = False
+                                    break
+                            
+                            await self._record_trade(pos, curr_date, run.user_id)
+                            if reentry_eligible:
+                                exited_this_pulse = True
+                            did_anything = True
+                        else:
+                            remaining.append(pos)
+                    active_positions = remaining
 
-                # Check Exits
-                remaining = []
-                should_reenter = False
-                for pos in active_positions:
-                    is_closed = await self._check_exit_conditions(pos, curr_date, spot_price, run.lot_size)
-                    if is_closed:
-                        await self._record_trade(pos, curr_date, run.user_id)
-                        if self.exit_config.get('allowReentry'):
-                            should_reenter = True
-                    else:
-                        remaining.append(pos)
-                active_positions = remaining
+                    # Check Entry
+                    if not active_positions:
+                        # Only try entry if:
+                        # 1. Pulse 1 (initial morning check)
+                        # 2. Just exited a non-expiry position in THIS pulse
+                        if pulse == 1 or exited_this_pulse:
+                            is_reentry = exited_this_pulse
+                            next_date = spot_prices[i+1].date if i+1 < len(spot_prices) else None
+                            new_pos = await self._check_entry(option_symbol, curr_date, spot, expiries, next_date, is_reentry=is_reentry)
+                            if new_pos:
+                                active_positions.append(new_pos)
+                                did_anything = True
+                    
+                    if not did_anything:
+                        break
                 
                 self.last_close = float(spot.close_price)
                 self.last_open = float(spot.open_price)
+                self.price_history.append((float(spot.open_price), float(spot.close_price)))
 
             # 7. Finalize
             run.total_trades = self.stats['total_trades']
@@ -158,19 +186,83 @@ class OptionBacktestEngine:
         
         can_enter = is_reentry
         
-        if not can_enter:
-            if days_to_exp == req_days:
+        if not is_reentry:
+            # 1. Determine Target Entry Day (Skipping Weekends)
+            target_day = target_exp
+            days_to_subtract = req_days
+            while days_to_subtract > 0:
+                target_day -= timedelta(days=1)
+                if target_day.weekday() < 5:  # Mon-Fri
+                    days_to_subtract -= 1
+            
+            # 2. Check if Target Day is a Market Holiday
+            is_open, _ = MarketSchedule.is_market_open(target_day)
+            actual_entry_day = target_day
+            
+            if not is_open:
+                mode = entry_conf.get('holidayEntryMode', 'NONE')
+                if mode == 'NONE':
+                    actual_entry_day = None
+                elif mode == 'PREVIOUS':
+                    # Look back for nearest trading day
+                    temp_day = target_day - timedelta(days=1)
+                    while temp_day > curr_date - timedelta(days=10): # Safety limit
+                        o, _ = MarketSchedule.is_market_open(temp_day)
+                        if o:
+                            actual_entry_day = temp_day
+                            break
+                        temp_day -= timedelta(days=1)
+                elif mode == 'NEXT':
+                    # Look forward for nearest trading day
+                    temp_day = target_day + timedelta(days=1)
+                    while temp_day <= target_exp:
+                        o, _ = MarketSchedule.is_market_open(temp_day)
+                        if o:
+                            actual_entry_day = temp_day
+                            break
+                        temp_day += timedelta(days=1)
+                    else:
+                        actual_entry_day = None # No trading day found before/on expiry
+            
+            # 3. Check if today IS the actual entry day
+            if actual_entry_day == curr_date:
                 can_enter = True
-            elif entry_conf.get('flexibleEntry'):
+                
+                # 4. Safety Check for NEXT mode: Don't enter after exit time
+                if entry_conf.get('holidayEntryMode') == 'NEXT' and actual_entry_day > target_day:
+                    exit_conf = self.exit_config
+                    exit_days = int(exit_conf.get('daysBeforeExpiry', 0))
+                    exit_target_day = target_exp - timedelta(days=exit_days)
+                    
+                    # If actual entry is already after planned exit day, skip
+                    if actual_entry_day > exit_target_day:
+                        can_enter = False
+                    # If same day, check timing
+                    elif actual_entry_day == exit_target_day:
+                        e_ref = entry_conf.get('priceRef', 'CLOSE')
+                        x_ref = exit_conf.get('exitTimeRef', 'CLOSE')
+                        if e_ref == 'CLOSE' and x_ref == 'OPEN':
+                            can_enter = False # Entry at 3:30 PM, Exit was at 9:15 AM
+            
+            # 5. Legacy/Flexible Fallback (if holidayEntryMode not set)
+            if not can_enter and entry_conf.get('flexibleEntry') and not entry_conf.get('holidayEntryMode'):
                  if next_date and (target_exp - next_date).days < req_days: can_enter = True
                  elif days_to_exp < req_days: can_enter = True
-            else:
-                 # Implicit Weekend Handling: If today is Friday and target lands on Sat/Sun
+            
+            # 6. Legacy Weekend Handling (Fallback)
+            if not can_enter and not entry_conf.get('holidayEntryMode'):
                  if curr_date.weekday() == 4: # Friday
                      if days_to_exp == req_days + 1 or days_to_exp == req_days + 2:
                          can_enter = True
-
-        if not can_enter: return None
+        else:
+            # For re-entry, we allow it if we are already past the original entry window
+            # and re-entry is explicitly allowed in exit config
+            if self.exit_config.get('allowReentry'):
+                # Basic check: don't enter on expiry after exit time if it's already closed
+                if curr_date == target_exp and self.exit_config.get('exitTimeRef') == 'OPEN':
+                    can_enter = False
+                else:
+                    can_enter = True
 
         if not can_enter: return None
         
@@ -210,6 +302,13 @@ class OptionBacktestEngine:
             if wtt_ref_type == 'PREV_CLOSE': ref_price = self.last_close or float(spot.open_price)
             elif wtt_ref_type == 'PREV_OPEN': ref_price = self.last_open or float(spot.open_price)
             elif wtt_ref_type == 'TODAY_OPEN': ref_price = float(spot.open_price)
+            elif wtt_ref_type in ('XTH_DAY_OPEN', 'XTH_DAY_CLOSE'):
+                days_back = int(wtt.get('refDays', 5))
+                if len(self.price_history) >= days_back:
+                    idx = len(self.price_history) - days_back
+                    ref_price = self.price_history[idx][0] if wtt_ref_type == 'XTH_DAY_OPEN' else self.price_history[idx][1]
+                else:
+                    return None  # Not enough history yet
             
             if ref_price <= 0: return None
             
@@ -253,7 +352,17 @@ class OptionBacktestEngine:
                 if leg_conf.get('strikeOffsetType') == '%': target *= (1 - offset / 100)
                 else: target -= offset
             
-            best_match = min(chain_all.values(), key=lambda x: abs(float(x.strike_price) - target))
+            rounding = leg_conf.get('strikeRounding', 'AUTO')
+            if rounding == 'DOWN':
+                candidates = [v for v in chain_all.values() if float(v.strike_price) <= target]
+                if not candidates: candidates = list(chain_all.values())
+                best_match = max(candidates, key=lambda x: float(x.strike_price))
+            elif rounding == 'UP':
+                candidates = [v for v in chain_all.values() if float(v.strike_price) >= target]
+                if not candidates: candidates = list(chain_all.values())
+                best_match = min(candidates, key=lambda x: float(x.strike_price))
+            else:  # AUTO - nearest
+                best_match = min(chain_all.values(), key=lambda x: abs(float(x.strike_price) - target))
         else: # PREMIUM
             target_px = float(leg_conf.get('targetPremium', 100))
             tolerance = float(leg_conf.get('premiumTolerance', 10))
@@ -323,39 +432,85 @@ class OptionBacktestEngine:
         total_entry = 0
         active = [l for l in pos['legs'] if l['status'] == 'OPEN']
         
-        for leg in active:
-            opt = self.option_data_cache.get(curr_date, {}).get(pos['expiry_date'], {}).get(leg['type'], {}).get(leg['strike'])
-            curr_px = float(opt.close_price) if opt else 0
-            mult = leg['lot_multiplier']
-            pnl = (curr_px - leg['entry_price']) if leg['action'] == 'BUY' else (leg['entry_price'] - curr_px)
-            total_pnl += pnl * lot_size * mult
-            total_entry += leg['entry_price'] * lot_size * mult
-
-        # Portfolio SL/TP
+        # Portfolio TP/SL check setup
         psl = self.exit_config.get('stopLoss', {})
         ptp = self.exit_config.get('takeProfit', {})
-        if psl.get('enabled') and total_entry > 0:
-            if total_pnl < 0 and abs(total_pnl) >= (total_entry * float(psl.get('value', 0)) / 100):
-                should_exit_now = True
-                exit_reason_str = 'PORTFOLIO_SL_HIT'
+        
+        p_sl_ref = psl.get('ref', 'CLOSE')
+        p_tp_ref = ptp.get('ref', 'CLOSE')
+
+        p_sl_total_pnl = 0
+        p_tp_total_pnl = 0
+
+        for leg in active:
+            opt = self.option_data_cache.get(curr_date, {}).get(pos['expiry_date'], {}).get(leg['type'], {}).get(leg['strike'])
+            if not opt: continue
+            
+            close = float(opt.close_price)
+            # Default PnL (for reports / general tracking) is Close
+            pnl = (close - leg['entry_price']) if leg['action'] == 'BUY' else (leg['entry_price'] - close)
+            total_pnl += pnl * lot_size * leg['lot_multiplier']
+            total_entry += leg['entry_price'] * lot_size * leg['lot_multiplier']
+
+            # Portfolio SL PnL calc
+            sl_px = float(opt.low_price if p_sl_ref == 'BOTH' else (opt.open_price if p_sl_ref == 'OPEN' else opt.close_price))
+            sl_pnl = (sl_px - leg['entry_price']) if leg['action'] == 'BUY' else (leg['entry_price'] - sl_px)
+            p_sl_total_pnl += sl_pnl * lot_size * leg['lot_multiplier']
+
+            # Portfolio TP PnL calc
+            tp_px = float(opt.high_price if p_tp_ref == 'BOTH' else (opt.open_price if p_tp_ref == 'OPEN' else opt.close_price))
+            tp_pnl = (tp_px - leg['entry_price']) if leg['action'] == 'BUY' else (leg['entry_price'] - tp_px)
+            p_tp_total_pnl += tp_pnl * lot_size * leg['lot_multiplier']
+
+        # Portfolio SL/TP Execution
+        risk_ref = None
         if ptp.get('enabled') and total_entry > 0:
-            if total_pnl > 0 and total_pnl >= (total_entry * float(ptp.get('value', 0)) / 100):
+            if p_tp_total_pnl > 0 and p_tp_total_pnl >= (total_entry * float(ptp.get('value', 0)) / 100):
                 should_exit_now = True
                 exit_reason_str = 'PORTFOLIO_TP_HIT'
+                risk_ref = p_tp_ref
+        
+        # SL takes precedence if both hit? Usually we check both, but SL is more critical.
+        # However, if TP hit at Open and SL hit at High/Low, Open (TP) happened first.
+        # For simplicity, if TP hit, we take it. If not, check SL.
+        if not should_exit_now and psl.get('enabled') and total_entry > 0:
+            if p_sl_total_pnl < 0 and abs(p_sl_total_pnl) >= (total_entry * float(psl.get('value', 0)) / 100):
+                should_exit_now = True
+                exit_reason_str = 'PORTFOLIO_SL_HIT'
+                risk_ref = p_sl_ref
 
         if should_exit_now:
-            exit_time_ref = self.exit_config.get('exitTimeRef', 'CLOSE')
+            # If it's a risk hit, use the risk ref for execution price. 
+            # Otherwise use the scheduled exit time ref.
+            exec_ref = risk_ref if risk_ref else self.exit_config.get('exitTimeRef', 'CLOSE')
+            
             for leg in active:
                 opt = self.option_data_cache.get(curr_date, {}).get(pos['expiry_date'], {}).get(leg['type'], {}).get(leg['strike'])
-                # If expiry or targeted exit, use appropriate price ref
-                px = float(opt.open_price if exit_time_ref == 'OPEN' and opt and opt.open_price else (opt.close_price if opt else 0))
+                if not opt:
+                    self._close_leg(leg, 0, curr_date, lot_size, exit_reason_str)
+                    continue
+                
+                if exec_ref == 'OPEN':
+                    px = float(opt.open_price or opt.close_price)
+                elif exec_ref == 'BOTH':
+                    # If BOTH triggered, it means either high (TP) or low (SL) hit.
+                    # We approximate by using the limit price that triggered it.
+                    if exit_reason_str == 'PORTFOLIO_TP_HIT':
+                        # Target PnL per leg? No, portfolio. 
+                        # Simple fallback: use high/low as proxy for "Intraday" hit.
+                        px = float(opt.high_price if leg['action'] == 'BUY' else opt.low_price)
+                    else:
+                        px = float(opt.low_price if leg['action'] == 'BUY' else opt.high_price)
+                else: # CLOSE
+                    px = float(opt.close_price)
+                
                 self._close_leg(leg, px, curr_date, lot_size, exit_reason_str)
             return True
 
         # Individual Leg SL/TP/TSL
-        # Time Travel Protection: If entered at CLOSE today, don't check SL/TP/TSL until tomorrow
         if pos['entry_date'] == curr_date and pos.get('entry_price_ref') == 'CLOSE':
             return False
+            
         entry_spot = pos['entry_spot_price']
         for leg in active:
             opt = self.option_data_cache.get(curr_date, {}).get(pos['expiry_date'], {}).get(leg['type'], {}).get(leg['strike'])
@@ -363,34 +518,56 @@ class OptionBacktestEngine:
             
             high = float(opt.high_price or opt.close_price)
             low = float(opt.low_price or opt.close_price)
+            open_px = float(opt.open_price or opt.close_price)
             close = float(opt.close_price)
             
-            # TSL
+            # 1. TSL
             tsl = leg['tsl_config']
             if tsl.get('enabled'):
                 val = float(tsl.get('value', 0))
                 if tsl.get('type') == 'Spot %' and entry_spot > 0:
                     is_bull = (leg['type'] == 'CE' and leg['action'] == 'BUY') or (leg['type'] == 'PE' and leg['action'] == 'SELL')
                     leg['tsl_watermark'] = max(leg['tsl_watermark'] or entry_spot, spot_price) if is_bull else min(leg['tsl_watermark'] or entry_spot, spot_price)
-                if (is_bull and spot_price <= leg['tsl_watermark'] * (1 - val/100)) or (not is_bull and spot_price >= leg['tsl_watermark'] * (1 + val/100)):
+                    if (is_bull and spot_price <= leg['tsl_watermark'] * (1 - val/100)) or (not is_bull and spot_price >= leg['tsl_watermark'] * (1 + val/100)):
                         self._close_leg(leg, close, curr_date, lot_size, 'TSL_SPOT_HIT')
                         continue
-                else: # Premium TSL
+                else: # Premium TSL (Absolute or %)
                     if leg['action'] == 'BUY':
-                        leg['tsl_watermark'] = max(leg['tsl_watermark'] or float(opt.open_price), high)
+                        leg['tsl_watermark'] = max(leg['tsl_watermark'] or open_px, high)
                         limit = leg['tsl_watermark'] - (val if tsl.get('type') == 'points' else leg['tsl_watermark'] * val/100)
                         if low <= limit:
                             self._close_leg(leg, limit, curr_date, lot_size, 'TSL_HIT')
                             continue
                     else:
-                        leg['tsl_watermark'] = min(leg['tsl_watermark'] or float(opt.open_price), low)
+                        leg['tsl_watermark'] = min(leg['tsl_watermark'] or open_px, low)
                         limit = leg['tsl_watermark'] + (val if tsl.get('type') == 'points' else leg['tsl_watermark'] * val/100)
                         if high >= limit:
                             self._close_leg(leg, limit, curr_date, lot_size, 'TSL_HIT')
                             continue
 
-            # SL/TP logic similar to Django... (Simplified for now but matches core calculation)
-            # Porting full SL/TP logic would be huge but core PnL is identical
+            # 2. Leg SL
+            sl = leg['sl_config']
+            if sl.get('enabled'):
+                val = float(sl.get('value', 0))
+                ref = sl.get('ref', 'CLOSE')
+                px = low if (leg['action'] == 'BUY' and ref == 'BOTH') else (high if (leg['action'] == 'SELL' and ref == 'BOTH') else (open_px if ref == 'OPEN' else close))
+                
+                limit = leg['entry_price'] - (val if sl.get('type') == 'points' else leg['entry_price'] * val/100) if leg['action'] == 'BUY' else leg['entry_price'] + (val if sl.get('type') == 'points' else leg['entry_price'] * val/100)
+                if (leg['action'] == 'BUY' and px <= limit) or (leg['action'] == 'SELL' and px >= limit):
+                    self._close_leg(leg, limit, curr_date, lot_size, 'LEG_SL_HIT')
+                    continue
+
+            # 3. Leg TP
+            tp = leg['tp_config']
+            if tp.get('enabled'):
+                val = float(tp.get('value', 0))
+                ref = tp.get('ref', 'CLOSE')
+                px = high if (leg['action'] == 'BUY' and ref == 'BOTH') else (low if (leg['action'] == 'SELL' and ref == 'BOTH') else (open_px if ref == 'OPEN' else close))
+
+                limit = leg['entry_price'] + (val if tp.get('type') == 'points' else leg['entry_price'] * val/100) if leg['action'] == 'BUY' else leg['entry_price'] - (val if tp.get('type') == 'points' else leg['entry_price'] * val/100)
+                if (leg['action'] == 'BUY' and px >= limit) or (leg['action'] == 'SELL' and px <= limit):
+                    self._close_leg(leg, limit, curr_date, lot_size, 'LEG_TP_HIT')
+                    continue
         
         return all(l['status'] == 'CLOSED' for l in pos['legs'])
 

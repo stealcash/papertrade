@@ -742,6 +742,18 @@ class OptionStrategyViewSet(viewsets.ModelViewSet):
             serializer.save(user=user)
             SubscriptionService.increment_usage(user, 'OPTION_STRATEGY_CREATE')
 
+    @action(detail=False, methods=['post'])
+    def bulk_delete(self, request):
+        """Delete multiple option strategies."""
+        ids = request.data.get('ids', [])
+        if not ids:
+            return get_error_response('VALIDATION_ERROR', 'No IDs provided', status_code=400)
+        
+        # Security: only delete strategies belonging to the user OR any if admin
+        queryset = self.get_queryset()
+        queryset.filter(id__in=ids).delete()
+        return get_success_response(None, message='Option strategies deleted successfully')
+
     def list(self, request):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)

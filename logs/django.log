@@ -1,495 +1,425 @@
-INFO 2026-02-12 23:27:31,047 autoreload Watching for file changes with StatReloader
-INFO 2026-02-12 23:28:09,821 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-12 23:28:09,829 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
-INFO 2026-02-12 23:28:09,843 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
-INFO 2026-02-12 23:28:09,865 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
-INFO 2026-02-12 23:28:09,890 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
-INFO 2026-02-12 23:28:09,896 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-12 23:28:12,424 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-12 23:28:12,869 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-12 23:28:14,619 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-12 23:28:14,871 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:28:15,123 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-12 23:28:17,322 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:28:23,086 basehttp "OPTIONS /api/v1/backtest/option-backtest/39/resync/ HTTP/1.1" 200 0
-DEBUG 2026-02-12 23:28:26,456 connectionpool Starting new HTTP connection (1): localhost:8001
-DEBUG 2026-02-12 23:28:26,494 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
-INFO 2026-02-12 23:28:26,495 option_engine_v2 Option Backtest OPT-BT-91943FDD02B3 delegated to FastAPI successfully
-INFO 2026-02-12 23:28:26,745 basehttp "POST /api/v1/backtest/option-backtest/39/resync/ HTTP/1.1" 200 213
-INFO 2026-02-12 23:28:27,944 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 491
-INFO 2026-02-12 23:28:29,033 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-DEBUG 2026-02-12 23:28:58,783 connectionpool Starting new HTTP connection (1): localhost:8001
-DEBUG 2026-02-12 23:28:58,803 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
-INFO 2026-02-12 23:28:58,803 option_engine_v2 Option Backtest OPT-BT-91943FDD02B3 delegated to FastAPI successfully
-INFO 2026-02-12 23:28:59,047 basehttp "POST /api/v1/backtest/option-backtest/39/resync/ HTTP/1.1" 200 213
-INFO 2026-02-12 23:29:00,272 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 491
-INFO 2026-02-12 23:29:01,526 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:31:27,245 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-12 23:31:27,850 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-12 23:31:29,002 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:31:29,055 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-12 23:31:29,249 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-12 23:31:31,262 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:31:35,621 basehttp "OPTIONS /api/v1/backtest/option-backtest/39/ HTTP/1.1" 200 0
-INFO 2026-02-12 23:31:35,623 basehttp "OPTIONS /api/v1/backtest/option-backtest/39/ HTTP/1.1" 200 0
-INFO 2026-02-12 23:31:38,586 basehttp "GET /api/v1/backtest/option-backtest/39/ HTTP/1.1" 200 3685
-INFO 2026-02-12 23:31:38,605 basehttp "OPTIONS /api/v1/backtest/option-backtest/39/results/ HTTP/1.1" 200 0
-INFO 2026-02-12 23:31:40,108 basehttp "GET /api/v1/backtest/option-backtest/39/results/ HTTP/1.1" 200 2049
-INFO 2026-02-12 23:31:42,586 basehttp "GET /api/v1/backtest/option-backtest/39/ HTTP/1.1" 200 3685
-INFO 2026-02-12 23:31:43,972 basehttp "GET /api/v1/backtest/option-backtest/39/results/ HTTP/1.1" 200 2049
-INFO 2026-02-12 23:32:09,883 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-12 23:32:11,062 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:32:13,252 basehttp "OPTIONS /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 0
-INFO 2026-02-12 23:32:13,257 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
-INFO 2026-02-12 23:32:13,268 basehttp "OPTIONS /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 0
-INFO 2026-02-12 23:32:13,524 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-12 23:32:14,224 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:32:16,099 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1376
-INFO 2026-02-12 23:32:18,426 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:32:20,296 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
-INFO 2026-02-12 23:32:22,716 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1200
-INFO 2026-02-12 23:32:46,881 basehttp "OPTIONS /api/v1/backtest/option-backtest/run/ HTTP/1.1" 200 0
-DEBUG 2026-02-12 23:32:50,850 connectionpool Starting new HTTP connection (1): localhost:8001
-DEBUG 2026-02-12 23:32:50,906 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
-INFO 2026-02-12 23:32:50,906 option_engine_v2 Option Backtest OPT-BT-37DC896CA64E delegated to FastAPI successfully
-INFO 2026-02-12 23:32:51,123 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
-INFO 2026-02-12 23:32:52,431 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 804
-INFO 2026-02-12 23:32:55,312 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:33:04,156 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-12 23:33:05,136 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 813
-INFO 2026-02-12 23:33:06,073 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:33:06,297 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-12 23:33:06,552 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 813
-INFO 2026-02-12 23:33:08,379 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-12 23:33:15,638 basehttp "OPTIONS /api/v1/backtest/option-backtest/40/ HTTP/1.1" 200 0
-INFO 2026-02-12 23:33:15,646 basehttp "OPTIONS /api/v1/backtest/option-backtest/40/ HTTP/1.1" 200 0
-INFO 2026-02-12 23:33:18,648 basehttp "GET /api/v1/backtest/option-backtest/40/ HTTP/1.1" 200 3684
-INFO 2026-02-12 23:33:18,658 basehttp "OPTIONS /api/v1/backtest/option-backtest/40/results/ HTTP/1.1" 200 0
-INFO 2026-02-12 23:33:19,803 basehttp "GET /api/v1/backtest/option-backtest/40/results/ HTTP/1.1" 200 2049
-INFO 2026-02-12 23:33:23,245 basehttp "GET /api/v1/backtest/option-backtest/40/ HTTP/1.1" 200 3684
-INFO 2026-02-12 23:33:24,356 basehttp "GET /api/v1/backtest/option-backtest/40/results/ HTTP/1.1" 200 2049
-INFO 2026-02-13 00:03:39,232 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 813
-INFO 2026-02-13 00:03:40,363 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:03:40,931 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 813
-INFO 2026-02-13 00:03:44,312 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:03:47,379 basehttp "DELETE /api/v1/backtest/option-backtest/39/ HTTP/1.1" 200 128
-INFO 2026-02-13 00:03:48,499 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-13 00:05:46,142 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
-WARNING 2026-02-13 00:05:46,387 log Forbidden: /api/v1/strategies/option-strategies/
-WARNING 2026-02-13 00:05:46,387 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 403 219
-INFO 2026-02-13 00:05:55,319 basehttp "OPTIONS /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:05:57,883 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
-INFO 2026-02-13 00:05:57,891 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:05:58,347 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-13 00:05:58,800 basehttp "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:06:00,150 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-13 00:11:27,801 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:11:31,270 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 1376
-INFO 2026-02-13 00:13:14,199 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:13:16,867 basehttp "POST /api/v1/strategies/option-strategies/ HTTP/1.1" 201 1275
-INFO 2026-02-13 00:13:17,636 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:13:22,566 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-13 00:13:23,728 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:23,934 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-13 00:13:24,886 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:25,035 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-13 00:13:25,346 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:25,692 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:13:25,723 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:25,810 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:26,354 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:26,808 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:27,974 basehttp - Broken pipe from ('127.0.0.1', 64117)
-INFO 2026-02-13 00:13:28,648 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:28,655 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
-INFO 2026-02-13 00:13:29,093 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:29,839 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:31,493 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
-INFO 2026-02-13 00:13:31,500 basehttp "OPTIONS /api/v1/portfolio/holdings/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:13:31,838 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:13:32,377 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
-INFO 2026-02-13 00:13:37,702 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-13 00:13:43,895 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-13 00:13:45,456 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-13 00:13:46,563 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 500
-INFO 2026-02-13 00:13:48,102 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:13:52,261 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:13:54,401 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:13:57,022 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:13:57,300 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
-INFO 2026-02-13 00:13:59,639 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1200
-DEBUG 2026-02-13 00:14:16,575 connectionpool Starting new HTTP connection (1): localhost:8001
-DEBUG 2026-02-13 00:14:16,590 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
-INFO 2026-02-13 00:14:16,591 option_engine_v2 Option Backtest OPT-BT-5ED77C733A88 delegated to FastAPI successfully
-INFO 2026-02-13 00:14:16,847 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
-INFO 2026-02-13 00:14:18,328 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 802
-INFO 2026-02-13 00:14:21,245 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:14:28,426 basehttp "OPTIONS /api/v1/strategies/option-strategies/26/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:14:28,428 basehttp "OPTIONS /api/v1/strategies/option-strategies/26/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:14:31,741 basehttp "OPTIONS /api/v1/strategies/option-strategies/26/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:14:31,744 basehttp "OPTIONS /api/v1/strategies/option-strategies/26/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:14:31,745 basehttp "OPTIONS /api/v1/strategies/option-strategies/26/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:14:31,745 basehttp "OPTIONS /api/v1/strategies/option-strategies/26/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:14:34,029 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-WARNING 2026-02-13 00:14:34,075 log Forbidden: /api/v1/strategies/option-strategies/26/
-WARNING 2026-02-13 00:14:34,075 basehttp "GET /api/v1/strategies/option-strategies/26/ HTTP/1.1" 403 219
-WARNING 2026-02-13 00:14:34,085 log Forbidden: /api/v1/strategies/option-strategies/26/
-WARNING 2026-02-13 00:14:34,085 basehttp "GET /api/v1/strategies/option-strategies/26/ HTTP/1.1" 403 219
-WARNING 2026-02-13 00:14:34,087 log Forbidden: /api/v1/strategies/option-strategies/26/
-WARNING 2026-02-13 00:14:34,087 basehttp "GET /api/v1/strategies/option-strategies/26/ HTTP/1.1" 403 219
-INFO 2026-02-13 00:14:47,989 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
-INFO 2026-02-13 00:14:48,452 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-13 00:14:52,270 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-13 00:16:16,650 basehttp "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:16:19,384 basehttp "GET /api/v1/strategies/master/ HTTP/1.1" 200 1229
-INFO 2026-02-13 00:16:20,039 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:16:23,437 basehttp "OPTIONS /api/v1/strategies/option-strategies/26/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:16:23,437 basehttp "OPTIONS /api/v1/strategies/option-strategies/26/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:16:26,102 basehttp "GET /api/v1/strategies/option-strategies/26/ HTTP/1.1" 200 1275
-INFO 2026-02-13 00:16:29,619 basehttp "GET /api/v1/strategies/option-strategies/26/ HTTP/1.1" 200 1275
-INFO 2026-02-13 00:16:35,955 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:36,570 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:37,034 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:41,342 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:16:42,129 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:16:42,837 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:16:44,349 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:16:46,895 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:16:46,936 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:16:46,940 basehttp - Broken pipe from ('127.0.0.1', 64911)
-INFO 2026-02-13 00:16:47,557 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:16:48,233 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:16:48,263 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:48,706 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:49,168 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:49,608 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:49,636 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:50,109 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:16:50,109 basehttp - Broken pipe from ('127.0.0.1', 64981)
-INFO 2026-02-13 00:16:50,252 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:50,252 basehttp - Broken pipe from ('127.0.0.1', 64983)
-INFO 2026-02-13 00:16:51,578 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:52,475 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
-INFO 2026-02-13 00:16:53,668 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:54,130 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:55,080 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
-INFO 2026-02-13 00:16:56,605 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:16:58,326 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-13 00:17:04,604 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-13 00:17:04,949 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:17:05,611 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:17:06,629 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:17:06,841 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 802
-INFO 2026-02-13 00:17:08,330 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 802
-INFO 2026-02-13 00:17:09,317 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:17:11,900 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:17:14,366 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:17:26,639 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:17:27,355 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 802
-INFO 2026-02-13 00:17:28,716 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:17:28,810 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:17:29,002 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 802
-INFO 2026-02-13 00:17:31,159 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:17:38,829 basehttp "OPTIONS /api/v1/backtest/option-backtest/41/resync/ HTTP/1.1" 200 0
-DEBUG 2026-02-13 00:17:44,667 connectionpool Starting new HTTP connection (1): localhost:8001
-DEBUG 2026-02-13 00:17:44,682 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
-INFO 2026-02-13 00:17:44,683 option_engine_v2 Option Backtest OPT-BT-5ED77C733A88 delegated to FastAPI successfully
-INFO 2026-02-13 00:17:44,916 basehttp "POST /api/v1/backtest/option-backtest/41/resync/ HTTP/1.1" 200 213
-INFO 2026-02-13 00:17:46,812 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 802
-INFO 2026-02-13 00:17:49,906 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:18:11,093 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:18:11,536 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:18:11,951 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 810
-INFO 2026-02-13 00:18:12,881 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:18:13,309 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 810
-INFO 2026-02-13 00:18:17,508 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:18:19,545 basehttp "GET /api/v1/backtest/option-backtest/40/ HTTP/1.1" 200 3684
-INFO 2026-02-13 00:18:20,711 basehttp "GET /api/v1/backtest/option-backtest/40/results/ HTTP/1.1" 200 2049
-INFO 2026-02-13 00:18:22,648 basehttp "GET /api/v1/backtest/option-backtest/40/ HTTP/1.1" 200 3684
-INFO 2026-02-13 00:18:23,943 basehttp "GET /api/v1/backtest/option-backtest/40/results/ HTTP/1.1" 200 2049
-INFO 2026-02-13 00:18:31,168 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 810
-INFO 2026-02-13 00:18:32,111 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:18:34,227 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 810
-INFO 2026-02-13 00:18:34,366 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:18:46,197 basehttp "OPTIONS /api/v1/backtest/option-backtest/41/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:18:46,197 basehttp "OPTIONS /api/v1/backtest/option-backtest/41/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:18:47,154 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:18:47,598 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:18:48,032 basehttp "GET /api/v1/backtest/option-backtest/40/ HTTP/1.1" 200 3684
-INFO 2026-02-13 00:18:49,130 basehttp "GET /api/v1/backtest/option-backtest/41/ HTTP/1.1" 200 2436
-INFO 2026-02-13 00:18:49,135 basehttp "OPTIONS /api/v1/backtest/option-backtest/41/results/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:18:49,184 basehttp "GET /api/v1/backtest/option-backtest/40/results/ HTTP/1.1" 200 2049
-INFO 2026-02-13 00:18:49,399 basehttp "GET /api/v1/backtest/option-backtest/40/ HTTP/1.1" 200 3684
-INFO 2026-02-13 00:18:50,230 basehttp "GET /api/v1/backtest/option-backtest/41/results/ HTTP/1.1" 200 807
-INFO 2026-02-13 00:18:50,611 basehttp "GET /api/v1/backtest/option-backtest/40/results/ HTTP/1.1" 200 2049
-INFO 2026-02-13 00:18:52,143 basehttp "GET /api/v1/backtest/option-backtest/41/ HTTP/1.1" 200 2436
-INFO 2026-02-13 00:18:53,444 basehttp "GET /api/v1/backtest/option-backtest/41/results/ HTTP/1.1" 200 807
-INFO 2026-02-13 00:19:09,894 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 810
-INFO 2026-02-13 00:19:10,902 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:19:11,335 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 810
-INFO 2026-02-13 00:19:12,152 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:19:15,157 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:19:15,975 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
-INFO 2026-02-13 00:19:16,085 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1200
-INFO 2026-02-13 00:19:17,602 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-DEBUG 2026-02-13 00:19:31,607 connectionpool Starting new HTTP connection (1): localhost:8001
-DEBUG 2026-02-13 00:19:31,617 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
-INFO 2026-02-13 00:19:31,617 option_engine_v2 Option Backtest OPT-BT-CC93C90E5632 delegated to FastAPI successfully
-INFO 2026-02-13 00:19:31,837 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
-INFO 2026-02-13 00:19:33,530 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 1112
-INFO 2026-02-13 00:19:36,154 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:20:10,086 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:20:10,581 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:20:11,354 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 1121
-INFO 2026-02-13 00:20:12,096 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:20:13,115 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 1121
-INFO 2026-02-13 00:20:14,538 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:20:19,103 basehttp "OPTIONS /api/v1/backtest/option-backtest/42/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:20:19,103 basehttp "OPTIONS /api/v1/backtest/option-backtest/42/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:20:22,248 basehttp "GET /api/v1/backtest/option-backtest/42/ HTTP/1.1" 200 3360
-INFO 2026-02-13 00:20:22,252 basehttp "OPTIONS /api/v1/backtest/option-backtest/42/results/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:20:23,573 basehttp "GET /api/v1/backtest/option-backtest/42/ HTTP/1.1" 200 3360
-INFO 2026-02-13 00:20:25,178 basehttp "GET /api/v1/backtest/option-backtest/42/results/ HTTP/1.1" 200 1729
-INFO 2026-02-13 00:20:26,325 basehttp "GET /api/v1/backtest/option-backtest/42/results/ HTTP/1.1" 200 1729
-INFO 2026-02-13 00:21:21,617 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:21:28,543 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-13 00:21:28,544 basehttp - Broken pipe from ('127.0.0.1', 65468)
-INFO 2026-02-13 00:21:29,638 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-13 00:21:30,552 basehttp - Broken pipe from ('127.0.0.1', 65482)
-INFO 2026-02-13 00:21:45,276 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
-INFO 2026-02-13 00:21:45,740 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-13 00:21:48,398 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-13 00:21:52,684 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 2652
-INFO 2026-02-13 00:22:34,035 basehttp "POST /api/v1/strategies/option-strategies/ HTTP/1.1" 201 1280
-INFO 2026-02-13 00:22:34,751 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 3933
-INFO 2026-02-13 00:22:38,179 basehttp "OPTIONS /api/v1/strategies/option-strategies/27/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:22:38,183 basehttp "OPTIONS /api/v1/strategies/option-strategies/27/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:22:41,242 basehttp "GET /api/v1/strategies/option-strategies/27/ HTTP/1.1" 200 1280
-INFO 2026-02-13 00:22:44,449 basehttp "GET /api/v1/strategies/option-strategies/27/ HTTP/1.1" 200 1280
-INFO 2026-02-13 00:22:56,550 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:22:56,988 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:22:57,424 basehttp "GET /api/v1/backtest/option-backtest/42/ HTTP/1.1" 200 3360
-INFO 2026-02-13 00:22:57,425 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:22:58,906 basehttp "GET /api/v1/backtest/option-backtest/42/ HTTP/1.1" 200 3360
-INFO 2026-02-13 00:23:00,227 basehttp "GET /api/v1/backtest/option-backtest/42/ HTTP/1.1" 200 3360
-INFO 2026-02-13 00:23:10,401 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-13 00:23:10,647 basehttp "GET /api/v1/strategies/option-strategies/27/ HTTP/1.1" 200 1280
-INFO 2026-02-13 00:23:11,300 basehttp "GET /api/v1/strategies/option-strategies/27/ HTTP/1.1" 200 1280
-INFO 2026-02-13 00:23:11,995 basehttp "GET /api/v1/strategies/option-strategies/27/ HTTP/1.1" 200 1280
-INFO 2026-02-13 00:23:12,668 basehttp "GET /api/v1/strategies/option-strategies/27/ HTTP/1.1" 200 1280
-INFO 2026-02-13 00:23:19,615 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 3933
-INFO 2026-02-13 00:24:14,344 basehttp "POST /api/v1/strategies/option-strategies/ HTTP/1.1" 201 1275
-INFO 2026-02-13 00:24:15,075 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 5209
-INFO 2026-02-13 00:24:17,776 basehttp "OPTIONS /api/v1/strategies/option-strategies/28/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:24:17,777 basehttp "OPTIONS /api/v1/strategies/option-strategies/28/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:24:20,474 basehttp "GET /api/v1/strategies/option-strategies/28/ HTTP/1.1" 200 1275
-INFO 2026-02-13 00:24:22,960 basehttp "GET /api/v1/strategies/option-strategies/28/ HTTP/1.1" 200 1275
-INFO 2026-02-13 00:24:32,420 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-13 00:24:32,637 basehttp "GET /api/v1/strategies/option-strategies/28/ HTTP/1.1" 200 1275
-INFO 2026-02-13 00:24:33,137 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 5209
-INFO 2026-02-13 00:24:33,284 basehttp "GET /api/v1/strategies/option-strategies/28/ HTTP/1.1" 200 1275
-INFO 2026-02-13 00:24:34,149 basehttp "GET /api/v1/strategies/option-strategies/28/ HTTP/1.1" 200 1275
-INFO 2026-02-13 00:24:34,847 basehttp "GET /api/v1/strategies/option-strategies/28/ HTTP/1.1" 200 1275
-INFO 2026-02-13 00:25:45,866 basehttp "POST /api/v1/strategies/option-strategies/ HTTP/1.1" 201 1281
-INFO 2026-02-13 00:25:46,616 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 6491
-INFO 2026-02-13 00:25:51,903 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:25:51,903 basehttp - Broken pipe from ('127.0.0.1', 49236)
-INFO 2026-02-13 00:25:53,334 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:25:53,997 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:25:55,586 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:25:56,159 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:25:56,168 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:25:56,600 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:25:57,067 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:26:19,222 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:26:19,692 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:26:20,477 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:26:22,192 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
-INFO 2026-02-13 00:26:22,626 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:26:23,071 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
-INFO 2026-02-13 00:26:29,991 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-13 00:26:35,894 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-13 00:26:45,778 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 1121
-INFO 2026-02-13 00:26:46,015 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:26:48,871 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 1121
-INFO 2026-02-13 00:26:50,092 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:26:50,829 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 6491
-INFO 2026-02-13 00:26:52,489 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:26:52,917 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
-INFO 2026-02-13 00:26:54,739 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1200
-DEBUG 2026-02-13 00:27:23,673 connectionpool Starting new HTTP connection (1): localhost:8001
-DEBUG 2026-02-13 00:27:23,683 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
-INFO 2026-02-13 00:27:23,683 option_engine_v2 Option Backtest OPT-BT-428FDBD80570 delegated to FastAPI successfully
-INFO 2026-02-13 00:27:23,926 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
-INFO 2026-02-13 00:27:25,971 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 1425
-INFO 2026-02-13 00:27:27,791 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:27:36,178 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 6491
-INFO 2026-02-13 00:27:37,923 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:27:38,398 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
-INFO 2026-02-13 00:27:40,234 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1200
-DEBUG 2026-02-13 00:27:57,416 connectionpool Starting new HTTP connection (1): localhost:8001
-DEBUG 2026-02-13 00:27:57,424 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
-INFO 2026-02-13 00:27:57,425 option_engine_v2 Option Backtest OPT-BT-2B390CF680A5 delegated to FastAPI successfully
-INFO 2026-02-13 00:27:57,648 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
-INFO 2026-02-13 00:27:59,968 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 1735
-INFO 2026-02-13 00:28:00,793 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 6491
-INFO 2026-02-13 00:28:02,362 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:28:04,580 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
-INFO 2026-02-13 00:28:04,806 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:28:06,639 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1200
-DEBUG 2026-02-13 00:28:09,836 connectionpool Starting new HTTP connection (1): localhost:8001
-DEBUG 2026-02-13 00:28:09,843 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
-INFO 2026-02-13 00:28:09,843 option_engine_v2 Option Backtest OPT-BT-A8F8270CA670 delegated to FastAPI successfully
-INFO 2026-02-13 00:28:10,210 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
-INFO 2026-02-13 00:28:12,680 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2046
-INFO 2026-02-13 00:28:14,058 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:28:25,620 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:28:26,073 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:28:26,583 basehttp "GET /api/v1/backtest/option-backtest/41/ HTTP/1.1" 200 2436
-INFO 2026-02-13 00:28:27,966 basehttp "GET /api/v1/backtest/option-backtest/41/results/ HTTP/1.1" 200 807
-INFO 2026-02-13 00:28:28,190 basehttp "GET /api/v1/backtest/option-backtest/41/ HTTP/1.1" 200 2436
-INFO 2026-02-13 00:28:29,460 basehttp "GET /api/v1/backtest/option-backtest/41/results/ HTTP/1.1" 200 807
-INFO 2026-02-13 00:28:37,345 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:28:38,398 basehttp "GET /api/v1/backtest/option-backtest/40/ HTTP/1.1" 200 3684
-INFO 2026-02-13 00:28:39,468 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:28:39,584 basehttp "GET /api/v1/backtest/option-backtest/40/results/ HTTP/1.1" 200 2049
-INFO 2026-02-13 00:28:39,802 basehttp "GET /api/v1/backtest/option-backtest/40/ HTTP/1.1" 200 3684
-INFO 2026-02-13 00:28:40,889 basehttp "GET /api/v1/backtest/option-backtest/40/results/ HTTP/1.1" 200 2049
-INFO 2026-02-13 00:28:46,543 basehttp "OPTIONS /api/v1/backtest/option-backtest/43/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:28:46,546 basehttp "OPTIONS /api/v1/backtest/option-backtest/43/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:28:48,515 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:28:48,967 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:28:49,379 basehttp "GET /api/v1/backtest/option-backtest/43/ HTTP/1.1" 200 2442
-INFO 2026-02-13 00:28:49,384 basehttp "OPTIONS /api/v1/backtest/option-backtest/43/results/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:28:50,616 basehttp "GET /api/v1/backtest/option-backtest/43/results/ HTTP/1.1" 200 807
-INFO 2026-02-13 00:28:50,855 basehttp "GET /api/v1/backtest/option-backtest/43/ HTTP/1.1" 200 2442
-INFO 2026-02-13 00:28:52,183 basehttp "GET /api/v1/backtest/option-backtest/43/results/ HTTP/1.1" 200 807
-INFO 2026-02-13 00:29:47,020 basehttp "OPTIONS /api/v1/backtest/option-backtest/44/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:29:47,024 basehttp "OPTIONS /api/v1/backtest/option-backtest/44/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:29:49,074 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:29:50,135 basehttp "GET /api/v1/backtest/option-backtest/44/ HTTP/1.1" 200 3387
-INFO 2026-02-13 00:29:50,137 basehttp "OPTIONS /api/v1/backtest/option-backtest/44/results/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:29:51,019 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:29:51,258 basehttp "GET /api/v1/backtest/option-backtest/44/results/ HTTP/1.1" 200 1743
-INFO 2026-02-13 00:29:51,452 basehttp "GET /api/v1/backtest/option-backtest/44/ HTTP/1.1" 200 3387
-INFO 2026-02-13 00:29:52,593 basehttp "GET /api/v1/backtest/option-backtest/44/results/ HTTP/1.1" 200 1743
-INFO 2026-02-13 00:37:30,768 basehttp "OPTIONS /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:37:30,778 basehttp "OPTIONS /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:37:34,327 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 3689
-INFO 2026-02-13 00:37:34,333 basehttp "OPTIONS /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:37:35,545 basehttp "GET /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 2050
-INFO 2026-02-13 00:37:37,394 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 3689
-INFO 2026-02-13 00:37:38,657 basehttp "GET /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 2050
-INFO 2026-02-13 00:37:46,856 basehttp "OPTIONS /api/v1/strategies/option-strategies/29/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:37:46,858 basehttp "OPTIONS /api/v1/strategies/option-strategies/29/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:37:51,444 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-13 00:37:51,444 basehttp - Broken pipe from ('127.0.0.1', 49511)
-INFO 2026-02-13 00:37:51,910 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-13 00:37:52,714 basehttp - Broken pipe from ('127.0.0.1', 49522)
-INFO 2026-02-13 00:38:14,683 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
-INFO 2026-02-13 00:38:15,131 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-13 00:38:17,990 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-13 00:38:22,060 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 6491
-INFO 2026-02-13 00:38:24,132 basehttp "OPTIONS /api/v1/strategies/option-strategies/29/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:38:24,133 basehttp "OPTIONS /api/v1/strategies/option-strategies/29/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:38:26,432 basehttp "GET /api/v1/strategies/option-strategies/29/ HTTP/1.1" 200 1281
-INFO 2026-02-13 00:38:28,649 basehttp "GET /api/v1/strategies/option-strategies/29/ HTTP/1.1" 200 1281
-INFO 2026-02-13 00:43:10,189 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:43:11,284 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2055
-INFO 2026-02-13 00:43:12,510 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:43:14,720 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:43:15,236 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2055
-INFO 2026-02-13 00:43:16,933 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:17,372 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:17,626 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2055
-INFO 2026-02-13 00:43:17,846 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:21,569 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:21,993 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:22,014 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:22,567 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:22,572 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:22,997 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:23,440 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:30,235 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 6491
-INFO 2026-02-13 00:43:30,955 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 6491
-INFO 2026-02-13 00:43:31,655 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 6491
-INFO 2026-02-13 00:43:31,714 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:43:34,050 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:43:36,639 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:43:38,542 basehttp - Broken pipe from ('127.0.0.1', 49620)
-INFO 2026-02-13 00:43:41,320 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:41,786 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:42,257 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:43,122 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:43:44,789 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
-INFO 2026-02-13 00:43:45,925 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
-INFO 2026-02-13 00:43:51,284 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-13 00:43:58,567 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-13 00:44:08,978 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 6491
-INFO 2026-02-13 00:44:10,432 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:44:11,680 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 6491
-INFO 2026-02-13 00:44:12,820 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:44:12,834 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2055
-INFO 2026-02-13 00:44:15,272 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:44:17,104 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2055
-INFO 2026-02-13 00:44:17,695 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:44:31,725 basehttp "GET /api/v1/backtest/option-backtest/44/ HTTP/1.1" 200 3387
-INFO 2026-02-13 00:44:33,312 basehttp "GET /api/v1/backtest/option-backtest/44/ HTTP/1.1" 200 3387
-INFO 2026-02-13 00:44:34,792 basehttp "GET /api/v1/backtest/option-backtest/44/results/ HTTP/1.1" 200 1743
-INFO 2026-02-13 00:44:36,383 basehttp "GET /api/v1/backtest/option-backtest/44/results/ HTTP/1.1" 200 1743
-INFO 2026-02-13 00:45:37,979 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:45:38,574 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2055
-INFO 2026-02-13 00:45:40,212 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1157
-INFO 2026-02-13 00:45:42,601 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 2055
-INFO 2026-02-13 00:45:47,942 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 3689
-INFO 2026-02-13 00:45:49,223 basehttp "GET /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 2050
-INFO 2026-02-13 00:45:51,094 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 3689
-INFO 2026-02-13 00:45:52,281 basehttp "GET /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 2050
-INFO 2026-02-13 00:47:20,687 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:47:21,133 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:47:21,749 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 3689
-INFO 2026-02-13 00:47:22,877 basehttp "GET /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 2050
-INFO 2026-02-13 00:47:23,265 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 3689
-INFO 2026-02-13 00:47:24,541 basehttp "GET /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 2050
-INFO 2026-02-13 00:51:47,708 basehttp "OPTIONS /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:51:47,740 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-13 00:51:47,747 basehttp "OPTIONS /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:51:47,755 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-13 00:51:49,785 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
-WARNING 2026-02-13 00:51:50,014 log Not Found: /api/v1/backtest/option-backtest/45/
-WARNING 2026-02-13 00:51:50,014 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 404 172
-INFO 2026-02-13 00:51:50,223 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
-WARNING 2026-02-13 00:51:50,850 log Not Found: /api/v1/backtest/option-backtest/45/
-WARNING 2026-02-13 00:51:50,850 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 404 172
-INFO 2026-02-13 00:53:13,918 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-13 00:53:13,926 basehttp "OPTIONS /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:53:13,933 basehttp "OPTIONS /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 0
-INFO 2026-02-13 00:53:13,940 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-13 00:53:16,020 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
-WARNING 2026-02-13 00:53:16,232 log Not Found: /api/v1/backtest/option-backtest/45/
-WARNING 2026-02-13 00:53:16,232 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 404 172
-INFO 2026-02-13 00:53:16,487 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 330
-WARNING 2026-02-13 00:53:17,002 log Not Found: /api/v1/backtest/option-backtest/45/
-WARNING 2026-02-13 00:53:17,004 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 404 172
-INFO 2026-02-13 00:54:08,506 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:54:09,430 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 3804
-INFO 2026-02-13 00:54:10,603 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:54:10,623 basehttp "GET /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 2164
-INFO 2026-02-13 00:54:10,821 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 3804
-INFO 2026-02-13 00:54:11,973 basehttp "GET /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 2164
-INFO 2026-02-13 00:58:30,432 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:58:31,596 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 3804
-INFO 2026-02-13 00:58:32,658 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-13 00:58:32,831 basehttp "GET /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 2164
-INFO 2026-02-13 00:58:33,044 basehttp "GET /api/v1/backtest/option-backtest/45/ HTTP/1.1" 200 3804
-INFO 2026-02-13 00:58:34,141 basehttp "GET /api/v1/backtest/option-backtest/45/results/ HTTP/1.1" 200 2164
+INFO 2026-02-14 16:30:51,605 autoreload Watching for file changes with StatReloader
+INFO 2026-02-14 16:30:57,447 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:30:57,883 basehttp "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:30:59,908 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-14 16:31:01,957 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
+INFO 2026-02-14 16:32:53,642 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:32:57,780 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 16178
+INFO 2026-02-14 16:33:55,772 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-14 16:34:35,531 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:35,533 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:36,131 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:36,131 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:51,266 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:51,267 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:51,267 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:51,267 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:53,688 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:53,694 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:53,695 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:53,695 basehttp "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:53,698 basehttp "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:53,699 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:56,837 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:34:56,837 basehttp - Broken pipe from ('127.0.0.1', 52875)
+INFO 2026-02-14 16:34:57,358 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:34:57,358 basehttp - Broken pipe from ('127.0.0.1', 52841)
+INFO 2026-02-14 16:34:58,154 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:34:58,155 basehttp - Broken pipe from ('127.0.0.1', 52890)
+INFO 2026-02-14 16:34:58,157 basehttp - Broken pipe from ('127.0.0.1', 52880)
+INFO 2026-02-14 16:34:58,373 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:34:58,378 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
+INFO 2026-02-14 16:34:58,822 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:34:59,270 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:35:01,052 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:35:01,052 basehttp - Broken pipe from ('127.0.0.1', 52889)
+INFO 2026-02-14 16:35:01,601 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:35:01,765 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-14 16:35:01,771 basehttp "OPTIONS /api/v1/portfolio/holdings/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:35:02,979 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 336
+INFO 2026-02-14 16:35:09,804 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
+INFO 2026-02-14 16:35:16,906 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:35:18,158 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
+INFO 2026-02-14 16:35:18,159 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:35:19,620 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:35:24,535 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:35:35,771 basehttp "OPTIONS /api/v1/backtest/option-backtest/71/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:35:35,771 basehttp "OPTIONS /api/v1/backtest/option-backtest/71/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:35:38,839 basehttp "GET /api/v1/backtest/option-backtest/71/ HTTP/1.1" 200 3179
+INFO 2026-02-14 16:35:38,842 basehttp "OPTIONS /api/v1/backtest/option-backtest/71/results/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:35:40,201 basehttp "GET /api/v1/backtest/option-backtest/71/results/ HTTP/1.1" 200 1487
+INFO 2026-02-14 16:35:40,210 basehttp "GET /api/v1/backtest/option-backtest/71/ HTTP/1.1" 200 3179
+INFO 2026-02-14 16:35:41,897 basehttp "GET /api/v1/backtest/option-backtest/71/results/ HTTP/1.1" 200 1487
+INFO 2026-02-14 16:36:07,755 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:36:07,756 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:36:08,379 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:36:09,027 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:36:09,345 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 16178
+INFO 2026-02-14 16:36:11,210 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:36:11,813 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 16178
+INFO 2026-02-14 16:36:14,870 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:36:19,172 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:36:22,226 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:40:56,089 basehttp "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:40:58,676 basehttp "POST /api/v1/strategies/option-strategies/ HTTP/1.1" 201 1313
+INFO 2026-02-14 16:41:00,872 basehttp "OPTIONS /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-14 16:41:00,874 basehttp "OPTIONS /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-14 16:41:01,800 basehttp "GET /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-14 16:41:02,732 basehttp "GET /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-14 16:41:06,431 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:41:06,883 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:41:09,134 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:41:09,923 basehttp "OPTIONS /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 0
+INFO 2026-02-14 16:41:09,925 basehttp "OPTIONS /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 0
+INFO 2026-02-14 16:41:10,859 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:41:11,044 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17492
+INFO 2026-02-14 16:41:11,493 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:41:14,647 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:41:15,052 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1200
+INFO 2026-02-14 16:41:15,326 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
+INFO 2026-02-14 16:41:16,873 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:41:27,058 basehttp "OPTIONS /api/v1/backtest/option-backtest/run/ HTTP/1.1" 200 0
+WARNING 2026-02-14 16:41:28,420 log Bad Request: /api/v1/backtest/option-backtest/run/
+WARNING 2026-02-14 16:41:28,420 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 400 192
+DEBUG 2026-02-14 16:41:41,466 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 16:41:41,488 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 16:41:41,488 option_engine_v2 Option Backtest OPT-BT-CE9564586F6B delegated to FastAPI successfully
+INFO 2026-02-14 16:41:41,719 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
+INFO 2026-02-14 16:41:44,086 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:41:46,293 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 16:42:00,538 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17492
+INFO 2026-02-14 16:42:02,110 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:42:02,510 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17492
+INFO 2026-02-14 16:42:04,353 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:42:05,262 basehttp "OPTIONS /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:42:05,262 basehttp "OPTIONS /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:42:05,916 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1313
+INFO 2026-02-14 16:42:06,585 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1313
+INFO 2026-02-14 16:42:14,815 basehttp "OPTIONS /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:42:14,815 basehttp "OPTIONS /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:42:17,010 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 3192
+INFO 2026-02-14 16:42:17,015 basehttp "OPTIONS /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:42:18,857 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 1507
+INFO 2026-02-14 16:42:19,171 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 3192
+INFO 2026-02-14 16:42:21,020 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 1507
+INFO 2026-02-14 16:42:52,407 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17492
+INFO 2026-02-14 16:42:53,406 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:42:53,743 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17492
+INFO 2026-02-14 16:42:55,743 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:42:57,955 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1313
+INFO 2026-02-14 16:42:58,865 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1313
+INFO 2026-02-14 16:44:02,461 basehttp "OPTIONS /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:44:03,844 basehttp "PUT /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1310
+INFO 2026-02-14 16:44:05,583 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17489
+INFO 2026-02-14 16:44:07,250 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:44:07,628 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17489
+INFO 2026-02-14 16:44:10,326 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:44:12,600 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:44:13,715 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4532
+INFO 2026-02-14 16:44:15,764 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:44:18,328 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4532
+INFO 2026-02-14 16:44:20,053 basehttp "OPTIONS /api/v1/backtest/option-backtest/81/resync/ HTTP/1.1" 200 0
+DEBUG 2026-02-14 16:44:24,601 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 16:44:24,614 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 16:44:24,614 option_engine_v2 Option Backtest OPT-BT-CE9564586F6B delegated to FastAPI successfully
+INFO 2026-02-14 16:44:24,908 basehttp "POST /api/v1/backtest/option-backtest/81/resync/ HTTP/1.1" 200 213
+INFO 2026-02-14 16:44:27,501 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:44:29,789 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 16:44:31,645 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:44:32,086 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:44:32,518 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 1783
+INFO 2026-02-14 16:44:33,399 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 188
+INFO 2026-02-14 16:44:33,824 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 1783
+INFO 2026-02-14 16:44:34,758 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 188
+INFO 2026-02-14 16:44:44,023 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:44:44,643 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:44:45,460 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 3102
+INFO 2026-02-14 16:44:46,913 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 1507
+INFO 2026-02-14 16:44:47,829 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 3188
+INFO 2026-02-14 16:44:49,374 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 1507
+INFO 2026-02-14 16:44:57,494 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1310
+INFO 2026-02-14 16:45:01,731 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1310
+INFO 2026-02-14 16:45:11,373 basehttp "PUT /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1309
+INFO 2026-02-14 16:45:12,515 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17488
+INFO 2026-02-14 16:45:13,622 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17488
+INFO 2026-02-14 16:45:13,771 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:45:16,666 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:45:16,666 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:45:19,503 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:45:21,492 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4532
+INFO 2026-02-14 16:45:22,105 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:45:25,279 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:45:26,302 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4532
+INFO 2026-02-14 16:45:32,601 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1309
+INFO 2026-02-14 16:45:33,382 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1309
+DEBUG 2026-02-14 16:45:34,505 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 16:45:34,518 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 16:45:34,518 option_engine_v2 Option Backtest OPT-BT-CE9564586F6B delegated to FastAPI successfully
+INFO 2026-02-14 16:45:34,814 basehttp "POST /api/v1/backtest/option-backtest/81/resync/ HTTP/1.1" 200 213
+INFO 2026-02-14 16:45:37,462 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:45:38,799 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17488
+INFO 2026-02-14 16:45:39,007 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 16:45:39,907 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17488
+INFO 2026-02-14 16:45:40,755 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:45:43,034 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:45:43,164 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1309
+INFO 2026-02-14 16:45:43,823 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1309
+INFO 2026-02-14 16:56:48,695 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:56:51,158 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:56:51,631 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:56:53,185 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:56:54,611 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:56:58,071 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+DEBUG 2026-02-14 16:57:00,726 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 16:57:00,768 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 16:57:00,768 option_engine_v2 Option Backtest OPT-BT-CE9564586F6B delegated to FastAPI successfully
+INFO 2026-02-14 16:57:00,994 basehttp "POST /api/v1/backtest/option-backtest/81/resync/ HTTP/1.1" 200 213
+INFO 2026-02-14 16:57:03,605 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:57:05,131 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 16:57:23,070 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:57:23,532 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:57:23,841 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 1782
+INFO 2026-02-14 16:57:24,782 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 188
+INFO 2026-02-14 16:57:25,284 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 1782
+INFO 2026-02-14 16:57:26,229 basehttp - Broken pipe from ('127.0.0.1', 53255)
+INFO 2026-02-14 16:57:27,380 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:57:27,887 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:57:28,342 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 1782
+INFO 2026-02-14 16:57:29,285 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 188
+INFO 2026-02-14 16:57:30,068 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 1782
+INFO 2026-02-14 16:57:31,030 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 188
+INFO 2026-02-14 16:57:39,013 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:57:39,540 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:57:40,230 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 3174
+INFO 2026-02-14 16:57:41,856 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 1507
+INFO 2026-02-14 16:57:42,925 basehttp "GET /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 3174
+INFO 2026-02-14 16:57:44,579 basehttp "GET /api/v1/backtest/option-backtest/81/results/ HTTP/1.1" 200 1507
+INFO 2026-02-14 16:58:23,389 basehttp "DELETE /api/v1/backtest/option-backtest/81/ HTTP/1.1" 200 128
+INFO 2026-02-14 16:58:25,323 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:58:25,575 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1309
+INFO 2026-02-14 16:58:26,322 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1309
+INFO 2026-02-14 16:58:27,426 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:58:29,384 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:58:47,286 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17488
+INFO 2026-02-14 16:58:47,722 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:58:48,280 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
+INFO 2026-02-14 16:58:50,680 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1200
+INFO 2026-02-14 16:58:51,146 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:58:57,422 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:59:00,619 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:59:01,405 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:59:03,772 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:59:07,890 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17488
+INFO 2026-02-14 16:59:10,020 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
+INFO 2026-02-14 16:59:10,820 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:59:13,305 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1200
+INFO 2026-02-14 16:59:13,704 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+DEBUG 2026-02-14 16:59:31,339 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 16:59:31,355 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 16:59:31,356 option_engine_v2 Option Backtest OPT-BT-E655195ED4E2 delegated to FastAPI successfully
+INFO 2026-02-14 16:59:32,047 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
+INFO 2026-02-14 16:59:34,283 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:59:36,069 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 16:59:44,507 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:59:44,965 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:59:46,940 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:59:47,845 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:59:49,283 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 16:59:53,674 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 16:59:54,563 basehttp "OPTIONS /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:59:54,573 basehttp "OPTIONS /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:59:55,257 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:59:55,710 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 16:59:55,977 basehttp "GET /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 3174
+INFO 2026-02-14 16:59:55,984 basehttp "OPTIONS /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 0
+INFO 2026-02-14 16:59:57,501 basehttp "GET /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 1507
+INFO 2026-02-14 16:59:58,080 basehttp "GET /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 3174
+INFO 2026-02-14 16:59:59,489 basehttp "GET /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 1507
+INFO 2026-02-14 17:20:59,490 basehttp "OPTIONS /api/v1/backtest/option-backtest/82/resync/ HTTP/1.1" 200 0
+DEBUG 2026-02-14 17:21:06,554 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 17:21:06,668 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 17:21:06,670 option_engine_v2 Option Backtest OPT-BT-E655195ED4E2 delegated to FastAPI successfully
+INFO 2026-02-14 17:21:06,889 basehttp "POST /api/v1/backtest/option-backtest/82/resync/ HTTP/1.1" 200 213
+INFO 2026-02-14 17:21:10,227 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:21:10,737 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:21:39,386 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:21:40,273 basehttp "GET /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 3163
+INFO 2026-02-14 17:21:41,518 basehttp "GET /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 1495
+INFO 2026-02-14 17:21:41,741 basehttp "GET /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 3163
+INFO 2026-02-14 17:21:41,823 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:21:42,953 basehttp "GET /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 1495
+INFO 2026-02-14 17:22:18,474 basehttp "PUT /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1310
+INFO 2026-02-14 17:22:20,292 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17489
+INFO 2026-02-14 17:22:23,840 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17489
+INFO 2026-02-14 17:22:23,905 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:22:26,732 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:22:27,044 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:22:28,636 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4519
+INFO 2026-02-14 17:22:29,068 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:22:29,199 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:22:33,372 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:22:37,089 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4519
+DEBUG 2026-02-14 17:22:38,875 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 17:22:38,937 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 17:22:38,939 option_engine_v2 Option Backtest OPT-BT-E655195ED4E2 delegated to FastAPI successfully
+INFO 2026-02-14 17:22:39,265 basehttp "POST /api/v1/backtest/option-backtest/82/resync/ HTTP/1.1" 200 213
+INFO 2026-02-14 17:22:42,592 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:22:44,142 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:22:45,417 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:22:46,347 basehttp "GET /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 1783
+INFO 2026-02-14 17:22:47,839 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:22:47,897 basehttp "GET /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 1487
+INFO 2026-02-14 17:22:48,342 basehttp "GET /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 3154
+INFO 2026-02-14 17:22:50,178 basehttp "GET /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 1487
+INFO 2026-02-14 17:23:12,859 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1310
+INFO 2026-02-14 17:23:16,139 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1310
+INFO 2026-02-14 17:24:08,958 basehttp "PUT /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1310
+INFO 2026-02-14 17:24:10,615 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17489
+INFO 2026-02-14 17:24:12,839 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:24:13,414 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:24:13,722 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17489
+INFO 2026-02-14 17:24:14,738 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 17:24:14,945 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:24:15,935 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:24:19,253 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:24:19,546 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4518
+INFO 2026-02-14 17:24:24,162 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+DEBUG 2026-02-14 17:24:28,624 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 17:24:28,645 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 17:24:28,646 option_engine_v2 Option Backtest OPT-BT-E655195ED4E2 delegated to FastAPI successfully
+INFO 2026-02-14 17:24:28,935 basehttp "POST /api/v1/backtest/option-backtest/82/resync/ HTTP/1.1" 200 213
+INFO 2026-02-14 17:24:32,738 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:24:33,397 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:24:41,478 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:24:43,170 basehttp "GET /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 3197
+INFO 2026-02-14 17:24:44,340 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:24:44,603 basehttp "GET /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 1529
+INFO 2026-02-14 17:24:46,653 basehttp "GET /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 3197
+INFO 2026-02-14 17:24:48,095 basehttp "GET /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 1529
+INFO 2026-02-14 17:27:31,052 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1310
+INFO 2026-02-14 17:27:33,983 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1310
+INFO 2026-02-14 17:35:11,943 basehttp "PUT /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1309
+INFO 2026-02-14 17:35:13,379 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17488
+INFO 2026-02-14 17:35:15,772 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17488
+INFO 2026-02-14 17:35:16,511 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:35:19,006 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:35:43,407 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:35:45,659 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:35:46,220 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:35:48,053 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4519
+INFO 2026-02-14 17:35:49,254 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:35:54,428 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4519
+INFO 2026-02-14 17:35:57,151 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:35:57,229 basehttp "GET /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 3197
+INFO 2026-02-14 17:35:57,657 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:35:59,404 basehttp "GET /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 1529
+INFO 2026-02-14 17:36:01,751 basehttp "GET /api/v1/backtest/option-backtest/82/ HTTP/1.1" 200 1856
+INFO 2026-02-14 17:36:02,760 basehttp "GET /api/v1/backtest/option-backtest/82/results/ HTTP/1.1" 200 188
+DEBUG 2026-02-14 17:36:02,850 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 17:36:02,902 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 17:36:02,903 option_engine_v2 Option Backtest OPT-BT-E655195ED4E2 delegated to FastAPI successfully
+INFO 2026-02-14 17:36:03,160 basehttp "POST /api/v1/backtest/option-backtest/82/resync/ HTTP/1.1" 200 213
+INFO 2026-02-14 17:36:05,487 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:36:08,173 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:36:17,373 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:36:19,175 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:36:19,437 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:36:20,578 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:36:22,285 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:36:25,174 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:37:10,638 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:37:12,342 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:37:12,781 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:37:14,775 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:37:15,318 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:37:19,176 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:37:37,488 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:37:39,307 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:37:39,448 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:37:40,645 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:37:41,783 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:37:44,628 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:38:12,118 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:38:14,136 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:38:14,360 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:38:15,247 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:38:18,235 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:38:19,046 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:38:36,751 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:38:38,754 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:38:38,870 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:38:39,432 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:38:41,400 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:38:43,909 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:38:57,198 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:38:59,071 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:38:59,293 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:39:00,767 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:39:03,500 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:39:04,378 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4459
+INFO 2026-02-14 17:39:11,882 basehttp "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 17488
+INFO 2026-02-14 17:39:13,275 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:39:13,919 basehttp "GET /api/v1/stocks/?is_index=false&is_option_enable=true&page_size=200 HTTP/1.1" 200 1050
+INFO 2026-02-14 17:39:16,119 basehttp "GET /api/v1/stocks/?is_index=true&is_option_enable=true HTTP/1.1" 200 1200
+DEBUG 2026-02-14 17:39:45,161 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 17:39:45,202 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 17:39:45,203 option_engine_v2 Option Backtest OPT-BT-1637C0FE5715 delegated to FastAPI successfully
+INFO 2026-02-14 17:39:45,573 basehttp "POST /api/v1/backtest/option-backtest/run/ HTTP/1.1" 201 214
+INFO 2026-02-14 17:39:49,446 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:39:49,575 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4400
+INFO 2026-02-14 17:40:17,862 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:40:19,975 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:40:20,234 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 17:40:20,534 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4460
+INFO 2026-02-14 17:40:22,601 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 17:40:25,109 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4460
+INFO 2026-02-14 17:40:32,868 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1309
+INFO 2026-02-14 17:40:35,913 basehttp "GET /api/v1/strategies/option-strategies/52/ HTTP/1.1" 200 1309
+INFO 2026-02-14 17:40:50,104 basehttp "OPTIONS /api/v1/backtest/option-backtest/83/ HTTP/1.1" 200 0
+INFO 2026-02-14 17:40:50,122 basehttp "OPTIONS /api/v1/backtest/option-backtest/83/ HTTP/1.1" 200 0
+INFO 2026-02-14 17:40:53,822 basehttp "GET /api/v1/backtest/option-backtest/83/ HTTP/1.1" 200 3197
+INFO 2026-02-14 17:40:53,836 basehttp "OPTIONS /api/v1/backtest/option-backtest/83/results/ HTTP/1.1" 200 0
+INFO 2026-02-14 17:40:55,060 basehttp "GET /api/v1/backtest/option-backtest/83/results/ HTTP/1.1" 200 1529
+INFO 2026-02-14 17:40:57,294 basehttp "GET /api/v1/backtest/option-backtest/83/ HTTP/1.1" 200 3197
+INFO 2026-02-14 17:40:58,788 basehttp "GET /api/v1/backtest/option-backtest/83/results/ HTTP/1.1" 200 1529
+INFO 2026-02-14 18:05:42,779 basehttp - Broken pipe from ('127.0.0.1', 54878)
+INFO 2026-02-14 18:05:43,381 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 18:05:43,800 basehttp - Broken pipe from ('127.0.0.1', 54876)
+INFO 2026-02-14 18:05:44,974 basehttp - Broken pipe from ('127.0.0.1', 54883)
+INFO 2026-02-14 18:05:45,010 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 18:05:45,462 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 18:05:47,332 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 18:05:47,880 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4473
+INFO 2026-02-14 18:05:51,260 basehttp "OPTIONS /api/v1/backtest/option-backtest/83/resync/ HTTP/1.1" 200 0
+INFO 2026-02-14 18:05:53,279 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4473
+DEBUG 2026-02-14 18:05:54,741 connectionpool Starting new HTTP connection (1): localhost:8001
+DEBUG 2026-02-14 18:05:54,765 connectionpool http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51
+INFO 2026-02-14 18:05:54,766 option_engine_v2 Option Backtest OPT-BT-1637C0FE5715 delegated to FastAPI successfully
+INFO 2026-02-14 18:05:54,982 basehttp "POST /api/v1/backtest/option-backtest/83/resync/ HTTP/1.1" 200 213
+INFO 2026-02-14 18:05:57,178 basehttp "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 1159
+INFO 2026-02-14 18:05:58,490 basehttp "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 4400
+INFO 2026-02-14 18:06:05,319 basehttp "OPTIONS /api/v1/backtest/option-backtest/80/ HTTP/1.1" 200 0
+INFO 2026-02-14 18:06:05,320 basehttp "OPTIONS /api/v1/backtest/option-backtest/80/ HTTP/1.1" 200 0
+INFO 2026-02-14 18:06:05,768 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 18:06:06,214 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 18:06:06,633 basehttp "GET /api/v1/backtest/option-backtest/80/ HTTP/1.1" 200 2853
+INFO 2026-02-14 18:06:06,638 basehttp "OPTIONS /api/v1/backtest/option-backtest/80/results/ HTTP/1.1" 200 0
+INFO 2026-02-14 18:06:07,840 basehttp "GET /api/v1/backtest/option-backtest/80/results/ HTTP/1.1" 200 1164
+INFO 2026-02-14 18:06:08,002 basehttp "GET /api/v1/backtest/option-backtest/80/ HTTP/1.1" 200 2853
+INFO 2026-02-14 18:06:09,562 basehttp "GET /api/v1/backtest/option-backtest/80/results/ HTTP/1.1" 200 1164
+INFO 2026-02-14 18:06:26,702 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 18:06:27,146 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
+INFO 2026-02-14 18:06:27,811 basehttp "GET /api/v1/backtest/option-backtest/83/ HTTP/1.1" 200 9613
+INFO 2026-02-14 18:06:29,264 basehttp "GET /api/v1/backtest/option-backtest/83/results/ HTTP/1.1" 200 3570
+INFO 2026-02-14 18:06:29,810 basehttp "GET /api/v1/backtest/option-backtest/83/ HTTP/1.1" 200 9613
+INFO 2026-02-14 18:06:31,532 basehttp "GET /api/v1/backtest/option-backtest/83/results/ HTTP/1.1" 200 3570
 SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
 SETTINGS-DEBUG: .env exists: True
 SETTINGS-DEBUG: Loaded .env successfully
 Performing system checks...
 
 System check identified no issues (0 silenced).
-February 12, 2026 - 23:27:34
+February 14, 2026 - 16:30:54
 Django version 5.1.4, using settings 'config.settings'
 Starting development server at http://0.0.0.0:8000/
 Quit the server with CONTROL-C.

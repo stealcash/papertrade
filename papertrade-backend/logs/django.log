@@ -9300,3 +9300,1343 @@ def chain(*args, **kwargs):
 {"time": "2026-02-13 00:49:11", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
 {"time": "2026-02-13 00:49:11", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
 {"time": "2026-02-13 00:49:11", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-A8F8270CA670 delegated to FastAPI successfully"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-13 08:31:45", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-13 21:58:11", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-13 22:14:29", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:28:30", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 22:28:31", "level": "INFO", "name": "apps.sync.tasks", "message": "Starting Option Sync. Start Config: 2025-11-26, Lookback: 32 days"}
+{"time": "2026-02-13 22:28:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTPS connection (1): www.nseindia.com:443"}
+{"time": "2026-02-13 22:28:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET / HTTP/1.1" 200 26593"}
+{"time": "2026-02-13 22:28:33", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/meta/foCPV/expireDts?instrument=OPTIDX&symbol=BANKNIFTY&year=2026 HTTP/1.1" 200 96"}
+{"time": "2026-02-13 22:28:34", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=24-FEB-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-13 22:28:35", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 24-FEB-2026 CE: Fetched 2075 records"}
+{"time": "2026-02-13 22:28:35", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=24-FEB-2026&optionType=PE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-13 22:28:37", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 24-FEB-2026 PE: Fetched 2075 records"}
+{"time": "2026-02-13 22:28:38", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-02-2026&to=26-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=26-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:38", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 26-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:39", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-02-2026&to=26-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=26-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:39", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 26-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:39", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=30-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:39", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 30-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:40", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=30-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:40", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 30-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:41", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-02-2026&to=31-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=31-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:41", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 31-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:42", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-02-2026&to=31-03-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=31-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:42", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 31-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:43", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=28-APR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:43", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 28-APR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:43", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=28-APR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:43", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 28-APR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:44", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-05-2026&to=30-06-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=30-JUN-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:44", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 30-JUN-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:45", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-05-2026&to=30-06-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=30-JUN-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:45", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 30-JUN-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:46", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=28-08-2026&to=29-09-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=29-SEP-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:46", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 29-SEP-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:47", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=28-08-2026&to=29-09-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=29-SEP-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:47", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 29-SEP-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:47", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-11-2026&to=29-12-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=29-DEC-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:47", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 29-DEC-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:48", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-11-2026&to=29-12-2026&instrumentType=OPTIDX&symbol=BANKNIFTY&year=2026&expiryDate=29-DEC-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:28:48", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced BANKNIFTY 29-DEC-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:28:49", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/meta/foCPV/expireDts?instrument=OPTIDX&symbol=NIFTY&year=2026 HTTP/1.1" 200 132"}
+{"time": "2026-02-13 22:28:50", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=09-01-2026&to=10-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=10-FEB-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-13 22:28:50", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 10-FEB-2026 CE: Fetched 1997 records"}
+{"time": "2026-02-13 22:28:51", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=09-01-2026&to=10-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=10-FEB-2026&optionType=PE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-13 22:28:51", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 10-FEB-2026 PE: Fetched 1997 records"}
+{"time": "2026-02-13 22:28:52", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=16-01-2026&to=17-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=17-FEB-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-13 22:28:53", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 17-FEB-2026 CE: Fetched 1801 records"}
+{"time": "2026-02-13 22:28:54", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=16-01-2026&to=17-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=17-FEB-2026&optionType=PE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-13 22:28:55", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 17-FEB-2026 PE: Fetched 1801 records"}
+{"time": "2026-02-13 22:28:56", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=24-FEB-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-13 22:28:57", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 24-FEB-2026 CE: Fetched 1590 records"}
+{"time": "2026-02-13 22:28:58", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=24-FEB-2026&optionType=PE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-13 22:29:00", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 24-FEB-2026 PE: Fetched 1590 records"}
+{"time": "2026-02-13 22:29:01", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-01-2026&to=02-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=02-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-13 22:29:02", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 02-MAR-2026 CE: Fetched 1135 records"}
+{"time": "2026-02-13 22:29:02", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-01-2026&to=02-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=02-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 48881"}
+{"time": "2026-02-13 22:29:03", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 02-MAR-2026 PE: Fetched 1135 records"}
+{"time": "2026-02-13 22:29:04", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=06-02-2026&to=10-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=10-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 14546"}
+{"time": "2026-02-13 22:29:06", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 10-MAR-2026 CE: Fetched 454 records"}
+{"time": "2026-02-13 22:29:07", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=06-02-2026&to=10-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=10-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 14446"}
+{"time": "2026-02-13 22:29:08", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 10-MAR-2026 PE: Fetched 454 records"}
+{"time": "2026-02-13 22:29:09", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=13-02-2026&to=17-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=17-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 2412"}
+{"time": "2026-02-13 22:29:10", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 17-MAR-2026 CE: Fetched 74 records"}
+{"time": "2026-02-13 22:29:11", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=13-02-2026&to=17-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=17-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 2337"}
+{"time": "2026-02-13 22:29:11", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 17-MAR-2026 PE: Fetched 74 records"}
+{"time": "2026-02-13 22:29:12", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-02-2026&to=26-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=26-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:12", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 26-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:13", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-02-2026&to=26-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=26-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:13", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 26-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:14", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=30-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:14", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 30-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:15", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=30-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:15", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 30-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:16", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-02-2026&to=31-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=31-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:16", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 31-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:17", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-02-2026&to=31-03-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=31-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:17", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 31-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:18", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=28-APR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:18", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 28-APR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:18", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=28-APR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:18", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 28-APR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:19", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=25-05-2026&to=25-06-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=25-JUN-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:19", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 25-JUN-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:20", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=25-05-2026&to=25-06-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=25-JUN-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:20", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 25-JUN-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:21", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-05-2026&to=30-06-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=30-JUN-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:21", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 30-JUN-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:21", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=29-05-2026&to=30-06-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=30-JUN-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:21", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 30-JUN-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:22", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=28-08-2026&to=29-09-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=29-SEP-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:22", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 29-SEP-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:23", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=28-08-2026&to=29-09-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=29-SEP-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:23", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 29-SEP-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:23", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-11-2026&to=29-12-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=29-DEC-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:23", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 29-DEC-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:24", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-11-2026&to=29-12-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=29-DEC-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:24", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 29-DEC-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:25", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=30-11-2026&to=31-12-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=31-DEC-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:25", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 31-DEC-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:26", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=30-11-2026&to=31-12-2026&instrumentType=OPTIDX&symbol=NIFTY&year=2026&expiryDate=31-DEC-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:26", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced NIFTY 31-DEC-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:27", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/meta/foCPV/expireDts?instrument=OPTSTK&symbol=TECHM&year=2026 HTTP/1.1" 200 73"}
+{"time": "2026-02-13 22:29:28", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=24-FEB-2026&optionType=CE&csv=true HTTP/1.1" 200 None"}
+{"time": "2026-02-13 22:29:29", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 24-FEB-2026 CE: Fetched 563 records"}
+{"time": "2026-02-13 22:29:30", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=23-01-2026&to=24-02-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=24-FEB-2026&optionType=PE&csv=true HTTP/1.1" 200 20155"}
+{"time": "2026-02-13 22:29:30", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 24-FEB-2026 PE: Fetched 547 records"}
+{"time": "2026-02-13 22:29:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=30-MAR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:31", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 30-MAR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=26-02-2026&to=30-03-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=30-MAR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:32", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 30-MAR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:33", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=28-APR-2026&optionType=CE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:33", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 28-APR-2026 CE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:33", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "https://www.nseindia.com:443 "GET /api/historicalOR/foCPV?from=27-03-2026&to=28-04-2026&instrumentType=OPTSTK&symbol=TECHM&year=2026&expiryDate=28-APR-2026&optionType=PE&csv=true HTTP/1.1" 200 11"}
+{"time": "2026-02-13 22:29:33", "level": "INFO", "name": "apps.sync.tasks", "message": "Synced TECHM 28-APR-2026 PE: Fetched 0 records"}
+{"time": "2026-02-13 22:29:34", "level": "INFO", "name": "celery.app.trace", "message": "Task apps.sync.tasks.sync_options_task[004a4e5b-5eba-43c8-88b1-0b35cea78149] succeeded in 64.34731158299996s: None"}
+{"time": "2026-02-13 22:37:34", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-13 22:37:34", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-13 22:37:34", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-393D2C77527F delegated to FastAPI successfully"}
+{"time": "2026-02-13 23:39:44", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-13 23:39:44", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-13 23:39:44", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-D54F45BA72EF delegated to FastAPI successfully"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-13 23:43:13", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-13 23:45:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-13 23:45:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-13 23:45:31", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-3AC0C1A85D49 delegated to FastAPI successfully"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-14 09:24:52", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 11:28:33", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 11:28:33", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 11:28:33", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-A4121D7295C3 delegated to FastAPI successfully"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-14 12:01:19", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-14 12:01:20", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 12:13:42", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 12:13:42", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 12:13:42", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-822909A87283 delegated to FastAPI successfully"}
+{"time": "2026-02-14 12:13:50", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 12:13:50", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 12:13:50", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-27D7B602ADFD delegated to FastAPI successfully"}
+{"time": "2026-02-14 12:15:22", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 12:15:22", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 12:15:22", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-7E3CF5DCFD0C delegated to FastAPI successfully"}
+{"time": "2026-02-14 12:15:33", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 12:15:33", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 12:15:33", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-4C5BE2DF811C delegated to FastAPI successfully"}
+{"time": "2026-02-14 12:16:10", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 12:16:10", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 12:16:10", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-C5D4B9A84375 delegated to FastAPI successfully"}
+{"time": "2026-02-14 12:16:23", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 12:16:23", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 12:16:23", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-4BD7EDDCCA8E delegated to FastAPI successfully"}
+{"time": "2026-02-14 12:16:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 12:16:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 12:16:32", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-7A4343309ECB delegated to FastAPI successfully"}
+{"time": "2026-02-14 12:16:40", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 12:16:40", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 12:16:40", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-26CFD7A73C7F delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 14:05:25", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 14:22:09", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:22:09", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:22:09", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-8F48D387D15E delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:22:25", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:22:25", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:22:25", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-80F4B7337E7D delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:22:36", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:22:36", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:22:36", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-4DF6F83EF541 delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:22:44", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:22:44", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:22:44", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-175AC091E2CB delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:22:51", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:22:51", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:22:51", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-C057ECA2FD2B delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:22:58", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:22:58", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:22:58", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-FD3768EA3251 delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:23:07", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:23:07", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:23:07", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-0DDF88A16D27 delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:23:17", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:23:17", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:23:17", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-4847F0BFB523 delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:23:25", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:23:25", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:23:25", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-8575617A6145 delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:23:37", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:23:37", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:23:37", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-20AB40E9A451 delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:23:46", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:23:46", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:23:46", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-5C15C12CAB1C delegated to FastAPI successfully"}
+{"time": "2026-02-14 14:26:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 14:26:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 14:26:32", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-4DF6F83EF541 delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:11:38", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:11:38", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:11:38", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-4DF6F83EF541 delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:13:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:13:32", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:13:32", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-5C15C12CAB1C delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:13:53", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:13:53", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:13:53", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-20AB40E9A451 delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:14:26", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:14:26", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:14:26", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-8575617A6145 delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:19:41", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:19:41", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:19:41", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-E504FE75E8C7 delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:19:55", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:19:55", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:19:55", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-9878D31200F6 delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:20:02", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:20:02", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:20:02", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-FECB24D51DDF delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:20:09", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:20:09", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:20:09", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-693C407037CD delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:20:18", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:20:18", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:20:18", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-CDC85D8709FD delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:20:24", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:20:24", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:20:24", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-C1ADCED7029E delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:20:35", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:20:35", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:20:35", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-71E26E2DA8D9 delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:20:41", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:20:41", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:20:41", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-197F8870E7AE delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:20:53", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:20:53", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:20:53", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-0793BC328B3D delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:21:03", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:21:03", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:21:03", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-D3627D758228 delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:21:11", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:21:11", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:21:11", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-AEAF1A544B3C delegated to FastAPI successfully"}
+{"time": "2026-02-14 15:30:40", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 15:30:40", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 15:30:40", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-4E4CD196F543 delegated to FastAPI successfully"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def accumulate(self, *args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def auto_sync_daily():
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def execute_backtest_task(backtest_run_id, stock_ids, execution_mode=0):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def debug_task(self):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def xstarmap(task, it):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def delete_old_notifications():
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chunks(task, it, n):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def backend_cleanup():
+    return 1
+"}
+{"time": "2026-02-14 16:30:47", "level": "DEBUG", "name": "celery.utils.functional", "message": "
+def chain(*args, **kwargs):
+    return 1
+"}
+{"time": "2026-02-14 16:41:41", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 16:41:41", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 16:41:41", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-CE9564586F6B delegated to FastAPI successfully"}
+{"time": "2026-02-14 16:44:24", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 16:44:24", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 16:44:24", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-CE9564586F6B delegated to FastAPI successfully"}
+{"time": "2026-02-14 16:45:34", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 16:45:34", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 16:45:34", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-CE9564586F6B delegated to FastAPI successfully"}
+{"time": "2026-02-14 16:57:00", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 16:57:00", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 16:57:00", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-CE9564586F6B delegated to FastAPI successfully"}
+{"time": "2026-02-14 16:59:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 16:59:31", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 16:59:31", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-E655195ED4E2 delegated to FastAPI successfully"}
+{"time": "2026-02-14 17:21:06", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 17:21:06", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 17:21:06", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-E655195ED4E2 delegated to FastAPI successfully"}
+{"time": "2026-02-14 17:22:38", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 17:22:38", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 17:22:38", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-E655195ED4E2 delegated to FastAPI successfully"}
+{"time": "2026-02-14 17:24:28", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 17:24:28", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 17:24:28", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-E655195ED4E2 delegated to FastAPI successfully"}
+{"time": "2026-02-14 17:36:02", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 17:36:02", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 17:36:02", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-E655195ED4E2 delegated to FastAPI successfully"}
+{"time": "2026-02-14 17:39:45", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 17:39:45", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 17:39:45", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-1637C0FE5715 delegated to FastAPI successfully"}
+{"time": "2026-02-14 18:05:54", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "Starting new HTTP connection (1): localhost:8001"}
+{"time": "2026-02-14 18:05:54", "level": "DEBUG", "name": "urllib3.connectionpool", "message": "http://localhost:8001 "POST /api/v1/compute/option-backtest HTTP/1.1" 200 51"}
+{"time": "2026-02-14 18:05:54", "level": "INFO", "name": "apps.backtests.option_engine_v2", "message": "Option Backtest OPT-BT-1637C0FE5715 delegated to FastAPI successfully"}
