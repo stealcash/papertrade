@@ -20,9 +20,9 @@ class StockPredictionViewSet(viewsets.ModelViewSet):
                  start = datetime.strptime(start_date, '%Y-%m-%d').date()
                  end = datetime.strptime(end_date, '%Y-%m-%d').date()
                  
-                 if (end - start).days > 7:
+                 if (end - start).days > 30:
                      from rest_framework.exceptions import ValidationError
-                     raise ValidationError({"date_range": "Date range cannot exceed 7 days."})
+                     raise ValidationError({"date_range": "Date range cannot exceed 30 days."})
              except ValueError:
                  pass # Let generic filter logic handle invalid dates or ignore
         

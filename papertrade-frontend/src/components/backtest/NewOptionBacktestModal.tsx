@@ -52,9 +52,15 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
             fetchIndices();
             fetchStocks();
             fetchSubscription();
-            if (initialStrategyId) {
-                setFormData(prev => ({ ...prev, strategy_id: initialStrategyId }));
-            }
+
+            // Explicitly reset form data on open to prevent persistence from previous runs
+            setFormData({
+                strategy_id: initialStrategyId || '',
+                underlying_symbol: '',
+                lot_size: 50,
+                start_date: '',
+                end_date: '',
+            });
         }
     }, [isOpen, initialStrategyId]);
 
@@ -101,7 +107,6 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
 
     async function fetchStocks() {
         try {
-            // Fetching stocks that have options enabled and are not indices
             const res = await apiClient.get('/stocks/?is_index=false&is_option_enable=true&page_size=200');
             const data = res.data.data.stocks || res.data.data.results || [];
             setStocks(data);
@@ -130,7 +135,11 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
     };
 
     async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
+        if (e) e.preventDefault();
+
+        // Safety Guard: Only allow submission if we are on step 2
+        if (step !== 2) return;
+
         setLoading(true);
         try {
             const payload = {
@@ -145,8 +154,6 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
             onClose();
         } catch (err: any) {
             console.error("Backtest Run Error:", err);
-
-            // Check for subscription limit error
             const errData = err.response?.data;
             const subError = errData?.subscription || errData?.details?.subscription || errData?.non_field_errors;
 
@@ -158,12 +165,12 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
                 alert(errData?.detail || errData?.message || 'Failed to run backtest');
             }
         }
-        setLoading(false);
+        setLoading(true); // Keep loading true during onClose/onSuccess transition
+        setTimeout(() => setLoading(false), 500);
     }
 
     if (!isOpen) return null;
 
-    // Group strategies
     const systemStrategies = strategies.filter(s => s.is_system);
     const myStrategies = strategies.filter(s => !s.is_system);
 
@@ -180,7 +187,6 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
     };
 
     const { canRun } = getPlanLimits();
-
     const selectedStrategyName = strategies.find(s => String(s.id) === String(formData.strategy_id))?.name;
 
     return (
@@ -192,7 +198,7 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
                         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">New Option Backtest</h2>
                         <p className="text-sm text-gray-500">Step {step} of 2</p>
                     </div>
-                    <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition">
+                    <button type="button" onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition">
                         <X size={20} className="text-gray-500" />
                     </button>
                 </div>
@@ -222,8 +228,8 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
                                                     <div key={strat.id}
                                                         onClick={() => setFormData({ ...formData, strategy_id: strat.id })}
                                                         className={`p-4 border rounded-xl cursor-pointer transition relative group ${Number(formData.strategy_id) === strat.id
-                                                                ? 'border-black dark:border-white bg-gray-50 dark:bg-gray-800 ring-1 ring-black dark:ring-white'
-                                                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500'
+                                                            ? 'border-black dark:border-white bg-gray-50 dark:bg-gray-800 ring-1 ring-black dark:ring-white'
+                                                            : 'border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500'
                                                             }`}
                                                     >
                                                         <div className="flex items-start justify-between gap-2">
@@ -257,8 +263,8 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
                                                     <div key={strat.id}
                                                         onClick={() => setFormData({ ...formData, strategy_id: strat.id })}
                                                         className={`p-4 border rounded-xl cursor-pointer transition relative ${Number(formData.strategy_id) === strat.id
-                                                                ? 'border-black dark:border-white bg-gray-50 dark:bg-gray-800 ring-1 ring-black dark:ring-white'
-                                                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500'
+                                                            ? 'border-black dark:border-white bg-gray-50 dark:bg-gray-800 ring-1 ring-black dark:ring-white'
+                                                            : 'border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500'
                                                             }`}
                                                     >
                                                         <div className="flex items-start justify-between gap-2">
@@ -411,6 +417,7 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
                 <div className="p-6 border-t border-gray-200 dark:border-gray-800 flex justify-end gap-3 bg-gray-50 dark:bg-gray-900/50">
                     {step > 1 && (
                         <button
+                            type="button"
                             onClick={() => setStep(1)}
                             className="px-5 py-2 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition"
                         >
@@ -427,6 +434,8 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
 
                     {step === 1 ? (
                         <button
+                            key="btn-next"
+                            type="button"
                             onClick={() => {
                                 if (!formData.strategy_id) return alert("Please select a strategy");
                                 setStep(2);
@@ -437,6 +446,7 @@ export default function NewOptionBacktestModal({ isOpen, onClose, onSuccess, ini
                         </button>
                     ) : (
                         <button
+                            key="btn-run"
                             type="submit"
                             form="backtestForm"
                             disabled={loading || !canRun}

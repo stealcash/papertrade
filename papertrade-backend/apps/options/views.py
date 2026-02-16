@@ -153,3 +153,34 @@ class OptionViewSet(viewsets.GenericViewSet):
         ).values_list('date', flat=True).distinct().order_by('-date')
         
         return Response({'data': list(dates)})
+
+    @action(detail=False, methods=['get'], url_path='latest-info')
+    def latest_info(self, request):
+        """Get the latest available year, expiry, and date for a symbol.
+        This allows the frontend to auto-set all cascading filters at once."""
+        symbol = request.query_params.get('symbol')
+        if not symbol:
+            return Response({'error': 'Symbol required'}, status=400)
+
+        stock = Stock.objects.filter(symbol=symbol).first()
+        query_symbol = symbol
+        if stock and stock.option_symbol:
+            query_symbol = stock.option_symbol
+
+        # Find the record with the most recent date for this symbol
+        latest_record = OptionDailyData.objects.filter(
+            underlying_symbol=query_symbol
+        ).order_by('-date', '-expiry_date').values('date', 'expiry_date').first()
+
+        if not latest_record:
+            return Response({'data': None})
+
+        latest_date = latest_record['date']
+        latest_expiry = latest_record['expiry_date']
+        latest_year = latest_expiry.year if latest_expiry else latest_date.year
+
+        return Response({'data': {
+            'year': latest_year,
+            'expiry': str(latest_expiry),
+            'date': str(latest_date),
+        }})

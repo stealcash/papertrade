@@ -136,7 +136,7 @@ export default function HomeScreen() {
           <View style={styles.section}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
               <Text style={styles.sectionTitle}>Your Holdings</Text>
-              <TouchableOpacity onPress={() => router.push('/(tabs)/portfolio')}>
+              <TouchableOpacity onPress={() => router.push('/portfolio')}>
                 <Text style={{ color: '#3b82f6', fontWeight: '600' }}>View All</Text>
               </TouchableOpacity>
             </View>
@@ -159,7 +159,7 @@ export default function HomeScreen() {
                   {/* Optional: Add Exit button here if space permits, or make row tappable */}
                   <TouchableOpacity
                     style={{ marginLeft: 10, padding: 6, backgroundColor: '#fee2e2', borderRadius: 6 }}
-                    onPress={() => router.push('/(tabs)/portfolio')} // Direct to portfolio for full actions or implementing modal here is complex
+                    onPress={() => router.push('/portfolio')}
                   >
                     <Text style={{ color: '#b91c1c', fontSize: 10, fontWeight: 'bold' }}>Exit</Text>
                   </TouchableOpacity>
@@ -252,12 +252,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
     padding: 20,
     backgroundColor: '#fff',
     paddingTop: 40,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f3f4f6',
   },
   greeting: {
     fontSize: 14,
@@ -270,7 +269,11 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   balanceContainer: {
-    alignItems: 'flex-end',
+    marginTop: 15,
+    padding: 12,
+    backgroundColor: '#f9fafb',
+    borderRadius: 12,
+    alignItems: 'flex-start',
   },
   balanceLabel: {
     fontSize: 12,
@@ -283,12 +286,11 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   disclaimer: {
-    fontSize: 8,
+    fontSize: 10,
     color: '#9ba3af',
     marginTop: 4,
     fontStyle: 'italic',
-    textAlign: 'right',
-    maxWidth: 150,
+    textAlign: 'left',
   },
   statsRow: {
     flexDirection: 'row',

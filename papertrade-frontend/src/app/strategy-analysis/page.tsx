@@ -4,7 +4,9 @@ import { useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import apiClient, { stocksAPI } from '@/lib/api';
-import { Search, Calendar, TrendingUp, TrendingDown, ArrowRight, Layout, CheckCircle, XCircle, AlertCircle, Info } from 'lucide-react';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import { Search, Calendar, ChevronDown, TrendingUp, TrendingDown, ArrowRight, Layout, CheckCircle, XCircle, AlertCircle, Info } from 'lucide-react';
 
 export default function MarketAnalysisPage() {
     const { isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -12,6 +14,7 @@ export default function MarketAnalysisPage() {
     // Data State
     const [stocks, setStocks] = useState<any[]>([]);
     const [selectedStock, setSelectedStock] = useState<any>(null);
+    const [displayedStock, setDisplayedStock] = useState<any>(null);
     const [priceHistory, setPriceHistory] = useState<any[]>([]);
 
     // Strategy State
@@ -25,21 +28,72 @@ export default function MarketAnalysisPage() {
 
     // Filters
     const [searchQuery, setSearchQuery] = useState('');
-    const [dateRange, setDateRange] = useState({
-        start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        end: new Date().toISOString().split('T')[0]
-    });
+    const [startDate, setStartDate] = useState<Date | null>(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
+    const [endDate, setEndDate] = useState<Date | null>(new Date());
+
+    const [autoInitialized, setAutoInitialized] = useState(false);
 
     useEffect(() => {
         fetchStocks();
         fetchStrategies();
     }, []);
 
+    // Auto-select first strategy & first stock alphabetically, then auto-fetch
     useEffect(() => {
+        if (autoInitialized) return;
+        if (stocks.length === 0 || strategies.length === 0) return;
+
+        const sortedStocks = [...stocks].sort((a, b) => a.symbol.localeCompare(b.symbol));
+        const sortedStrategies = [...strategies].sort((a: any, b: any) => (a.name || '').localeCompare(b.name || ''));
+
+        const firstStock = sortedStocks[0];
+        const firstStrategy = sortedStrategies[0];
+
+        setSelectedStock(firstStock);
+        setDisplayedStock(firstStock);
+        setSearchQuery(firstStock.symbol);
+        setSelectedStrategy(firstStrategy.code);
+        setAutoInitialized(true);
+
+        // Auto-fetch history for the default selection (pass dates directly to avoid stale closures)
+        const sDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+        const eDate = new Date();
+        const fmtDate = (d: Date) => d.toISOString().split('T')[0];
+
+        setLoadingHistory(true);
+        apiClient.get('/stocks/prices/daily', {
+            params: {
+                stock_symbol: firstStock.symbol,
+                start_date: fmtDate(sDate),
+                end_date: fmtDate(eDate),
+                strategy: firstStrategy.code,
+            }
+        }).then(response => {
+            const allPrices = response.data.data || [];
+            const filtered = allPrices.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            setPriceHistory(filtered);
+        }).catch(error => {
+            console.error('Failed to auto-fetch history', error);
+            setPriceHistory([]);
+        }).finally(() => {
+            setLoadingHistory(false);
+        });
+    }, [stocks, strategies, autoInitialized]);
+
+    const handleApply = () => {
         if (selectedStock) {
+            setDisplayedStock(selectedStock);
             fetchHistory(selectedStock.symbol);
         }
-    }, [selectedStock, dateRange, selectedStrategy]);
+    };
+
+    useEffect(() => {
+        if (priceHistory.length > 0 && selectedStrategy) {
+            calculateStats();
+        } else {
+            setStats({ total: 0, dirCorrect: 0, priceCorrect: 0 });
+        }
+    }, [priceHistory, selectedStrategy]);
 
     useEffect(() => {
         if (priceHistory.length > 0 && selectedStrategy) {
@@ -135,10 +189,11 @@ export default function MarketAnalysisPage() {
     const fetchHistory = async (symbol: string) => {
         setLoadingHistory(true);
         try {
+            const fmtDate = (d: Date | null) => d ? d.toISOString().split('T')[0] : undefined;
             const params: any = {
                 stock_symbol: symbol,
-                start_date: dateRange.start,
-                end_date: dateRange.end
+                start_date: fmtDate(startDate),
+                end_date: fmtDate(endDate)
             };
 
             // Pass strategy code to get merged signals
@@ -172,7 +227,7 @@ export default function MarketAnalysisPage() {
 
     const handleSelectStock = (stock: any) => {
         setSelectedStock(stock);
-        setSearchQuery('');
+        setSearchQuery(stock.symbol);
         setIsSearchOpen(false);
     };
 
@@ -183,8 +238,8 @@ export default function MarketAnalysisPage() {
             <div className="flex flex-col gap-4 shrink-0">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Market Analysis</h1>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Deep dive into individual stock performance</p>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Strategy Analysis</h1>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Evaluate strategy predictions against historical stock performance</p>
                     </div>
 
                     <div className="flex items-center gap-4 w-full md:w-auto">
@@ -203,7 +258,7 @@ export default function MarketAnalysisPage() {
                         </div>
 
                         {/* Stock Search */}
-                        <div className="relative w-full md:w-96 z-50">
+                        <div className="relative w-full md:w-64 z-50">
                             <div className="relative">
                                 <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                                 <input
@@ -214,7 +269,18 @@ export default function MarketAnalysisPage() {
                                         setSearchQuery(e.target.value);
                                         setIsSearchOpen(true);
                                     }}
-                                    onFocus={() => setIsSearchOpen(true)}
+                                    onFocus={() => {
+                                        setSearchQuery('');
+                                        setIsSearchOpen(true);
+                                    }}
+                                    onBlur={() => {
+                                        // Restore selected stock symbol if search is cleared
+                                        setTimeout(() => {
+                                            if (selectedStock && !searchQuery) {
+                                                setSearchQuery(selectedStock.symbol);
+                                            }
+                                        }, 200);
+                                    }}
                                     className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
                                 />
                             </div>
@@ -247,6 +313,51 @@ export default function MarketAnalysisPage() {
                                 <div className="fixed inset-0 z-[-1]" onClick={() => setIsSearchOpen(false)} />
                             )}
                         </div>
+
+                        {/* Date Range Picker */}
+                        <div className="min-w-[220px]">
+                            <DatePicker
+                                selectsRange={true}
+                                startDate={startDate}
+                                endDate={endDate}
+                                onChange={(update: [Date | null, Date | null]) => {
+                                    const [start, end] = update;
+                                    setStartDate(start);
+                                    setEndDate(end);
+                                }}
+                                isClearable={true}
+                                maxDate={new Date()}
+                                placeholderText="Select date range"
+                                dateFormat="dd MMM, yyyy"
+                                customInput={
+                                    <div className="w-full h-[42px] flex items-center justify-between bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 text-left text-sm rounded-lg px-3 py-2 cursor-pointer hover:border-blue-500 transition-all shadow-sm group">
+                                        <div className="flex items-center gap-2 overflow-hidden">
+                                            <Calendar size={14} className="text-gray-400 group-hover:text-blue-500 transition-colors shrink-0" />
+                                            <span className="text-xs font-medium text-gray-700 dark:text-gray-200 truncate">
+                                                {startDate && endDate
+                                                    ? `${startDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} - ${endDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}`
+                                                    : startDate ? `${startDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} - ...` : "Select date range"}
+                                            </span>
+                                        </div>
+                                        <ChevronDown size={14} className="text-gray-400 shrink-0" />
+                                    </div>
+                                }
+                            />
+                        </div>
+
+                        {/* Apply Button */}
+                        <button
+                            onClick={handleApply}
+                            disabled={!selectedStock || loadingHistory}
+                            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 dark:disabled:bg-gray-800 disabled:text-gray-500 text-white font-medium rounded-lg transition-colors flex items-center gap-2 shadow-sm"
+                        >
+                            {loadingHistory ? (
+                                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            ) : (
+                                <Search size={16} />
+                            )}
+                            Apply
+                        </button>
                     </div>
                 </div>
 
@@ -308,36 +419,18 @@ export default function MarketAnalysisPage() {
             {/* Main Content: Details & History */}
             <div className="flex-1 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex flex-col">
 
-                {selectedStock ? (
+                {displayedStock ? (
                     <>
                         {/* Header Details */}
                         <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex flex-wrap justify-between items-center gap-4 bg-gray-50/30 dark:bg-gray-800/30">
                             <div>
                                 <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
-                                    {selectedStock.name}
+                                    {displayedStock.name}
                                     <span className="px-2 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-sm font-medium text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
-                                        {selectedStock.symbol}
+                                        {displayedStock.symbol}
                                     </span>
                                 </h2>
-                                <p className="text-sm text-gray-500 mt-1">{selectedStock.sectors_details?.[0]?.name || 'Sector N/A'}</p>
-                            </div>
-
-                            {/* Date Controls */}
-                            <div className="flex items-center gap-2 bg-white dark:bg-gray-800 p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
-                                <Calendar size={16} className="text-gray-400 ml-2" />
-                                <input
-                                    type="date"
-                                    value={dateRange.start}
-                                    onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-                                    className="text-sm border-none focus:ring-0 text-gray-700 dark:text-gray-200 bg-transparent w-32 outline-none"
-                                />
-                                <span className="text-gray-300">|</span>
-                                <input
-                                    type="date"
-                                    value={dateRange.end}
-                                    onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-                                    className="text-sm border-none focus:ring-0 text-gray-700 dark:text-gray-200 bg-transparent w-32 outline-none"
-                                />
+                                <p className="text-sm text-gray-500 mt-1">{displayedStock.sectors_details?.[0]?.name || 'Sector N/A'}</p>
                             </div>
                         </div>
 
@@ -444,19 +537,12 @@ export default function MarketAnalysisPage() {
                         </div>
                     </>
                 ) : (
-                    <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                    <div className="flex flex-col items-center justify-center p-20 text-gray-400">
                         <div className="p-6 bg-gray-50 dark:bg-gray-800 rounded-full mb-4">
                             <Search size={48} className="opacity-20 text-gray-900 dark:text-gray-100" />
                         </div>
                         <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200">Start Analysis</h3>
-                        <p className="text-sm mt-1 max-w-xs text-center">Search for a stock above to view detailed market data and price history.</p>
-
-                        {/* Auto-Trigger Modal if no stock selected */}
-                        <StockSelectionModal
-                            isOpen={!selectedStock && !loadingStocks}
-                            stocks={stocks}
-                            onSelect={handleSelectStock}
-                        />
+                        <p className="text-sm mt-1 max-w-xs text-center">Select a strategy and stock above, then click Apply to view data.</p>
                     </div>
                 )}
             </div>
@@ -465,64 +551,4 @@ export default function MarketAnalysisPage() {
 }
 
 
-/* ░░░ Components ░░░ */
 
-function StockSelectionModal({ isOpen, stocks, onSelect }: { isOpen: boolean, stocks: any[], onSelect: (s: any) => void }) {
-    const [search, setSearch] = useState('');
-
-    if (!isOpen) return null;
-
-    const filtered = stocks.filter(s =>
-        s.symbol.toLowerCase().includes(search.toLowerCase()) ||
-        s.name.toLowerCase().includes(search.toLowerCase())
-    );
-
-    return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-            <div className="bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden animate-in fade-in zoom-in duration-200">
-                <div className="p-6 border-b border-gray-100 dark:border-gray-800">
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Select a Stock</h2>
-                    <p className="text-sm text-gray-500 mt-1">Choose a stock to analyze its market performance.</p>
-                </div>
-
-                <div className="p-4 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
-                    <div className="relative">
-                        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                        <input
-                            type="text"
-                            autoFocus
-                            placeholder="Search by symbol or name..."
-                            className="w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                            value={search}
-                            onChange={e => setSearch(e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                <div className="max-h-[60vh] overflow-y-auto divide-y divide-gray-100 dark:divide-gray-800">
-                    {filtered.length === 0 ? (
-                        <div className="p-8 text-center text-gray-500">
-                            No stocks found matching "{search}"
-                        </div>
-                    ) : (
-                        filtered.map(stock => (
-                            <button
-                                key={stock.id}
-                                onClick={() => onSelect(stock)}
-                                className="w-full flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition text-left group"
-                            >
-                                <div>
-                                    <div className="font-bold text-gray-900 dark:text-gray-100">{stock.symbol}</div>
-                                    <div className="text-sm text-gray-500">{stock.name}</div>
-                                </div>
-                                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <span className="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 text-xs px-2 py-1 rounded font-medium">Select</span>
-                                </div>
-                            </button>
-                        ))
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-}

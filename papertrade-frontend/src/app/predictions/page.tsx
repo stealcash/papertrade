@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import {
     TrendingUp, TrendingDown, Trash2,
-    ArrowUpRight, ArrowDownRight, Calendar, Filter
+    ArrowUpRight, ArrowDownRight, Calendar, Filter, ChevronDown
 } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
@@ -11,6 +11,8 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { useToast } from "@/context/ToastContext";
 import { useConfirm } from "@/context/ConfirmContext";
 import api from "@/lib/api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface Prediction {
     id: number;
@@ -32,28 +34,36 @@ interface GroupedPredictions {
     [date: string]: Prediction[];
 }
 
+type PresetKey = '7d' | '30d' | 'custom';
+
 export default function PredictionsPage() {
     const { showToast } = useToast();
     const { confirm } = useConfirm();
     const [predictions, setPredictions] = useState<Prediction[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    // Date Filters
-    // Default to last 7 days
-    const today = new Date().toISOString().split('T')[0];
-    const lastWeek = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    // Date Filters — default to last 7 days
+    const [startDate, setStartDate] = useState<Date | null>(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
+    const [endDate, setEndDate] = useState<Date | null>(new Date());
+    const [activePreset, setActivePreset] = useState<PresetKey>('7d');
 
-    const [startDate, setStartDate] = useState(lastWeek);
-    const [endDate, setEndDate] = useState(today);
+    // Applied dates (what the API actually uses)
+    const [appliedStart, setAppliedStart] = useState<Date>(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
+    const [appliedEnd, setAppliedEnd] = useState<Date>(new Date());
 
+    // Fetch on mount
     useEffect(() => {
         fetchPredictions();
-    }, [startDate, endDate]);
+    }, []);
 
-    const fetchPredictions = async () => {
+    const toDateStr = (d: Date) => d.toISOString().split('T')[0];
+
+    const fetchPredictions = async (start?: Date, end?: Date) => {
+        const s = start || appliedStart;
+        const e = end || appliedEnd;
         try {
             setIsLoading(true);
-            const res = await api.get(`/predictions/?start_date=${startDate}&end_date=${endDate}`);
+            const res = await api.get(`/predictions/?start_date=${toDateStr(s)}&end_date=${toDateStr(e)}`);
             setPredictions(res.data.results || res.data);
         } catch (error) {
             console.error("Failed to fetch predictions", error);
@@ -61,6 +71,39 @@ export default function PredictionsPage() {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleApply = () => {
+        if (!startDate || !endDate) {
+            showToast("Please select a complete date range", "error");
+            return;
+        }
+        setAppliedStart(startDate);
+        setAppliedEnd(endDate);
+        fetchPredictions(startDate, endDate);
+    };
+
+    const handlePreset = (preset: PresetKey) => {
+        const now = new Date();
+        let start: Date;
+        if (preset === '7d') {
+            start = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        } else {
+            start = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+        }
+        setStartDate(start);
+        setEndDate(now);
+        setActivePreset(preset);
+        setAppliedStart(start);
+        setAppliedEnd(now);
+        fetchPredictions(start, now);
+    };
+
+    const handleDateRangeChange = (update: [Date | null, Date | null]) => {
+        const [start, end] = update;
+        setStartDate(start);
+        setEndDate(end);
+        setActivePreset('custom');
     };
 
     const handleDelete = async (id: number) => {
@@ -95,7 +138,7 @@ export default function PredictionsPage() {
         if (!isConfirmed) return;
 
         try {
-            await api.delete(`/predictions/delete_all/?start_date=${startDate}&end_date=${endDate}`);
+            await api.delete(`/predictions/delete_all/?start_date=${toDateStr(appliedStart)}&end_date=${toDateStr(appliedEnd)}`);
             setPredictions([]);
             showToast("Visible predictions deleted", "success");
         } catch (error) {
@@ -118,7 +161,6 @@ export default function PredictionsPage() {
 
         try {
             await api.post('/predictions/delete_batch/', { ids: idsToDelete });
-            // Update UI
             setPredictions(prev => prev.filter(p => !idsToDelete.includes(p.id)));
             showToast(`Deleted predictions for ${groupDate}`, "success");
         } catch (error) {
@@ -158,47 +200,6 @@ export default function PredictionsPage() {
         );
     };
 
-    // Helper to add days
-    const addDays = (dateStr: string, days: number) => {
-        const date = new Date(dateStr);
-        date.setDate(date.getDate() + days);
-        return date.toISOString().split('T')[0];
-    };
-
-    const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newStart = e.target.value;
-        setStartDate(newStart);
-
-        // Enforce max 7 days
-        const start = new Date(newStart);
-        const end = new Date(endDate);
-        const diffTime = Math.abs(end.getTime() - start.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        if (diffDays > 7 && end > start) {
-            setEndDate(addDays(newStart, 7));
-        } else if (end < start) {
-            setEndDate(newStart);
-        }
-    };
-
-    const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newEnd = e.target.value;
-        setEndDate(newEnd);
-
-        // Enforce max 7 days
-        const start = new Date(startDate);
-        const end = new Date(newEnd);
-        const diffTime = Math.abs(end.getTime() - start.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        if (diffDays > 7 && end > start) {
-            setStartDate(addDays(newEnd, -7));
-        } else if (end < start) {
-            setStartDate(newEnd);
-        }
-    };
-
     if (isLoading) {
         return (
             <div className="flex justify-center p-12">
@@ -219,32 +220,76 @@ export default function PredictionsPage() {
                     </p>
                 </div>
 
-                {/* Filters */}
+                {/* Date Filter Bar */}
                 <div className="flex flex-wrap items-center gap-3 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                    <div className="flex items-center gap-2">
-                        <Filter size={16} className="text-gray-400" />
-                        <span className="text-xs font-semibold text-gray-500 uppercase">Date Range:</span>
+                    {/* Preset Buttons */}
+                    <div className="flex items-center gap-1">
+                        <button
+                            onClick={() => handlePreset('7d')}
+                            className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${activePreset === '7d'
+                                    ? 'bg-blue-600 text-white shadow-sm'
+                                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                }`}
+                        >
+                            Last 7 Days
+                        </button>
+                        <button
+                            onClick={() => handlePreset('30d')}
+                            className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${activePreset === '30d'
+                                    ? 'bg-blue-600 text-white shadow-sm'
+                                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                }`}
+                        >
+                            Last 30 Days
+                        </button>
                     </div>
 
-                    <input
-                        type="date"
-                        value={startDate}
-                        onChange={handleStartDateChange}
-                        max={endDate} // Can't go past end date logically
-                        className="bg-gray-50 dark:bg-gray-700 border-0 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500"
-                    />
-                    <span className="text-gray-400">-</span>
-                    <input
-                        type="date"
-                        value={endDate}
-                        min={startDate}
-                        max={addDays(startDate, 7)} // VISUAL TIP: Force max date in picker
-                        onChange={handleEndDateChange}
-                        className="bg-gray-50 dark:bg-gray-700 border-0 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500"
-                    />
+                    {/* Divider */}
+                    <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
 
+                    {/* Date Range Picker */}
+                    <div className="relative">
+                        <DatePicker
+                            selectsRange={true}
+                            startDate={startDate}
+                            endDate={endDate}
+                            onChange={handleDateRangeChange}
+                            maxDate={new Date()}
+                            placeholderText="Select date range"
+                            dateFormat="dd MMM, yyyy"
+                            customInput={
+                                <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-1.5 cursor-pointer hover:border-gray-300 dark:hover:border-gray-500 transition-colors group">
+                                    <Calendar size={14} className="text-gray-400 group-hover:text-blue-500 transition-colors" />
+                                    <span className="text-xs font-medium text-gray-700 dark:text-gray-200">
+                                        {startDate && endDate
+                                            ? `${startDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} - ${endDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}`
+                                            : startDate
+                                                ? `${startDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })} - ...`
+                                                : "Select Range"}
+                                    </span>
+                                    <ChevronDown size={14} className="text-gray-400" />
+                                </div>
+                            }
+                        />
+                    </div>
+
+                    {/* Apply Button */}
+                    <button
+                        onClick={handleApply}
+                        disabled={!startDate || !endDate || isLoading}
+                        className={`flex items-center gap-2 px-4 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-sm text-xs font-semibold active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100`}
+                    >
+                        {isLoading ? (
+                            <div className="animate-spin w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full" />
+                        ) : (
+                            <Filter size={14} />
+                        )}
+                        Apply
+                    </button>
+
+                    {/* Delete Filtered */}
                     {(predictions.length > 0) && (
-                        <div className="ml-2 pl-2 border-l border-gray-200 dark:border-gray-700">
+                        <div className="ml-1 pl-2 border-l border-gray-200 dark:border-gray-700">
                             <Button variant="danger" size="sm" onClick={handleDeleteAll}>
                                 Delete Filtered
                             </Button>

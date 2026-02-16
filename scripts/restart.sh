@@ -37,7 +37,7 @@ check_port() {
 
 # Kill existing processes on ports if running
 # print_step "Checking for existing processes..."
-for port in 8000 8001 8080 3000 4000; do
+for port in 8000 8001 8080 3000 4000 8081; do
     if check_port $port; then
         # echo "Port $port is in use. Killing process..."
         lsof -ti :$port | xargs kill -9 2>/dev/null || true
@@ -92,6 +92,13 @@ cd "$PROJECT_ROOT/papertrade-frontend-admin"
 
 # print_step "Installing npm dependencies..."
 npm install --legacy-peer-deps
+
+# Mobile App (Expo)
+# print_step "Setting up React Native App..."
+cd "$PROJECT_ROOT/papertrade-app"
+
+# print_step "Installing dependencies..."
+npm install
 
 # Done with setup
 cd "$PROJECT_ROOT"
@@ -159,6 +166,14 @@ ADMIN_FRONTEND_PID=$!
 # echo "Admin Frontend started with PID: $ADMIN_FRONTEND_PID"
 # sleep 2
 
+# Start Mobile App in background
+# print_step "Starting Mobile App (Expo)..."
+cd "$PROJECT_ROOT"
+bash scripts/run-app.sh > logs/app.log 2>&1 &
+APP_PID=$!
+# echo "Mobile App started with PID: $APP_PID"
+# sleep 2
+
 # echo ""
 # echo "========================================="
 # echo "✅ All Services Started Successfully!"
@@ -171,6 +186,7 @@ ADMIN_FRONTEND_PID=$!
 # echo "  FastAPI API:     http://localhost:8001/api/v1"
 # echo "  Swagger Docs:    http://localhost:8000/api/v1/docs"
 # echo "  Go Service:      http://localhost:8080/api/v1"
+# echo "  Mobile App:      exp://localhost:8081"
 # echo ""
 # echo "📝 Process IDs:"
 # echo "  Django:          $DJANGO_PID"
@@ -180,6 +196,7 @@ ADMIN_FRONTEND_PID=$!
 # echo "  Go Service:      $GO_PID"
 # echo "  User Frontend:   $FRONTEND_PID"
 # echo "  Admin Frontend:  $ADMIN_FRONTEND_PID"
+# echo "  Mobile App:      $APP_PID"
 # echo ""
 # echo "📋 Logs are available in:"
 # echo "  Django:          logs/django.log"
@@ -189,10 +206,11 @@ ADMIN_FRONTEND_PID=$!
 # echo "  Go Service:      logs/go.log"
 # echo "  User Frontend:   logs/frontend.log"
 # echo "  Admin Frontend:  logs/admin-frontend.log"
+# echo "  Mobile App:      logs/app.log"
 # echo ""
 # echo "🛑 To stop all services:"
-# echo "  kill $DJANGO_PID $FASTAPI_PID $GO_PID $FRONTEND_PID $ADMIN_FRONTEND_PID $CELERY_WORKER_PID $CELERY_BEAT_PID"
-# echo "  OR run: lsof -ti :8000,:8001,:8080,:3000,:4000 | xargs kill -9"
+# echo "  kill $DJANGO_PID $FASTAPI_PID $GO_PID $FRONTEND_PID $ADMIN_FRONTEND_PID $CELERY_WORKER_PID $CELERY_BEAT_PID $APP_PID"
+# echo "  OR run: lsof -ti :8000,:8001,:8080,:3000,:4000,:8081 | xargs kill -9"
 # echo "========================================="
 # echo ""
 

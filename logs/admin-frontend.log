@@ -7,15 +7,15 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2s
+ ✓ Ready in 2.2s
  ○ Compiling / ...
- ✓ Compiled / in 1124ms (1549 modules)
- GET / 200 in 1314ms
- ✓ Compiled /favicon.ico in 324ms (1587 modules)
- GET /favicon.ico 200 in 367ms
- ✓ Compiled /option-strategies in 378ms (1557 modules)
- ✓ Compiled /option-strategies/create in 237ms (1567 modules)
- GET /option-strategies/create 200 in 142ms
- ✓ Compiled /favicon.ico in 109ms (868 modules)
- GET /favicon.ico 200 in 157ms
-[?25h
+ ✓ Compiled / in 1041ms (1549 modules)
+ GET / 200 in 1218ms
+ ✓ Compiled /login in 406ms (1593 modules)
+ GET /favicon.ico 200 in 457ms
+ GET /login 200 in 532ms
+ GET /login 200 in 20ms
+ GET /dashboard 200 in 26ms
+ GET /favicon.ico 200 in 8ms
+ GET /login 200 in 19ms
+ ✓ Compiled /sync in 297ms (1595 modules)

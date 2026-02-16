@@ -19,25 +19,58 @@ export default function OptionBacktestDetailPage() {
     const [trades, setTrades] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
+    // Pagination State
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(false);
+    const [loadingMore, setLoadingMore] = useState(false);
+
     useEffect(() => {
         if (id && !isNaN(Number(id))) {
-            loadData();
+            loadInitialData();
         }
     }, [id]);
 
-    async function loadData() {
+    async function loadInitialData() {
         try {
             const res = await optionBacktestAPI.getById(Number(id));
             setRun(res.data.data);
 
-            // Load trades
-            const tradesRes = await optionBacktestAPI.getResults(Number(id));
-            setTrades(tradesRes.data.data.results || []);
+            // Load first page of trades
+            await fetchTrades(1, true);
         } catch (err) {
             console.error('Failed to load option backtest', err);
         }
         setLoading(false);
     }
+
+    async function fetchTrades(pageNum: number, isInitial: boolean = false) {
+        try {
+            if (!isInitial) setLoadingMore(true);
+
+            const res = await optionBacktestAPI.getResults(Number(id), { page: pageNum, page_size: 10 });
+            const newTrades = res.data.data.results || [];
+            const pagination = res.data.data.pagination;
+
+            if (isInitial) {
+                setTrades(newTrades);
+            } else {
+                setTrades(prev => [...prev, ...newTrades]);
+            }
+
+            setHasMore(pagination.current_page < pagination.total_pages);
+            setPage(pageNum);
+        } catch (err) {
+            console.error('Failed to fetch trades', err);
+        } finally {
+            if (!isInitial) setLoadingMore(false);
+        }
+    }
+
+    const handleLoadMore = () => {
+        if (!loadingMore && hasMore) {
+            fetchTrades(page + 1);
+        }
+    };
 
     if (loading) return <div className="flex justify-center items-center h-60 text-gray-600">Loading...</div>;
     if (!run) return <div className="flex justify-center items-center h-60 text-gray-500">Backtest Not Found</div>;
@@ -207,6 +240,31 @@ export default function OptionBacktestDetailPage() {
                             )}
                         </tbody>
                     </table>
+
+                    {/* Show More Button */}
+                    {hasMore && (
+                        <div className="p-4 border-t border-gray-100 bg-gray-50/50 flex justify-center">
+                            <button
+                                onClick={handleLoadMore}
+                                disabled={loadingMore}
+                                className="px-6 py-2.5 bg-white border border-gray-200 shadow-sm rounded-xl text-sm font-bold text-gray-600 hover:text-black hover:border-gray-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                            >
+                                {loadingMore ? (
+                                    <>
+                                        <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+                                        Loading...
+                                    </>
+                                ) : (
+                                    <>
+                                        Show More Trades
+                                        <span className="text-xs text-gray-400 font-normal ml-1">
+                                            (Page {page + 1})
+                                        </span>
+                                    </>
+                                )}
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

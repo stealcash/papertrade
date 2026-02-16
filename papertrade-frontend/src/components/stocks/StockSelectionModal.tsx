@@ -109,7 +109,7 @@ export default function StockSelectionModal({ isOpen, onConfirm, initialSelectio
 
                 {/* Header */}
                 <div className="p-6 border-b border-gray-100 dark:border-gray-800">
-                    <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Compare Stock History</h2>
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Compare Charts</h2>
                     <p className="text-sm text-gray-500 mt-1">
                         Select up to 4 stocks and a date range (max 60 days).
                     </p>
@@ -162,8 +162,8 @@ export default function StockSelectionModal({ isOpen, onConfirm, initialSelectio
                                 key={stock.id}
                                 onClick={() => toggleStock(stock.id.toString())}
                                 className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${selectedIds.includes(stock.id.toString())
-                                        ? "bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800 ring-1 ring-blue-500/20"
-                                        : "hover:bg-gray-50 dark:hover:bg-gray-800 border border-transparent"
+                                    ? "bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800 ring-1 ring-blue-500/20"
+                                    : "hover:bg-gray-50 dark:hover:bg-gray-800 border border-transparent"
                                     }`}
                             >
                                 <div className="text-left">
@@ -199,8 +199,8 @@ export default function StockSelectionModal({ isOpen, onConfirm, initialSelectio
                             onClick={handleConfirm}
                             disabled={selectedIds.length === 0}
                             className={`px-6 py-2.5 rounded-lg text-sm font-semibold shadow-sm transition-all flex items-center gap-2 ${selectedIds.length > 0
-                                    ? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/25"
-                                    : "bg-gray-200 dark:bg-gray-800 text-gray-400 cursor-not-allowed"
+                                ? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/25"
+                                : "bg-gray-200 dark:bg-gray-800 text-gray-400 cursor-not-allowed"
                                 }`}
                         >
                             Compare Stocks

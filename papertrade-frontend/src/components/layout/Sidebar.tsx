@@ -2,7 +2,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Home, TrendingUp, Zap, BarChart3, PieChart, Wallet,
-  Bell, User, BookOpen, Crown, LogOut, Scan, LineChart, Target, FlaskConical, History, Search,
+  Bell, User, BookOpen, Crown, LogOut, Scan, LineChart, Target, FlaskConical, AreaChart, Search,
   Compass, Layers, Microscope
 } from "lucide-react";
 import { useSelector, useDispatch } from 'react-redux';
@@ -27,15 +27,16 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
 
   const generalItems = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
-    { name: "Stocks", href: "/stocks", icon: LineChart },
-    { name: "My Watchlist", href: "/watchlist", icon: BookOpen },
     { name: "My Predictions", href: "/predictions", icon: Target },
-    { name: "Scanner", href: "/scanner", icon: Scan },
-    { name: "Compare Stock History", href: "/stock-history", icon: History },
+    { name: "Market", href: "/market", icon: LineChart },
+    { name: "My Watchlist", href: "/watchlist", icon: BookOpen },
+    { name: "Compare Charts", href: "/compare-charts", icon: AreaChart },
   ];
 
   const strategyItems = [
-    { name: "Stock Finder", href: "/stock-finder", icon: Search },
+    { name: "Scanner", href: "/scanner", icon: Scan },
+    { name: "Multi Strategy Scanner", href: "/multi-strategy-scanner", icon: Search },
+    { name: "Strategy Analysis", href: "/strategy-analysis", icon: BarChart3 },
     { name: "Strategies", href: "/strategies", icon: Compass },
     { name: "Backtest", href: "/backtest", icon: FlaskConical },
   ];
@@ -47,7 +48,6 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
   ];
 
   const otherItems = [
-    { name: "Market Analysis", href: "/market-analysis", icon: BarChart3 },
     { name: "Wallet", href: "/wallet", icon: Wallet },
     { name: "Notifications", href: "/notifications", icon: Bell },
     { name: "Profile", href: "/profile", icon: User },

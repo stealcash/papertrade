@@ -270,7 +270,7 @@ export default function StockFinderPage() {
                         <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
                             <Lock size={32} className="text-blue-600 dark:text-blue-400" />
                         </div>
-                        <h2 className="text-2xl font-bold mb-3">Upgrade to Stock Finder</h2>
+                        <h2 className="text-2xl font-bold mb-3">Upgrade to Multi Strategy Scanner</h2>
                         <p className="text-gray-500 mb-8 dark:text-gray-400">
                             This advanced scanning feature is only available in our Pro plans. Find the best trading opportunities by scanning multiple strategies at once.
                         </p>
@@ -285,7 +285,7 @@ export default function StockFinderPage() {
                     <div className="max-w-7xl mx-auto space-y-6">
                         <h1 className="text-2xl font-bold flex items-center gap-2 mb-6">
                             <Search className="text-blue-600" size={28} />
-                            Stock Finder
+                            Multi Strategy Scanner
                         </h1>
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">

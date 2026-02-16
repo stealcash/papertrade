@@ -3,10 +3,10 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { Search, Calendar, ChevronDown, Filter, AlertCircle } from 'lucide-react';
+import { Search, Calendar, ChevronDown, Filter, AlertCircle, Loader2 } from 'lucide-react';
 
 // --- CUSTOM SEARCHABLE SELECT COMPONENT ---
-function SearchableSelect({ label, value, options, onChange, placeholder = "Select..." }: any) {
+function SearchableSelect({ label, value, options, onChange, placeholder = "Select...", className = "" }: any) {
     const [isOpen, setIsOpen] = useState(false);
     const [query, setQuery] = useState('');
     const containerRef = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ function SearchableSelect({ label, value, options, onChange, placeholder = "Sele
     const selectedLabel = options.find((o: any) => o.value == value)?.label || value || placeholder;
 
     return (
-        <div className={`relative ${label === 'Year' ? 'min-w-[90px]' : 'min-w-[140px]'}`} ref={containerRef}>
+        <div className={`relative ${className || (label === 'Year' ? 'min-w-[90px]' : 'min-w-[140px]')}`} ref={containerRef}>
             <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{label}</label>
             <button
                 onClick={() => { setIsOpen(!isOpen); setQuery(''); }}
@@ -41,7 +41,7 @@ function SearchableSelect({ label, value, options, onChange, placeholder = "Sele
             </button>
 
             {isOpen && (
-                <div className="absolute z-50 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl max-h-60 overflow-y-auto">
+                <div className="absolute z-50 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl max-h-60 overflow-y-auto min-w-[200px]">
                     <div className="p-2 sticky top-0 bg-white dark:bg-gray-800 border-b dark:border-gray-700">
                         <input
                             type="text"
@@ -127,13 +127,17 @@ export default function OptionsPage() {
     // 2. DATA FETCHING EFFECTS
     // -------------------------------------------------------------------------
 
+    // Track whether we've done initial setup for a symbol via latest-info
+    const latestInfoDoneRef = useRef<string>('');
+    const fetchIdRef = useRef(0);
+
     useEffect(() => {
         fetch(`${API_URL}/options/instruments/`)
             .then(res => res.json())
             .then(data => {
                 if (data.data) {
                     setIndices(data.data.map((i: any) => ({
-                        label: `${i.is_index ? 'Index' : 'Stock'}: ${i.name || i.symbol}`,
+                        label: i.symbol, // Symbol only to be safe
                         value: i.symbol,
                         ...i
                     })));
@@ -143,35 +147,117 @@ export default function OptionsPage() {
             .catch(err => console.error(err));
     }, [API_URL]);
 
+    // When symbol changes: call latest-info to get the right defaults, then auto-fetch chain
     useEffect(() => {
         if (!selectedSymbol) return;
-        setLoadingFilters(true);
-        fetch(`${API_URL}/options/years/?symbol=${selectedSymbol}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.data) {
-                    setYears(data.data);
-                    if (data.data.length > 0) setSelectedYear(data.data[data.data.length - 1].toString());
-                    else setSelectedYear('');
-                }
-            })
-            .finally(() => setLoadingFilters(false));
-    }, [selectedSymbol, API_URL]);
 
+        const currentFetchId = ++fetchIdRef.current;
+
+        const doInit = async () => {
+            setLoading(true);
+            setChainData([]);
+            setStartDate(null);
+            setEndDate(null);
+
+            try {
+                // 1. Fetch latest-info to find the most recent data for this symbol
+                const infoRes = await fetch(`${API_URL}/options/latest-info/?symbol=${selectedSymbol}`);
+                const infoData = await infoRes.json();
+
+                if (currentFetchId !== fetchIdRef.current) return;
+
+                // 2. Fetch years and expiries in parallel for the dropdowns
+                const yearsRes = await fetch(`${API_URL}/options/years/?symbol=${selectedSymbol}`);
+                const yearsData = await yearsRes.json();
+
+                if (currentFetchId !== fetchIdRef.current) return;
+
+                const yearsList = yearsData.data || [];
+                setYears(yearsList);
+
+                let targetYear = '';
+                let targetExpiry = '';
+
+                if (infoData.data) {
+                    targetYear = infoData.data.year.toString();
+                    targetExpiry = infoData.data.expiry;
+
+                    // Set date from latest-info
+                    const dateObj = new Date(infoData.data.date);
+                    setStartDate(dateObj);
+                    setEndDate(dateObj);
+                } else if (yearsList.length > 0) {
+                    targetYear = yearsList[yearsList.length - 1].toString();
+                }
+
+                setSelectedYear(targetYear);
+
+                // 3. Fetch expiries for the target year
+                if (targetYear) {
+                    const expRes = await fetch(`${API_URL}/options/expiries/?symbol=${selectedSymbol}&year=${targetYear}`);
+                    const expData = await expRes.json();
+
+                    if (currentFetchId !== fetchIdRef.current) return;
+
+                    const expList = expData.data || [];
+                    setExpiries(expList);
+
+                    if (targetExpiry && expList.some((e: string) => e === targetExpiry)) {
+                        setSelectedExpiry(targetExpiry);
+                    } else if (expList.length > 0) {
+                        targetExpiry = expList[expList.length - 1]; // pick latest expiry
+                        setSelectedExpiry(targetExpiry);
+                    }
+                }
+
+                // Mark that we've done latest-info for this symbol
+                latestInfoDoneRef.current = selectedSymbol;
+
+                // 4. Auto-fetch chain data with the resolved defaults
+                if (targetExpiry) {
+                    let chainUrl = `${API_URL}/options/chain/?symbol=${selectedSymbol}&expiry=${targetExpiry}&type=${viewMode}`;
+                    if (infoData.data?.date) {
+                        chainUrl += `&date=${infoData.data.date}`;
+                    }
+                    const chainRes = await fetch(chainUrl);
+                    const chainData = await chainRes.json();
+
+                    if (currentFetchId !== fetchIdRef.current) return;
+                    setChainData(chainData.data || []);
+                }
+            } catch (err) {
+                if (currentFetchId !== fetchIdRef.current) return;
+                console.error("Failed to initialize options page", err);
+            } finally {
+                if (currentFetchId === fetchIdRef.current) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        doInit();
+    }, [selectedSymbol]);
+
+    // When year changes manually (not from initial load), refresh expiries
     useEffect(() => {
         if (!selectedSymbol || !selectedYear) return;
+        // Skip if this was set by the latest-info init
+        if (latestInfoDoneRef.current === selectedSymbol) {
+            latestInfoDoneRef.current = ''; // clear so future manual changes work
+            return;
+        }
         setLoadingFilters(true);
         fetch(`${API_URL}/options/expiries/?symbol=${selectedSymbol}&year=${selectedYear}`)
             .then(res => res.json())
             .then(data => {
                 if (data.data) {
                     setExpiries(data.data);
-                    if (data.data.length > 0) setSelectedExpiry(data.data[0]);
+                    if (data.data.length > 0) setSelectedExpiry(data.data[data.data.length - 1]); // pick latest
                     else setSelectedExpiry('');
                 }
             })
             .finally(() => setLoadingFilters(false));
-    }, [selectedSymbol, selectedYear, API_URL]);
+    }, [selectedYear, API_URL]);
 
     const fetchChain = async () => {
         if (!selectedSymbol || !selectedExpiry) return;
@@ -253,16 +339,16 @@ export default function OptionsPage() {
             <div className="max-w-[1800px] mx-auto space-y-6">
 
                 {/* TOP BAR */}
-                <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col md:flex-row gap-4 items-center justify-between sticky top-0 z-20">
+                <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col xl:flex-row gap-4 items-end justify-between sticky top-0 z-20">
 
-                    {/* Left: Searchable Selects */}
-                    <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
-
+                    {/* Left Group: Filters */}
+                    <div className="flex flex-wrap items-end gap-3 w-full xl:w-auto">
                         <SearchableSelect
                             label="Instrument"
                             value={selectedSymbol}
                             options={indices}
                             onChange={setSelectedSymbol}
+                            className="min-w-[160px] max-w-[200px]"
                         />
 
                         <SearchableSelect
@@ -279,8 +365,8 @@ export default function OptionsPage() {
                             onChange={setSelectedExpiry}
                         />
 
-                        {/* Date Range Picker - RELOCATED FROM SIDEBAR */}
-                        <div className="min-w-[240px]">
+                        {/* Date Range Picker */}
+                        <div className="w-auto">
                             <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Date Range</label>
                             <DatePicker
                                 selectsRange={true}
@@ -312,7 +398,7 @@ export default function OptionsPage() {
                         </div>
 
                         {/* View Mode Toggle */}
-                        <div className="min-w-[150px]">
+                        <div className="min-w-[140px]">
                             <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">View Mode</label>
                             <div className="flex bg-gray-100 dark:bg-gray-900 p-1 rounded-lg h-[42px]">
                                 {['CE', 'BOTH', 'PE'].map(mode => (
@@ -326,31 +412,43 @@ export default function OptionsPage() {
                                 ))}
                             </div>
                         </div>
+
+                        {/* More Filters Icon Only */}
+                        <div className="relative group">
+                            <label className="block text-[10px] font-bold text-transparent uppercase tracking-wider mb-1 select-none">.</label>
+                            <button
+                                onClick={() => {
+                                    setTempMinStrike(minStrike);
+                                    setTempMaxStrike(maxStrike);
+                                    setTempVisibleColumns(visibleColumns);
+                                    setIsSidebarOpen(true);
+                                }}
+                                className="flex items-center justify-center w-[42px] h-[42px] bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg transition-all"
+                            >
+                                <Filter size={18} />
+                            </button>
+                            {/* Tooltip */}
+                            <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">
+                                More Filters
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Right: Actions */}
-                    <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => {
-                                setTempMinStrike(minStrike);
-                                setTempMaxStrike(maxStrike);
-                                setTempVisibleColumns(visibleColumns);
-                                setIsSidebarOpen(true);
-                            }}
-                            className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2.5 rounded-lg text-sm font-medium transition-all"
-                        >
-                            <Filter size={16} />
-                            <span>More Filters</span>
-                        </button>
-
+                    {/* Right: Apply Button */}
+                    <div className="mt-4 xl:mt-0 flex-shrink-0">
+                        <div className="h-[21px] mb-1 xl:block hidden"></div> {/* Spacer aligns with labels on desktop */}
                         <button
                             onClick={fetchChain}
-                            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-lg text-sm font-bold transition-all shadow-md active:scale-95"
+                            disabled={loading}
+                            className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold shadow-lg shadow-indigo-500/30 transition-all h-[42px] ${loading ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 text-white hover:shadow-indigo-500/50 hover:-translate-y-0.5'}`}
                         >
-                            <AlertCircle size={16} />
-                            <span>Apply</span>
+                            {loading ? <Loader2 className="animate-spin" size={18} /> : <Search size={18} />}
+                            <span>{loading ? 'Fetching...' : 'Apply'}</span>
                         </button>
                     </div>
+
+
+
                 </div>
 
                 {/* DATA TABLE */}
@@ -557,6 +655,6 @@ export default function OptionsPage() {
                     @apply w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500 transition-all shadow-sm;
                 }
             `}</style>
-        </div>
+        </div >
     );
 }

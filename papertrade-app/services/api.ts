@@ -4,8 +4,8 @@ import { Platform } from 'react-native';
 // TODO: Change this to your computer's IP address if running on a physical device.
 // Your current local IP: 'http://192.168.0.102:8000'
 const DEV_API_URL = Platform.select({
-    ios: 'http://192.168.0.102:8000',
-    android: 'http://192.168.0.102:8000',
+    ios: 'http://192.168.0.117:8000',
+    android: 'http://192.168.0.117:8000',
 });
 
 const apiClient = axios.create({

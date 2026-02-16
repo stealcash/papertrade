@@ -24,8 +24,8 @@ export default function Header() {
 
     const navItems = [
         { name: 'Dashboard', path: '/dashboard', icon: '📊' },
-        { name: 'Stocks', path: '/stocks', icon: '📈' },
-        { name: 'History', path: '/stock-history', icon: '📅' },
+        { name: 'Market', path: '/market', icon: '📈' },
+        { name: 'Compare Charts', path: '/compare-charts', icon: '📅' },
         { name: 'Backtest', path: '/backtest', icon: '🔬' },
         { name: 'Strategies', path: '/strategy', icon: '🎯' },
         { name: 'Wallet', path: '/wallet', icon: '💰' },

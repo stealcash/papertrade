@@ -7,82 +7,14 @@
   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2.1s
+ ✓ Ready in 2.2s
  ○ Compiling / ...
- ✓ Compiled / in 1243ms (1541 modules)
- GET / 200 in 1443ms
- ✓ Compiled /dashboard in 396ms (1549 modules)
- ✓ Compiled /option-backtest in 368ms (1575 modules)
- GET /option-backtest 200 in 116ms
- ✓ Compiled /favicon.ico in 136ms (874 modules)
- GET /favicon.ico 200 in 178ms
- GET /dashboard 200 in 72ms
- GET /favicon.ico 200 in 6ms
- ✓ Compiled /option-backtest/[id] in 353ms (1619 modules)
- ✓ Compiled /option-strategies in 413ms (1592 modules)
- GET /option-strategies 200 in 539ms
- ✓ Compiled /option-strategies/create in 288ms (1600 modules)
- ○ Compiling /backtest ...
- ✓ Compiled /backtest in 551ms (1614 modules)
- GET /option-backtest 200 in 122ms
- ✓ Compiled /option-strategies/[id] in 360ms (1619 modules)
- ✓ Compiled /option-strategies/edit/[id] in 324ms (1624 modules)
- GET /option-backtest/81 200 in 115ms
- ✓ Compiled /favicon.ico in 265ms (888 modules)
- GET /favicon.ico 200 in 305ms
- GET /option-backtest/81 200 in 90ms
- GET /favicon.ico 200 in 9ms
- GET /option-backtest 200 in 27ms
- GET /favicon.ico 200 in 9ms
- GET /option-backtest 200 in 214ms
- GET /favicon.ico 200 in 103ms
- GET /option-backtest/81 200 in 112ms
- GET /favicon.ico 200 in 102ms
- GET /option-backtest/81 200 in 109ms
- GET /favicon.ico 200 in 65ms
- GET /option-backtest/81 200 in 117ms
- GET /favicon.ico 200 in 95ms
- GET /option-strategies/edit/52 200 in 168ms
- GET /favicon.ico 200 in 40ms
- ○ Compiling /option-strategies/create ...
- ✓ Compiled /option-strategies/create in 1165ms (893 modules)
- GET /option-backtest 200 in 520ms
- GET /favicon.ico 200 in 159ms
- GET /option-backtest/82 200 in 141ms
- GET /option-backtest/82 200 in 518ms
- GET /favicon.ico 200 in 159ms
- GET /option-backtest 200 in 304ms
- GET /favicon.ico 200 in 109ms
- GET /option-backtest/82 200 in 440ms
- GET /favicon.ico 200 in 214ms
- GET /option-backtest 200 in 397ms
- GET /favicon.ico 200 in 199ms
- GET /favicon.ico 200 in 161ms
- GET /option-backtest/82 200 in 210ms
- GET /favicon.ico 200 in 169ms
- GET /option-backtest 200 in 307ms
- GET /favicon.ico 200 in 98ms
- GET /option-backtest/82 200 in 194ms
- GET /option-backtest 200 in 207ms
- GET /favicon.ico 200 in 121ms
- GET /option-backtest 200 in 122ms
- GET /favicon.ico 200 in 83ms
- GET /option-backtest 200 in 169ms
- GET /favicon.ico 200 in 70ms
- GET /option-backtest 200 in 228ms
- GET /favicon.ico 200 in 59ms
- GET /option-backtest 200 in 194ms
- GET /favicon.ico 200 in 91ms
- GET /option-backtest 200 in 124ms
- GET /favicon.ico 200 in 79ms
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 8.1s (1650 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 10059ms
- GET /option-backtest 200 in 889ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 130ms
- GET /favicon.ico 200 in 189ms
- GET /option-backtest 200 in 262ms
- GET /favicon.ico 200 in 179ms
- GET /option-backtest/80 200 in 171ms
- GET /option-backtest/83 200 in 172ms
-[?25h
+ ✓ Compiled / in 1267ms (1541 modules)
+ GET / 200 in 1436ms
+ ✓ Compiled /dashboard in 354ms (1549 modules)
+ ✓ Compiled /market in 456ms (1577 modules)
+ ○ Compiling /market/[id] ...
+ ✓ Compiled /market/[id] in 543ms (1601 modules)
+ GET /market/27 200 in 155ms
+ ✓ Compiled /favicon.ico in 280ms (882 modules)
+ GET /favicon.ico 200 in 328ms

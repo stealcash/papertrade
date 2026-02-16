@@ -271,34 +271,40 @@ export default function OptionStrategiesPage() {
                         {/* System Strategies Section */}
                         <section>
                             <h2 className="text-xl font-semibold mb-4 text-gray-800">System Strategies</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {systemStrategies.map(strat => (
-                                    <div key={strat.id} className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition relative group overflow-hidden flex flex-col justify-between">
-                                        <div className="absolute top-0 right-0 w-12 h-12 bg-amber-50 rounded-bl-full -mr-3 -mt-3" />
+                            {systemStrategies.length === 0 ? (
+                                <div className="text-center py-10 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+                                    <p className="text-gray-500">No System Strategy Found</p>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {systemStrategies.map(strat => (
+                                        <div key={strat.id} className="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition relative group overflow-hidden flex flex-col justify-between">
+                                            <div className="absolute top-0 right-0 w-12 h-12 bg-amber-50 rounded-bl-full -mr-3 -mt-3" />
 
-                                        <div>
-                                            <h3 className="text-lg font-bold text-gray-900 group-hover:text-amber-600 transition-colors">
-                                                {strat.name}
-                                            </h3>
-                                            <p className="text-sm text-gray-500 mt-2 line-clamp-3">
-                                                {strat.description || 'No description'}
-                                            </p>
-                                        </div>
+                                            <div>
+                                                <h3 className="text-lg font-bold text-gray-900 group-hover:text-amber-600 transition-colors">
+                                                    {strat.name}
+                                                </h3>
+                                                <p className="text-sm text-gray-500 mt-2 line-clamp-3">
+                                                    {strat.description || 'No description'}
+                                                </p>
+                                            </div>
 
-                                        <div className="mt-6 pt-4 border-t border-gray-100 flex justify-between items-center">
-                                            <span className="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-                                                SYSTEM
-                                            </span>
-                                            <Link
-                                                href={`/option-strategies/${strat.id}`}
-                                                className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-                                            >
-                                                <Eye size={16} /> View
-                                            </Link>
+                                            <div className="mt-6 pt-4 border-t border-gray-100 flex justify-between items-center">
+                                                <span className="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                                                    SYSTEM
+                                                </span>
+                                                <Link
+                                                    href={`/option-strategies/${strat.id}`}
+                                                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+                                                >
+                                                    <Eye size={16} /> View
+                                                </Link>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
+                                    ))}
+                                </div>
+                            )}
                         </section>
                     </div>
                 )}

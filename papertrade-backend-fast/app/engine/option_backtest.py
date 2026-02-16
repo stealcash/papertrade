@@ -8,13 +8,18 @@ from .market_schedule import MarketSchedule
 import time
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 class OptionBacktestEngine:
     def __init__(self, db, run_id_int: int):
         self.db = db
         self.run_id = run_id_int
-        self.option_data_cache = {}
+        self.option_data_cache = {} # Cache option data: date -> expiry -> type -> strike -> data
+        self.entry_config = {}
+        self.exit_config = {}
+        self.strategy_config = {}
         self.processed_expiries = set()
+        self.processed_daily_entries = set() # Track daily entries to prevent duplicates
         self.results = []
         self.stats = {
             'total_trades': 0,
@@ -114,11 +119,26 @@ class OptionBacktestEngine:
                             remaining.append(pos)
                     active_positions = remaining
 
+                    active_positions = remaining
+
                     # Check Entry
+                    # Strictly sequential: Only check entry if NO active positions
                     if not active_positions:
-                        # Only try entry if:
-                        # 1. Pulse 1 (initial morning check)
-                        # 2. Just exited a non-expiry position in THIS pulse
+                        # NEW LOGIC: Only try entry if we did NOT exit in this pulse
+                        # (To enforce 'Next entry only when previous trade finished' - and maybe waiting for next candle/day?)
+                        # The user said: "next entry will only happen when previous trade exist" (exited)
+                        # If we just exited, `exited_this_pulse` is True.
+                        # If we allow immediate re-entry, we keep `is_reentry=True`.
+                        # But if we want strictly sequential and separate, maybe we should NOT re-enter immediately?
+                        # Implementation Plan said: "Ensure that if a trade exists (is open), no new entry is scanned."
+                        # Which is covered by `if not active_positions`.
+                        
+                        # Re-entry logic from existing code:
+                        # if pulse == 1 or exited_this_pulse: ...
+                        
+                        # If user wants STRICT sequential, does it mean we can re-enter immediately?
+                        # Usually yes, if the rule allows.
+                        
                         if pulse == 1 or exited_this_pulse:
                             is_reentry = exited_this_pulse
                             next_date = spot_prices[i+1].date if i+1 < len(spot_prices) else None
@@ -132,7 +152,23 @@ class OptionBacktestEngine:
                 
                 self.last_close = float(spot.close_price)
                 self.last_open = float(spot.open_price)
+                self.last_close = float(spot.close_price)
+                self.last_open = float(spot.open_price)
                 self.price_history.append((float(spot.open_price), float(spot.close_price)))
+            
+                # Record remaining active positions as OPEN
+            for pos in active_positions:
+                pos['exit_date'] = curr_date # Use last date as placeholder
+                pos['exit_reason'] = 'OPEN_AT_END'
+                pos['status'] = 'OPEN'
+                # PnL is 0 for open positions in this context
+                for legs in pos['legs']:
+                    legs['pnl'] = 0
+                    legs['status'] = 'OPEN'
+                    legs['exit_price'] = 0.0 # Set to 0 to avoid not-null constraint
+                    legs['exit_reason'] = 'OPEN_AT_END'
+                
+                await self._record_trade(pos, curr_date, run.user_id)
 
             # 7. Finalize
             run.total_trades = self.stats['total_trades']
@@ -174,98 +210,147 @@ class OptionBacktestEngine:
             self.option_data_cache[d.date][d.expiry_date][d.option_type][float(d.strike_price)] = d
 
     async def _check_entry(self, symbol, curr_date, spot, expiries, next_date, is_reentry):
+        entry_conf = self.entry_config
+        mode = entry_conf.get('mode', 'EXPIRY_BASED') # Default to expiry based
+        
+        if mode == 'DAILY':
+            return await self._check_entry_daily(symbol, curr_date, spot, expiries, next_date, is_reentry)
+        else:
+            return await self._check_entry_expiry_based(symbol, curr_date, spot, expiries, next_date, is_reentry)
+
+    async def _check_entry_daily(self, symbol, curr_date, spot, expiries, next_date, is_reentry):
+        # 1. Deduplication Check
+        # STRICTLY enforce one trade per day for DAILY mode, even if re-entry loop is active.
+        if curr_date in self.processed_daily_entries:
+            return None
+
+        # 2. Find Nearest Valid Expiry
         valid_expiries = [e for e in expiries if e >= curr_date]
         if not valid_expiries: return None
+        
+        # Take the first available expiry that meets criteria (usually the nearest one)
         target_exp = valid_expiries[0]
-        days_to_exp = (target_exp - curr_date).days
         
-        entry_conf = self.entry_config
-        req_days = int(entry_conf.get('daysBeforeExpiry', 0))
+        # 3. Create Position
+        pos = self._create_position(symbol, curr_date, spot, target_exp, self.entry_config, is_reentry)
         
-        if not is_reentry and target_exp in self.processed_expiries: return None
-        
-        can_enter = is_reentry
-        
-        if not is_reentry:
-            # 1. Determine Target Entry Day (Skipping Weekends)
-            target_day = target_exp
-            days_to_subtract = req_days
-            while days_to_subtract > 0:
-                target_day -= timedelta(days=1)
-                if target_day.weekday() < 5:  # Mon-Fri
-                    days_to_subtract -= 1
+        # 4. Mark as Processed
+        if pos:
+            self.processed_daily_entries.add(curr_date)
             
-            # 2. Check if Target Day is a Market Holiday
-            is_open, _ = MarketSchedule.is_market_open(target_day)
-            actual_entry_day = target_day
-            
-            if not is_open:
-                mode = entry_conf.get('holidayEntryMode', 'NONE')
-                if mode == 'NONE':
-                    actual_entry_day = None
-                elif mode == 'PREVIOUS':
-                    # Look back for nearest trading day
-                    temp_day = target_day - timedelta(days=1)
-                    while temp_day > curr_date - timedelta(days=10): # Safety limit
-                        o, _ = MarketSchedule.is_market_open(temp_day)
-                        if o:
-                            actual_entry_day = temp_day
-                            break
-                        temp_day -= timedelta(days=1)
-                elif mode == 'NEXT':
-                    # Look forward for nearest trading day
-                    temp_day = target_day + timedelta(days=1)
-                    while temp_day <= target_exp:
-                        o, _ = MarketSchedule.is_market_open(temp_day)
-                        if o:
-                            actual_entry_day = temp_day
-                            break
-                        temp_day += timedelta(days=1)
-                    else:
-                        actual_entry_day = None # No trading day found before/on expiry
-            
-            # 3. Check if today IS the actual entry day
-            if actual_entry_day == curr_date:
-                can_enter = True
-                
-                # 4. Safety Check for NEXT mode: Don't enter after exit time
-                if entry_conf.get('holidayEntryMode') == 'NEXT' and actual_entry_day > target_day:
-                    exit_conf = self.exit_config
-                    exit_days = int(exit_conf.get('daysBeforeExpiry', 0))
-                    exit_target_day = target_exp - timedelta(days=exit_days)
-                    
-                    # If actual entry is already after planned exit day, skip
-                    if actual_entry_day > exit_target_day:
-                        can_enter = False
-                    # If same day, check timing
-                    elif actual_entry_day == exit_target_day:
-                        e_ref = entry_conf.get('priceRef', 'CLOSE')
-                        x_ref = exit_conf.get('exitTimeRef', 'CLOSE')
-                        if e_ref == 'CLOSE' and x_ref == 'OPEN':
-                            can_enter = False # Entry at 3:30 PM, Exit was at 9:15 AM
-            
-            # 5. Legacy/Flexible Fallback (if holidayEntryMode not set)
-            if not can_enter and entry_conf.get('flexibleEntry') and not entry_conf.get('holidayEntryMode'):
-                 if next_date and (target_exp - next_date).days < req_days: can_enter = True
-                 elif days_to_exp < req_days: can_enter = True
-            
-            # 6. Legacy Weekend Handling (Fallback)
-            if not can_enter and not entry_conf.get('holidayEntryMode'):
-                 if curr_date.weekday() == 4: # Friday
-                     if days_to_exp == req_days + 1 or days_to_exp == req_days + 2:
-                         can_enter = True
-        else:
-            # For re-entry, we allow it if we are already past the original entry window
-            # and re-entry is explicitly allowed in exit config
-            if self.exit_config.get('allowReentry'):
-                # Basic check: don't enter on expiry after exit time if it's already closed
-                if curr_date == target_exp and self.exit_config.get('exitTimeRef') == 'OPEN':
-                    can_enter = False
-                else:
-                    can_enter = True
+        return pos
 
-        if not can_enter: return None
+    async def _check_entry_expiry_based(self, symbol, curr_date, spot, expiries, next_date, is_reentry):
+        valid_expiries = [e for e in expiries if e >= curr_date]
+        if not valid_expiries: return None
         
+        # Loop through valid expiries to find the first one that matches entry conditions
+        # Limiting to next 5 expiries to avoid infinite scanning if no entry found
+        for target_exp in valid_expiries[:5]:
+            days_to_exp = (target_exp - curr_date).days
+            
+            entry_conf = self.entry_config
+            req_days = int(entry_conf.get('daysBeforeExpiry', 0))
+            
+            if not is_reentry and target_exp in self.processed_expiries: 
+                logger.info(f"DEBUG_ENTRY: Expiry {target_exp} already processed. Skipping.")
+                continue
+            
+            logger.info(f"DEBUG_ENTRY: Checking Expiry {target_exp} (Days: {days_to_exp}) for Date {curr_date}. ReqDays: {req_days}")
+
+            can_enter = False
+            
+            if not is_reentry:
+                # 1. Determine Target Entry Day (Skipping Weekends)
+                target_day = target_exp
+                days_to_subtract = req_days
+                while days_to_subtract > 0:
+                    target_day -= timedelta(days=1)
+                    if target_day.weekday() < 5:  # Mon-Fri
+                        days_to_subtract -= 1
+                
+                # 2. Check if Target Day is a Market Holiday
+                is_open, _ = MarketSchedule.is_market_open(target_day)
+                actual_entry_day = target_day
+                
+                if not is_open:
+                    mode = entry_conf.get('holidayEntryMode', 'NONE')
+                    if mode == 'NONE':
+                        actual_entry_day = None
+                    elif mode == 'PREVIOUS':
+                        # Look back for nearest trading day
+                        temp_day = target_day - timedelta(days=1)
+                        while temp_day > curr_date - timedelta(days=10): # Safety limit
+                            o, _ = MarketSchedule.is_market_open(temp_day)
+                            if o:
+                                actual_entry_day = temp_day
+                                break
+                            temp_day -= timedelta(days=1)
+                    elif mode == 'NEXT':
+                        # Look forward for nearest trading day
+                        temp_day = target_day + timedelta(days=1)
+                        while temp_day <= target_exp:
+                            o, _ = MarketSchedule.is_market_open(temp_day)
+                            if o:
+                                actual_entry_day = temp_day
+                                break
+                            temp_day += timedelta(days=1)
+                        else:
+                            actual_entry_day = None # No trading day found before/on expiry
+                
+                # 3. Check if today IS the actual entry day
+                if actual_entry_day == curr_date:
+                    logger.info(f"DEBUG_ENTRY: MATCH! Actual Entry {actual_entry_day} == Curr {curr_date}")
+                    can_enter = True
+                else:
+                    logger.info(f"DEBUG_ENTRY: No Match. Actual Entry {actual_entry_day} != Curr {curr_date}")
+                    
+                    # 4. Safety Check for NEXT mode: Don't enter after exit time
+                    if entry_conf.get('holidayEntryMode') == 'NEXT' and actual_entry_day > target_day:
+                        exit_conf = self.exit_config
+                        exit_days = int(exit_conf.get('daysBeforeExpiry', 0))
+                        exit_target_day = target_exp - timedelta(days=exit_days)
+                        
+                        # If actual entry is already after planned exit day, skip
+                        if actual_entry_day > exit_target_day:
+                            can_enter = False
+                        # If same day, check timing
+                        elif actual_entry_day == exit_target_day:
+                            e_ref = entry_conf.get('priceRef', 'CLOSE')
+                            x_ref = exit_conf.get('exitTimeRef', 'CLOSE')
+                            if e_ref == 'CLOSE' and x_ref == 'OPEN':
+                                can_enter = False # Entry at 3:30 PM, Exit was at 9:15 AM
+                
+                # 5. Legacy/Flexible Fallback (if holidayEntryMode not set)
+                # Note: `daysBeforeExpiry` check is strict here based on loop logic. 
+                # If current day matches calculated entry, we enter.
+                # Flexible logic might override strict calculation?
+                if not can_enter and entry_conf.get('flexibleEntry') and not entry_conf.get('holidayEntryMode'):
+                     if next_date and (target_exp - next_date).days < req_days: can_enter = True
+                     elif days_to_exp < req_days: can_enter = True
+                
+                # 6. Legacy Weekend Handling (Fallback)
+                if not can_enter and not entry_conf.get('holidayEntryMode'):
+                     if curr_date.weekday() == 4: # Friday
+                         if days_to_exp == req_days + 1 or days_to_exp == req_days + 2:
+                             can_enter = True
+            else:
+                # For re-entry, we allow it if we are already past the original entry window
+                # and re-entry is explicitly allowed in exit config
+                if self.exit_config.get('allowReentry'):
+                    # Basic check: don't enter on expiry after exit time if it's already closed
+                    if curr_date == target_exp and self.exit_config.get('exitTimeRef') == 'OPEN':
+                        can_enter = False
+                    else:
+                        can_enter = True
+
+            if can_enter:
+                # Found a matching expiry! Return position.
+                return self._create_position(symbol, curr_date, spot, target_exp, entry_conf, is_reentry)
+
+        return None
+    
+    def _create_position(self, symbol, curr_date, spot, target_exp, entry_conf, is_reentry):
         # Mark processed if not a re-entry
         if not is_reentry:
             self.processed_expiries.add(target_exp)
@@ -284,9 +369,12 @@ class OptionBacktestEngine:
 
         for leg_conf in self.strategy_config.get('legs', []):
             leg = self._build_leg(leg_conf, symbol, target_exp, curr_date, spot)
-            if not leg: return None
+            if not leg: 
+                logger.info(f"DEBUG_POS: Failed to build leg {leg_conf.get('type')} {leg_conf.get('action')}")
+                return None
             
             if min_vol > 0 and float(leg.get('volume', 0)) < min_vol:
+                logger.info(f"DEBUG_POS: Volume too low for leg {leg_conf.get('type')}. Vol: {leg.get('volume')} < Min: {min_vol}")
                 return None
                 
             pos['legs'].append(leg)
@@ -337,7 +425,9 @@ class OptionBacktestEngine:
         spot_ref = float(spot.open_price if spot_ref_type == 'OPEN' else spot.close_price)
         
         chain_all = self.option_data_cache.get(curr_date, {}).get(exp, {}).get(ltype, {})
-        if not chain_all: return None
+        if not chain_all: 
+            logger.info(f"DEBUG_LEG: No option chain found for Date: {curr_date}, Exp: {exp}, Type: {ltype}")
+            return None
         
         best_match = None
         if select_by == 'STRIKE':
@@ -371,6 +461,7 @@ class OptionBacktestEngine:
             
             best_match = min(chain_all.values(), key=lambda x: abs(get_px(x) - target_px))
             if abs(get_px(best_match) - target_px) > tolerance:
+                logger.info(f"DEBUG_LEG: Premium mismatch. Target: {target_px}, Best: {get_px(best_match)}, Tol: {tolerance}")
                 return None
 
         entry_px = float(best_match.open_price if spot_ref_type == 'OPEN' and best_match.open_price else best_match.close_price)
@@ -389,9 +480,11 @@ class OptionBacktestEngine:
             tp = leg_conf.get('takeProfit', {})
             tsl = leg_conf.get('trailingStopLoss', {})
         else:
-            sl = self.exit_config.get('stopLoss', {})
-            tp = self.exit_config.get('takeProfit', {})
-            tsl = self.exit_config.get('trailingStopLoss', {})
+            # GLOBAL MODE: Do not apply global settings to individual legs.
+            # Legs should only close when the Portfolio Trigger fires.
+            sl = {}
+            tp = {}
+            tsl = {}
 
         return {
             'type': ltype,
@@ -408,25 +501,11 @@ class OptionBacktestEngine:
         }
 
     async def _check_exit_conditions(self, pos, curr_date, spot_price, lot_size):
-        is_expiry = curr_date >= pos['expiry_date']
         exit_type = self.exit_config.get('type', 'DAYS_BEFORE_EXPIRY')
         
         exit_reason_str = None
-        should_exit_now = is_expiry
-        if is_expiry: exit_reason_str = 'EXPIRY'
-        
-        if not should_exit_now and exit_type == 'DAYS_BEFORE_EXPIRY':
-            if (pos['expiry_date'] - curr_date).days <= int(self.exit_config.get('daysBeforeExpiry', 0)):
-                should_exit_now = True
-                exit_reason_str = 'DAYS_BEFORE_EXPIRY'
-        elif not should_exit_now and exit_type == 'DAILY':
-            days_in = (curr_date - pos['entry_date']).days
-            if self.exit_config.get('dailyExitType') == 'SAME_DAY' and days_in >= 0:
-                should_exit_now = True
-                exit_reason_str = 'DAILY_EXIT'
-            elif self.exit_config.get('dailyExitType') == 'AFTER_DAYS' and days_in >= int(self.exit_config.get('dailyExitDays', 0)):
-                should_exit_now = True
-                exit_reason_str = 'DAILY_EXIT'
+        should_exit_now = False
+        risk_ref = None
 
         total_pnl = 0
         total_entry = 0
@@ -463,7 +542,6 @@ class OptionBacktestEngine:
             p_tp_total_pnl += tp_pnl * lot_size * leg['lot_multiplier']
 
         # Portfolio SL/TP Execution
-        risk_ref = None
         if ptp.get('enabled') and total_entry > 0:
             if p_tp_total_pnl > 0 and p_tp_total_pnl >= (total_entry * float(ptp.get('value', 0)) / 100):
                 should_exit_now = True
@@ -478,6 +556,35 @@ class OptionBacktestEngine:
                 should_exit_now = True
                 exit_reason_str = 'PORTFOLIO_SL_HIT'
                 risk_ref = p_sl_ref
+
+        # 3. Scheduled Exits (Only if risk triggers haven't hit)
+        # 3. Scheduled Exits (Only if risk triggers haven't hit)
+        if not should_exit_now:
+            # Check Daily Exit Config first (applies to ALL exit types if configured)
+            if self.exit_config.get('dailyExitType') == 'SAME_DAY':
+                 # Exit if we've held it for >= 0 days (i.e., today)
+                 should_exit_now = True
+                 exit_reason_str = 'DAILY_EXIT'
+            elif self.exit_config.get('dailyExitType') == 'AFTER_DAYS':
+                 days_in = (curr_date - pos['entry_date']).days
+                 if days_in >= int(self.exit_config.get('dailyExitDays', 0)):
+                     should_exit_now = True
+                     exit_reason_str = 'DAILY_EXIT'
+            
+            # If Daily Exit didn't trigger, check Primary Exit Mode
+            if not should_exit_now:
+                is_expiry = curr_date >= pos['expiry_date']
+                if is_expiry:
+                    should_exit_now = True
+                    exit_reason_str = 'EXPIRY'
+                elif exit_type == 'DAYS_BEFORE_EXPIRY':
+                    if (pos['expiry_date'] - curr_date).days <= int(self.exit_config.get('daysBeforeExpiry', 0)):
+                        should_exit_now = True
+                        exit_reason_str = 'DAYS_BEFORE_EXPIRY'
+                elif exit_type == 'DAILY':
+                    # Fallback if dailyExitType wasn't set but type is DAILY? 
+                    # The block above handles the logic, but let's keep it clean.
+                    pass
 
         if should_exit_now:
             # If it's a risk hit, use the risk ref for execution price. 

@@ -6,6 +6,7 @@ export interface MyStock {
   symbol: string;
   name: string;
   last_price?: number;
+  price_change?: number;
   last_synced_at?: string;
   user_stock_id?: number; // ID from UserStock model
 }
@@ -64,6 +65,7 @@ export const fetchMyStocks = createAsyncThunk(
         symbol: item.stock_details.symbol,
         name: item.stock_details.name,
         last_price: item.stock_details.last_price,
+        price_change: item.stock_details.price_change,
         last_synced_at: item.stock_details.last_synced_at,
         user_stock_id: item.id, // This is the UserStock ID (for deletion)
         order: item.order

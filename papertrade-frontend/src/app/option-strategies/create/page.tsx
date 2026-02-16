@@ -292,7 +292,7 @@ export default function CreateOptionStrategyPage() {
             });
 
             setSuccessMessage('Strategy created successfully');
-            setTimeout(() => router.push('/backtest'), 1500); // Redirect to Backtest or Strategies list
+            setTimeout(() => router.push('/option-strategies'), 1500); // Redirect to Strategies list
         } catch (err: any) {
             console.error("Strategy Creation Error:", err);
             console.log("Error Response Data:", err.response?.data);

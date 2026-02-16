@@ -103,6 +103,16 @@ class StockViewSet(viewsets.ModelViewSet):
         category = request.query_params.get('category')
         if category:
             queryset = queryset.filter(categories__name=category)
+        
+        # Filter by category_id
+        category_id = request.query_params.get('category_id')
+        if category_id:
+            queryset = queryset.filter(categories__id=category_id)
+        
+        # Filter by sector_id
+        sector_id = request.query_params.get('sector_id')
+        if sector_id:
+            queryset = queryset.filter(sectors__id=sector_id)
             
         # Filter by is_index
         is_index = request.query_params.get('is_index')
@@ -132,12 +142,57 @@ class StockViewSet(viewsets.ModelViewSet):
         sort_by = request.query_params.get('sort_by', 'symbol')
         order = request.query_params.get('order', 'asc')
         
-        allowed_sort_fields = ['symbol', 'name', 'status', 'exchange_suffix']
+        allowed_sort_fields = ['symbol', 'name', 'status', 'exchange_suffix', 'last_price', 'price_change']
         if sort_by not in allowed_sort_fields:
             sort_by = 'symbol'
         
-        order_prefix = '-' if order == 'desc' else ''
-        queryset = queryset.order_by(f'{order_prefix}{sort_by}')
+        # For last_price and price_change, annotate from StockPriceDaily
+        if sort_by in ('last_price', 'price_change'):
+            from django.db.models import Subquery, OuterRef, DecimalField, F, Value
+            from django.db.models.functions import Coalesce
+            
+            # Latest price subquery
+            latest_price_sq = StockPriceDaily.objects.filter(
+                stock=OuterRef('pk')
+            ).order_by('-date').values('close_price')[:1]
+            
+            # Previous day price subquery
+            prev_price_sq = StockPriceDaily.objects.filter(
+                stock=OuterRef('pk')
+            ).order_by('-date').values('close_price')[1:2]
+            
+            queryset = queryset.annotate(
+                annotated_last_price=Coalesce(
+                    Subquery(latest_price_sq, output_field=DecimalField()),
+                    Value(0, output_field=DecimalField())
+                ),
+                annotated_prev_price=Coalesce(
+                    Subquery(prev_price_sq, output_field=DecimalField()),
+                    Value(0, output_field=DecimalField())
+                ),
+            )
+            
+            if sort_by == 'last_price':
+                actual_field = 'annotated_last_price'
+            else:
+                # price_change = ((last - prev) / prev) * 100 — approximate sort by (last - prev) / prev
+                # We can annotate the change ratio for sorting
+                from django.db.models import Case, When
+                queryset = queryset.annotate(
+                    annotated_price_change=Case(
+                        When(annotated_prev_price__gt=0,
+                             then=(F('annotated_last_price') - F('annotated_prev_price')) * 100 / F('annotated_prev_price')),
+                        default=Value(0, output_field=DecimalField()),
+                        output_field=DecimalField()
+                    )
+                )
+                actual_field = 'annotated_price_change'
+            
+            order_prefix = '-' if order == 'desc' else ''
+            queryset = queryset.order_by(f'{order_prefix}{actual_field}')
+        else:
+            order_prefix = '-' if order == 'desc' else ''
+            queryset = queryset.order_by(f'{order_prefix}{sort_by}')
 
         # Pagination parameters
         page = request.query_params.get('page')

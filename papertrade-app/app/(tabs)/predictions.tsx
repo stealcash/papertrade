@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { StyleSheet, View, Text, FlatList, ActivityIndicator, TouchableOpacity, Alert, RefreshControl, Platform, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, TouchableOpacity, Alert, RefreshControl, Platform, ScrollView } from 'react-native';
 import { Stack } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -27,19 +27,24 @@ export default function PredictionsScreen() {
 
     const [startDate, setStartDate] = useState(lastWeek);
     const [endDate, setEndDate] = useState(today);
+    const [activePreset, setActivePreset] = useState<'7d' | '30d' | 'custom'>('7d');
+
+    // Applied dates for API
+    const [appliedStart, setAppliedStart] = useState(lastWeek);
+    const [appliedEnd, setAppliedEnd] = useState(today);
+
     const [showStartPicker, setShowStartPicker] = useState(false);
     const [showEndPicker, setShowEndPicker] = useState(false);
 
-    const fetchPredictions = async (isRefresh = false) => {
+    const fetchPredictions = async (isRefresh = false, start = appliedStart, end = appliedEnd) => {
         if (!isRefresh) setLoading(true);
         try {
             const params = {
-                start_date: startDate.toISOString().split('T')[0],
-                end_date: endDate.toISOString().split('T')[0],
+                start_date: start.toISOString().split('T')[0],
+                end_date: end.toISOString().split('T')[0],
             };
             const res = await predictionsAPI.getAll(params);
 
-            // Handle different potential response formats
             let data = [];
             if (Array.isArray(res.data)) {
                 data = res.data;
@@ -48,7 +53,6 @@ export default function PredictionsScreen() {
             } else if (res.data?.data && Array.isArray(res.data.data)) {
                 data = res.data.data;
             } else {
-                console.warn("Unexpected response format:", res.data);
                 data = [];
             }
 
@@ -63,13 +67,35 @@ export default function PredictionsScreen() {
     };
 
     useEffect(() => {
-        fetchPredictions();
-    }, [startDate, endDate]);
+        fetchPredictions(false, appliedStart, appliedEnd);
+    }, []);
+
+    const handleApply = () => {
+        setAppliedStart(startDate);
+        setAppliedEnd(endDate);
+        fetchPredictions(false, startDate, endDate);
+    };
+
+    const handlePreset = (preset: '7d' | '30d') => {
+        const end = new Date();
+        const start = new Date();
+        if (preset === '7d') {
+            start.setDate(end.getDate() - 7);
+        } else {
+            start.setDate(end.getDate() - 30);
+        }
+        setStartDate(start);
+        setEndDate(end);
+        setAppliedStart(start);
+        setAppliedEnd(end);
+        setActivePreset(preset);
+        fetchPredictions(false, start, end);
+    };
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        fetchPredictions(true);
-    }, [startDate, endDate]);
+        fetchPredictions(true, appliedStart, appliedEnd);
+    }, [appliedStart, appliedEnd]);
 
     const handleDelete = (id: number) => {
         Alert.alert(
@@ -130,8 +156,8 @@ export default function PredictionsScreen() {
                     onPress: async () => {
                         try {
                             const params = {
-                                start_date: startDate.toISOString().split('T')[0],
-                                end_date: endDate.toISOString().split('T')[0],
+                                start_date: appliedStart.toISOString().split('T')[0],
+                                end_date: appliedEnd.toISOString().split('T')[0],
                             };
                             await predictionsAPI.deleteAll(params);
                             setPredictions([]);
@@ -144,7 +170,6 @@ export default function PredictionsScreen() {
         );
     };
 
-    // Grouping
     const groupedPredictions = useMemo(() => {
         const groups: GroupedPredictions = {};
         predictions.forEach(pred => {
@@ -230,39 +255,33 @@ export default function PredictionsScreen() {
         if (showStartPicker && selectedDate) {
             setShowStartPicker(false);
             setStartDate(selectedDate);
-            // If end date is before new start date, update end date
+            setActivePreset('custom');
+            setTimeout(() => setShowEndPicker(true), 100);
             if (endDate < selectedDate) setEndDate(selectedDate);
-            // If range > 7 days, cap it
-            const diff = (endDate.getTime() - selectedDate.getTime()) / (1000 * 60 * 60 * 24);
-            if (diff > 7) {
-                const newEnd = new Date(selectedDate);
-                newEnd.setDate(newEnd.getDate() + 7);
-                setEndDate(newEnd);
-            }
         } else if (showEndPicker && selectedDate) {
             setShowEndPicker(false);
             setEndDate(selectedDate);
-            // If start date is after new end date, update start date
+            setActivePreset('custom');
             if (startDate > selectedDate) setStartDate(selectedDate);
-            // If range > 7 days, cap it
-            const diff = (selectedDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
-            if (diff > 7) {
-                const newStart = new Date(selectedDate);
-                newStart.setDate(newStart.getDate() - 7);
-                setStartDate(newStart);
-            }
         }
     };
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             <Stack.Screen options={{
-                title: 'My Predictions',
+                title: 'Predictions',
                 headerShown: true,
                 headerRight: () => (
-                    <TouchableOpacity onPress={() => fetchPredictions(true)} style={{ marginRight: 15 }}>
-                        <FontAwesome name="refresh" size={18} color={colors.tint} />
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', gap: 15, marginRight: 15 }}>
+                        {predictions.length > 0 && (
+                            <TouchableOpacity onPress={handleDeleteAllVisible}>
+                                <FontAwesome name="trash" size={18} color={colors.text} />
+                            </TouchableOpacity>
+                        )}
+                        <TouchableOpacity onPress={() => fetchPredictions(true)}>
+                            <FontAwesome name="refresh" size={18} color={colors.text} />
+                        </TouchableOpacity>
+                    </View>
                 )
             }} />
 
@@ -271,24 +290,51 @@ export default function PredictionsScreen() {
                 <View style={{ flex: 1 }}>
                     <View style={styles.filterSection}>
                         <FontAwesome name="calendar" size={14} color={colors.tabIconDefault} style={{ marginRight: 8 }} />
-                        <Text style={[styles.filterLabel, { color: colors.tabIconDefault }]}>Range (Max 7days):</Text>
+                        <Text style={[styles.filterLabel, { color: colors.tabIconDefault }]}>Range:</Text>
                     </View>
-                    <View style={styles.dateSelectorRow}>
-                        <TouchableOpacity style={[styles.dateBtn, { backgroundColor: colors.card, borderColor: colors.border }]} onPress={() => setShowStartPicker(true)}>
-                            <Text style={[styles.dateBtnText, { color: colors.text }]}>{startDate.toLocaleDateString()}</Text>
+
+                    {/* Preset Buttons */}
+                    <View style={{ flexDirection: 'row', gap: 8, marginBottom: 12 }}>
+                        <TouchableOpacity
+                            onPress={() => handlePreset('7d')}
+                            style={[
+                                styles.presetBtn,
+                                activePreset === '7d' ? { backgroundColor: colors.text } : { backgroundColor: 'transparent', borderColor: colors.text, borderWidth: 1 }
+                            ]}
+                        >
+                            <Text style={[styles.presetBtnText, activePreset === '7d' ? { color: colors.background } : { color: colors.text }]}>Last 7 Days</Text>
                         </TouchableOpacity>
-                        <Text style={{ color: colors.tabIconDefault, marginHorizontal: 5 }}>-</Text>
-                        <TouchableOpacity style={[styles.dateBtn, { backgroundColor: colors.card, borderColor: colors.border }]} onPress={() => setShowEndPicker(true)}>
-                            <Text style={[styles.dateBtnText, { color: colors.text }]}>{endDate.toLocaleDateString()}</Text>
+                        <TouchableOpacity
+                            onPress={() => handlePreset('30d')}
+                            style={[
+                                styles.presetBtn,
+                                activePreset === '30d' ? { backgroundColor: colors.text } : { backgroundColor: 'transparent', borderColor: colors.text, borderWidth: 1 }
+                            ]}
+                        >
+                            <Text style={[styles.presetBtnText, activePreset === '30d' ? { color: colors.background } : { color: colors.text }]}>Last 30 Days</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* Date Selector & Apply */}
+                    <View style={styles.dateSelectorRow}>
+                        <TouchableOpacity
+                            style={[styles.dateRangeBtn, { borderColor: colors.text }]}
+                            onPress={() => setShowStartPicker(true)}
+                        >
+                            <FontAwesome name="calendar" size={14} color={colors.text} style={{ marginRight: 8 }} />
+                            <Text style={[styles.dateBtnText, { color: colors.text }]}>
+                                {startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}
+                            </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={[styles.applyBtn, { backgroundColor: colors.text }]}
+                            onPress={handleApply}
+                        >
+                            <Text style={[styles.applyBtnText, { color: colors.background }]}>Apply</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-
-                {predictions.length > 0 && (
-                    <TouchableOpacity style={[styles.deleteAllBtn, { backgroundColor: '#fee2e2' }]} onPress={handleDeleteAllVisible}>
-                        <Text style={styles.deleteAllBtnText}>Delete Filtered</Text>
-                    </TouchableOpacity>
-                )}
             </View>
 
             {(showStartPicker || showEndPicker) && (
@@ -304,14 +350,14 @@ export default function PredictionsScreen() {
 
             {loading && !refreshing ? (
                 <View style={styles.center}>
-                    <ActivityIndicator size="large" color={colors.tint} />
+                    <ActivityIndicator size="large" color={colors.text} />
                 </View>
             ) : (
                 <ScrollView
                     style={styles.content}
                     contentContainerStyle={{ padding: 16 }}
                     refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.tint} />
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.text} />
                     }
                 >
                     {predictions.length === 0 ? (
@@ -331,7 +377,7 @@ export default function PredictionsScreen() {
                                         <Text style={[styles.dateHeaderTitle, { color: colors.text }]}>{date}</Text>
                                     </View>
                                     <TouchableOpacity onPress={() => handleDeleteGroup(date, preds)} style={styles.deleteGroupBtn}>
-                                        <Text style={styles.deleteGroupText}>Delete Group</Text>
+                                        <Text style={[styles.deleteGroupText, { color: '#ef4444' }]}>Delete Group</Text>
                                     </TouchableOpacity>
                                 </View>
                                 {preds.map(renderPredictionCard)}
@@ -354,17 +400,19 @@ const styles = StyleSheet.create({
     filterSection: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
     filterLabel: { fontSize: 11, fontWeight: '700', textTransform: 'uppercase' },
     dateSelectorRow: { flexDirection: 'row', alignItems: 'center' },
-    dateBtn: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, borderWidth: 1, flex: 1, alignItems: 'center' },
+    dateRangeBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12, paddingVertical: 10, borderRadius: 8, borderWidth: 1 },
     dateBtnText: { fontSize: 13, fontWeight: '500' },
-    deleteAllBtn: { paddingHorizontal: 12, paddingVertical: 10, borderRadius: 8, alignSelf: 'flex-end' },
-    deleteAllBtnText: { color: '#ef4444', fontSize: 12, fontWeight: 'bold' },
+    applyBtn: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, marginLeft: 8 },
+    applyBtnText: { fontSize: 13, fontWeight: '600' },
+    presetBtn: { paddingHorizontal: 16, paddingVertical: 8, borderRadius: 20 },
+    presetBtnText: { fontSize: 12, fontWeight: '600' },
 
     // Date Groups
     dateGroup: { marginBottom: 24 },
     dateHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 12, paddingHorizontal: 4 },
     dateHeaderTitle: { fontSize: 15, fontWeight: 'bold' },
     deleteGroupBtn: { padding: 4 },
-    deleteGroupText: { fontSize: 13, color: '#ef4444', fontWeight: '600' },
+    deleteGroupText: { fontSize: 13, fontWeight: '600' },
 
     // Cards
     card: { borderRadius: 16, padding: 16, borderWidth: 1, marginBottom: 12, elevation: 1, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 4 },

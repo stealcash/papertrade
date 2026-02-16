@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, TextInput, Modal, ActivityIndicator, Alert, RefreshControl, Platform } from 'react-native';
 import { useFocusEffect, Link, useRouter } from 'expo-router';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Feather } from '@expo/vector-icons';
 import DraggableFlatList, { ScaleDecorator, RenderItemParams } from 'react-native-draggable-flatlist';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -29,6 +29,7 @@ export default function WatchlistScreen() {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [searching, setSearching] = useState(false);
+    const searchTimeout = useRef<NodeJS.Timeout | null>(null);
 
     // Prediction Modal
     const [selectedStock, setSelectedStock] = useState<any>(null);
@@ -82,33 +83,44 @@ export default function WatchlistScreen() {
         }
     };
 
-    const handleSearch = async (text: string) => {
+    const handleSearch = (text: string) => {
         setSearchQuery(text);
+        if (searchTimeout.current) clearTimeout(searchTimeout.current);
+
         if (text.length < 2) {
             setSearchResults([]);
             return;
         }
 
         setSearching(true);
-        try {
-            const response = await stocksAPI.getAll({ search: text });
-            const data = response.data?.data || response.data || response;
-            const stocks = data.stocks || (Array.isArray(data) ? data : []);
-            setSearchResults(stocks);
-        } catch (e) {
-            console.error(e);
-        } finally {
-            setSearching(false);
-        }
+        searchTimeout.current = setTimeout(async () => {
+            try {
+                const response = await stocksAPI.getAll({ search: text, limit: 20 });
+                const data = response.data?.data || response.data || response;
+                const stocks = data.stocks || (Array.isArray(data) ? data : []);
+                setSearchResults(stocks);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setSearching(false);
+            }
+        }, 500); // 500ms debounce
     };
 
     const addToWatchlist = async (stock: any) => {
         try {
+            // Check if already in watchlist to prevent duplicates locally first
+            if (watchlist.some(w => w.stock_details.id === stock.id)) {
+                Alert.alert("Info", `${stock.symbol} is already in the watchlist.`);
+                return;
+            }
+
             await watchlistAPI.add(stock.id);
-            setSearchVisible(false);
-            setSearchQuery('');
-            setSearchResults([]);
+            // Optimistically add to UI or refresh
             fetchWatchlist();
+            // Optional: Close modal or show success feedback
+            // setSearchVisible(false);
+            Alert.alert("Success", `${stock.symbol} added to watchlist.`);
         } catch (e) {
             Alert.alert("Error", "Failed to add stock.");
         }
@@ -154,42 +166,56 @@ export default function WatchlistScreen() {
                     onLongPress={drag}
                     disabled={isActive}
                     style={[
-                        styles.card,
+                        styles.row,
                         {
-                            backgroundColor: colors.card,
-                            borderColor: isActive ? colors.tint : colors.border,
-                            opacity: isActive ? 0.9 : 1
+                            backgroundColor: isActive ? colors.tint + '10' : colors.background, // Highlight on drag
+                            borderBottomColor: colors.border
                         }
                     ]}
                 >
-                    <TouchableOpacity
-                        style={styles.dragHandle}
-                        onPressIn={drag}
-                    >
-                        <FontAwesome name="navicon" size={16} color={colors.tabIconDefault} />
-                    </TouchableOpacity>
+                    <View style={styles.rowLeft}>
+                        <TouchableOpacity onPressIn={drag} style={styles.dragHandle}>
+                            <FontAwesome name="bars" size={14} color={colors.tabIconDefault} />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.stockInfo}
-                        onPress={() => router.push(`/stocks/${item.stock_details.id}` as any)}
-                    >
-                        <Text style={[styles.symbol, { color: colors.text }]}>{item.stock_details.symbol}</Text>
-                        <Text style={[styles.name, { color: colors.tabIconDefault }]} numberOfLines={1}>{item.stock_details.name}</Text>
-                    </TouchableOpacity>
-
-                    <View style={styles.stockValues}>
-                        <Text style={[styles.price, { color: colors.text }]}>₹{parseFloat(item.stock_details.last_price as any || 0).toFixed(2)}</Text>
-                        <Text style={[styles.change, { color: isPositive ? '#10b981' : '#ef4444' }]}>
-                            {isPositive ? '+' : ''}{parseFloat(item.stock_details.change_percent as any || 0).toFixed(2)}%
-                        </Text>
+                        <TouchableOpacity
+                            style={styles.stockInfo}
+                            onPress={() => router.push(`/stocks/${item.stock_details.id}` as any)}
+                        >
+                            <Text style={[styles.symbol, { color: colors.text }]}>{item.stock_details.symbol}</Text>
+                            <Text style={[styles.name, { color: colors.tabIconDefault }]} numberOfLines={1}>{item.stock_details.name}</Text>
+                        </TouchableOpacity>
                     </View>
 
-                    <View style={styles.actionButtons}>
-                        <TouchableOpacity style={styles.actionBtn} onPress={() => handlePredict(item)}>
-                            <FontAwesome name="bullseye" size={18} color="#8b5cf6" />
+                    <View style={styles.rowRight}>
+                        <View style={styles.priceInfo}>
+                            <Text style={[styles.price, { color: colors.text }]}>₹{parseFloat(item.stock_details.last_price as any || 0).toFixed(2)}</Text>
+                            <View style={styles.changeContainer}>
+                                <Feather
+                                    name={isPositive ? "trending-up" : "trending-down"}
+                                    size={12}
+                                    color={isPositive ? '#16a34a' : '#dc2626'}
+                                    style={{ marginRight: 2 }}
+                                />
+                                <Text style={[styles.change, { color: isPositive ? '#16a34a' : '#dc2626' }]}>
+                                    {parseFloat(item.stock_details.change_percent as any || 0).toFixed(2)}%
+                                </Text>
+                            </View>
+                        </View>
+
+                        <TouchableOpacity
+                            style={styles.predictBtn}
+                            onPress={() => handlePredict(item)}
+                        >
+                            <Feather name="trending-up" size={14} color="#7c3aed" />
+                            <Text style={styles.predictText}>Predict</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.actionBtn} onPress={() => removeFromWatchlist(item)}>
-                            <FontAwesome name="trash-o" size={18} color="#ef4444" />
+
+                        <TouchableOpacity
+                            style={styles.removeBtn}
+                            onPress={() => removeFromWatchlist(item)}
+                        >
+                            <Feather name="trash-2" size={16} color={colors.tabIconDefault} />
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
@@ -201,8 +227,8 @@ export default function WatchlistScreen() {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
                 {/* Header */}
-                <View style={[styles.header, { borderBottomColor: colors.border, backgroundColor: colors.background }]}>
-                    <Text style={[styles.headerTitle, { color: colors.text }]}>Watchlist</Text>
+                <View style={[styles.header, { borderBottomColor: colors.border }]}>
+                    <Text style={[styles.headerTitle, { color: colors.text }]}>My Watchlist</Text>
 
                     <View style={styles.headerActions}>
                         {hasUnsavedOrder && (
@@ -214,12 +240,15 @@ export default function WatchlistScreen() {
                                 {isSavingOrder ? (
                                     <ActivityIndicator size="small" color="#fff" />
                                 ) : (
-                                    <Text style={styles.saveBtnText}>Save Order</Text>
+                                    <Text style={styles.saveBtnText}>Save</Text>
                                 )}
                             </TouchableOpacity>
                         )}
-                        <TouchableOpacity style={styles.addBtn} onPress={() => setSearchVisible(true)}>
-                            <FontAwesome name="plus" size={18} color={colors.tint} />
+                        <TouchableOpacity
+                            style={[styles.addBtn, { backgroundColor: colors.tint }]}
+                            onPress={() => setSearchVisible(true)}
+                        >
+                            <Feather name="plus" size={20} color="#fff" />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -243,8 +272,8 @@ export default function WatchlistScreen() {
                         }
                         ListEmptyComponent={
                             <View style={styles.emptyState}>
-                                <FontAwesome name="star-o" size={64} color={colors.tabIconDefault} />
-                                <Text style={[styles.emptyText, { color: colors.tabIconDefault }]}>Your watchlist is empty</Text>
+                                <Feather name="list" size={48} color={colors.tabIconDefault} />
+                                <Text style={[styles.emptyText, { color: colors.tabIconDefault }]}>Your watchlist is empty.</Text>
                                 <TouchableOpacity style={[styles.emptyAddBtn, { borderColor: colors.tint }]} onPress={() => setSearchVisible(true)}>
                                     <Text style={[styles.emptyAddBtnText, { color: colors.tint }]}>Add Stocks</Text>
                                 </TouchableOpacity>
@@ -261,46 +290,67 @@ export default function WatchlistScreen() {
                 />
 
                 {/* Search Modal */}
-                <Modal visible={searchVisible} animationType="slide">
+                <Modal visible={searchVisible} animationType="slide" presentationStyle="pageSheet">
                     <View style={[styles.modalContainer, { backgroundColor: colors.background }]}>
                         <View style={[styles.modalHeader, { borderBottomColor: colors.border }]}>
-                            <TouchableOpacity onPress={() => setSearchVisible(false)} style={styles.modalCloseBtn}>
-                                <FontAwesome name="arrow-left" size={20} color={colors.text} />
+                            <View style={[styles.searchBar, { backgroundColor: colors.background, borderColor: colors.border }]}>
+                                <Feather name="search" size={18} color={colors.tabIconDefault} style={{ marginLeft: 10 }} />
+                                <TextInput
+                                    style={[styles.searchInput, { color: colors.text }]}
+                                    placeholder="Search stocks..."
+                                    placeholderTextColor={colors.tabIconDefault}
+                                    autoFocus
+                                    value={searchQuery}
+                                    onChangeText={handleSearch}
+                                    clearButtonMode="while-editing"
+                                />
+                                {searching && <ActivityIndicator size="small" color={colors.tint} style={{ marginRight: 10 }} />}
+                            </View>
+                            <TouchableOpacity onPress={() => setSearchVisible(false)} style={styles.modalCancelBtn}>
+                                <Text style={{ color: colors.tint, fontSize: 16 }}>Cancel</Text>
                             </TouchableOpacity>
-                            <TextInput
-                                style={[styles.searchInput, { color: colors.text }]}
-                                placeholder="Search stocks..."
-                                placeholderTextColor={colors.tabIconDefault}
-                                autoFocus
-                                value={searchQuery}
-                                onChangeText={handleSearch}
-                            />
-                            {searching && <ActivityIndicator size="small" color={colors.tint} style={{ marginRight: 10 }} />}
                         </View>
 
                         <FlatList
                             data={searchResults}
-                            renderItem={({ item }: { item: any }) => (
-                                <TouchableOpacity
-                                    style={[styles.searchItem, { borderBottomColor: colors.border }]}
-                                    onPress={() => addToWatchlist(item)}
-                                >
-                                    <View>
-                                        <Text style={[styles.searchSymbol, { color: colors.text }]}>{item.symbol}</Text>
-                                        <Text style={[styles.searchName, { color: colors.tabIconDefault }]}>{item.name}</Text>
-                                    </View>
-                                    <View style={styles.searchAddIcon}>
-                                        <FontAwesome name="plus" size={16} color="#fff" />
-                                    </View>
-                                </TouchableOpacity>
-                            )}
+                            renderItem={({ item }: { item: any }) => {
+                                const isInWatchlist = watchlist.some(w => w.stock_details.id === item.id);
+                                return (
+                                    <TouchableOpacity
+                                        style={[styles.searchItem, { borderBottomColor: colors.border }]}
+                                        onPress={() => !isInWatchlist && addToWatchlist(item)}
+                                        disabled={isInWatchlist}
+                                    >
+                                        <View>
+                                            <Text style={[styles.searchSymbol, { color: colors.text }]}>{item.symbol}</Text>
+                                            <Text style={[styles.searchName, { color: colors.tabIconDefault }]}>{item.name}</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            {item.last_price && (
+                                                <Text style={[styles.searchPrice, { color: colors.tabIconDefault }]}>₹{item.last_price}</Text>
+                                            )}
+                                            {isInWatchlist ? (
+                                                <View style={styles.addedBadge}>
+                                                    <Feather name="check" size={14} color="#16a34a" />
+                                                    <Text style={styles.addedText}>Added</Text>
+                                                </View>
+                                            ) : (
+                                                <View style={[styles.addIcon, { backgroundColor: colors.tint + '10' }]}>
+                                                    <Feather name="plus" size={16} color={colors.tint} />
+                                                </View>
+                                            )}
+                                        </View>
+                                    </TouchableOpacity>
+                                );
+                            }}
                             keyExtractor={(item: any) => item.id.toString()}
                             contentContainerStyle={styles.searchList}
                             ListEmptyComponent={!searching && searchQuery.length >= 2 ? (
                                 <View style={styles.emptyState}>
-                                    <Text style={[styles.emptyText, { color: colors.tabIconDefault }]}>No stocks found matching "{searchQuery}"</Text>
+                                    <Text style={[styles.emptyText, { color: colors.tabIconDefault }]}>No stocks found.</Text>
                                 </View>
                             ) : null}
+                            keyboardShouldPersistTaps="handled"
                         />
                     </View>
                 </Modal>
@@ -313,57 +363,74 @@ const styles = StyleSheet.create({
     container: { flex: 1 },
     header: {
         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-        paddingHorizontal: 20, paddingTop: Platform.OS === 'ios' ? 60 : 40, paddingBottom: 15,
+        paddingHorizontal: 20, paddingTop: Platform.OS === 'ios' ? 60 : 50, paddingBottom: 15,
         borderBottomWidth: 1,
     },
-    headerTitle: { fontSize: 24, fontWeight: 'bold' },
-    headerActions: { flexDirection: 'row', alignItems: 'center', gap: 15 },
+    headerTitle: { fontSize: 28, fontWeight: 'bold' },
+    headerActions: { flexDirection: 'row', alignItems: 'center', gap: 12 },
     addBtn: {
-        width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(59, 130, 246, 0.1)',
-        justifyContent: 'center', alignItems: 'center'
+        width: 36, height: 36, borderRadius: 18,
+        justifyContent: 'center', alignItems: 'center',
+        shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 3, elevation: 3
     },
-    saveBtn: {
-        paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8,
-    },
-    saveBtnText: { color: '#fff', fontSize: 13, fontWeight: 'bold' },
+    saveBtn: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16 },
+    saveBtnText: { color: '#fff', fontSize: 13, fontWeight: '600' },
 
-    list: { padding: 16 },
-    center: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 40 },
+    list: { paddingBottom: 40 },
+    center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 
-    card: {
-        padding: 12, borderRadius: 16, marginBottom: 12, borderWidth: 1,
-        flexDirection: 'row', alignItems: 'center',
-        shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05, shadowRadius: 4, elevation: 2
+    // Row Styles
+    row: {
+        flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+        paddingVertical: 14, paddingHorizontal: 20,
+        borderBottomWidth: 1,
     },
-    dragHandle: { padding: 10, marginRight: 5 },
+    rowLeft: { flexDirection: 'row', alignItems: 'center', flex: 1 },
+    dragHandle: { paddingRight: 15, paddingVertical: 5 },
     stockInfo: { flex: 1 },
-    symbol: { fontSize: 16, fontWeight: 'bold' },
+    symbol: { fontSize: 16, fontWeight: '700' },
     name: { fontSize: 12, marginTop: 2 },
-    stockValues: { alignItems: 'flex-end', marginRight: 15 },
-    price: { fontSize: 16, fontWeight: '600' },
-    change: { fontSize: 12, fontWeight: 'bold', marginTop: 2 },
 
-    actionButtons: { flexDirection: 'row', gap: 5 },
-    actionBtn: { width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.03)' },
+    rowRight: { flexDirection: 'row', alignItems: 'center', gap: 16 },
+    priceInfo: { alignItems: 'flex-end', minWidth: 70 },
+    price: { fontSize: 15, fontWeight: '600' },
+    changeContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 2 },
+    change: { fontSize: 12, fontWeight: '500' },
 
-    emptyState: { alignItems: 'center', marginTop: 100, paddingHorizontal: 40 },
-    emptyText: { fontSize: 16, marginTop: 16, marginBottom: 24, textAlign: 'center' },
-    emptyAddBtn: { paddingHorizontal: 32, paddingVertical: 12, borderRadius: 24, borderWidth: 1 },
-    emptyAddBtnText: { fontSize: 16, fontWeight: 'bold' },
+    predictBtn: {
+        flexDirection: 'row', alignItems: 'center', gap: 4,
+        backgroundColor: '#7c3aed10', paddingHorizontal: 10, paddingVertical: 6, borderRadius: 8
+    },
+    predictText: { fontSize: 12, fontWeight: '600', color: '#7c3aed' },
+
+    removeBtn: { padding: 6 },
+
+    emptyState: { alignItems: 'center', marginTop: 100 },
+    emptyText: { fontSize: 16, marginTop: 16, marginBottom: 24 },
+    emptyAddBtn: { paddingHorizontal: 24, paddingVertical: 10, borderRadius: 20, borderWidth: 1 },
+    emptyAddBtnText: { fontSize: 14, fontWeight: '600' },
 
     // Modal
     modalContainer: { flex: 1 },
-    modalHeader: { flexDirection: 'row', alignItems: 'center', padding: 15, paddingTop: Platform.OS === 'ios' ? 60 : 40, borderBottomWidth: 1 },
-    modalCloseBtn: { padding: 10 },
-    searchInput: { flex: 1, marginLeft: 10, fontSize: 17, paddingVertical: 8 },
-    searchList: { padding: 15 },
+    modalHeader: { flexDirection: 'row', alignItems: 'center', padding: 16, borderBottomWidth: 1, paddingTop: Platform.OS === 'ios' ? 20 : 16 },
+    searchBar: {
+        flex: 1, flexDirection: 'row', alignItems: 'center',
+        borderWidth: 1, borderRadius: 12, height: 44, marginRight: 12
+    },
+    searchInput: { flex: 1, marginHorizontal: 10, fontSize: 16, height: '100%' },
+    modalCancelBtn: { padding: 4 },
+
+    searchList: { paddingHorizontal: 16 },
     searchItem: {
         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-        paddingVertical: 15, borderBottomWidth: 1,
+        paddingVertical: 16, borderBottomWidth: 1,
     },
     searchSymbol: { fontSize: 16, fontWeight: 'bold' },
-    searchName: { fontSize: 12, marginTop: 2 },
-    searchAddIcon: { width: 28, height: 28, borderRadius: 14, backgroundColor: '#3b82f6', justifyContent: 'center', alignItems: 'center' },
+    searchName: { fontSize: 13, marginTop: 2, maxWidth: 200 },
+    searchPrice: { fontSize: 13, marginRight: 10 },
+
+    addIcon: { width: 28, height: 28, borderRadius: 14, justifyContent: 'center', alignItems: 'center' },
+    addedBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: '#dcfce7', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12 },
+    addedText: { fontSize: 12, fontWeight: '600', color: '#16a34a' }
 });
 

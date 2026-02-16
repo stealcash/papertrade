@@ -51,15 +51,16 @@ function RootLayoutNav() {
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="login" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="portfolio" options={{ headerShown: true, title: 'Portfolio' }} />
+      <Stack.Screen name="watchlist" options={{ headerShown: true, title: 'Watchlist' }} />
+      <Stack.Screen name="strategies" options={{ headerShown: true, title: 'Strategies' }} />
+      <Stack.Screen name="options" options={{ headerShown: true, title: 'Options' }} />
       <Stack.Screen name="wallet" options={{ headerShown: true, title: 'Wallet' }} />
-      <Stack.Screen name="strategies/[id]" options={{ headerShown: true, title: 'Strategy Details' }} />
-      <Stack.Screen name="strategies/trades" options={{ headerShown: true, title: 'Trade History' }} />
-      <Stack.Screen name="strategies/edit" options={{ headerShown: true, title: 'Edit Strategy' }} />
+      <Stack.Screen name="market" options={{ headerShown: true, title: 'Market' }} />
+      <Stack.Screen name="predictions" options={{ headerShown: true, title: 'My Predictions' }} />
       <Stack.Screen name="notifications" options={{ headerShown: true, title: 'Notifications' }} />
       <Stack.Screen name="scanner" options={{ headerShown: true, title: 'Scanner' }} />
       <Stack.Screen name="stock-finder" options={{ headerShown: true, title: 'Stock Finder' }} />
-      <Stack.Screen name="predictions" options={{ headerShown: true, title: 'My Predictions' }} />
-      <Stack.Screen name="stocks" options={{ headerShown: true, title: 'Stocks' }} />
       <Stack.Screen name="stock-history" options={{ headerShown: true, title: 'History' }} />
       <Stack.Screen name="market-analysis" options={{ headerShown: true, title: 'Market Analysis' }} />
       <Stack.Screen name="backtest" options={{ headerShown: true, title: 'Backtest' }} />

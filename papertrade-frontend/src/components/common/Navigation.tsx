@@ -8,10 +8,10 @@ export default function Navigation() {
 
     const navItems = [
         { name: 'Dashboard', path: '/dashboard' },
-        { name: 'Stocks', path: '/stocks' },
-        { name: 'History', path: '/stock-history' },
+        { name: 'Market', path: '/market' },
+        { name: 'Compare Charts', path: '/compare-charts' },
         { name: 'Options', path: '/options' },
-        { name: 'Analysis', path: '/market-analysis' },
+        { name: 'Strategy Analysis', path: '/strategy-analysis' },
         { name: 'Backtest', path: '/backtest' },
         { name: 'Strategies', path: '/strategy' },
         { name: 'Wallet', path: '/wallet' },
