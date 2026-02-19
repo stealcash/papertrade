@@ -2,19 +2,93 @@
 > papertrade-frontend@0.1.0 dev
 > next dev
 
-  ▲ Next.js 14.2.35
-  - Local:        http://localhost:3000
-  - Environments: .env.local
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.103:3000
+   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2.2s
+ ✓ Ready in 2.4s
  ○ Compiling / ...
- ✓ Compiled / in 1267ms (1541 modules)
- GET / 200 in 1436ms
- ✓ Compiled /dashboard in 354ms (1549 modules)
- ✓ Compiled /market in 456ms (1577 modules)
- ○ Compiling /market/[id] ...
- ✓ Compiled /market/[id] in 543ms (1601 modules)
- GET /market/27 200 in 155ms
- ✓ Compiled /favicon.ico in 280ms (882 modules)
- GET /favicon.ico 200 in 328ms
+ ✓ Compiled / in 1044ms (1631 modules)
+ GET / 200 in 1383ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 853ms (1640 modules)
+ GET /dashboard 200 in 963ms
+ GET /dashboard 200 in 18ms
+ GET /dashboard 200 in 201ms
+ ✓ Compiled /favicon.ico in 162ms (959 modules)
+ GET /favicon.ico 200 in 249ms
+ ✓ Compiled /login in 207ms (1672 modules)
+ GET /login 200 in 295ms
+ GET /login 200 in 18ms
+ GET /login 200 in 190ms
+ GET /favicon.ico 200 in 21ms
+ GET /dashboard 200 in 42ms
+ GET /dashboard 200 in 20ms
+ GET /dashboard 200 in 13ms
+ ○ Compiling /predictions ...
+ ✓ Compiled /predictions in 512ms (2330 modules)
+ GET /predictions 200 in 588ms
+ ○ Compiling /market ...
+ ✓ Compiled /market in 549ms (2353 modules)
+ GET /market 200 in 595ms
+ ○ Compiling /watchlist ...
+ ✓ Compiled /watchlist in 942ms (2374 modules)
+ GET /watchlist 200 in 991ms
+ ○ Compiling /compare-charts ...
+ ✓ Compiled /compare-charts in 787ms (2393 modules)
+ GET /compare-charts 200 in 864ms
+ ○ Compiling /scanner ...
+ ✓ Compiled /scanner in 541ms (2402 modules)
+ GET /scanner 200 in 592ms
+ ○ Compiling /multi-strategy-scanner ...
+ ✓ Compiled /multi-strategy-scanner in 523ms (2413 modules)
+ GET /multi-strategy-scanner 200 in 567ms
+ GET /scanner 200 in 44ms
+ GET /multi-strategy-scanner 200 in 17ms
+ ○ Compiling /strategy-analysis ...
+ ✓ Compiled /strategy-analysis in 1023ms (2424 modules)
+ GET /strategy-analysis 200 in 1103ms
+ ○ Compiling /strategies ...
+ ✓ Compiled /strategies in 519ms (2432 modules)
+ GET /strategies 200 in 581ms
+ ○ Compiling /backtest ...
+ ✓ Compiled /backtest in 522ms (2453 modules)
+ GET /backtest 200 in 636ms
+ GET /backtest 200 in 21ms
+ ✓ Compiled /options in 478ms (2468 modules)
+ GET /options 200 in 613ms
+ ✓ Compiled /option-strategies in 425ms (2477 modules)
+ GET /option-strategies 200 in 487ms
+ ○ Compiling /pattern-finder ...
+ ✓ Compiled /pattern-finder in 598ms (2473 modules)
+ GET /pattern-finder 200 in 698ms
+ ○ Compiling /option-backtest ...
+ ✓ Compiled /option-backtest in 690ms (2459 modules)
+ GET /option-backtest 200 in 762ms
+ ○ Compiling /wallet ...
+ ✓ Compiled /wallet in 693ms (2452 modules)
+ GET /wallet 200 in 742ms
+ ○ Compiling /notifications ...
+ ✓ Compiled /notifications in 652ms (2463 modules)
+ GET /notifications 200 in 711ms
+ ○ Compiling /profile ...
+ ✓ Compiled /profile in 780ms (2474 modules)
+ GET /profile 200 in 862ms
+ GET /notifications 200 in 43ms
+ GET /profile 200 in 36ms
+ ○ Compiling /subscription ...
+ ✓ Compiled /subscription in 654ms (2111 modules)
+ GET /subscription 200 in 772ms
+ ✓ Compiled /market in 408ms (999 modules)
+ GET /market 200 in 530ms
+ GET /market 200 in 214ms
+ GET /market 200 in 208ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 889ms (994 modules)
+ GET /favicon.ico 200 in 1022ms
+ GET /market 200 in 341ms
+ GET /favicon.ico 200 in 11ms
+ GET /market 200 in 40ms
+ GET /market 200 in 31ms

@@ -51,7 +51,7 @@ cd "$PROJECT_ROOT/papertrade-backend"
 
 if [ ! -d "venv" ]; then
     # print_step "Creating virtual environment..."
-    python3 -m venv venv
+    python3.14 -m venv venv
 fi
 
 # print_step "Activating virtual environment..."

@@ -31,5 +31,6 @@ urlpatterns = [
         path('portfolio/', include('apps.portfolio.urls')),
         path('subscriptions/', include('apps.subscriptions.urls')),
         path('predictions/', include('apps.predictions.urls')),
+        path('patterns/', include('apps.patterns.urls')),
     ])),
 ]

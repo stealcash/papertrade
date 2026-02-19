@@ -30,39 +30,60 @@ class BacktestEngine:
         
     def execute(self, stock_ids: List[int], execution_mode: str = 'signal_close'):
         """
-        Execute backtest by delegating to FastAPI compute engine.
+        Execute backtest locally (Synchronous).
         """
         try:
             self.backtest_run.status = 'running'
             self.backtest_run.save()
+
+            # Local Execution
+            from apps.stocks.models import Stock
             
-            # Call FastAPI Service
-            fastapi_url = settings.FASTAPI_SERVICE_URL
-            secret = settings.INTERNAL_API_SECRET
+            start_date = self.backtest_run.start_date
+            end_date = self.backtest_run.end_date
             
-            payload = {
-                "run_id": self.backtest_run.id,
-                "stock_ids": stock_ids
-            }
+            strategy = self.backtest_run.strategy_predefined
+            strategy_rule = self.backtest_run.strategy_rule_based
             
-            headers = {
-                "X-Internal-Secret": secret
-            }
+            stocks = []
             
-            response = requests.post(
-                f"{fastapi_url}/compute/backtest",
-                json=payload,
-                headers=headers,
-                timeout=5
-            )
-            response.raise_for_status()
+            # 1. Process Signals (Accuracy)
+            for stock_id in stock_ids:
+                try:
+                    stock = Stock.objects.get(id=stock_id)
+                    stocks.append(stock)
+                    
+                    # Pass strategy object if available, else None (Rule-based handled internally)
+                    self._process_stock(stock, strategy, start_date, end_date)
+                    
+                except Stock.DoesNotExist:
+                    continue
             
-            logger.info(f"Backtest {self.backtest_run.run_id} delegated to FastAPI successfully")
+            # 2. Save Accuracy Results
+            self.backtest_run.list_of_trades_json = self.results
+            
+            # Calculate accuracy stats
+            if self.stats['total_signals'] > 0:
+                self.backtest_run.win_rate = Decimal((self.stats['win_count'] / self.stats['total_signals']) * 100)
+            
+            self.backtest_run.total_signals = self.stats['total_signals']
+            self.backtest_run.win_count = self.stats['win_count']
+            self.backtest_run.loss_count = self.stats['loss_count']
+            
+            # 3. Calculate PnL if strategy is set
+            if self.backtest_run.trade_strategy:
+                self._calculate_pnl(stocks, strategy, strategy_rule, start_date, end_date)
+            
+            self.backtest_run.status = 'completed'
+            self.backtest_run.time_taken = 0 # Todo: measure time
+            self.backtest_run.save()
+            
+            logger.info(f"Backtest {self.backtest_run.run_id} completed successfully (Local)")
             
         except Exception as e:
-            logger.error(f"Failed to delegate backtest {self.backtest_run.run_id} to FastAPI: {str(e)}")
+            logger.error(f"Backtest execution failed: {str(e)}")
             self.backtest_run.status = 'failed'
-            self.backtest_run.error_message = f"Delegation error: {str(e)}"
+            self.backtest_run.error_message = str(e)
             self.backtest_run.save()
             raise
 

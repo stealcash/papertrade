@@ -245,12 +245,12 @@ export default function StrategyDetailPage() {
                             <thead className="bg-gray-50 text-gray-500 font-semibold border-b border-gray-200">
                                 <tr>
                                     <th className="px-6 py-3">Stock</th>
-                                    <th className="px-6 py-3 text-center">Signals</th>
-                                    <th className="px-6 py-3 text-center">Wins</th>
-                                    <th className="px-6 py-3 text-center">Losses</th>
-                                    <th className="px-6 py-3 text-center">Win Rate</th>
+                                    <th className="px-2 py-3 text-center">Signals</th>
+                                    <th className="px-2 py-3 text-center">Wins</th>
+                                    <th className="px-2 py-3 text-center">Losses</th>
+                                    <th className="px-2 py-3 text-center">Win Rate</th>
                                     <th className="px-6 py-3 text-right">Total PnL</th>
-                                    <th className="px-6 py-3 text-right whitespace-nowrap min-w-[140px] pr-8">Action</th>
+                                    <th className="px-6 py-3 text-right whitespace-nowrap min-w-[180px] pr-8">Action</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
@@ -276,10 +276,10 @@ export default function StrategyDetailPage() {
                                                     </div>
                                                 )}
                                             </td>
-                                            <td className="px-6 py-4 text-center text-gray-600">{item.total_signals}</td>
-                                            <td className="px-6 py-4 text-center text-green-600 font-medium">{item.wins}</td>
-                                            <td className="px-6 py-4 text-center text-red-500 font-medium">{item.losses}</td>
-                                            <td className="px-6 py-4 text-center">
+                                            <td className="px-2 py-4 text-center text-gray-600">{item.total_signals}</td>
+                                            <td className="px-2 py-4 text-center text-green-600 font-medium">{item.wins}</td>
+                                            <td className="px-2 py-4 text-center text-red-500 font-medium">{item.losses}</td>
+                                            <td className="px-2 py-4 text-center">
                                                 <span className={`px-2 py-1 rounded text-xs font-bold ${item.win_rate >= 50 ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'
                                                     }`}>
                                                     {item.win_rate}%

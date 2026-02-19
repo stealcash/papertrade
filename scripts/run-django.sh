@@ -12,9 +12,8 @@ cd "$(dirname "$0")/../papertrade-backend"
 
 # Check if virtual environment exists
 if [ ! -d "venv" ]; then
-    # echo "ERROR: Virtual environment not found!"
-    # echo "Please run './restart.sh' first to set up the environment."
-    exit 1
+    # echo "Creating virtual environment..."
+    python3.14 -m venv venv
 fi
 
 # Activate virtual environment

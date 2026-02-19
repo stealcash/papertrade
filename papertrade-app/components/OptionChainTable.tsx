@@ -74,6 +74,9 @@ export function OptionChainTable({
 
     const renderHeader = () => (
         <View style={styles.headerRow}>
+            {/* Strike Price - Left for Single Mode */}
+            {viewMode !== 'BOTH' && <Text style={[styles.headerCell, styles.strikeHeader]}>Strike</Text>}
+
             {viewMode !== 'PE' && (
                 <>
                     {visibleColumns.oi && <Text style={[styles.headerCell, styles.callHeader]}>OI</Text>}
@@ -88,7 +91,8 @@ export function OptionChainTable({
                 </>
             )}
 
-            <Text style={[styles.headerCell, styles.strikeHeader]}>Strike</Text>
+            {/* Strike Price - Center for BOTH Mode */}
+            {viewMode === 'BOTH' && <Text style={[styles.headerCell, styles.strikeHeader]}>Strike</Text>}
 
             {viewMode !== 'CE' && (
                 <>
@@ -115,6 +119,13 @@ export function OptionChainTable({
 
         return (
             <View key={item.strike} style={styles.row}>
+                {/* Strike - Left for Single Mode */}
+                {viewMode !== 'BOTH' && (
+                    <View style={[styles.cell, styles.strikeCell]}>
+                        <Text style={styles.strikeText}>{Number(item.strike).toFixed(0)}</Text>
+                    </View>
+                )}
+
                 {/* CE Side */}
                 {viewMode !== 'PE' && (
                     <>
@@ -172,10 +183,12 @@ export function OptionChainTable({
                     </>
                 )}
 
-                {/* Strike */}
-                <View style={[styles.cell, styles.strikeCell]}>
-                    <Text style={styles.strikeText}>{Number(item.strike).toFixed(0)}</Text>
-                </View>
+                {/* Strike - Center for BOTH Mode */}
+                {viewMode === 'BOTH' && (
+                    <View style={[styles.cell, styles.strikeCell]}>
+                        <Text style={styles.strikeText}>{Number(item.strike).toFixed(0)}</Text>
+                    </View>
+                )}
 
                 {/* PE Side */}
                 {viewMode !== 'CE' && (
@@ -246,31 +259,34 @@ export function OptionChainTable({
     }
 
     return (
-        <ScrollView style={styles.container} stickyHeaderIndices={[0]}>
-            {groupedData.map(([date, items], index) => {
-                const sectionProcessed = processSideBySide(items);
-                const sectionSpot = Number(items[0]?.underlying_value) || spotPrice;
+        <View style={styles.container}>
+            <View style={styles.headerContainer}>
+                {renderHeader()}
+            </View>
+            <ScrollView style={styles.scrollContainer}>
+                {groupedData.map(([date, items]) => {
+                    const sectionProcessed = processSideBySide(items);
+                    const sectionSpot = Number(items[0]?.underlying_value) || spotPrice;
 
-                return (
-                    <View key={date} style={styles.dateSection}>
-                        <View style={styles.dateHeader}>
-                            <View style={styles.dateBadge}>
-                                <Text style={styles.dateBadgeText}>
-                                    {new Date(date).toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric' })}
+                    return (
+                        <View key={date} style={styles.dateSection}>
+                            <View style={styles.dateHeader}>
+                                <View style={styles.dateBadge}>
+                                    <Text style={styles.dateBadgeText}>
+                                        {new Date(date).toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric' })}
+                                    </Text>
+                                </View>
+                                <Text style={styles.sectionSpotText}>
+                                    Spot: <Text style={styles.spotValue}>{sectionSpot.toFixed(2)}</Text>
                                 </Text>
                             </View>
-                            <Text style={styles.sectionSpotText}>
-                                Spot: <Text style={styles.spotValue}>{sectionSpot.toFixed(2)}</Text>
-                            </Text>
+
+                            {sectionProcessed.map((row) => renderRow(row, sectionSpot))}
                         </View>
-
-                        {index === 0 && renderHeader()}
-
-                        {sectionProcessed.map((row) => renderRow(row, sectionSpot))}
-                    </View>
-                );
-            })}
-        </ScrollView>
+                    );
+                })}
+            </ScrollView>
+        </View>
     );
 }
 
@@ -279,11 +295,16 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    headerRow: {
-        flexDirection: 'row',
+    headerContainer: {
         backgroundColor: '#f8f9fa',
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
+    },
+    scrollContainer: {
+        flex: 1,
+    },
+    headerRow: {
+        flexDirection: 'row',
         paddingVertical: 8,
     },
     headerCell: {

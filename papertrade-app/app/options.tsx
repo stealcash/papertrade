@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator, SafeAreaView, Alert, TouchableOpacity, ScrollView, Modal, TextInput, Platform } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, Alert, TouchableOpacity, ScrollView, Modal, TextInput, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from 'expo-router';
 import { InstrumentSelector } from '@/components/InstrumentSelector';
 import { ExpirySelector } from '@/components/ExpirySelector';
@@ -14,6 +15,11 @@ export default function TradeScreen() {
     const [instruments, setInstruments] = useState<Instrument[]>([]);
     const [selectedInstrument, setSelectedInstrument] = useState<Instrument | null>(null);
     const [selectedExpiry, setSelectedExpiry] = useState<string>('');
+    const [selectedYear, setSelectedYear] = useState<number | null>(null);
+    const [years, setYears] = useState<number[]>([]);
+    const [expiries, setExpiries] = useState<string[]>([]);
+    const [latestDate, setLatestDate] = useState<string | null>(null);
+
     const [viewMode, setViewMode] = useState<ViewMode>('BOTH');
 
     const [chainData, setChainData] = useState<any[]>([]);
@@ -34,11 +40,11 @@ export default function TradeScreen() {
     // Column Filters
     const [visibleColumns, setVisibleColumns] = useState<VisibleColumns>({
         oi: true,
-        oiChange: true,
+        oiChange: false,
         volume: true,
-        open: true,
+        open: false,
         high: true,
-        low: true,
+        low: false,
         close: true,
         ltp: true,
         priceChange: false
@@ -65,16 +71,19 @@ export default function TradeScreen() {
     const handleViewModeChange = (mode: ViewMode) => {
         setViewMode(mode);
         if (mode === 'BOTH') {
-            // Ensure we don't have more than 4 columns active when switching to BOTH
-            setVisibleColumns(prev => {
-                const activeKeys = (Object.keys(prev) as (keyof VisibleColumns)[]).filter(k => prev[k]);
-                if (activeKeys.length > 4) {
-                    const newVisible = { ...prev };
-                    // Keep first 4, disable others
-                    activeKeys.slice(4).forEach(k => { newVisible[k] = false; });
-                    return newVisible;
-                }
-                return prev;
+            // Set default columns for BOTH mode: OI, Volume, High, Close
+            setVisibleColumns({
+                oi: true,
+                oiChange: false,
+                volume: true,
+                open: false,
+                high: true,
+                low: false,
+                close: true,
+                ltp: false, // User requested OI, Vol, High, Close only? Wait, LTP is usually critical. 
+                // Request said: "by default show only oi, vol, high and close only"
+                // I will follow request exactly.
+                priceChange: false
             });
         }
     };
@@ -89,15 +98,82 @@ export default function TradeScreen() {
             // Default to NIFTY (Index) if available
             const nifty = list.find((i: Instrument) => i.symbol === 'NIFTY' || i.symbol === 'NIFTY 50');
             if (nifty) {
-                setSelectedInstrument(nifty);
+                // handleInstrumentChange will trigger logic
+                handleInstrumentChange(nifty);
             } else if (list.length > 0) {
-                setSelectedInstrument(list[0]);
+                handleInstrumentChange(list[0]);
             }
         } catch (e) {
             console.error(e);
             Alert.alert('Error', 'Failed to fetch instruments');
         } finally {
             setLoadingInstruments(false);
+        }
+    };
+
+    const initializeSymbol = async (symbol: string) => {
+        setLoadingChain(true); // Show header loading or similar if needed
+        try {
+            // 1. Get Latest Info
+            const infoRes = await optionsAPI.getLatestInfo(symbol);
+            const latestInfo = infoRes.data?.data || {};
+
+            // 2. Get Years
+            const yearsRes = await optionsAPI.getYears(symbol);
+            const yearsList = yearsRes.data?.data || [];
+            setYears(yearsList);
+
+            // Determine Target Year
+            let targetYear = latestInfo.year || (yearsList.length > 0 ? yearsList[yearsList.length - 1] : new Date().getFullYear());
+            setSelectedYear(targetYear);
+
+            // 3. Get Expiries
+            const expRes = await optionsAPI.getExpiries(symbol, targetYear.toString());
+            const expList = expRes.data?.data || [];
+            setExpiries(expList);
+
+            // Determine Target Expiry
+            let targetExpiry = latestInfo.expiry || (expList.length > 0 ? expList[expList.length - 1] : '');
+            setSelectedExpiry(targetExpiry);
+
+            // Set Latest Date (if available from latest-info)
+            if (latestInfo.date) {
+                setLatestDate(latestInfo.date);
+                // Also set as default filter date
+                const d = new Date(latestInfo.date);
+                setFromDate(d);
+                setToDate(d);
+            } else {
+                setLatestDate(null);
+                setFromDate(null);
+                setToDate(null);
+            }
+
+        } catch (e) {
+            console.error("Failed to initialize symbol", e);
+        } finally {
+            setLoadingChain(false);
+        }
+    };
+
+    const handleYearChange = async (year: number) => {
+        setSelectedYear(year);
+        // Refresh expiries for new year
+        try {
+            if (selectedInstrument) {
+                const res = await optionsAPI.getExpiries(selectedInstrument.symbol, year.toString());
+                const list = res.data?.data || [];
+                setExpiries(list);
+                // Select latest expiry for that year by default? Or first?
+                // Web app selects latest.
+                if (list.length > 0) {
+                    setSelectedExpiry(list[list.length - 1]);
+                } else {
+                    setSelectedExpiry('');
+                }
+            }
+        } catch (e) {
+            console.error(e);
         }
     };
 
@@ -114,6 +190,15 @@ export default function TradeScreen() {
 
             if (fromDate) params.from_date = fromDate.toISOString().split('T')[0];
             if (toDate) params.to_date = toDate.toISOString().split('T')[0];
+
+            // Should we use latestDate? 
+            // Only if from/to are NOT set?? The web app appends date if infoData.data.date exists.
+            // Let's assume if filters are clear, we use latestDate if available to get that specific day's data
+            // But wait, getOptionChain usually defaults to latest if date not provided.
+            // However, the web logic explicitly adds `&date=...`.
+            if (latestDate && !fromDate && !toDate) {
+                params.date = latestDate;
+            }
 
             const response = await optionsAPI.getOptionChain(params);
 
@@ -144,18 +229,27 @@ export default function TradeScreen() {
         }
     };
 
-    // Fetch chain when instrument, expiry or viewMode changes
+    // Fetch chain when expiry or viewMode changes
     useEffect(() => {
         if (selectedInstrument && selectedExpiry) {
             fetchOptionChain();
         }
-    }, [selectedInstrument, selectedExpiry, viewMode, fromDate, toDate]);
+    }, [selectedExpiry, viewMode, fromDate, toDate]);
+    // Removed selectedInstrument from here because handleInstrumentChange calls initializeSymbol which sets expiry which triggers this.
 
     // Reset expiry when instrument changes
     const handleInstrumentChange = (item: Instrument) => {
+        if (selectedInstrument?.symbol === item.symbol) return;
+
         setSelectedInstrument(item);
+        // Reset states
         setSelectedExpiry('');
+        setSelectedYear(null);
         setChainData([]);
+        setLatestDate(null);
+
+        // Trigger initialization
+        initializeSymbol(item.symbol);
     };
 
     const clearFilters = () => {
@@ -207,8 +301,12 @@ export default function TradeScreen() {
 
                 {selectedInstrument && (
                     <ExpirySelector
-                        symbol={selectedInstrument.symbol}
+                        // symbol param is not needed as data is passed via props
+                        years={years}
+                        expiries={expiries}
+                        selectedYear={selectedYear}
                         selectedExpiry={selectedExpiry}
+                        onSelectYear={handleYearChange}
                         onSelectExpiry={setSelectedExpiry}
                     />
                 )}
@@ -239,24 +337,8 @@ export default function TradeScreen() {
                 )}
             </View>
 
-            <View style={styles.fabContainer}>
-                <TouchableOpacity
-                    style={styles.fab}
-                    onPress={() => setIsFilterOpen(true)}
-                >
-                    <FontAwesome name="filter" size={20} color="#fff" />
-                    <Text style={styles.fabText}>More Filters</Text>
-                    {hasActiveFilters && (
-                        <View style={styles.badge} />
-                    )}
-                </TouchableOpacity>
-            </View>
-
-            {spotPrice > 0 && (
-                <View style={styles.footer}>
-                    <Text style={styles.spotText}>Spot Price: {spotPrice.toFixed(2)}</Text>
-                </View>
-            )}
+            {/* Removed redundant FAB filter button */}
+            {/* Removed Spot Price Footer as requested */}
 
             {/* Advanced Filters Modal */}
             <Modal
@@ -390,7 +472,7 @@ export default function TradeScreen() {
                     </View>
                 </View>
             </Modal>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 

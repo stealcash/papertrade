@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, FlatList, TextInput, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useLocalSearchParams, Stack, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
@@ -162,179 +162,182 @@ export default function StrategyDetailScreen() {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             <Stack.Screen options={{
-                title: strategy.name || 'Strategy Detail',
-                headerTitleStyle: { fontSize: 16, fontWeight: 'bold' },
-                headerTitleAlign: 'left'
+                headerShown: false
             }} />
 
-            <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}>
-                <View style={styles.header}>
-                    <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', gap: 12 }}>
-                        <View style={[styles.iconBox, { backgroundColor: colors.tint }]}>
-                            <FontAwesome name="flash" size={24} color="#fff" />
-                        </View>
-                        <View style={{ flex: 1 }}>
-                            <Text style={[styles.name, { color: colors.text }]}>{strategy.name}</Text>
-                            <Text style={[styles.type, { color: colors.tabIconDefault }]}>{strategy.type} Strategy</Text>
-                            {dateRange.max && (
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 4 }}>
-                                    <FontAwesome name="clock-o" size={11} color={colors.tabIconDefault} />
-                                    <Text style={[styles.lastData, { color: colors.tabIconDefault }]}>Last Data: {dateRange.max}</Text>
-                                </View>
-                            )}
-                        </View>
-                    </View>
-
-                    {isCustom === 'true' && (
-                        <TouchableOpacity
-                            style={styles.editButton}
-                            onPress={() => router.push({ pathname: '/strategies/edit', params: { id: strategy.id } } as any)}
-                        >
-                            <FontAwesome name="pencil" size={16} color="#fff" />
-                            <Text style={styles.editButtonText}>Edit</Text>
-                        </TouchableOpacity>
-                    )}
-
-                    {latestBacktest && (
-                        <View style={styles.backtestBadge}>
-                            <Text style={styles.backtestLabel}>Win Rate</Text>
-                            <Text style={[styles.backtestValue, { color: Number(latestBacktest.win_rate) >= 50 ? '#16a34a' : '#dc2626' }]}>
-                                {latestBacktest.win_rate}%
-                            </Text>
-                        </View>
-                    )}
-                </View>
-
-                {/* Description */}
-                <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                    <Text style={[styles.sectionTitle, { color: colors.text }]}>Description</Text>
-                    <Text style={[styles.description, { color: colors.tabIconDefault }]}>
-                        {strategy.description || 'No description provided.'}
-                    </Text>
-                </View>
-
-                {/* Backtest Stats */}
-                {latestBacktest && (
-                    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, gap: 8 }}>
-                            <FontAwesome name="history" size={16} color={colors.text} />
-                            <Text style={[styles.sectionTitle, { color: colors.text, marginBottom: 0 }]}>Backtest Summary</Text>
-                        </View>
-                        <View style={styles.statsRow}>
-                            <View style={styles.statItem}>
-                                <Text style={styles.statLabel}>Total Trades</Text>
-                                <Text style={styles.statValue}>{latestBacktest.total_trades}</Text>
+            <View style={[styles.mainContainer, { paddingTop: insets.top }]}>
+                <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}>
+                    <View style={styles.header}>
+                        <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', gap: 12 }}>
+                            <View style={[styles.iconBox, { backgroundColor: colors.tint }]}>
+                                <FontAwesome name="flash" size={24} color="#fff" />
                             </View>
-                            <View style={styles.statItem}>
-                                <Text style={styles.statLabel}>Wins</Text>
-                                <Text style={[styles.statValue, { color: '#16a34a' }]}>{latestBacktest.win_count}</Text>
-                            </View>
-                            <View style={styles.statItem}>
-                                <Text style={styles.statLabel}>Losses</Text>
-                                <Text style={[styles.statValue, { color: '#dc2626' }]}>{latestBacktest.loss_count}</Text>
-                            </View>
-                        </View>
-                    </View>
-                )}
-
-                {/* Top Performers (Live) */}
-                <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, gap: 8 }}>
-                        <FontAwesome name="line-chart" size={16} color={colors.text} />
-                        <Text style={[styles.sectionTitle, { color: colors.text, marginBottom: 0 }]}>Top Live Performers</Text>
-                    </View>
-                    {topLivePerformers.length === 0 ? (
-                        <Text style={{ color: '#999', fontStyle: 'italic' }}>No live data available yet.</Text>
-                    ) : (
-                        topLivePerformers.map((stock, i) => (
-                            <View key={stock.stock_symbol} style={styles.performerRow}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                                    <View style={[styles.rankBadge, i === 0 && { backgroundColor: '#fef08a' }]}>
-                                        <Text style={[styles.rankText, i === 0 && { color: '#854d0e' }]}>{i + 1}</Text>
+                            <View style={{ flex: 1 }}>
+                                <Text style={[styles.name, { color: colors.text }]}>{strategy.name}</Text>
+                                <Text style={[styles.type, { color: colors.tabIconDefault }]}>{strategy.type} Strategy</Text>
+                                {dateRange.max && (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 4 }}>
+                                        <FontAwesome name="clock-o" size={11} color={colors.tabIconDefault} />
+                                        <Text style={[styles.lastData, { color: colors.tabIconDefault }]}>Last Data: {dateRange.max}</Text>
                                     </View>
-                                    <Text style={styles.performerSymbol}>{stock.stock_symbol}</Text>
-                                </View>
-                                <View style={{ alignItems: 'flex-end' }}>
-                                    <Text style={{ fontWeight: 'bold', color: '#16a34a' }}>{stock.win_rate}%</Text>
-                                    <Text style={{ fontSize: 10, color: '#666' }}>{stock.wins} Wins</Text>
-                                </View>
+                                )}
                             </View>
-                        ))
-                    )}
-                </View>
+                        </View>
 
-                {/* Stock List */}
-                <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                        <Text style={[styles.sectionTitle, { color: colors.text, marginBottom: 0 }]}>Stock Performance</Text>
-                        {dateRange.min && (
-                            <Text style={styles.dateRange}>
-                                {dateRange.min} — {dateRange.max}
-                            </Text>
+                        {isCustom === 'true' && (
+                            <TouchableOpacity
+                                style={styles.editButton}
+                                onPress={() => router.push({ pathname: '/strategies/edit', params: { id: strategy.id } } as any)}
+                            >
+                                <FontAwesome name="pencil" size={16} color="#fff" />
+                                <Text style={styles.editButtonText}>Edit</Text>
+                            </TouchableOpacity>
+                        )}
+
+                        {latestBacktest && (
+                            <View style={styles.backtestBadge}>
+                                <Text style={styles.backtestLabel}>Win Rate</Text>
+                                <Text style={[styles.backtestValue, { color: Number(latestBacktest.win_rate) >= 50 ? '#16a34a' : '#dc2626' }]}>
+                                    {latestBacktest.win_rate}%
+                                </Text>
+                            </View>
                         )}
                     </View>
 
-                    {/* Search and Filters */}
-                    <View style={{ marginBottom: 12, gap: 8 }}>
-                        <TextInput
-                            style={[styles.searchInput, { borderColor: colors.border, color: colors.text }]}
-                            placeholder="Search Stock..."
-                            placeholderTextColor="#999"
-                            value={searchTerm}
-                            onChangeText={setSearchTerm}
-                        />
-                        <View style={{ flexDirection: 'row', gap: 8 }}>
-                            <View style={{ flex: 1 }}>
-                                <Text style={styles.filterLabel}>Sector</Text>
-                                <View style={[styles.pickerContainer, { borderColor: colors.border }]}>
-                                    <Picker
-                                        selectedValue={selectedSector}
-                                        onValueChange={(value) => setSelectedSector(value)}
-                                        style={{ height: 40, color: colors.text }}
-                                    >
-                                        <Picker.Item label="All Sectors" value="" />
-                                        {allSectors.map(s => <Picker.Item key={s} label={s} value={s} />)}
-                                    </Picker>
-                                </View>
+                    {/* Description */}
+                    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                        <Text style={[styles.sectionTitle, { color: colors.text }]}>Description</Text>
+                        <Text style={[styles.description, { color: colors.tabIconDefault }]}>
+                            {strategy.description || 'No description provided.'}
+                        </Text>
+                    </View>
+
+                    {/* Backtest Stats */}
+                    {latestBacktest && (
+                        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, gap: 8 }}>
+                                <FontAwesome name="history" size={16} color={colors.text} />
+                                <Text style={[styles.sectionTitle, { color: colors.text, marginBottom: 0 }]}>Backtest Summary</Text>
                             </View>
-                            <View style={{ flex: 1 }}>
-                                <Text style={styles.filterLabel}>Category</Text>
-                                <View style={[styles.pickerContainer, { borderColor: colors.border }]}>
-                                    <Picker
-                                        selectedValue={selectedCategory}
-                                        onValueChange={(value) => setSelectedCategory(value)}
-                                        style={{ height: 40, color: colors.text }}
-                                    >
-                                        <Picker.Item label="All Categories" value="" />
-                                        {allCategories.map(c => <Picker.Item key={c} label={c} value={c} />)}
-                                    </Picker>
+                            <View style={styles.statsRow}>
+                                <View style={styles.statItem}>
+                                    <Text style={styles.statLabel}>Total Trades</Text>
+                                    <Text style={styles.statValue}>{latestBacktest.total_trades}</Text>
+                                </View>
+                                <View style={styles.statItem}>
+                                    <Text style={styles.statLabel}>Wins</Text>
+                                    <Text style={[styles.statValue, { color: '#16a34a' }]}>{latestBacktest.win_count}</Text>
+                                </View>
+                                <View style={styles.statItem}>
+                                    <Text style={styles.statLabel}>Losses</Text>
+                                    <Text style={[styles.statValue, { color: '#dc2626' }]}>{latestBacktest.loss_count}</Text>
                                 </View>
                             </View>
                         </View>
+                    )}
+
+                    {/* Top Performers (Live) */}
+                    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, gap: 8 }}>
+                            <FontAwesome name="line-chart" size={16} color={colors.text} />
+                            <Text style={[styles.sectionTitle, { color: colors.text, marginBottom: 0 }]}>Top Live Performers</Text>
+                        </View>
+                        {topLivePerformers.length === 0 ? (
+                            <Text style={{ color: '#999', fontStyle: 'italic' }}>No live data available yet.</Text>
+                        ) : (
+                            topLivePerformers.map((stock, i) => (
+                                <View key={stock.stock_symbol} style={styles.performerRow}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                                        <View style={[styles.rankBadge, i === 0 && { backgroundColor: '#fef08a' }]}>
+                                            <Text style={[styles.rankText, i === 0 && { color: '#854d0e' }]}>{i + 1}</Text>
+                                        </View>
+                                        <Text style={styles.performerSymbol}>{stock.stock_symbol}</Text>
+                                    </View>
+                                    <View style={{ alignItems: 'flex-end' }}>
+                                        <Text style={{ fontWeight: 'bold', color: '#16a34a' }}>{stock.win_rate}%</Text>
+                                        <Text style={{ fontSize: 10, color: '#666' }}>{stock.wins} Wins</Text>
+                                    </View>
+                                </View>
+                            ))
+                        )}
                     </View>
 
-                    {filteredPerformance.length === 0 ? (
-                        <Text style={{ color: '#999', padding: 20, textAlign: 'center' }}>No data found</Text>
-                    ) : (
-                        filteredPerformance.slice(0, 20).map((item, index) => (
-                            <View key={index}>
-                                {renderStockItem({ item })}
-                                {index < filteredPerformance.length - 1 && <View style={styles.separator} />}
-                            </View>
-                        ))
-                    )}
-                    {filteredPerformance.length > 20 && (
-                        <Text style={{ textAlign: 'center', color: '#999', marginTop: 10, fontSize: 12 }}>Showing top 10 stocks</Text>
-                    )}
-                </View>
+                    {/* Stock List */}
+                    <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                            <Text style={[styles.sectionTitle, { color: colors.text, marginBottom: 0 }]}>Stock Performance</Text>
+                            {dateRange.min && (
+                                <Text style={styles.dateRange}>
+                                    {dateRange.min} — {dateRange.max}
+                                </Text>
+                            )}
+                        </View>
 
-            </ScrollView>
-        </View>
+                        {/* Search and Filters */}
+                        <View style={{ marginBottom: 12, gap: 8 }}>
+                            <TextInput
+                                style={[styles.searchInput, { borderColor: colors.border, color: colors.text }]}
+                                placeholder="Search Stock..."
+                                placeholderTextColor="#999"
+                                value={searchTerm}
+                                onChangeText={setSearchTerm}
+                            />
+                            <View style={{ flexDirection: 'row', gap: 8 }}>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={styles.filterLabel}>Sector</Text>
+                                    <View style={[styles.pickerContainer, { borderColor: colors.border }]}>
+                                        <Picker
+                                            selectedValue={selectedSector}
+                                            onValueChange={(value) => setSelectedSector(value)}
+                                            style={[styles.picker, { color: colors.text }]}
+                                            itemStyle={{ height: 50, fontSize: 14 }}
+                                        >
+                                            <Picker.Item label="All Sectors" value="" />
+                                            {allSectors.map(s => <Picker.Item key={s} label={s} value={s} />)}
+                                        </Picker>
+                                    </View>
+                                </View>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={styles.filterLabel}>Category</Text>
+                                    <View style={[styles.pickerContainer, { borderColor: colors.border }]}>
+                                        <Picker
+                                            selectedValue={selectedCategory}
+                                            onValueChange={(value) => setSelectedCategory(value)}
+                                            style={[styles.picker, { color: colors.text }]}
+                                            itemStyle={{ height: 50, fontSize: 14 }}
+                                        >
+                                            <Picker.Item label="All Categories" value="" />
+                                            {allCategories.map(c => <Picker.Item key={c} label={c} value={c} />)}
+                                        </Picker>
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
+
+                        {filteredPerformance.length === 0 ? (
+                            <Text style={{ color: '#999', padding: 20, textAlign: 'center' }}>No data found</Text>
+                        ) : (
+                            filteredPerformance.slice(0, 20).map((item, index) => (
+                                <View key={index}>
+                                    {renderStockItem({ item })}
+                                    {index < filteredPerformance.length - 1 && <View style={styles.separator} />}
+                                </View>
+                            ))
+                        )}
+                        {filteredPerformance.length > 20 && (
+                            <Text style={{ textAlign: 'center', color: '#999', marginTop: 10, fontSize: 12 }}>Showing top 10 stocks</Text>
+                        )}
+                    </View>
+
+                </ScrollView>
+            </View>
+        </View >
     );
 }
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
+    mainContainer: { flex: 1 },
     centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
     header: { flexDirection: 'row', alignItems: 'center', padding: 20, paddingBottom: 10, gap: 12 },
     iconBox: { width: 48, height: 48, borderRadius: 24, justifyContent: 'center', alignItems: 'center' },
@@ -379,7 +382,8 @@ const styles = StyleSheet.create({
     dateRange: { fontSize: 10, color: '#666', fontFamily: 'monospace' },
     searchInput: { borderWidth: 1, borderRadius: 8, padding: 10, fontSize: 14 },
     filterLabel: { fontSize: 11, color: '#666', marginBottom: 4, fontWeight: '500' },
-    pickerContainer: { borderWidth: 1, borderRadius: 8, overflow: 'hidden' },
+    pickerContainer: { borderWidth: 1, borderRadius: 8, justifyContent: 'center' },
+    picker: { height: Platform.OS === 'ios' ? 100 : 50, width: '100%' },
     viewTradesButton: { backgroundColor: '#dbeafe', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 6, marginLeft: 8 },
     viewTradesText: { color: '#3b82f6', fontSize: 11, fontWeight: '600' },
 });

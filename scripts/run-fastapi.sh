@@ -6,7 +6,7 @@ cd "$PROJECT_ROOT/papertrade-backend-fast"
 
 # Setup venv if not exists
 if [ ! -d "venv" ]; then
-    python3 -m venv venv
+    python3.14 -m venv venv
 fi
 
 source venv/bin/activate

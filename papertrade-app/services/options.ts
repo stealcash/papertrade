@@ -23,6 +23,7 @@ export const optionsAPI = {
     getYears: async (symbol: string) => apiClient.get('/options/years/', { params: { symbol } }),
     getExpiries: async (symbol: string, year: string) => apiClient.get('/options/expiries/', { params: { symbol, year } }),
     getAvailableDates: async (symbol: string, expiry: string) => apiClient.get('/options/dates/', { params: { symbol, expiry } }),
+    getLatestInfo: async (symbol: string) => apiClient.get('/options/latest-info/', { params: { symbol } }),
     getOptionChain: async (params: OptionChainParams) => apiClient.get('/options/chain/', { params }),
 };
 

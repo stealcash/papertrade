@@ -31,7 +31,13 @@ export default function HomeScreen() {
         userData = profileRes.data?.data || profileRes.data;
         setUser(userData);
         console.log('Profile fetched successfully');
-      } catch (e) {
+      } catch (e: any) {
+        // If 401/403, the API interceptor already handles logout — just bail silently
+        const status = e.response?.status;
+        if (status === 401 || status === 403) {
+          console.log('Auth expired, interceptor will handle logout');
+          return; // Exit early — redirect will happen automatically
+        }
         console.error('Error fetching profile:', e);
         throw e;
       }
@@ -42,9 +48,11 @@ export default function HomeScreen() {
         const notifData = notifRes.data?.data || notifRes.data || [];
         setNotifications(Array.isArray(notifData) ? notifData : []);
         console.log('Notifications fetched successfully');
-      } catch (e) {
+      } catch (e: any) {
+        const status = e.response?.status;
+        if (status === 401 || status === 403) return;
         console.error('Error fetching notifications:', e);
-        throw e; // fail gracefully? or rethrow?
+        // Degrade gracefully, don't rethrow
       }
 
       console.log('Fetching Holdings...');
@@ -70,13 +78,13 @@ export default function HomeScreen() {
         console.log('Holdings fetched successfully');
 
       } catch (e: any) {
+        const status = e.response?.status;
+        if (status === 401 || status === 403) return;
         console.error('Error fetching holdings (graceful degradation):', e.message);
-        // Do not throw, just show empty holdings
         setHoldings([]);
-        // Keep existing stats or set to defaults? For now defaults, or partial update from profile
         setStats(prev => ({
           ...prev,
-          wallet: Number(userData?.wallet_balance) || prev.wallet, // Ensure wallet is at least updated
+          wallet: Number(userData?.wallet_balance) || prev.wallet,
         }));
       }
 

@@ -3,6 +3,7 @@ import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { AuthProvider, useAuth } from '../context/AuthContext';
@@ -64,6 +65,7 @@ function RootLayoutNav() {
       <Stack.Screen name="stock-history" options={{ headerShown: true, title: 'History' }} />
       <Stack.Screen name="market-analysis" options={{ headerShown: true, title: 'Market Analysis' }} />
       <Stack.Screen name="backtest" options={{ headerShown: true, title: 'Backtest' }} />
+      <Stack.Screen name="option-backtest" options={{ headerShown: false }} />
     </Stack>
   );
 }
@@ -72,14 +74,16 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <LoadingProvider>
-      <AuthProvider>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <GlobalLoader />
-          <RootLayoutNav />
-          <StatusBar style="auto" />
-        </ThemeProvider>
-      </AuthProvider>
-    </LoadingProvider>
+    <SafeAreaProvider>
+      <LoadingProvider>
+        <AuthProvider>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <GlobalLoader />
+            <RootLayoutNav />
+            <StatusBar style="auto" />
+          </ThemeProvider>
+        </AuthProvider>
+      </LoadingProvider>
+    </SafeAreaProvider>
   );
 }

@@ -265,12 +265,13 @@ def run_backtest(request):
         from .engine import BacktestEngine
         from .option_engine import OptionBacktestEngine
         try:
-            if backtest.strategy_options:
-                engine = OptionBacktestEngine(backtest)
-                engine.execute(stock_ids)
-            else:
-                engine = BacktestEngine(backtest)
-                engine.execute(stock_ids)
+            # Fixed: backtest.strategy_options does not exist on BacktestRun model
+            # if backtest.strategy_options:
+            #     engine = OptionBacktestEngine(backtest)
+            #     engine.execute(stock_ids)
+            # else:
+            engine = BacktestEngine(backtest)
+            engine.execute(stock_ids)
             
             backtest.refresh_from_db()
             return get_success_response({

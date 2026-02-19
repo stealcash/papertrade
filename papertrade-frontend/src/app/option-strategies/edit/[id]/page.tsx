@@ -44,6 +44,7 @@ interface ExitCriteria {
 interface EntryCriteria {
     mode: 'EXPIRY_BASED' | 'DAILY';
     daysBeforeExpiry: string; // "0" for Expiry Day, "1" for 1 Day Before
+    flexibleEntry: boolean;
     holidayEntryMode: 'PREVIOUS' | 'NONE' | 'NEXT'; // New holiday handling
     priceRef: 'CLOSE' | 'OPEN';
     minVolume: string;
@@ -108,6 +109,7 @@ export default function EditOptionStrategyPage() {
         mode: 'EXPIRY_BASED',
         daysBeforeExpiry: '0',
         flexibleEntry: false,
+        holidayEntryMode: 'NONE',
         priceRef: 'OPEN',
         minVolume: '0',
         waitAndTrade: {
@@ -156,6 +158,7 @@ export default function EditOptionStrategyPage() {
                 mode: conf.entry?.mode || firstLeg.entry?.mode || 'EXPIRY_BASED',
                 daysBeforeExpiry: (conf.entry?.daysBeforeExpiry ?? firstLeg.entry?.daysBeforeExpiry ?? '0').toString(),
                 flexibleEntry: conf.entry?.flexibleEntry ?? firstLeg.entry?.flexibleEntry ?? false,
+                holidayEntryMode: conf.entry?.holidayEntryMode || firstLeg.entry?.holidayEntryMode || 'NONE',
                 priceRef: conf.entry?.priceRef || firstLeg.entry?.priceRef || 'OPEN',
                 minVolume: (conf.entry?.minVolume ?? firstLeg.entry?.minVolume ?? '0').toString(),
                 waitAndTrade: {

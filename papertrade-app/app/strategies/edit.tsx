@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, ScrollView, TextInput, TouchableOpacity, Alert, Modal, ActivityIndicator } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { strategiesAPI } from '@/services/strategies';
@@ -22,6 +23,7 @@ export default function EditStrategyScreen() {
     const router = useRouter();
     const { id } = useLocalSearchParams();
     const colorScheme = useColorScheme();
+    const insets = useSafeAreaInsets();
     const colors = Colors[colorScheme ?? 'light'];
 
     const [loading, setLoading] = useState(true);
@@ -174,8 +176,16 @@ export default function EditStrategyScreen() {
     }
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <Stack.Screen options={{ title: 'Edit Strategy' }} />
+        <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top }]}>
+            <Stack.Screen options={{ headerShown: false }} />
+
+            <View style={styles.customHeader}>
+                <TouchableOpacity onPress={() => router.back()} style={styles.backHeaderBtn}>
+                    <FontAwesome name="arrow-left" size={20} color={colors.text} />
+                </TouchableOpacity>
+                <Text style={[styles.headerTitle, { color: colors.text }]}>Edit Strategy</Text>
+                <View style={{ width: 20 }} />
+            </View>
 
             <ScrollView contentContainerStyle={styles.scroll}>
                 <View style={styles.section}>
@@ -231,7 +241,7 @@ export default function EditStrategyScreen() {
                             </View>
 
                             {block.rules.map((rule, rIndex) => (
-                                <View key={rIndex} style={styles.ruleasCard}>
+                                <View key={rIndex} style={styles.rulesCard}>
                                     <View style={styles.ruleHeader}>
                                         <Text style={styles.ruleTitle}>Rule {rIndex + 1}</Text>
                                         <TouchableOpacity onPress={() => removeRule(bIndex, rIndex)}>
@@ -282,6 +292,10 @@ export default function EditStrategyScreen() {
                                             />
                                         </View>
                                     </View>
+
+                                    <Text style={styles.fieldDescription}>
+                                        {FIELD_DESCRIPTIONS[rule.field]}
+                                    </Text>
                                 </View>
                             ))}
 
@@ -298,6 +312,8 @@ export default function EditStrategyScreen() {
                                         value={block.outputPercentage}
                                         onChangeText={(val) => updateBlock(bIndex, 'outputPercentage', val)}
                                         keyboardType="numeric"
+                                        placeholder="0"
+                                        placeholderTextColor="#999"
                                     />
                                     <Text style={{ color: '#666', fontSize: 14 }}>%</Text>
                                 </View>
@@ -319,14 +335,30 @@ export default function EditStrategyScreen() {
                     {saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveButtonText}>Update Strategy</Text>}
                 </TouchableOpacity>
 
-            </ScrollView>
-        </View>
+            </ScrollView >
+        </View >
     );
 }
+
+// Field Descriptions
+const FIELD_DESCRIPTIONS: Record<string, string> = {
+    'RSI': 'Relative Strength Index (14-period). Momentum indicator (0-100).',
+    'SMA_5': 'Simple Moving Average (5-day). Value is % of Close Price relative to SMA.',
+    'SMA_10': 'Simple Moving Average (10-day). Value is % of Close Price relative to SMA.',
+    'SMA_20': 'Simple Moving Average (20-day). Value is % of Close Price relative to SMA.',
+    'SMA_50': 'Simple Moving Average (50-day). Value is % of Close Price relative to SMA.',
+    'CLOSE_PCT_CHANGE_0': 'Percentage change between Day -1 (Yesterday) and Day -2.',
+    'CLOSE_PCT_CHANGE_1': 'Percentage change between Day -2 and Day -3.',
+    'CLOSE_PCT_CHANGE_1_3': 'Percentage change between Day -1 (Yesterday) and Day -3.',
+    'CLOSE_PCT_CHANGE_1_7': 'Percentage change between Day -1 (Yesterday) and Day -7.'
+};
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
     centered: { justifyContent: 'center', alignItems: 'center' },
+    customHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#eee' },
+    backHeaderBtn: { padding: 4 },
+    headerTitle: { fontSize: 18, fontWeight: 'bold' },
     scroll: { padding: 16, paddingBottom: 50 },
     section: { marginBottom: 20 },
     label: { fontSize: 14, fontWeight: '600', marginBottom: 6 },
@@ -351,7 +383,8 @@ const styles = StyleSheet.create({
     optionText: { fontSize: 16 },
     selectedOptionText: { color: '#007AFF', fontWeight: 'bold' },
 
-    ruleasCard: { backgroundColor: '#fff', padding: 8, borderRadius: 8, marginBottom: 8, borderWidth: 1, borderColor: '#eee' },
+    rulesCard: { backgroundColor: '#fff', padding: 8, borderRadius: 8, marginBottom: 8, borderWidth: 1, borderColor: '#eee' },
+    fieldDescription: { fontSize: 11, color: '#666', marginTop: 4, fontStyle: 'italic' },
     ruleHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
     ruleTitle: { fontSize: 12, color: '#888' },
     ruleRow: { flexDirection: 'row', gap: 8, alignItems: 'center' },
@@ -362,7 +395,7 @@ const styles = StyleSheet.create({
 
     outcomeRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8, borderTopWidth: 1, borderTopColor: 'rgba(0,0,0,0.05)', paddingTop: 8 },
     outcomeLabel: { fontSize: 12, marginRight: 8, color: '#555' },
-    outcomeInput: { borderWidth: 1, borderColor: '#ddd', borderRadius: 4, width: 60, height: 30, paddingHorizontal: 8, textAlign: 'center' },
+    outcomeInput: { borderWidth: 1, borderColor: '#ddd', borderRadius: 4, width: 80, height: 35, paddingHorizontal: 8, textAlign: 'center', backgroundColor: '#fff' },
 
     addBlockBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 16, borderWidth: 1, borderColor: '#ddd', borderStyle: 'dashed', borderRadius: 12, marginBottom: 24, gap: 8 },
     addBlockText: { color: '#6b7280', fontWeight: '600' },

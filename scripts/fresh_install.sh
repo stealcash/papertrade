@@ -23,6 +23,18 @@ find apps -type d -path "*/migrations/__pycache__" -exec rm -rf {} +
 
 echo "      Migration files cleaned."
 
+# 1.5 Setup Virtual Environment
+if [ ! -d "venv" ]; then
+    echo "Creating virtual environment..."
+    python3.14 -m venv venv
+fi
+
+echo "Activating virtual environment..."
+source venv/bin/activate
+
+echo "Installing dependencies..."
+pip install -r requirements.txt
+
 # 2. Reset Database Schema
 echo "[2/5] Resetting Database Schema (Dropping all tables)..."
 # Using the python script we created
@@ -36,9 +48,10 @@ python3 manage.py makemigrations
 echo "[4/5] Applying migrations..."
 python3 manage.py migrate
 
-# 5. Seed Data
-echo "[5/5] Seeding initial data..."
-python3 scripts/seed_fresh_data.py
+
+# 5. Create Default Superuser - REMOVED per user request (Manual Step)
+# echo "[5/5] Creating default superuser..."
+# python3 scripts/create_default_superuser.py
 
 echo "=================================================="
 echo "      Fresh Install COMPLETED                     "

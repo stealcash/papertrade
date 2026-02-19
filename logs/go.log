@@ -1,4 +1,4 @@
-2026/02/16 08:55:58 Configuration loaded: Port=8080
+2026/02/19 23:47:15 Configuration loaded: Port=8080
 Using Data Provider: UPSTOX
 Upstox Provider: Loaded 3241 instruments.
 [GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
@@ -12,16 +12,7 @@ Upstox Provider: Loaded 3241 instruments.
 [GIN-debug] GET    /api/v1/sector/data       --> github.com/papertrade/backend-go/internal/api.(*Handler).GetSectorData-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/contracts --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionContracts-fm (4 handlers)
 [GIN-debug] GET    /api/v1/options/candles/5min --> github.com/papertrade/backend-go/internal/api.(*Handler).GetOptionCandles-fm (4 handlers)
-2026/02/16 08:55:58 Starting Go service on :8080
+2026/02/19 23:47:15 Starting Go service on :8080
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
-Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+Please check https://github.com/gin-gonic/gin/blob/master/docs/doc.md#dont-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :8080
-[GIN] 2026/02/16 - 08:58:33 | 200 |  152.464417ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-01-30&timewise=true"
-[GIN] 2026/02/16 - 08:58:34 | 200 |   87.147416ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-02-02&timewise=true"
-[GIN] 2026/02/16 - 08:58:36 | 200 |   79.495417ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-02-03&timewise=true"
-[GIN] 2026/02/16 - 08:58:38 | 200 |   80.300042ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-02-04&timewise=true"
-[GIN] 2026/02/16 - 08:58:39 | 200 |   79.643875ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-02-05&timewise=true"
-[GIN] 2026/02/16 - 08:58:41 | 200 |   92.098375ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-02-06&timewise=true"
-[GIN] 2026/02/16 - 08:58:43 | 200 |    119.0395ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-02-09&timewise=true"
-[GIN] 2026/02/16 - 08:58:44 | 200 |    84.15675ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-02-10&timewise=true"
-[GIN] 2026/02/16 - 08:58:45 | 200 |   91.609875ms |             ::1 | GET      "/api/v1/stock/data?symbol=HDFCBANK&date=2026-02-11&timewise=true"

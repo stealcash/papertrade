@@ -2,20 +2,56 @@
 > frontend-admin@0.1.0 dev
 > next dev -p 4000
 
-  ▲ Next.js 14.2.35
-  - Local:        http://localhost:4000
-  - Environments: .env.local
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:4000
+   - Network:      http://192.168.0.103:4000
+   - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 2.2s
+ ✓ Ready in 2.3s
  ○ Compiling / ...
- ✓ Compiled / in 1041ms (1549 modules)
- GET / 200 in 1218ms
- ✓ Compiled /login in 406ms (1593 modules)
- GET /favicon.ico 200 in 457ms
- GET /login 200 in 532ms
- GET /login 200 in 20ms
- GET /dashboard 200 in 26ms
- GET /favicon.ico 200 in 8ms
- GET /login 200 in 19ms
- ✓ Compiled /sync in 297ms (1595 modules)
+ ✓ Compiled / in 1114ms (1643 modules)
+ GET / 200 in 1528ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 649ms (1650 modules)
+ GET /dashboard 200 in 730ms
+ ✓ Compiled /users in 271ms (1657 modules)
+ GET /users 200 in 321ms
+ ✓ Compiled /stocks in 447ms (1664 modules)
+ GET /stocks 200 in 521ms
+ ✓ Compiled /stock-categories in 415ms (1671 modules)
+ GET /stock-categories 200 in 506ms
+ ✓ Compiled /sectors in 315ms (1673 modules)
+ GET /sectors 200 in 379ms
+ ✓ Compiled /admins in 346ms (1680 modules)
+ GET /admins 200 in 441ms
+ ✓ Compiled /scripts in 257ms (1687 modules)
+ GET /scripts 200 in 326ms
+ ✓ Compiled /tables in 416ms (1694 modules)
+ GET /tables 200 in 493ms
+ ○ Compiling /strategies ...
+ ✓ Compiled /strategies in 914ms (1705 modules)
+ GET /strategies 200 in 985ms
+ ✓ Compiled /option-strategies in 433ms (1712 modules)
+ GET /option-strategies 200 in 478ms
+ ✓ Compiled /sync in 441ms (1719 modules)
+ GET /sync 200 in 498ms
+ ✓ Compiled /strategy-sync in 288ms (1726 modules)
+ GET /strategy-sync 200 in 328ms
+ ✓ Compiled /debug-logs in 356ms (1723 modules)
+ GET /debug-logs 200 in 397ms
+ ✓ Compiled /config in 289ms (1730 modules)
+ GET /config 200 in 326ms
+ ✓ Compiled /notifications in 462ms (1747 modules)
+ GET /notifications 200 in 540ms
+ ○ Compiling /plans ...
+ ✓ Compiled /plans in 663ms (1754 modules)
+ GET /plans 200 in 706ms
+ ✓ Compiled /coupons in 327ms (1761 modules)
+ GET /coupons 200 in 366ms
+ GET /stock-categories 200 in 39ms
+ GET /sectors 200 in 24ms
+ GET /sectors 200 in 255ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 513ms (979 modules)
+ GET /favicon.ico 200 in 613ms

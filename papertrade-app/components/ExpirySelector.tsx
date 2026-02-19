@@ -1,78 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, FlatList, Modal } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, Modal } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { optionsAPI } from '@/services/options';
 
 interface ExpirySelectorProps {
-    symbol: string;
+    years: number[];
+    expiries: string[];
+    selectedYear: number | null;
     selectedExpiry: string;
+    onSelectYear: (year: number) => void;
     onSelectExpiry: (expiry: string) => void;
+    loadingYears?: boolean;
+    loadingExpiries?: boolean;
 }
 
-export function ExpirySelector({ symbol, selectedExpiry, onSelectExpiry }: ExpirySelectorProps) {
-    const [years, setYears] = useState<number[]>([]);
-    const [expiries, setExpiries] = useState<string[]>([]);
-
-    const [selectedYear, setSelectedYear] = useState<number | null>(null);
-
-    const [loadingYears, setLoadingYears] = useState(false);
-    const [loadingExpiries, setLoadingExpiries] = useState(false);
-
+export function ExpirySelector({
+    years,
+    expiries,
+    selectedYear,
+    selectedExpiry,
+    onSelectYear,
+    onSelectExpiry,
+    loadingYears,
+    loadingExpiries
+}: ExpirySelectorProps) {
     // Modal State
     const [modalType, setModalType] = useState<'YEAR' | 'EXPIRY' | null>(null);
-
-    useEffect(() => {
-        if (symbol) {
-            fetchYears();
-        }
-    }, [symbol]);
-
-    useEffect(() => {
-        if (symbol && selectedYear) {
-            fetchExpiries(selectedYear);
-        }
-    }, [symbol, selectedYear]);
-
-    const fetchYears = async () => {
-        setLoadingYears(true);
-        try {
-            const response = await optionsAPI.getYears(symbol);
-            const yearList = response.data?.data || response.data || [];
-            if (yearList.length > 0) {
-                setYears(yearList);
-                setSelectedYear(yearList[0]); // Default to first (usually current)
-            } else {
-                // Fallback
-                const currentYear = new Date().getFullYear();
-                setYears([currentYear, currentYear + 1]);
-                setSelectedYear(currentYear);
-            }
-        } catch (e) {
-            console.error(e);
-            // Fallback
-            const currentYear = new Date().getFullYear();
-            setYears([currentYear, currentYear + 1]);
-            setSelectedYear(currentYear);
-        } finally {
-            setLoadingYears(false);
-        }
-    };
-
-    const fetchExpiries = async (year: number) => {
-        setLoadingExpiries(true);
-        try {
-            const response = await optionsAPI.getExpiries(symbol, year.toString());
-            const expiryList = response.data?.data || response.data || [];
-            setExpiries(expiryList);
-            if (expiryList.length > 0 && !selectedExpiry) {
-                onSelectExpiry(expiryList[0]);
-            }
-        } catch (e) {
-            console.error(e);
-        } finally {
-            setLoadingExpiries(false);
-        }
-    };
 
     return (
         <View style={styles.container}>
@@ -82,6 +34,7 @@ export function ExpirySelector({ symbol, selectedExpiry, onSelectExpiry }: Expir
                 <TouchableOpacity
                     style={styles.selector}
                     onPress={() => setModalType('YEAR')}
+                    disabled={loadingYears}
                 >
                     <Text style={styles.value}>{selectedYear || 'Select'}</Text>
                     <FontAwesome name="calendar" size={14} color="#666" />
@@ -94,12 +47,9 @@ export function ExpirySelector({ symbol, selectedExpiry, onSelectExpiry }: Expir
                 <TouchableOpacity
                     style={styles.selector}
                     onPress={() => setModalType('EXPIRY')}
+                    disabled={loadingExpiries}
                 >
-                    {loadingExpiries ? (
-                        <ActivityIndicator size="small" color="#000" />
-                    ) : (
-                        <Text style={styles.value}>{selectedExpiry || 'Select Expiry'}</Text>
-                    )}
+                    <Text style={styles.value}>{selectedExpiry || 'Select Expiry'}</Text>
                     <FontAwesome name="chevron-down" size={14} color="#666" />
                 </TouchableOpacity>
             </View>
@@ -130,7 +80,7 @@ export function ExpirySelector({ symbol, selectedExpiry, onSelectExpiry }: Expir
                                     style={styles.item}
                                     onPress={() => {
                                         if (modalType === 'YEAR') {
-                                            setSelectedYear(Number(item));
+                                            onSelectYear(Number(item));
                                         } else {
                                             onSelectExpiry(String(item));
                                         }
@@ -140,6 +90,9 @@ export function ExpirySelector({ symbol, selectedExpiry, onSelectExpiry }: Expir
                                     <Text style={styles.itemText}>{item}</Text>
                                 </TouchableOpacity>
                             )}
+                            ListEmptyComponent={
+                                <Text style={styles.emptyText}>No items available</Text>
+                            }
                         />
                     </View>
                 </View>
@@ -180,7 +133,7 @@ const styles = StyleSheet.create({
     modalOverlay: {
         flex: 1,
         backgroundColor: 'rgba(0,0,0,0.5)',
-        justifyContent: 'center', // Center for smaller list
+        justifyContent: 'center',
         padding: 40,
     },
     modalContent: {
@@ -208,5 +161,10 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: 16,
+    },
+    emptyText: {
+        textAlign: 'center',
+        color: '#999',
+        padding: 20,
     }
 });

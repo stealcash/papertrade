@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Alert } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack, useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
@@ -23,6 +24,7 @@ export default function BacktestScreen() {
     const router = useRouter();
     const colorScheme = useColorScheme();
     const colors = Colors[colorScheme ?? 'light'];
+    const insets = useSafeAreaInsets();
 
     const [backtests, setBacktests] = useState<BacktestRun[]>([]);
     const [loading, setLoading] = useState(true);
@@ -166,8 +168,22 @@ export default function BacktestScreen() {
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <Stack.Screen options={{ title: 'Backtest History', headerShown: true }} />
+        <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top }]}>
+            <Stack.Screen options={{ headerShown: false }} />
+
+            {/* Custom Header with Actions */}
+            <View style={styles.headerRow}>
+                <Text style={[styles.screenTitle, { color: colors.text }]}>Backtest History</Text>
+                <View style={styles.headerBtns}>
+                    <TouchableOpacity onPress={() => router.push('/strategies')} style={styles.iconBtn}>
+                        <FontAwesome name="cog" size={20} color={colors.text} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push('/backtest/create')} style={[styles.newBtn, { backgroundColor: colors.tint }]}>
+                        <FontAwesome name="plus" size={14} color="#fff" />
+                        <Text style={styles.newBtnText}>New</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
 
             {loading ? (
                 <View style={styles.centerContainer}>
@@ -200,6 +216,12 @@ export default function BacktestScreen() {
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
+    headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#eee' },
+    screenTitle: { fontSize: 20, fontWeight: 'bold' },
+    headerBtns: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+    iconBtn: { padding: 8 },
+    newBtn: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 20, gap: 4 },
+    newBtnText: { color: '#fff', fontWeight: '600', fontSize: 14 },
     list: { padding: 16 },
     centerContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
     card: {

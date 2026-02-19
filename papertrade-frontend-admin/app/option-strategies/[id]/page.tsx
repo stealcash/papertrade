@@ -60,7 +60,7 @@ export default function ViewOptionStrategyPage() {
                                 <h1 className="text-2xl font-bold dark:text-white">View Option Strategy</h1>
                                 <span className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-widest">ID: {id}</span>
                             </div>
-                            <p className="text-xs text-gray-500">System Administration > Strategy Management</p>
+                            <p className="text-xs text-gray-500">System Administration &gt; Strategy Management</p>
                         </div>
                     </div>
                 </div>

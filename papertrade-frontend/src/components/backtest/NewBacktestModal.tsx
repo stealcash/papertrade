@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { X, ChevronRight, Check, Search, Filter, Plus, Trash2 } from 'lucide-react';
-import { strategiesAPI, stocksAPI, backtestAPI, sectorsAPI } from '@/lib/api';
+import { strategiesAPI, stocksAPI, backtestAPI, sectorsAPI, optionStrategiesAPI } from '@/lib/api';
 import UpgradeModal from '@/components/common/UpgradeModal';
 
 interface ModalProps {
@@ -17,6 +17,7 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
 
     // Data Sources
     const [strategies, setStrategies] = useState<any[]>([]);
+    const [optionStrategies, setOptionStrategies] = useState<any[]>([]);
 
     const [stocks, setStocks] = useState<any[]>([]);
     const [sectors, setSectors] = useState<any[]>([]);
@@ -33,6 +34,8 @@ export default function NewBacktestModal({ isOpen, onClose, onSuccess }: ModalPr
     const [formData, setFormData] = useState({
         strategy_id: '',
         is_system_strategy: false,
+        is_option_strategy: false,
+        scope_type: 'stocks',
 
 
         // This tracks the visual selection (Stock IDs)

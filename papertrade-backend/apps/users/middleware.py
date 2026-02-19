@@ -73,11 +73,17 @@ class JWTAuthenticationMiddleware(MiddlewareMixin):
         from django.conf import settings
         
         cache_key = f'rate_limit:{user.id}'
-        current_count = cache.get(cache_key, 0)
-        
-        if current_count >= settings.RATE_LIMIT_PER_MINUTE:
+        if cache.add(cache_key, 1, 60):
+            return True
+            
+        try:
+            current_count = cache.incr(cache_key)
+        except ValueError:
+            # Key might have expired or been evicted
+            cache.set(cache_key, 1, 60)
+            current_count = 1
+            
+        if current_count > settings.RATE_LIMIT_PER_MINUTE:
             return False
-        
-        # Increment counter
-        cache.set(cache_key, current_count + 1, 60)  # 60 seconds TTL
+            
         return True

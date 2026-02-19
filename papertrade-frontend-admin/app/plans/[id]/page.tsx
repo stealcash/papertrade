@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { plansAPI } from '@/lib/api';
 import { toast } from 'react-hot-toast';
 
-export default function PlanEditorPage({ params }: { params: { id: string } }) {
+export default function PlanEditorPage() {
     const router = useRouter();
+    const params = useParams();
     const isNew = params.id === 'create';
     const [loading, setLoading] = useState(!isNew);
     const [saving, setSaving] = useState(false);
@@ -27,7 +28,7 @@ export default function PlanEditorPage({ params }: { params: { id: string } }) {
 
     useEffect(() => {
         if (!isNew) {
-            fetchPlan(params.id);
+            fetchPlan(params.id as string);
         }
     }, [isNew, params.id]);
 

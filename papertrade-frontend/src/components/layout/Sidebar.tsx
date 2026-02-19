@@ -43,7 +43,9 @@ export default function Sidebar({ isMobileOpen, isCollapsed, setIsMobileOpen }: 
 
   const optionItems = [
     { name: "Options", href: "/options", icon: Zap },
-    { name: "Option Strategies", href: "/option-strategies", icon: Layers },
+    { name: 'Option Strategies', icon: BookOpen, href: '/option-strategies' },
+    { name: 'Pattern Finder', icon: Layers, href: '/pattern-finder' },
+    { name: 'Wallet', icon: Wallet, href: '/wallet' },
     { name: "Option Backtest", href: "/option-backtest", icon: Microscope },
   ];
 

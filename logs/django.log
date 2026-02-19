@@ -1,134 +1,251 @@
-INFO 2026-02-16 08:56:03,576 autoreload Watching for file changes with StatReloader
-INFO 2026-02-16 08:56:22,321 basehttp "OPTIONS /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 0
-WARNING 2026-02-16 08:56:24,521 log Unauthorized: /api/v1/admin-panel/auth/login/
-WARNING 2026-02-16 08:56:24,522 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 401 145
-INFO 2026-02-16 08:56:33,835 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
-INFO 2026-02-16 08:56:33,843 basehttp "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:33,902 basehttp "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:34,386 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-16 08:56:38,214 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-16 08:56:42,360 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:42,361 basehttp "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:42,938 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-16 08:56:43,544 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-16 08:56:44,137 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-16 08:56:44,141 basehttp "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:44,660 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-16 08:56:45,163 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 97
-INFO 2026-02-16 08:56:45,166 basehttp "OPTIONS /api/v1/portfolio/holdings/ HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:46,218 basehttp "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 97
-INFO 2026-02-16 08:56:51,866 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-16 08:56:55,509 basehttp "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:55,513 basehttp "OPTIONS /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:55,514 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:55,517 basehttp "OPTIONS /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:55,517 basehttp "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
-INFO 2026-02-16 08:56:56,147 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
-INFO 2026-02-16 08:56:57,655 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 514
-INFO 2026-02-16 08:56:58,295 basehttp "GET /api/v1/sectors/ HTTP/1.1" 200 514
-INFO 2026-02-16 08:56:58,330 basehttp "GET /api/v1/stocks/categories/ HTTP/1.1" 200 557
-INFO 2026-02-16 08:56:58,810 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-16 08:57:12,478 basehttp "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 5332
-INFO 2026-02-16 08:57:16,349 basehttp "OPTIONS /api/v1/stocks/27/ HTTP/1.1" 200 0
-INFO 2026-02-16 08:57:16,351 basehttp "OPTIONS /api/v1/stocks/27/ HTTP/1.1" 200 0
-INFO 2026-02-16 08:57:16,353 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_id=27&days=365 HTTP/1.1" 200 0
-INFO 2026-02-16 08:57:16,353 basehttp "OPTIONS /api/v1/stocks/prices/daily/?stock_id=27&days=365 HTTP/1.1" 200 0
-INFO 2026-02-16 08:57:18,687 basehttp "GET /api/v1/stocks/27/ HTTP/1.1" 200 1162
-INFO 2026-02-16 08:57:21,069 basehttp "GET /api/v1/stocks/27/ HTTP/1.1" 200 1162
-INFO 2026-02-16 08:57:21,800 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-16 08:57:27,259 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-16 08:57:28,763 basehttp "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 5332
-INFO 2026-02-16 08:57:31,058 basehttp "GET /api/v1/stocks/prices/daily/?stock_id=27&days=365 HTTP/1.1" 200 16609
-INFO 2026-02-16 08:57:45,905 basehttp "GET /api/v1/stocks/prices/daily/?stock_id=27&days=365 HTTP/1.1" 200 16609
-INFO 2026-02-16 08:57:50,776 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-16 08:57:52,003 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-16 08:57:52,004 basehttp - Broken pipe from ('127.0.0.1', 49495)
-INFO 2026-02-16 08:57:59,477 basehttp "POST /api/v1/admin-panel/auth/login/ HTTP/1.1" 200 573
-INFO 2026-02-16 08:58:00,450 basehttp "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
-INFO 2026-02-16 08:58:01,529 basehttp "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
-INFO 2026-02-16 08:58:30,052 basehttp "OPTIONS /api/v1/sync/trigger-hard/ HTTP/1.1" 200 0
-DEBUG 2026-02-16 08:58:30,778 functional 
-def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
-    return 1
+INFO 2026-02-19 23:47:19,498 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 23:48:21,934 log "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:21,937 log "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:22,942 log "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:22,943 log "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:29,212 log "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:29,213 log "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:29,215 log "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:29,216 log "OPTIONS /api/v1/auth/profile HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:31,287 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:48:31,292 log "OPTIONS /api/v1/notifications/?limit=5 HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:32,382 log "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 97
+INFO 2026-02-19 23:48:32,385 log "OPTIONS /api/v1/portfolio/holdings/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:33,068 log "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 141
+INFO 2026-02-19 23:48:33,513 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:48:33,971 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:48:34,417 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+WARNING 2026-02-19 23:48:34,422 log Forbidden: /api/v1/notifications/
+WARNING 2026-02-19 23:48:34,422 log "GET /api/v1/notifications/?limit=5 HTTP/1.1" 403 219
+INFO 2026-02-19 23:48:39,055 log "OPTIONS /api/v1/auth/login HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:39,745 log "POST /api/v1/auth/login HTTP/1.1" 200 618
+INFO 2026-02-19 23:48:40,190 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:48:40,610 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:48:41,081 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:48:41,526 log "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 97
+INFO 2026-02-19 23:48:42,199 log "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 141
+INFO 2026-02-19 23:48:42,415 log "GET /api/v1/notifications/?limit=5 HTTP/1.1" 200 97
+INFO 2026-02-19 23:48:43,105 log "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 141
+INFO 2026-02-19 23:48:49,885 log "OPTIONS /api/v1/predictions/?start_date=2026-02-12&end_date=2026-02-19 HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:49,885 log "OPTIONS /api/v1/predictions/?start_date=2026-02-12&end_date=2026-02-19 HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:50,551 log "GET /api/v1/predictions/?start_date=2026-02-12&end_date=2026-02-19 HTTP/1.1" 200 52
+INFO 2026-02-19 23:48:51,216 log "GET /api/v1/predictions/?start_date=2026-02-12&end_date=2026-02-19 HTTP/1.1" 200 52
+INFO 2026-02-19 23:48:53,029 log "OPTIONS /api/v1/predictions/?start_date=2026-01-20&end_date=2026-02-19 HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:53,681 log "GET /api/v1/predictions/?start_date=2026-01-20&end_date=2026-02-19 HTTP/1.1" 200 52
+INFO 2026-02-19 23:48:55,655 log "GET /api/v1/predictions/?start_date=2026-01-20&end_date=2026-02-19 HTTP/1.1" 200 52
+INFO 2026-02-19 23:48:58,024 log "OPTIONS /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:58,029 log "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:58,026 log "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:58,029 log "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:58,033 log "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:58,033 log "OPTIONS /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 0
+INFO 2026-02-19 23:48:58,664 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:48:58,687 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:48:59,355 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:49:00,317 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:00,838 log "OPTIONS /api/v1/watchlist/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:00,838 log "OPTIONS /api/v1/watchlist/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:00,979 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:00,982 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:01,520 log "GET /api/v1/watchlist/?page=1&page_size=10 HTTP/1.1" 200 187
+INFO 2026-02-19 23:49:02,168 log "GET /api/v1/watchlist/?page=1&page_size=10 HTTP/1.1" 200 187
+INFO 2026-02-19 23:49:04,315 log "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:04,315 log "OPTIONS /api/v1/stocks/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:04,956 log "GET /api/v1/stocks/ HTTP/1.1" 200 187
+INFO 2026-02-19 23:49:05,597 log "GET /api/v1/stocks/ HTTP/1.1" 200 187
+INFO 2026-02-19 23:49:06,801 log "OPTIONS /api/v1/strategies/master/?scope=system HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:06,802 log "OPTIONS /api/v1/strategies/master/?scope=system HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:07,449 log "GET /api/v1/strategies/master/?scope=system HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:08,097 log "GET /api/v1/strategies/master/?scope=system HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:08,582 log "OPTIONS /api/v1/strategies/stock-finder/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:08,583 log "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:08,583 log "OPTIONS /api/v1/subscriptions/current/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:08,585 log "OPTIONS /api/v1/strategies/stock-finder/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:09,213 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:09,244 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:09,246 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:49:09,894 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:09,943 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:49:10,424 log "GET /api/v1/strategies/master/?scope=system HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:10,824 log "GET /api/v1/strategies/stock-finder/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:11,092 log "GET /api/v1/strategies/master/?scope=system HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:11,372 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:11,477 log "GET /api/v1/strategies/stock-finder/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:13,148 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:49:13,150 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:13,153 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:13,161 log "GET /api/v1/strategies/stock-finder/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:13,777 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:49:13,789 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:13,797 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:13,806 log "GET /api/v1/strategies/stock-finder/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:21,770 log "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:21,772 log "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:22,416 log "GET /api/v1/stocks/ HTTP/1.1" 200 187
+INFO 2026-02-19 23:49:22,417 log "GET /api/v1/strategies/master/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:23,044 log "GET /api/v1/strategies/master/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:23,059 log "GET /api/v1/stocks/ HTTP/1.1" 200 187
+INFO 2026-02-19 23:49:26,910 log "OPTIONS /api/v1/strategies/rule-based/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:26,910 log "OPTIONS /api/v1/strategies/rule-based/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:27,540 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:49:27,592 log "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:28,194 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:49:28,221 log "GET /api/v1/strategies/rule-based/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:28,239 log "GET /api/v1/strategies/master/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:28,873 log "GET /api/v1/strategies/master/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:30,116 log "OPTIONS /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:30,116 log "OPTIONS /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:30,778 log "GET /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-19 23:49:31,401 log "GET /api/v1/backtest/runs/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-19 23:49:32,361 log "GET /api/v1/options/instruments/ HTTP/1.1" 200 11
+INFO 2026-02-19 23:49:32,572 log "GET /api/v1/options/instruments/ HTTP/1.1" 200 11
+INFO 2026-02-19 23:49:35,054 log "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:35,054 log "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:49:35,680 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:49:35,701 log "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:36,325 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:49:36,333 log "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:49:39,167 log "GET /api/v1/stocks/ HTTP/1.1" 200 187
+INFO 2026-02-19 23:49:39,930 log "GET /api/v1/stocks/ HTTP/1.1" 200 187
+INFO 2026-02-19 23:50:05,332 log "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-19 23:50:05,332 log "OPTIONS /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 0
+INFO 2026-02-19 23:50:05,958 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:50:05,967 log "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-19 23:50:06,599 log "GET /api/v1/backtest/option-backtest/?page=1&page_size=10 HTTP/1.1" 200 188
+INFO 2026-02-19 23:50:06,602 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:50:07,834 log "OPTIONS /api/v1/payments/records/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:50:07,834 log "OPTIONS /api/v1/payments/records/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:50:08,272 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:50:08,467 log "GET /api/v1/payments/records/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:08,857 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:50:09,348 log "GET /api/v1/payments/records/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:11,681 log "OPTIONS /api/v1/notifications/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:50:11,682 log "OPTIONS /api/v1/notifications/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:50:12,543 log "GET /api/v1/notifications/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:13,667 log "GET /api/v1/notifications/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:15,551 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:50:15,765 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:50:15,969 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:50:16,408 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:50:19,748 log "GET /api/v1/notifications/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:20,598 log "GET /api/v1/notifications/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:29,951 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:50:30,147 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:50:30,378 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:50:30,791 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:50:36,504 log "OPTIONS /api/v1/subscriptions/plans/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:50:36,504 log "OPTIONS /api/v1/subscriptions/plans/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:50:37,135 log "GET /api/v1/subscriptions/plans/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:37,154 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:50:37,799 log "GET /api/v1/subscriptions/plans/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:37,804 log "GET /api/v1/subscriptions/current/ HTTP/1.1" 200 99
+INFO 2026-02-19 23:50:44,608 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:44,646 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:44,648 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:50:45,252 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:45,275 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:50:45,292 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:51:01,061 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:51:01,256 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:51:01,269 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:51:01,273 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+WARNING 2026-02-19 23:51:01,468 log Too Many Requests: /api/v1/sectors/
+WARNING 2026-02-19 23:51:01,468 log "GET /api/v1/sectors/ HTTP/1.1" 429 167
+WARNING 2026-02-19 23:51:01,480 log Too Many Requests: /api/v1/stocks/
+WARNING 2026-02-19 23:51:01,480 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 429 167
+WARNING 2026-02-19 23:51:01,486 log Too Many Requests: /api/v1/stocks/categories/
+WARNING 2026-02-19 23:51:01,487 log "GET /api/v1/stocks/categories/ HTTP/1.1" 429 167
+INFO 2026-02-19 23:51:01,500 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:53:30,827 autoreload /Users/chat360team/Documents/papertrade/papertrade-backend/apps/users/middleware.py changed, reloading.
+SETTINGS-DEBUG: Looking for .env at: /Users/chat360team/Documents/papertrade/papertrade-backend/.env
+SETTINGS-DEBUG: .env exists: True
+SETTINGS-DEBUG: Loaded .env successfully
+Performing system checks...
 
-DEBUG 2026-02-16 08:58:30,780 functional 
-def xmap(task, it):
-    return 1
+System check identified no issues (0 silenced).
+February 19, 2026 - 23:47:22
+Django version 6.0.2, using settings 'config.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
 
-DEBUG 2026-02-16 08:58:30,780 functional 
-def backend_cleanup():
-    return 1
-
-DEBUG 2026-02-16 08:58:30,780 functional 
-def sync_hard_task(sync_type, start_date, end_date, instruments=0, user_id=1):
-    return 1
-
-DEBUG 2026-02-16 08:58:30,780 functional 
-def sync_options_task(is_auto=0, user_id=1, from_date=2, to_date=3):
-    return 1
-
-DEBUG 2026-02-16 08:58:30,780 functional 
-def chain(*args, **kwargs):
-    return 1
-
-DEBUG 2026-02-16 08:58:30,781 functional 
-def sync_stocks_task(is_auto=0, user_id=1, from_date=2, to_date=3, instruments=4, sync_indices=5):
-    return 1
-
-DEBUG 2026-02-16 08:58:30,781 functional 
-def xstarmap(task, it):
-    return 1
-
-DEBUG 2026-02-16 08:58:30,781 functional 
-def auto_sync_daily():
-    return 1
-
-DEBUG 2026-02-16 08:58:30,781 functional 
-def accumulate(self, *args, **kwargs):
-    return 1
-
-DEBUG 2026-02-16 08:58:30,781 functional 
-def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
-    return 1
-
-DEBUG 2026-02-16 08:58:30,781 functional 
-def chunks(task, it, n):
-    return 1
-
-DEBUG 2026-02-16 08:58:30,781 functional 
-def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
-    return 1
-
-DEBUG 2026-02-16 08:58:32,992 connectionpool Starting new HTTP connection (1): localhost:8080
-DEBUG 2026-02-16 08:58:33,155 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-01-30&timewise=true HTTP/1.1" 200 263
-INFO 2026-02-16 08:58:34,318 tasks Skipping HDFCBANK for 2026-01-31: Market Closed (Weekend)
-INFO 2026-02-16 08:58:34,319 tasks Skipping HDFCBANK for 2026-02-01: Market Closed (Weekend)
-DEBUG 2026-02-16 08:58:34,323 connectionpool Starting new HTTP connection (1): localhost:8080
-DEBUG 2026-02-16 08:58:34,412 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-02-02&timewise=true HTTP/1.1" 200 260
-DEBUG 2026-02-16 08:58:36,272 connectionpool Starting new HTTP connection (1): localhost:8080
-DEBUG 2026-02-16 08:58:36,353 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-02-03&timewise=true HTTP/1.1" 200 260
-DEBUG 2026-02-16 08:58:38,121 connectionpool Starting new HTTP connection (1): localhost:8080
-DEBUG 2026-02-16 08:58:38,202 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-02-04&timewise=true HTTP/1.1" 200 264
-DEBUG 2026-02-16 08:58:39,621 connectionpool Starting new HTTP connection (1): localhost:8080
-DEBUG 2026-02-16 08:58:39,702 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-02-05&timewise=true HTTP/1.1" 200 262
-DEBUG 2026-02-16 08:58:41,409 connectionpool Starting new HTTP connection (1): localhost:8080
-DEBUG 2026-02-16 08:58:41,502 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-02-06&timewise=true HTTP/1.1" 200 261
-INFO 2026-02-16 08:58:43,464 tasks Skipping HDFCBANK for 2026-02-07: Market Closed (Weekend)
-INFO 2026-02-16 08:58:43,464 tasks Skipping HDFCBANK for 2026-02-08: Market Closed (Weekend)
-DEBUG 2026-02-16 08:58:43,465 connectionpool Starting new HTTP connection (1): localhost:8080
-DEBUG 2026-02-16 08:58:43,585 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-02-09&timewise=true HTTP/1.1" 200 261
-DEBUG 2026-02-16 08:58:44,812 connectionpool Starting new HTTP connection (1): localhost:8080
-DEBUG 2026-02-16 08:58:44,897 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-02-10&timewise=true HTTP/1.1" 200 262
-DEBUG 2026-02-16 08:58:45,880 connectionpool Starting new HTTP connection (1): localhost:8080
-DEBUG 2026-02-16 08:58:45,974 connectionpool http://localhost:8080 "GET /api/v1/stock/data?symbol=HDFCBANK&date=2026-02-11&timewise=true HTTP/1.1" 200 261
-INFO 2026-02-16 08:58:47,680 tasks Stock sync completed: 1/1 successful
-INFO 2026-02-16 08:58:47,690 trace Task apps.sync.tasks.sync_stocks_task[73b7dd98-cc45-4bd7-ab03-3e891fb2ae7e] succeeded in 16.90648033299999s: None
-INFO 2026-02-16 08:58:47,691 basehttp "POST /api/v1/sync/trigger-hard/ HTTP/1.1" 202 296
-INFO 2026-02-16 08:58:52,740 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-16 08:58:53,217 basehttp "GET /api/v1/auth/profile HTTP/1.1" 200 342
-INFO 2026-02-16 08:58:54,755 basehttp "GET /api/v1/stocks/27/ HTTP/1.1" 200 1162
-INFO 2026-02-16 08:58:57,257 basehttp "GET /api/v1/stocks/27/ HTTP/1.1" 200 1162
-INFO 2026-02-16 08:58:57,879 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-16 08:59:03,226 basehttp "GET /api/v1/portfolio/holdings/ HTTP/1.1" 200 2453
-INFO 2026-02-16 08:59:05,749 basehttp "GET /api/v1/stocks/prices/daily/?stock_id=27&days=365 HTTP/1.1" 200 18444
-INFO 2026-02-16 08:59:19,439 basehttp "GET /api/v1/stocks/prices/daily/?stock_id=27&days=365 HTTP/1.1" 200 18444
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+INFO 2026-02-19 23:53:31,636 autoreload Watching for file changes with StatReloader
+INFO 2026-02-19 23:55:52,570 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:55:52,721 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:55:52,779 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:55:52,779 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:55:53,004 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:55:53,409 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:55:53,434 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:55:54,962 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:10,473 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:56:10,668 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:56:10,682 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:10,691 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:10,917 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:56:11,490 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:11,497 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:56:11,498 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:24,680 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:56:24,874 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:56:24,892 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:24,893 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:25,132 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:56:25,514 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:56:25,534 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:26,965 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:31,517 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:56:31,700 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:31,706 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:31,731 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:56:31,943 log "GET /api/v1/auth/profile HTTP/1.1" 200 348
+INFO 2026-02-19 23:56:32,317 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:32,345 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:56:32,358 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:56:39,253 log "OPTIONS /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:56:39,677 log "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-19 23:56:40,028 log "OPTIONS /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:56:41,288 log "GET /api/v1/admin-panel/dashboard/stats/ HTTP/1.1" 200 167
+INFO 2026-02-19 23:56:59,203 log "OPTIONS /api/v1/admin-panel/users/?page=1&sort_by=created_at&order=desc HTTP/1.1" 200 0
+INFO 2026-02-19 23:57:00,063 log "GET /api/v1/admin-panel/users/?page=1&sort_by=created_at&order=desc HTTP/1.1" 200 439
+INFO 2026-02-19 23:57:02,002 log "OPTIONS /api/v1/stocks/categories/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:57:02,002 log "OPTIONS /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 0
+INFO 2026-02-19 23:57:02,003 log "OPTIONS /api/v1/sectors/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:57:02,614 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:57:02,618 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:57:02,649 log "GET /api/v1/stocks/?page=1&page_size=10&sort_by=symbol&order=asc HTTP/1.1" 200 187
+INFO 2026-02-19 23:57:36,331 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:57:44,041 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:57:47,905 log "OPTIONS /api/v1/admin-panel/admins/?page=1&sort_by=created_at&order=desc HTTP/1.1" 200 0
+INFO 2026-02-19 23:57:48,771 log "GET /api/v1/admin-panel/admins/?page=1&sort_by=created_at&order=desc HTTP/1.1" 200 393
+INFO 2026-02-19 23:57:53,425 log "OPTIONS /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:57:54,368 log "GET /api/v1/admin-panel/database/tables/ HTTP/1.1" 200 1036
+INFO 2026-02-19 23:57:56,339 log "OPTIONS /api/v1/strategies/master/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:57:57,098 log "GET /api/v1/strategies/master/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:00,055 log "OPTIONS /api/v1/strategies/option-strategies/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:58:02,298 log "GET /api/v1/strategies/option-strategies/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:05,645 log "GET /api/v1/strategies/master/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:07,418 log "OPTIONS /api/v1/sync/external-logs/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:58:07,419 log "OPTIONS /api/v1/sync/external-logs/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:58:07,854 utils Deleted old sync log: go_service_2026-02-16.log
+INFO 2026-02-19 23:58:07,855 log "GET /api/v1/sync/external-logs/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:09,053 log "OPTIONS /api/v1/admin-panel/config/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:58:09,690 log "GET /api/v1/admin-panel/config/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:09,754 log "GET /api/v1/sync/external-logs/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:10,614 log "OPTIONS /api/v1/notifications/broadcasts/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:58:10,615 log "OPTIONS /api/v1/notifications/broadcasts/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:58:11,288 log "GET /api/v1/notifications/broadcasts/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:11,917 log "GET /api/v1/notifications/broadcasts/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:12,756 log "OPTIONS /api/v1/subscriptions/admin/plans/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:58:12,756 log "OPTIONS /api/v1/subscriptions/admin/plans/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:58:13,388 log "GET /api/v1/subscriptions/admin/plans/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:13,829 log "OPTIONS /api/v1/subscriptions/admin/coupons/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:58:13,831 log "OPTIONS /api/v1/subscriptions/admin/coupons/ HTTP/1.1" 200 0
+INFO 2026-02-19 23:58:14,025 log "GET /api/v1/subscriptions/admin/plans/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:14,490 log "GET /api/v1/subscriptions/admin/coupons/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:15,167 log "GET /api/v1/subscriptions/admin/coupons/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:56,631 log "GET /api/v1/stocks/categories/ HTTP/1.1" 200 97
+INFO 2026-02-19 23:58:57,711 log "GET /api/v1/sectors/ HTTP/1.1" 200 97
+INFO 2026-02-20 00:01:04,752 log "GET /api/v1/admin-panel/auth/profile/ HTTP/1.1" 200 301
+INFO 2026-02-20 00:01:04,960 log "GET /api/v1/sectors/ HTTP/1.1" 200 97

@@ -11,6 +11,10 @@ class BacktestRequest(BaseModel):
     run_id: int
     stock_ids: List[int]
 
+class PatternFinderRequest(BaseModel):
+    symbol: str
+    tolerance: float = 0.5
+
 @router.post("/compute/backtest")
 async def run_backtest(
     request: BacktestRequest, 
@@ -32,4 +36,15 @@ async def run_option_backtest(
     from app.engine.option_backtest import OptionBacktestEngine
     engine = OptionBacktestEngine(db, request.run_id)
     background_tasks.add_task(engine.execute)
+    background_tasks.add_task(engine.execute)
     return {"message": "Option Backtest initiated", "run_id": request.run_id}
+
+@router.post("/compute/pattern-finder")
+async def find_patterns(
+    request: PatternFinderRequest,
+    db: AsyncSession = Depends(get_db)
+):
+    from app.engine.pattern_finder import PatternFinderEngine
+    engine = PatternFinderEngine(db)
+    result = await engine.find_patterns(request.symbol, request.tolerance)
+    return result

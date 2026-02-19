@@ -63,6 +63,7 @@ export const strategiesAPI = {
         create: (data: any) => apiClient.post('/strategies/option-strategies/', data),
         update: (id: number | string, data: any) => apiClient.put(`/strategies/option-strategies/${id}/`, data),
         delete: (id: number) => apiClient.delete(`/strategies/option-strategies/${id}/`),
+        deleteBulk: (ids: number[]) => Promise.all(ids.map(id => apiClient.delete(`/strategies/option-strategies/${id}/`))),
     }
 };
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, TextInput, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, TextInput, FlatList, Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { Stack } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
@@ -22,10 +23,15 @@ export default function MarketAnalysisScreen() {
     // Loading State
     const [loadingStocks, setLoadingStocks] = useState(true);
     const [loadingHistory, setLoadingHistory] = useState(false);
+    const [autoInitialized, setAutoInitialized] = useState(false);
 
     // Search & Filter
     const [searchQuery, setSearchQuery] = useState('');
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [startDate, setStartDate] = useState(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000));
+    const [endDate, setEndDate] = useState(new Date());
+    const [showStartPicker, setShowStartPicker] = useState(false);
+    const [showEndPicker, setShowEndPicker] = useState(false);
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -46,13 +52,48 @@ export default function MarketAnalysisScreen() {
         fetchInitialData();
     }, []);
 
+    // Auto-initialize: Select first stock & strategy once data is loaded
+    useEffect(() => {
+        if (autoInitialized || loadingStocks || stocks.length === 0 || strategies.length === 0) return;
+
+        const sortedStocks = [...stocks].sort((a, b) => a.symbol.localeCompare(b.symbol));
+        // Sort strategies if needed, or take first
+        const firstStock = sortedStocks[0];
+        const firstStrategy = strategies[0];
+
+        if (firstStock && firstStrategy) {
+            setSelectedStock(firstStock);
+            setSearchQuery(firstStock.symbol);
+            setSelectedStrategyCode(firstStrategy.code);
+            setAutoInitialized(true);
+            // Fetch history immediately
+            fetchHistory(firstStock.symbol, firstStrategy.code);
+        }
+    }, [stocks, strategies, loadingStocks, autoInitialized]);
+
+    const handleApply = () => {
+        if (selectedStock) {
+            fetchHistory(selectedStock.symbol, selectedStrategyCode);
+        }
+    };
+
+    const onDateChange = (event: any, selectedDate: Date | undefined, isStart: boolean) => {
+        if (isStart) setShowStartPicker(false);
+        else setShowEndPicker(false);
+
+        if (selectedDate) {
+            if (isStart) setStartDate(selectedDate);
+            else setEndDate(selectedDate);
+        }
+    };
+
     const fetchHistory = async (symbol: string, strategyCode: string) => {
         setLoadingHistory(true);
         try {
             const params: any = {
                 stock_symbol: symbol,
-                start_date: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                end_date: new Date().toISOString().split('T')[0],
+                start_date: startDate.toISOString().split('T')[0],
+                end_date: endDate.toISOString().split('T')[0],
                 strategy: strategyCode || undefined
             };
 
@@ -70,11 +111,11 @@ export default function MarketAnalysisScreen() {
         }
     };
 
-    useEffect(() => {
-        if (selectedStock) {
-            fetchHistory(selectedStock.symbol, selectedStrategyCode);
-        }
-    }, [selectedStock, selectedStrategyCode]);
+    // useEffect(() => {
+    //     if (selectedStock) {
+    //         fetchHistory(selectedStock.symbol, selectedStrategyCode);
+    //     }
+    // }, [selectedStock, selectedStrategyCode]);
 
     useEffect(() => {
         if (priceHistory.length > 0 && selectedStrategyCode) {
@@ -159,7 +200,7 @@ export default function MarketAnalysisScreen() {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <Stack.Screen options={{ title: 'Market Analysis', headerShown: true }} />
+            <Stack.Screen options={{ title: 'Strategy Analysis', headerShown: true }} />
 
             <View style={styles.header}>
                 {/* Search Stock */}
@@ -216,6 +257,45 @@ export default function MarketAnalysisScreen() {
                 </View>
             </View>
 
+            {/* Date Filter & Apply */}
+            <View style={styles.filterRow}>
+                <TouchableOpacity onPress={() => setShowStartPicker(true)} style={[styles.dateBtn, { borderColor: colors.border }]}>
+                    <Text style={[styles.dateText, { color: colors.text }]}>{startDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}</Text>
+                </TouchableOpacity>
+                <Text style={[styles.dateSep, { color: colors.tabIconDefault }]}>-</Text>
+                <TouchableOpacity onPress={() => setShowEndPicker(true)} style={[styles.dateBtn, { borderColor: colors.border }]}>
+                    <Text style={[styles.dateText, { color: colors.text }]}>{endDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={handleApply}
+                    disabled={loadingHistory || !selectedStock}
+                    style={[styles.applyBtn, { opacity: (loadingHistory || !selectedStock) ? 0.6 : 1 }]}
+                >
+                    {loadingHistory ? <ActivityIndicator size="small" color="#fff" /> : <Text style={styles.applyText}>Apply</Text>}
+                </TouchableOpacity>
+
+                {showStartPicker && (
+                    <DateTimePicker
+                        value={startDate}
+                        mode="date"
+                        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                        onChange={(e, d) => onDateChange(e, d, true)}
+                        maximumDate={endDate}
+                    />
+                )}
+                {showEndPicker && (
+                    <DateTimePicker
+                        value={endDate}
+                        mode="date"
+                        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                        onChange={(e, d) => onDateChange(e, d, false)}
+                        minimumDate={startDate}
+                        maximumDate={new Date()}
+                    />
+                )}
+            </View>
+
             {!selectedStock ? (
                 <View style={styles.centerContainer}>
                     <FontAwesome name="area-chart" size={64} color={colors.tabIconDefault} />
@@ -228,16 +308,16 @@ export default function MarketAnalysisScreen() {
                     {selectedStrategyCode && stats.total > 0 && (
                         <View style={styles.statsRow}>
                             <View style={[styles.statCard, { backgroundColor: '#eff6ff' }]}>
-                                <Text style={styles.statLabel}>Dir Correct</Text>
-                                <Text style={styles.statValue}>{(stats.total > 0 ? (stats.dirCorrect / stats.total) * 100 : 0).toFixed(0)}%</Text>
+                                <Text style={styles.statLabel}>Total Predictions</Text>
+                                <Text style={styles.statValue}>{stats.total}</Text>
                             </View>
                             <View style={[styles.statCard, { backgroundColor: '#f0fdf4' }]}>
-                                <Text style={styles.statLabel}>Target Met</Text>
-                                <Text style={styles.statValue}>{(stats.total > 0 ? (stats.priceCorrect / stats.total) * 100 : 0).toFixed(0)}%</Text>
+                                <Text style={styles.statLabel}>Direction Correct</Text>
+                                <Text style={styles.statValue}>{(stats.total > 0 ? (stats.dirCorrect / stats.total) * 100 : 0).toFixed(0)}%</Text>
                             </View>
                             <View style={[styles.statCard, { backgroundColor: '#faf5ff' }]}>
-                                <Text style={styles.statLabel}>Samples</Text>
-                                <Text style={styles.statValue}>{stats.total}</Text>
+                                <Text style={styles.statLabel}>Price Target Met</Text>
+                                <Text style={styles.statValue}>{(stats.total > 0 ? (stats.priceCorrect / stats.total) * 100 : 0).toFixed(0)}%</Text>
                             </View>
                         </View>
                     )}
@@ -256,8 +336,14 @@ export default function MarketAnalysisScreen() {
                             ListHeaderComponent={() => (
                                 <View style={[styles.tableHeader, { borderBottomColor: colors.border }]}>
                                     <Text style={[styles.headerCell, styles.colDate]}>Date</Text>
-                                    <Text style={[styles.headerCell, styles.colPrice]}>Close</Text>
-                                    {selectedStrategyCode ? <Text style={[styles.headerCell, styles.colPred]}>Pred</Text> : null}
+                                    <View style={styles.colPriceHeader}>
+                                        <Text style={[styles.headerCell, { textAlign: 'right' }]}>Close</Text>
+                                    </View>
+                                    {selectedStrategyCode ? (
+                                        <View style={styles.colPredHeader}>
+                                            <Text style={[styles.headerCell, { textAlign: 'center' }]}>Pred</Text>
+                                        </View>
+                                    ) : null}
                                 </View>
                             )}
                         />
@@ -286,6 +372,13 @@ const styles = StyleSheet.create({
     stratBtnActive: { backgroundColor: '#3b82f6', borderColor: '#3b82f6' },
     stratBtnText: { fontSize: 11, fontWeight: '600' },
 
+    filterRow: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingBottom: 12, gap: 8 },
+    dateBtn: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, borderWidth: 1, backgroundColor: 'transparent' },
+    dateText: { fontSize: 12, fontWeight: '500' },
+    dateSep: { fontWeight: 'bold' },
+    applyBtn: { backgroundColor: '#3b82f6', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 8, marginLeft: 'auto' },
+    applyText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
+
     mainContent: { flex: 1, paddingHorizontal: 16 },
     statsRow: { flexDirection: 'row', gap: 8, marginBottom: 16 },
     statCard: { flex: 1, padding: 12, borderRadius: 12, alignItems: 'center' },
@@ -303,8 +396,10 @@ const styles = StyleSheet.create({
     tinyText: { fontSize: 10, marginTop: 2 },
 
     colDate: { width: 80 },
-    colPrice: { flex: 1, alignItems: 'flex-end', paddingRight: 20 },
-    colPred: { width: 100, alignItems: 'center' },
+    colPrice: { flex: 1, alignItems: 'flex-end', paddingRight: 0 },
+    colPriceHeader: { flex: 1, alignItems: 'flex-end', paddingRight: 0 },
+    colPred: { width: 90, alignItems: 'center' },
+    colPredHeader: { width: 90, alignItems: 'center' },
 
     predBadge: { paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4 },
     predText: { fontSize: 10, fontWeight: 'bold' },

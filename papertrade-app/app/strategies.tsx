@@ -150,7 +150,7 @@ export default function StrategiesScreen() {
                     <Text style={[styles.subtitle, { color: colors.tabIconDefault }]}>
                         {activeTab === 'system'
                             ? 'Explore expert strategies'
-                            : 'Manage your custom strategies'}
+                            : 'Manage and view trading strategies.'}
                     </Text>
 
                     {activeTab === 'my' && (
@@ -179,67 +179,61 @@ export default function StrategiesScreen() {
                             }}
                             activeOpacity={activeTab === 'system' ? 0.7 : 1}
                         >
+                            {/* Corner Accent */}
+                            <View style={[styles.cornerAccent, { backgroundColor: activeTab === 'my' ? '#eff6ff' : '#fffbeb' }]}>
+                                <View style={[styles.cornerCurve, { backgroundColor: colors.card }]} />
+                            </View>
+
                             <View style={styles.strategyHeader}>
                                 <View style={styles.strategyInfo}>
                                     <Text style={[styles.strategyName, { color: colors.text }]}>{strategy.name || strategy.code}</Text>
-                                    <Text style={[styles.strategyType, { color: colors.tabIconDefault }]}>
-                                        {strategy.type || 'Rule Based'}
+                                    <Text style={[styles.strategyDescription, { color: colors.tabIconDefault }]} numberOfLines={3}>
+                                        {strategy.description || 'No description available.'}
                                     </Text>
                                 </View>
-                                {activeTab === 'my' ? (
-                                    <View style={styles.actionButtons}>
-                                        <TouchableOpacity
-                                            style={styles.editButton}
-                                            onPress={(e) => {
-                                                e.stopPropagation();
-                                                router.push({ pathname: '/strategies/edit', params: { id: strategy.id } } as any);
-                                            }}
-                                        >
-                                            <FontAwesome name="pencil" size={16} color="#3b82f6" />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            style={styles.deleteButton}
-                                            onPress={(e) => {
-                                                e.stopPropagation();
-                                                handleDelete(strategy.id);
-                                            }}
-                                        >
-                                            <FontAwesome name="trash" size={16} color="#ef4444" />
-                                        </TouchableOpacity>
-                                    </View>
-                                ) : (
-                                    <View style={[
-                                        styles.statusBadge,
-                                        { backgroundColor: strategy.status === 'active' || !strategy.status ? '#10b981' : '#6b7280' }
-                                    ]}>
-                                        <Text style={styles.statusText}>
-                                            {strategy.status === 'active' || !strategy.status ? 'Active' : 'Inactive'}
-                                        </Text>
-                                    </View>
-                                )}
                             </View>
 
-                            <Text style={[styles.strategyDescription, { color: colors.tabIconDefault }]} numberOfLines={2}>
-                                {strategy.description || 'No description available.'}
-                            </Text>
+                            <View style={[styles.cardFooter, { borderTopColor: colors.border }]}>
+                                {activeTab === 'my' ? (
+                                    <>
+                                        <View style={[styles.badge, { backgroundColor: '#eff6ff' }]}>
+                                            <Text style={[styles.badgeText, { color: '#1d4ed8' }]}>User Created</Text>
+                                        </View>
 
-                            {strategy.performance !== undefined && (
-                                <View style={styles.performanceContainer}>
-                                    <FontAwesome
-                                        name={strategy.performance >= 0 ? 'arrow-up' : 'arrow-down'}
-                                        size={14}
-                                        color={strategy.performance >= 0 ? '#10b981' : '#ef4444'}
-                                    />
-                                    <Text
-                                        style={[
-                                            styles.performanceText,
-                                            { color: strategy.performance >= 0 ? '#10b981' : '#ef4444' }
-                                        ]}
-                                    >
-                                        {strategy.performance > 0 ? '+' : ''}{strategy.performance}%
-                                    </Text>
-                                </View>
-                            )}
+                                        <View style={styles.actionButtons}>
+                                            <TouchableOpacity
+                                                style={styles.editButton}
+                                                onPress={(e) => {
+                                                    e.stopPropagation();
+                                                    router.push({ pathname: '/strategies/edit', params: { id: strategy.id } } as any);
+                                                }}
+                                            >
+                                                <FontAwesome name="pencil" size={16} color="#3b82f6" />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                style={styles.deleteButton}
+                                                onPress={(e) => {
+                                                    e.stopPropagation();
+                                                    handleDelete(strategy.id);
+                                                }}
+                                            >
+                                                <FontAwesome name="trash" size={16} color="#ef4444" />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </>
+                                ) : (
+                                    <>
+                                        <View style={[styles.badge, { backgroundColor: '#fffbeb' }]}>
+                                            <Text style={[styles.badgeText, { color: '#b45309' }]}>System</Text>
+                                        </View>
+
+                                        <View style={styles.viewLink}>
+                                            <Text style={[styles.viewLinkText, { color: '#d97706' }]}>View</Text>
+                                            <FontAwesome name="arrow-right" size={12} color="#d97706" />
+                                        </View>
+                                    </>
+                                )}
+                            </View>
                         </TouchableOpacity>
                     ))}
 
@@ -247,7 +241,7 @@ export default function StrategiesScreen() {
                         <View style={styles.emptyState}>
                             <FontAwesome name="flash" size={48} color={colors.tabIconDefault} />
                             <Text style={[styles.emptyText, { color: colors.tabIconDefault }]}>
-                                No strategies found
+                                {activeTab === 'my' ? "You haven't created any strategies yet." : "No system strategies available."}
                             </Text>
                         </View>
                     )}
@@ -329,66 +323,84 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     strategyCard: {
-        padding: 16,
         borderRadius: 12,
         borderWidth: 1,
-        marginBottom: 12,
+        marginBottom: 16,
+        overflow: 'hidden',
+        position: 'relative',
+    },
+    cornerAccent: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        width: 48,
+        height: 48,
+    },
+    cornerCurve: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        width: 48,
+        height: 48,
+        borderTopRightRadius: 12, // Match card radius - DOES NOT WORK WELL WITH ABSOLUTE, BETTER TO USE BORDER RADIUS ON PARENT
     },
     strategyHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginBottom: 8,
+        padding: 16,
+        paddingBottom: 8,
     },
     strategyInfo: {
         flex: 1,
-        paddingRight: 10,
     },
     strategyName: {
         fontSize: 18,
-        fontWeight: '600',
-        marginBottom: 4,
+        fontWeight: 'bold',
+        marginBottom: 8,
+        zIndex: 10,
     },
-    strategyType: {
-        fontSize: 12,
+    strategyDescription: {
+        fontSize: 14,
+        lineHeight: 20,
     },
-    statusBadge: {
+    cardFooter: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        borderTopWidth: 1,
+        marginTop: 8,
+    },
+    badge: {
         paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 6,
+        paddingVertical: 2,
+        borderRadius: 4,
     },
-    statusText: {
-        color: '#ffffff',
-        fontSize: 11,
-        fontWeight: '600',
+    badgeText: {
+        fontSize: 12,
+        fontWeight: '500',
     },
-    deleteButton: {
-        padding: 8,
-        backgroundColor: '#fee2e2',
-        borderRadius: 8,
+    viewLink: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+    },
+    viewLinkText: {
+        fontSize: 14,
+        fontWeight: '500',
     },
     actionButtons: {
         flexDirection: 'row',
         gap: 8,
     },
     editButton: {
-        padding: 8,
-        backgroundColor: '#dbeafe',
+        padding: 6,
+        backgroundColor: '#eff6ff', // Light Blue
         borderRadius: 8,
     },
-    strategyDescription: {
-        fontSize: 14,
-        marginBottom: 12,
-        lineHeight: 20,
-    },
-    performanceContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-    },
-    performanceText: {
-        fontSize: 14,
-        fontWeight: '600',
+    deleteButton: {
+        padding: 6,
+        backgroundColor: '#fef2f2', // Light Red
+        borderRadius: 8,
     },
     emptyState: {
         alignItems: 'center',
@@ -398,5 +410,6 @@ const styles = StyleSheet.create({
     emptyText: {
         fontSize: 16,
         marginTop: 12,
+        textAlign: 'center',
     },
 });
